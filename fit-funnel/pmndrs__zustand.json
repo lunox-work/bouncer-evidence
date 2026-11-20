@@ -1,0 +1,15 @@
+{
+  "repo": "pmndrs/zustand",
+  "package": ".",
+  "language": "typescript",
+  "commit": "9fed2eb2f3af672da9f7bf694b996df3831fc207",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 13
+  }
+}

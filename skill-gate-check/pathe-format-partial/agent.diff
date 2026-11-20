@@ -1,0 +1,70 @@
+diff --git a/src/_path.ts b/src/_path.ts
+index 84eb4c9..979ec40 100644
+--- a/src/_path.ts
++++ b/src/_path.ts
+@@ -250,7 +250,9 @@ export const dirname: typeof path.dirname = function (p) {
+ };
+ 
+ export const format: typeof path.format = function (p) {
+-  const segments = [p.root, p.dir, p.base ?? p.name + p.ext].filter(Boolean);
++  // Missing parts (`name`, `ext`, `base`, `dir`, `root`) are treated as empty
++  const base = p.base ?? `${p.name ?? ""}${p.ext ?? ""}`;
++  const segments = [p.root, p.dir, base].filter(Boolean);
+   return normalizeWindowsPath(
+     p.root ? resolve(...segments) : segments.join("/"),
+   );
+diff --git a/test/pathe-format-partial-confirmed-own.spec.ts b/test/pathe-format-partial-confirmed-own.spec.ts
+new file mode 100644
+index 0000000..fc477fe
+--- /dev/null
++++ b/test/pathe-format-partial-confirmed-own.spec.ts
+@@ -0,0 +1,49 @@
++import { describe, expect, it } from "vitest";
++
++import { format } from "../src";
++
++describe("format with partial arguments", () => {
++  const cases: [Record<string, string | undefined>, string][] = [
++    // Only `name`, no `ext`
++    [{ name: "file" }, "file"],
++    // Only `ext`, no `name`
++    [{ ext: ".txt" }, ".txt"],
++    // Only `dir`, no `base`/`name`/`ext`
++    [{ dir: "/home/user" }, "/home/user"],
++    // Only `root`
++    [{ root: "/" }, "/"],
++    // Empty object
++    [{}, ""],
++    // `dir` and `name`, no `ext`
++    [{ dir: "/home/user", name: "file" }, "/home/user/file"],
++    // `root` and `ext`, no `name`
++    [{ root: "/", ext: ".txt" }, "/.txt"],
++    // `base` takes precedence over `name`/`ext` even when partial
++    [{ base: "file.txt", name: "other" }, "file.txt"],
++    // `undefined` values are the same as missing ones
++    [{ name: undefined, ext: ".txt", dir: undefined }, ".txt"],
++    // Empty string base falls through to nothing
++    [{ base: "", dir: "/home/user" }, "/home/user"],
++  ];
++
++  for (const [input, expected] of cases) {
++    it(`format(${JSON.stringify(input)}) should be ${JSON.stringify(expected)}`, () => {
++      expect(format(input as any)).to.equal(expected);
++    });
++  }
++
++  it("never produces the string 'undefined'", () => {
++    expect(format({ name: "file" } as any)).not.toContain("undefined");
++    expect(format({ ext: ".txt" } as any)).not.toContain("undefined");
++    expect(format({} as any)).not.toContain("undefined");
++  });
++
++  it("keeps full-argument behavior unchanged", () => {
++    expect(
++      format({ dir: "/home/user", name: "file", ext: ".txt" } as any),
++    ).to.equal("/home/user/file.txt");
++    expect(format({ root: "/", name: "file", ext: ".txt" } as any)).to.equal(
++      "/file.txt",
++    );
++  });
++});

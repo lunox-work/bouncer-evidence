@@ -1,0 +1,78 @@
+{
+  "run": "status-normalize/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 19,
+  "costUsd": 0.0507657,
+  "items": [
+    {
+      "question": "What does reading a stored value that matches no status or known old spelling return?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null instead of throwing or guessing the nearest status.",
+      "where": "src/index.ts:35",
+      "instead": "Throw an error, or fall back to a default status such as draft."
+    },
+    {
+      "question": "How much cleaning is applied to a stored value before matching (case, surrounding whitespace)?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Trims the ends and lowercases, so \"  PUBLISHED  \" reads as published.",
+      "where": "src/index.ts:22",
+      "instead": "Match case-sensitively or without trimming, or only lowercase."
+    },
+    {
+      "question": "How are \"-\", \"_\" and runs of spaces treated when reading?",
+      "ticket": "silent",
+      "chose": "Collapses each run of whitespace, \"-\" and \"_\" into one space, so \"-review-\" reads as review and \"CLAIMED__\" as claimed. Inside a word the space remains, so \"mer-ged\" and \"re   view\" read as null.",
+      "where": "src/index.ts:22",
+      "instead": "Strip separators entirely, or leave them alone and match exact spellings only."
+    },
+    {
+      "question": "Which old spellings count as known legacy values?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only the cleaned form \"in review\" to review. The \"...\" in the ticket's example list is not expanded to other spellings.",
+      "where": "src/index.ts:12",
+      "instead": "Add more aliases, such as \"in progress\", \"done\" or \"pending\", or use no alias table."
+    },
+    {
+      "question": "Does writing accept a non-canonical but readable value, such as \"Draft\" or \"in-review\"?",
+      "ticket": "Only enum values are written",
+      "chose": "Accepts only exact enum strings. Anything else, including a cased variant, an untrimmed value or an old spelling, throws.",
+      "where": "src/index.ts:44",
+      "instead": "Normalise the value with the read logic and write the canonical status."
+    },
+    {
+      "question": "What error does writing an invalid value raise, and what does it say?",
+      "ticket": "silent",
+      "chose": "Throws a plain Error whose message quotes the value exactly as given.",
+      "where": "src/index.ts:45",
+      "instead": "Throw a custom error type, or return null or a result object instead of throwing."
+    },
+    {
+      "question": "What happens to a row with an unreadable status in a batch read?",
+      "ticket": "silent",
+      "chose": "Keeps the row with its id and status null instead of dropping it or failing the batch.",
+      "where": "src/index.ts:56",
+      "instead": "Drop the row, or throw for the whole batch."
+    },
+    {
+      "question": "How does the batch read report the unreadable values?",
+      "ticket": "silent",
+      "chose": "Returns a separate `unreadable` list of distinct raw stored values, exactly as stored (not cleaned), sorted with the default string sort.",
+      "where": "src/index.ts:57",
+      "instead": "List the ids of the bad rows, list cleaned values, keep duplicates, or keep encounter order."
+    },
+    {
+      "question": "Does the batch read keep the input row order?",
+      "ticket": "silent",
+      "chose": "Maps the rows one to one, so the output order matches the input.",
+      "where": "src/index.ts:55",
+      "instead": "Group or sort the rows by status."
+    },
+    {
+      "question": "What does an empty or whitespace-only stored value read as?",
+      "ticket": "silent",
+      "chose": "Reads as null, and in a batch the raw value (e.g. \"  \") goes into the unreadable list.",
+      "where": "src/index.ts:33",
+      "instead": "Read it as a default status such as draft."
+    }
+  ]
+}

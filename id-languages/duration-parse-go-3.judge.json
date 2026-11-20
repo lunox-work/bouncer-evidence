@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1160603,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "The examples include 2d = 172800000 and 1d0h0m0s0ms, so they depend on which units exist and whether a day unit is one of them. The pick supports d, h, m, s and ms. Item 8 (zero values) is close too, since 0s and the zero components must be accepted, and its pick does accept them.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how surrounding whitespace is handled. The pick trims leading and trailing whitespace, so '  45m\\n' parses to 2700000.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "This scenario mixes several rejection questions. Item 5 covers the most rows: 1.5h, -3s, +3s and the full-width digit '３s'. The pick rejects any component that does not start with ASCII digits, so all four fail. Other rows belong to other items (90→1, 3S→3, '1h 30m' and '3 s'→6, empty→7, 3w→2). Note that the row 05s must be rejected, but item 8's pick accepts leading zeros, so the implementation would still fail S3 on that row.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may exceed the next unit, as 90m does. Item 4 is about the order of units and repeated units, not the size of a count.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks about largest-to-smallest order and repeated units. The pick rejects both, which covers 30m1h, 1h1h, 1s500ms2s and 5ms1s.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks for the upper limit. The pick caps the total at 2^53-1 ms, which is 9007199254740991, and that value is allowed, so the largest duration parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 also asks what happens on overflow. The pick checks each component and the running sum and returns 0 with an error beyond 2^53-1, so both rows are rejected.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks which units formatting uses and whether zero components are shown. The pick breaks the value greedily into d/h/m/s/ms and omits zeros, giving 1m30s, 1h30m, 1d and 1d1h1m1s1ms. The 0→'0ms' row matches item 11, which also agrees.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": true,
+      "why": "The exact output string comes from the greedy d/h/m/s/ms breakdown with zeros omitted. 9007199254740991 breaks into 104249991d 8h 59m 0s 991ms, and dropping the 0s gives '104249991d8h59m991ms'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatted output parses back to the same number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what formatting does with negative or over-range values. The pick returns \"\" and an error below 0 or above 2^53-1, which covers -1, 2^53, MinInt64 and MaxInt64. The pick doesn't give the error text, so it doesn't settle whether the message contains 'milliseconds'.",
+      "failing": false
+    }
+  ]
+}

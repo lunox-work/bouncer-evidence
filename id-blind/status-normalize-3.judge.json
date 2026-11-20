@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07847630000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how reads handle case and whitespace. Its pick lowercases and trims, so \"Draft\" and \" PUBLISHED \" read as draft and published, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks which old spellings map to statuses. Its pick maps only 'in review', so 'under review' and 'live' would read as null. S2 expects them to read as review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an unknown stored value reads as. Its pick returns null, which is 'no status at all' with no nearest-match guess. Item 7 covers only the empty and spaces-only part, and also returns null.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether an exact status is stored unchanged. Item 1 asks whether variants are accepted, and \"review\" is stored as \"review\" whichever way that is answered, so it does not settle S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether writes accept only the exact enum spelling. Its pick of exact, case-sensitive matching refuses \"Review\" and \" draft\". Items 3 (old spellings refused on write) and 2 (error contains the JSON-quoted value) cover the other parts of S5 and also agree.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how the batch read reports unreadable values. Its pick reports the original stored strings, removes exact duplicates and sorts them, which matches listing each distinct original value once, sorted, exactly as stored.",
+      "failing": true
+    }
+  ]
+}

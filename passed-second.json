@@ -1,0 +1,397 @@
+{
+  "at": "2026-11-20T13:31:17.474Z",
+  "about": "every archive run the Opus-written suites passed, judged again by Codex's suites, the failing calibrated tests refereed blind against the spec",
+  "referee": {
+    "model": "claude-fable-5-1",
+    "refereed": 12,
+    "requires": {
+      "open": 4,
+      "yes": 8
+    },
+    "costUsd": 3.97
+  },
+  "arms": {
+    "double-blind-haiku": {
+      "passes": 386,
+      "failSecond": 56,
+      "required": 51,
+      "open": 5,
+      "unresolved": 0,
+      "codexReferee": {
+        "required": 55,
+        "bothRequired": 50
+      },
+      "bySpec": {
+        "access-rules": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 11.5
+        },
+        "coalescing-cache": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 12.5
+        },
+        "csv-export": {
+          "passes": 6,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 23.1
+        },
+        "env-names": {
+          "passes": 3,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 11.8
+        },
+        "escrow-ledger": {
+          "passes": 10,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 7.2
+        },
+        "escrow-split": {
+          "passes": 14,
+          "required": 1,
+          "open": 0,
+          "mutantSurvivalPct": 17.6
+        },
+        "frame-codec": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 17.5
+        },
+        "gherkin-parse": {
+          "passes": 15,
+          "required": 12,
+          "open": 0,
+          "mutantSurvivalPct": 35.8
+        },
+        "gherkin-spec": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 4.2
+        },
+        "invite-codes": {
+          "passes": 15,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 3.3
+        },
+        "keyed-queue": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 11.8
+        },
+        "licence-scan": {
+          "passes": 19,
+          "required": 1,
+          "open": 4,
+          "mutantSurvivalPct": 9.9
+        },
+        "money-format": {
+          "passes": 3,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 0
+        },
+        "name-scan": {
+          "passes": 10,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 15.2
+        },
+        "patch-apply": {
+          "passes": 20,
+          "required": 14,
+          "open": 0,
+          "mutantSurvivalPct": 44.8
+        },
+        "project-names": {
+          "passes": 3,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 7.1
+        },
+        "promo-stack": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 16.1
+        },
+        "question-limit": {
+          "passes": 3,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 0
+        },
+        "retention-sweep": {
+          "passes": 16,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 12.1
+        },
+        "reverse-diff": {
+          "passes": 2,
+          "required": 1,
+          "open": 0,
+          "mutantSurvivalPct": 36.8
+        },
+        "shift-compliance": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 12.9
+        },
+        "statement-import": {
+          "passes": 20,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 10.8
+        },
+        "status-normalize": {
+          "passes": 15,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 16.7
+        },
+        "tool-versions": {
+          "passes": 42,
+          "required": 22,
+          "open": 1,
+          "mutantSurvivalPct": 9.1
+        },
+        "usage-counter": {
+          "passes": 15,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 18.2
+        },
+        "weekly-digest": {
+          "passes": 15,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 16.7
+        }
+      }
+    },
+    "double-blind-own-haiku": {
+      "passes": 100,
+      "failSecond": 29,
+      "required": 23,
+      "open": 6,
+      "unresolved": 0,
+      "codexReferee": {
+        "required": 29,
+        "bothRequired": 23
+      },
+      "bySpec": {
+        "csv-export": {
+          "passes": 11,
+          "required": 0,
+          "open": 0,
+          "mutantSurvivalPct": 23.1
+        },
+        "licence-scan": {
+          "passes": 20,
+          "required": 0,
+          "open": 1,
+          "mutantSurvivalPct": 9.9
+        },
+        "patch-apply": {
+          "passes": 19,
+          "required": 13,
+          "open": 0,
+          "mutantSurvivalPct": 44.8
+        },
+        "tool-versions": {
+          "passes": 50,
+          "required": 10,
+          "open": 5,
+          "mutantSurvivalPct": 9.1
+        }
+      }
+    }
+  },
+  "codexReferee": {
+    "refereed": 12,
+    "agree": 7,
+    "requires": {
+      "no": 2,
+      "yes": 10
+    },
+    "disagreements": [
+      {
+        "spec": "escrow-split",
+        "name": "a pro bono task records no releases across both gates and redelivery",
+        "passes": 1,
+        "fable": "open",
+        "codex": "no",
+        "codexReason": "For bounty 0, the spec says “no release is ever recorded,” so the hidden-test share remains unreleased. When UAT arrives with “the hidden-test share has not been released,” the spec requires that “it fails with an error saying the hidden tests have not passed,” contrary to the test’s expected success."
+      },
+      {
+        "spec": "licence-scan",
+        "name": "a parser must consume trailing input even after a permitted OR branch",
+        "passes": 5,
+        "fable": "open",
+        "codex": "yes",
+        "codexReason": "The spec says \"Licences are read as SPDX expressions\" and an \"expression that does not parse\" fails as \"unknown\"; malformed syntax such as the semicolon in \"MIT OR ISC;\" therefore requires failure despite the permitted MIT branch. The test deliberately supplies malformed expressions to probe parser validation."
+      },
+      {
+        "spec": "tool-versions",
+        "name": "all differing later versions are grouped in one conflict per tool",
+        "passes": 32,
+        "fable": "open",
+        "codex": "yes",
+        "codexReason": "The spec says Go comes from “the toolchain line of go.mod, then its go line” and “the first source wins and a disagreement is reported.” Both directives contain differing exact versions, so Go must also have a conflict; these are ordinary repository declarations like the spec’s examples."
+      },
+      {
+        "spec": "tool-versions",
+        "name": "no exact version is extracted from aliases ranges or malformed versions",
+        "passes": 10,
+        "fable": "open",
+        "codex": "yes",
+        "codexReason": "The spec says “anything else is not a version” and “no version is guessed, rounded or taken from part of a range.” Thus “22 || 20” must be skipped; extracting “22” from the Go directive violates that requirement."
+      },
+      {
+        "spec": "escrow-split",
+        "name": "pro bono status also holds at both share endpoints",
+        "passes": 1,
+        "fable": "yes",
+        "codex": "no",
+        "codexReason": "For a zero bounty, the spec says \"no release is ever recorded.\" Its UAT rule says that when \"the hidden-test share has not been released,\" handling \"fails with an error\"; remaining \"pro bono\" does not require the successful UAT return asserted by the test."
+      }
+    ]
+  },
+  "sonnetSecondSuite": {
+    "misses": 13,
+    "caught": 0
+  },
+  "tests": [
+    {
+      "spec": "escrow-split",
+      "suite": "public",
+      "name": "a pro bono task records no releases across both gates and redelivery",
+      "requires": "open",
+      "codexRequires": "no",
+      "severity": "edge",
+      "passes": 1,
+      "reason": "The pro bono scenario only says \"no release is ever recorded and the task is 'pro bono'\", which both outcomes satisfy; the refusal scenario's title \"before the hidden tests pass\" favours the test while its Given \"the hidden-test share has not been released\" is literally true for a zero bounty and favours the implementation, so the spec does not decide."
+    },
+    {
+      "spec": "gherkin-parse",
+      "suite": "public",
+      "name": "handles CRLF, mixed leading whitespace and no final newline",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "edge",
+      "passes": 11,
+      "reason": "The spec defines a step's text as 'its text after the keyword and one space' and only strips 'leading spaces and tabs' before the keyword; it calls for trimming only where it says so ('each row's cells trimmed'), so trailing spaces in step text must be kept."
+    },
+    {
+      "spec": "gherkin-parse",
+      "suite": "hidden",
+      "name": "rejects step-like lines without the required space after the keyword",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "edge",
+      "passes": 8,
+      "reason": "The spec defines a step's text as \"after the keyword and one space\" and says \"a line inside a scenario that is none of the forms above, fails at that line\"; the spec admits tabs only for leading indentation, so \"Given\\tvalue\" is not a step form and must fail at its line, while the implementation's regex accepts a tab separator."
+    },
+    {
+      "spec": "licence-scan",
+      "suite": "hidden",
+      "name": "singleton legacy arrays are not automatically treated as permissive",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "edge",
+      "passes": 1,
+      "reason": "The spec reads an old-style \"licenses\" array \"as each entry's 'type' joined by OR\", so a singleton [{type: \"UNLICENSED\"}] is the licence \"UNLICENSED\", which the spec says \"fails as 'unknown'\"; the implementation wraps it as \"(UNLICENSED)\" and passes it."
+    },
+    {
+      "spec": "licence-scan",
+      "suite": "hidden",
+      "name": "a parser must consume trailing input even after a permitted OR branch",
+      "requires": "open",
+      "codexRequires": "yes",
+      "severity": "adversarial",
+      "passes": 5,
+      "reason": "The spec says licences are 'read as SPDX expressions' and that 'an expression that does not parse' is unknown, but it never defines which characters an identifier may contain, and it already departs from strict SPDX by accepting 'GPLv3' and any 'LGPL' identifier; whether 'ISC;' is an identifier or a parse failure is left undecided."
+    },
+    {
+      "spec": "patch-apply",
+      "suite": "public",
+      "name": "rejects a deletion without hunks when the file is nonempty",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "edge",
+      "passes": 24,
+      "reason": "The spec says a deletion \"is rejected with reason \"no match\" unless the hunk's removed lines are the file's whole text, or the file is empty when it has no hunks\"; a nonempty file with no hunks satisfies neither exception, so it must be rejected, while the implementation returns ok and leaves the file in place."
+    },
+    {
+      "spec": "patch-apply",
+      "suite": "public",
+      "name": "measures each offset from the old start adjusted only by preceding line-count changes",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "typical",
+      "passes": 4,
+      "reason": "The spec states \"a hunk's stated line is its old start line moved by the lines the hunks before it added or removed, and its offset is measured from that line\"; hunk 1 adds a net one line, so hunk 2's stated line is 6 and D at line 5 gives offset -1, but the implementation measures from the unadjusted old start and reports 0."
+    },
+    {
+      "spec": "reverse-diff",
+      "suite": "hidden",
+      "name": "discovers paths from standalone old and new headers in their textual order",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "edge",
+      "passes": 1,
+      "reason": "The spec says of '--- ... / +++ ...' header lines that every public path 'in those header lines becomes' the real one and unmapped ones are 'reported in the order they first appear'; it never requires a 'diff --git' line, and in a unified diff the '@@ -1 +1 @@' hunk ends after one removed and one added line, so the second file's headers are headers, not hunk content."
+    },
+    {
+      "spec": "tool-versions",
+      "suite": "public",
+      "name": "all differing later versions are grouped in one conflict per tool",
+      "requires": "open",
+      "codexRequires": "yes",
+      "severity": "typical",
+      "passes": 32,
+      "reason": "The spec lists \"the toolchain line of go.mod, then its go line\" as ordered sources, which suggests a conflict when they differ, but its own example with \"go 1.22\" and \"toolchain go1.22.3\" says only that golang is pinned to \"1.22.3\" and never defines whether two lines of one file, or \"1.22\" versus \"1.22.3\", constitute \"a disagreement\"."
+    },
+    {
+      "spec": "tool-versions",
+      "suite": "public",
+      "name": "no exact version is extracted from aliases ranges or malformed versions",
+      "requires": "open",
+      "codexRequires": "yes",
+      "severity": "adversarial",
+      "passes": 10,
+      "reason": "The rule that 'a value with anything after the version on the same line ... is not a version' is stated only for 'When .nvmrc, .node-version or .python-version is read'; the spec never says how a go.mod directive line is split, so reading 'toolchain go22 || 20' as the argument 'go22' is as defensible as rejecting the whole line."
+    },
+    {
+      "spec": "escrow-split",
+      "suite": "public",
+      "name": "pro bono status also holds at both share endpoints",
+      "requires": "yes",
+      "codexRequires": "no",
+      "severity": "edge",
+      "passes": 1,
+      "reason": "The spec says for a bounty of 0 \"no release is ever recorded and the task is 'pro bono'\", and the refusal applies only to \"UAT approval before the hidden tests pass\"; here hidden-tests-passed was handled first, so rejecting with \"the hidden tests have not passed\" contradicts the spec."
+    },
+    {
+      "spec": "tool-versions",
+      "suite": "hidden",
+      "name": "every exact loser is reported with all sources present in reverse priority order",
+      "requires": "yes",
+      "codexRequires": "yes",
+      "severity": "typical",
+      "passes": 32,
+      "reason": "Under \"Each tool has its sources, tried in order\" the spec says \"Go comes from the toolchain line of go.mod, then its go line\", making them two ordered sources like the volta.node and engines.node fields of package.json; the conflict rule then requires the differing exact go-line version to be reported as ignored."
+    }
+  ]
+}

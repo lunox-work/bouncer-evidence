@@ -1,0 +1,15 @@
+{
+  "repo": "mswjs/msw",
+  "package": ".",
+  "language": "typescript",
+  "commit": "b3df8504adc30538e9634a46b7303a850a817928",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "the existing suite does not build on a clean install: failed to load config from /private/var/folders/9k/pldvsgmx3kz_k53f_53t5m900000gn/T/bouncer-work/fit-bcBt63/vitest.config.ts",
+    "seconds": 13
+  }
+}

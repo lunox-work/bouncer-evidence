@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0825303,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "The scenario depends on the default share being 75% (7500 of 10000). Item 10 asks which share values are valid and what the default is, and its pick sets the default to 7500 basis points, which gives a 7500 release.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how a fractional hidden-test amount is rounded. Its pick rounds down with integer division and gives the remainder to UAT, which matches 749 + 250 = 999.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what the UAT amount is and when the task counts as fully released. Its pick releases the bounty minus what was already released and sets \"fully released\" once the total reaches the bounty.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what a failed hidden-test run does. Its pick does nothing and writes nothing to the store, so the task stays locked.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT is approved before the hidden tests pass. Its pick throws an Error and records nothing, as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": false,
+      "why": "Item 8 asks what a zero bounty does. Its pick marks the task pro bono but records a 0 release on pass and on UAT. The scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether repeated events are matched by event id or by the kind of release already recorded. Its pick goes by kind and ignores the id, so both a repeated 'e1' and a second hidden-tests-passed event with a different id record nothing. Item 3 fits too, but it covers only the repeated event.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how events delivered at the same time are handled. Its pick runs a single handler's events one at a time through a promise queue, so two simultaneous events, with the same id or different ids, record one release.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what happens when a store read or write fails. Its pick passes store errors to the caller and records nothing when a write fails, so handling the same event again can still succeed.",
+      "failing": false
+    }
+  ]
+}

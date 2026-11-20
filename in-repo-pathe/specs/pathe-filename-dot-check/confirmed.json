@@ -1,0 +1,47 @@
+{
+  "sha256": "db9f2a8e04972afab81bc3cf881bb8561acce684782f67dc23401f6d59897f2b",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:27:13.689Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "If the path ends in a separator (the last segment is empty), the result is `undefined`. `filename` does not fall back to the segment before it (`\"foo/\"` → `undefined`).",
+    "Ticket: silent.",
+    "Instead: Ignore the trailing slash and return the last non-empty segment (`\"foo\"`).",
+    "The empty string `\"\"` gives `undefined`.",
+    "Ticket: silent.",
+    "Instead: Return an empty string `\"\"`.",
+    "A dotfile such as `\".gitignore\"` returns its whole basename (`\".gitignore\"`). A leading dot is part of the name, not an extension separator.",
+    "Ticket: \"handle files beginning with a period\"",
+    "Instead: Return `\"\"` (treating it as an empty name with extension `gitignore`), as some libraries do.",
+    "A name with several dots loses only its last extension (`\"archive.tar.gz\"` → `\"archive.tar\"`).",
+    "Ticket: silent.",
+    "Instead: Strip everything from the first dot after the start of the name, giving `\"archive\"`.",
+    "A name ending in a dot loses that dot (`\"file.\"` → `\"file\"`).",
+    "Ticket: silent.",
+    "Instead: Keep the trailing dot, since no extension follows it (`\"file.\"`).",
+    "A dot-prefixed name with a further extension loses its last extension (`\".config.json\"` → `\".config\"`).",
+    "Ticket: \"handle files beginning with a period\"",
+    "Instead: Return `\".config.json\"` unchanged, or return `\"\"` if the dot-prefixed name is treated as all extension.",
+    "A file with no dot, such as `\"README\"`, returns its basename unchanged.",
+    "Ticket: \"without ext\"",
+    "Instead: Return `undefined`, or an empty string.",
+    "The special segments get no special treatment. `\".\"` is a leading dot and is returned whole (`\".\"`); in `\"..\"` the last dot is the second character, so the text before it is returned (`\"..\"` → `\".\"`).",
+    "Ticket: silent.",
+    "Instead: Return `\"..\"` unchanged, or return `undefined` or an empty string, since they are not real filenames.",
+    "Both `/` and `\\` are path separators on every platform.",
+    "Ticket: silent.",
+    "Instead: Split only on `/`, as POSIX paths do.",
+    "A dot in a directory segment never affects the result. Only the last segment is looked at (`\"/a.b/README\"` → `\"README\"`).",
+    "Ticket: \"handle files beginning with a period or without ext\"",
+    "Instead: Keep the old regex behaviour, where a dot earlier in the path could be read as the extension separator (`\"/a.b/README\"` → `\"a\"`).",
+    "Seam (the files the stub writes): src/utils.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/utils.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

@@ -1,0 +1,490 @@
+{
+  "what": "bouncer fit on 50 popular open-source libraries (25 TypeScript, 25 Python), the package a change would most likely touch, default branch, shallow clone; static checks, then an install and one run of the existing suite for those that pass",
+  "date": "2026-11-20",
+  "all": {
+    "repositories": 50,
+    "notMeasuredHere": 8,
+    "measured": 42,
+    "supported": 28,
+    "staticallySupported": 35,
+    "reasons": {
+      "existing suite does not build on a clean install": 4,
+      "the dependencies do not install on a clean copy": 3,
+      "no test files where fit looks": 3,
+      "runner outside vitest, Jest and node:test": 2,
+      "JavaScript, not TypeScript": 1,
+      "no pytest": 1
+    }
+  },
+  "typescript": {
+    "repositories": 25,
+    "notMeasuredHere": 8,
+    "measured": 17,
+    "supported": 7,
+    "staticallySupported": 11,
+    "reasons": {
+      "no test files where fit looks": 3,
+      "existing suite does not build on a clean install": 3,
+      "runner outside vitest, Jest and node:test": 2,
+      "the dependencies do not install on a clean copy": 1,
+      "JavaScript, not TypeScript": 1
+    }
+  },
+  "python": {
+    "repositories": 25,
+    "notMeasuredHere": 0,
+    "measured": 25,
+    "supported": 21,
+    "staticallySupported": 24,
+    "reasons": {
+      "the dependencies do not install on a clean copy": 2,
+      "existing suite does not build on a clean install": 1,
+      "no pytest": 1
+    }
+  },
+  "rows": [
+    {
+      "repo": "colinhacks/zod",
+      "package": "packages/zod",
+      "commit": "e32e08836e451e26f53f5ff6efe4fb92b07a47ad",
+      "supported": false,
+      "reason": "the dependencies do not install on a clean copy (pnpm): To fix the lockfile, run 'pnpm install --no-frozen-lockfile'.",
+      "stage": "run",
+      "seconds": 1
+    },
+    {
+      "repo": "sindresorhus/ky",
+      "package": ".",
+      "commit": "3541888878c4d303a8bc2ad61815f4e048f55a5d",
+      "supported": false,
+      "reason": "runner outside vitest, Jest and node:test over tsconfig.test.json: scripts.test is \"xo && npm run build && tsc --project tsconfig.test.json && ava\"",
+      "stage": "static"
+    },
+    {
+      "repo": "date-fns/date-fns",
+      "package": "pkgs/core",
+      "commit": "a9739fb3e5384a810e90d7376446f6d84ecc5029",
+      "supported": false,
+      "reason": "no test folder: no include glob's folder, test/, tests/, __tests__/ or src/ holds *.test or *.spec files",
+      "stage": "static"
+    },
+    {
+      "repo": "unjs/ofetch",
+      "package": ".",
+      "commit": "1dbc37fd1ceab832fc7c90cad81b1091c95ba563",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 6
+    },
+    {
+      "repo": "unjs/defu",
+      "package": ".",
+      "commit": "82632b66f5914e9946edce300e10633a3d5c0cb7",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 7
+    },
+    {
+      "repo": "unjs/h3",
+      "package": ".",
+      "commit": "2f29b875617e8daf39d25118f7474fd4c24fbfe1",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 18
+    },
+    {
+      "repo": "vitejs/vite",
+      "package": "packages/vite",
+      "commit": "c7326770e1121733435e0527af972f387d64d344",
+      "supported": false,
+      "reason": "the existing suite does not build on a clean install: scripts/benchCircularImport.ts(14,56): error TS2307: Cannot find module 'vite' or its corresponding type declarations.",
+      "stage": "run",
+      "seconds": 40
+    },
+    {
+      "repo": "trpc/trpc",
+      "package": "packages/server",
+      "commit": "596d03d93295f8b4876909cfce86f94a1e6afe51",
+      "supported": false,
+      "reason": "killed: memory, one process at 1067 MB",
+      "stage": "run",
+      "seconds": 21
+    },
+    {
+      "repo": "TanStack/query",
+      "package": "packages/query-core",
+      "commit": "f6689e04be493e2e83f9c93d7e478f92c3e5d328",
+      "supported": false,
+      "reason": "killed: memory, one process at 1131 MB",
+      "stage": "run",
+      "seconds": 9
+    },
+    {
+      "repo": "pmndrs/zustand",
+      "package": ".",
+      "commit": "9fed2eb2f3af672da9f7bf694b996df3831fc207",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 13
+    },
+    {
+      "repo": "pmndrs/jotai",
+      "package": ".",
+      "commit": "5fe0e825f9674b16162e6952c0a1afea01c1485f",
+      "supported": false,
+      "reason": "killed: memory, one process at 1162 MB",
+      "stage": "run",
+      "seconds": 12
+    },
+    {
+      "repo": "statelyai/xstate",
+      "package": "packages/core",
+      "commit": "268d54efb0ecabc3fd118e379aa3db5fe1295ab0",
+      "supported": false,
+      "reason": "killed: memory, one process at 1820 MB",
+      "stage": "run",
+      "seconds": 6
+    },
+    {
+      "repo": "honojs/hono",
+      "package": ".",
+      "commit": "75ff8e3ea18485589816881c6278bc9783e56602",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 30
+    },
+    {
+      "repo": "drizzle-team/drizzle-orm",
+      "package": "drizzle-orm",
+      "commit": "3bcb6a27ec1f4f1602aeeb0af2f5aec61010d72d",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 49
+    },
+    {
+      "repo": "axios/axios",
+      "package": ".",
+      "commit": "9f0f4ddfe72b4c06afafe1a658e6ee53d35b5760",
+      "supported": false,
+      "reason": "the existing suite does not build on a clean install: docs/blog/posts.data.ts(22,37): error TS2307: Cannot find module 'vitepress' or its corresponding type declarations.",
+      "stage": "run",
+      "seconds": 6
+    },
+    {
+      "repo": "vercel/swr",
+      "package": ".",
+      "commit": "8148ef012fd5b317d1e8ec2da4b2ca0673f63c0f",
+      "supported": false,
+      "reason": "killed: memory, one process at 1104 MB",
+      "stage": "run",
+      "seconds": 3
+    },
+    {
+      "repo": "reduxjs/redux-toolkit",
+      "package": "packages/toolkit",
+      "commit": "45eb0379c719ddfaeee6a39f43222cee01515caa",
+      "supported": false,
+      "reason": "killed: memory, one process at 1149 MB",
+      "stage": "run",
+      "seconds": 3
+    },
+    {
+      "repo": "immerjs/immer",
+      "package": ".",
+      "commit": "784c86bb234e805566481c9425fcb2a3897e8bcc",
+      "supported": false,
+      "reason": "no test folder: no include glob's folder, test/, tests/, __tests__/ or src/ holds *.test or *.spec files",
+      "stage": "static"
+    },
+    {
+      "repo": "mswjs/msw",
+      "package": ".",
+      "commit": "b3df8504adc30538e9634a46b7303a850a817928",
+      "supported": false,
+      "reason": "the existing suite does not build on a clean install: failed to load config from /private/var/folders/9k/pldvsgmx3kz_k53f_53t5m900000gn/T/bouncer-work/fit-bcBt63/vitest.config.ts",
+      "stage": "run",
+      "seconds": 13
+    },
+    {
+      "repo": "remix-run/react-router",
+      "package": "packages/react-router",
+      "commit": "be1629037a63f84040f485594ee0c7aa769de100",
+      "supported": false,
+      "reason": "no test files under test/, tests/, __tests__/ or src/",
+      "stage": "static"
+    },
+    {
+      "repo": "fastify/fastify",
+      "package": ".",
+      "commit": "825d7722e4932a39193729997c76535d0a963b6b",
+      "supported": false,
+      "reason": "JavaScript, not TypeScript: no tsconfig.json, and 270 .js files to 18 .ts",
+      "stage": "static"
+    },
+    {
+      "repo": "fabian-hiller/valibot",
+      "package": "library",
+      "commit": "d72f76fcf70ccfa0a5ca341b80da1d440ac60b11",
+      "supported": false,
+      "reason": "killed: memory, one process at 1253 MB",
+      "stage": "run",
+      "seconds": 9
+    },
+    {
+      "repo": "Effect-TS/effect",
+      "package": "packages/effect",
+      "commit": "ca9de3c912ddb035a52b0f3f24e36ac453e417ae",
+      "supported": false,
+      "reason": "killed: memory, one process at 2262 MB",
+      "stage": "run",
+      "seconds": 6
+    },
+    {
+      "repo": "nanostores/nanostores",
+      "package": ".",
+      "commit": "7b86b32bcff00bf5d08895854765a9076740478a",
+      "supported": false,
+      "reason": "runner outside vitest, Jest and node:test over tsconfig.test.json: scripts.test is \"pnpm run /^test:/\"",
+      "stage": "static"
+    },
+    {
+      "repo": "supermacro/neverthrow",
+      "package": ".",
+      "commit": "5ef3a018bda74fb960e44b68fc3672635ee8037d",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 5
+    },
+    {
+      "repo": "psf/requests",
+      "package": ".",
+      "commit": "3c7baaa05ab4aa49cc819ce3a819d260de19c157",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 87
+    },
+    {
+      "repo": "pallets/flask",
+      "package": ".",
+      "commit": "49943b5a94413a530761350f04e896f76e8d620e",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 13
+    },
+    {
+      "repo": "pallets/click",
+      "package": ".",
+      "commit": "08b803cf32ceb2ae6a772c62d5da42757a897d44",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 14
+    },
+    {
+      "repo": "encode/httpx",
+      "package": ".",
+      "commit": "7cff5f79bc78649bbcd3fd9aa7a74c86e0f63016",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 44
+    },
+    {
+      "repo": "fastapi/fastapi",
+      "package": ".",
+      "commit": "05e6df7e906c3decba377c37548019973f40bf15",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 106
+    },
+    {
+      "repo": "pydantic/pydantic",
+      "package": ".",
+      "commit": "45e208ee48b62c47dd92507ec6a4bcd71cfdb0d8",
+      "supported": false,
+      "reason": "the dependencies do not install on a clean copy (uv): error: Required uv version `>=0.13.0` does not match the running version `0.12.24`. Update `uv` by running `uv self update`.",
+      "stage": "run",
+      "seconds": 1
+    },
+    {
+      "repo": "python-attrs/attrs",
+      "package": ".",
+      "commit": "2a1fb86d44816afcc60e86d57956ce3604820326",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 10
+    },
+    {
+      "repo": "Textualize/rich",
+      "package": ".",
+      "commit": "3a109ccdffe5b2d0e30684a304fbd388e99ce57b",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 9
+    },
+    {
+      "repo": "tqdm/tqdm",
+      "package": ".",
+      "commit": "9cf5a12b1f955468a17f0ba3c59092b23e4258ac",
+      "supported": false,
+      "reason": "the existing suite does not build on a clean install: ERROR: usage: python -m pytest [options] [file_or_dir] [file_or_dir] [...]",
+      "stage": "run",
+      "seconds": 1
+    },
+    {
+      "repo": "pallets/jinja",
+      "package": ".",
+      "commit": "5ef70112a1ff19c05324ff889dd30405b1002044",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 5
+    },
+    {
+      "repo": "aio-libs/aiohttp",
+      "package": ".",
+      "commit": "62b8f507b56fad4ea3af5a5238c911e7d2641fd1",
+      "supported": false,
+      "reason": "the dependencies do not install on a clean copy (uv-dated): error: Command '['clang', '-fno-strict-overflow', '-Wsign-compare', '-Wunreachable-code', '-fno-common', '-dynamic', '-DNDEBUG', '-g', '-O3', '-Wall', '-I/Users/charlieangriawan/.cache/uv/builds-v0/.tmp5CUA0B/include', '-I/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/includ",
+      "stage": "run",
+      "seconds": 1
+    },
+    {
+      "repo": "marshmallow-code/marshmallow",
+      "package": ".",
+      "commit": "f268f0c4d12c4edb43743ca5703eed7954320245",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 3
+    },
+    {
+      "repo": "more-itertools/more-itertools",
+      "package": ".",
+      "commit": "e3f79f4fde5f7c107f70a20730b17240a05ba99b",
+      "supported": false,
+      "reason": "no pytest: no pytest configuration and pytest is not a declared dependency",
+      "stage": "static"
+    },
+    {
+      "repo": "dateutil/dateutil",
+      "package": ".",
+      "commit": "261e2913961865300032cf30df1d59f4f0ff6f1a",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 15
+    },
+    {
+      "repo": "arrow-py/arrow",
+      "package": ".",
+      "commit": "2224255c4acc594d734cef0bbc83360452a67983",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 6
+    },
+    {
+      "repo": "pytest-dev/pluggy",
+      "package": ".",
+      "commit": "93de545c3a31880feaf0f6bb8870b30d602cf681",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 2
+    },
+    {
+      "repo": "psf/black",
+      "package": ".",
+      "commit": "c0e143e75443afd3be50c3b63ed2ee2fd108f509",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 28
+    },
+    {
+      "repo": "fastapi/typer",
+      "package": ".",
+      "commit": "2517edde5a1292a712e2f16e600754c52c6f00d9",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 146
+    },
+    {
+      "repo": "Delgan/loguru",
+      "package": ".",
+      "commit": "28349be3cd740867bc947eef741c69370ca45735",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 50
+    },
+    {
+      "repo": "jd/tenacity",
+      "package": ".",
+      "commit": "aac059c906170ee7b6ce1aa086a226f3aded5c99",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 7
+    },
+    {
+      "repo": "pallets/werkzeug",
+      "package": ".",
+      "commit": "0f43c6ebd426039e4b99ec22535c2c8a2ec2f69f",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 11
+    },
+    {
+      "repo": "hynek/structlog",
+      "package": ".",
+      "commit": "81779f0abe5942018c543e4a7cb047e92d2b5ad8",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 5
+    },
+    {
+      "repo": "python-attrs/cattrs",
+      "package": ".",
+      "commit": "e9239b7082206f18e3cec873b11451aff35beb9c",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 73
+    },
+    {
+      "repo": "urllib3/urllib3",
+      "package": ".",
+      "commit": "d9f9b0ad5b99247e06aa9a50b7a5747aa5c2e35d",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 65
+    },
+    {
+      "repo": "pypa/packaging",
+      "package": ".",
+      "commit": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "supported": true,
+      "reason": null,
+      "stage": "run",
+      "seconds": 31
+    }
+  ]
+}

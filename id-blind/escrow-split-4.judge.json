@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0757978,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what the default hidden-test share is. Its pick is 7500 bps when no share is configured, so a 10000 bounty releases 7500, as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how an uneven share is rounded. Its pick rounds down with BigInt integer division and gives the remainder to UAT, which yields 749/250 and stays exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks what UAT approval releases. Its pick releases the bounty minus the amounts already recorded, which is the remaining balance.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks what a failed run records. Its pick saves nothing and returns the current or a fresh 'locked' state, so nothing is recorded and the task stays locked.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what happens when UAT is approved before the hidden tests pass. Its pick rejects with an Error and records nothing. The pick does not give the error message, but the behaviour the scenario tests (refuse and record nothing) matches.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks what a zero bounty does. Its pick records a release of amount 0 on a pass, but the scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how repeated events are treated. Its pick checks the stored release kinds and ignores the event id, so both a replay of e1 and a different hidden-tests-passed event record nothing.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how concurrent events are handled. Its pick runs all events through one queue, so the second event sees the first release and the repeat check skips it, whether the ids match or not.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what happens when the store fails. Its pick rejects with the store's error, records nothing, and lets the same event be retried.",
+      "failing": false
+    }
+  ]
+}

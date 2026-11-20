@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1275801,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "The open question in S1 is what happens when a drawn code repeats an existing one, and item 8 asks exactly that. Its pick redraws, as S1 expects. The run with a constant random source only shows that it eventually gives up and throws, which S1 does not cover. Item 6's run also shows a new code as unused with expiry 14 days after creation.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether redeeming grants access only to the code's own task, or whether a used code records who used it and when. Item 2's output happens to show usedBy and usedAt, but its question is about state after expiry.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how typed input is matched. Its pick strips whitespace and dashes and uppercases the input. The run with a lowercase, space-separated code padded with spaces returned ok: true.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code still works at the exact 14-day instant. Its pick treats now >= expiresAt as expired, so it still works 1 ms before. The run at exactly +14 days returned { ok: false, reason: 'expired' }.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when a used code is redeemed by someone else or again by the same contributor, or whether a repeat redemption by the same person is idempotent. Item 3 is about a different, unused code for a task the contributor already has, and item 4 is about which reason wins when several apply.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether codes can be revoked and what revoking a used, unknown or already-revoked code does. Its pick adds revocation and refuses used codes. The run returned 'threw: invite code has been used'. Item 4's run also shows a revoked code refused with reason 'revoked'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about redeeming another code for a task the contributor already has access to. Its pick returns 'already has access' and leaves that code unused. The run returned { ok: false, reason: 'already has access' }, and the listing (cut off in the file) shows the second code was not marked used.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how simultaneous operations are handled. Its pick runs them one at a time. The run used a delayed store and two redemptions at once: one returned ok: true and the other { ok: false, reason: 'used' }.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 2,
+      "agrees": true,
+      "why": "The open part of S9 is what state a code used before its expiry shows afterwards, and item 2 asks exactly that. The run listed the code 20 days later as state 'used', with usedBy, usedAt, createdAt and expiresAt.",
+      "failing": false
+    }
+  ]
+}

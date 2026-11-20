@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1042743,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how case and whitespace variants of a stored value are normalised, which is what S1 tests. In its run, \"  PUBLISHED \" read as 'published' and \"Merged\" as 'merged'. Item 6's run reads \"Draft\" as 'draft'. \"claimed\" is already an exact enum value.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings are accepted on read, which is what S2's table settles. The pick only maps \"in review\" and reads every other old spelling as null. So \"In-Review\" would read as review, but \"under_review\" and \"LIVE\" would read as null, not 'review' and 'published'. Its run also returned null for \"done\", which S2 says means merged.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unrecognised, empty or whitespace-only value reads as. Its run returned null for \"\", \"   \" and \"bogus\", and nothing does nearest-match guessing. So \"closed\", \"drafts\" and \"revew\" read as no status, as S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item settles this. Item 4 asks whether writes normalise or need exact values, but under either answer writing \"review\" stores \"review\". So answering it does not decide what S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing normalises input or accepts only exact enum values, including old spellings. Its run threw on \"Draft\", \" review\" and \"in-review\", with messages quoting the value as given, and accepted only exact 'draft'. That matches S5's refusals, including rejecting old spellings on write. Item 5, about the error's form, is narrower.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how the bulk read reports unreadable values: duplicates, order and form. Its run listed distinct raw values once each, sorted and not cleaned, e.g. [ '', ' bad ', 'Alpha', 'alpha', 'zeta' ]. Item 6's run also shows every row kept, with status null where it could not be read. Both match S6.",
+      "failing": true
+    }
+  ]
+}

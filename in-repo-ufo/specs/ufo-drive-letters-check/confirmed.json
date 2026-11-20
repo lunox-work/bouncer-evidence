@@ -1,0 +1,50 @@
+{
+  "sha256": "2cd8a6ef13124e26b1a2f9c258ba688531ca205a38033fa84b286068013c3446",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T01:52:34.939Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "The `file:` protocol check is case-sensitive against the protocol as written, so `FILE:///C:/foo` keeps pathname `/C:/foo`. The returned `protocol` is still lowercased (`file:`).",
+    "Ticket: \"only normalize windows drive letters with `file://` protocol\"",
+    "Instead: Lowercase the protocol before comparing, so `FILE://` is normalized the same as `file://`.",
+    "Inputs with no protocol are not normalized: `///C:/foo` keeps pathname `/C:/foo`, `//C:/foo` stays host `C:` + pathname `/foo`, and bare `C:/foo` / `/C:/foo` come back from `parsePath` unchanged.",
+    "Ticket: \"only normalize windows drive letters with `file://` protocol\"",
+    "Instead: Also normalize when there is no protocol, or when a default protocol of `file:` is supplied.",
+    "`defaultProto` is not checked on its own. Only the protocol captured from the parsed string counts. Because the existing code prepends `defaultProto` to a protocol-less input before parsing, `parseURL(\"/C:/foo\", \"file://\")` gives `C:/foo`, and `parseURL(\"/C:/foo\", \"http://\")` gives `/C:/foo`.",
+    "Ticket: silent.",
+    "Instead: Use the effective protocol (input protocol or `defaultProto`) for the check.",
+    "The existing unanchored regex is kept: the first `/` before a letter and `:` anywhere in the rest is removed (`file:///foo/D:/bar` → `/fooD:/bar`).",
+    "Ticket: silent.",
+    "Instead: Anchor the regex to the start of the path (`^\\/(?=[A-Za-z]:)`).",
+    "Every protocol other than exactly `file:` (`http:`, `https:`, `ftp:`, `s3:`, and so on) leaves the path untouched (`http://host/C:/x` → `/C:/x`).",
+    "Ticket: silent.",
+    "Instead: Keep the leading slash only for known non-file protocols and handle the rest differently, or treat other local-like protocols the same as `file:`.",
+    "The removal runs on the whole text after the host, before it is split, so for a `file:` URL a `/X:` in the search or hash can be the one removed (`file:///?q=/C:/x` → search `?q=C:/x`).",
+    "Ticket: silent.",
+    "Instead: Apply the removal to the parsed `pathname` only, leaving `search` and `hash` as written.",
+    "Only the first match is removed (non-global): `file:///C:/a/D:/b` → `C:/a/D:/b`.",
+    "Ticket: silent.",
+    "Instead: Remove the slash before every drive-letter-like segment.",
+    "A drive letter is exactly one ASCII letter followed by `:`. Digits (`1:`), two letters (`CD:`) and the legacy `C|` form are not normalized.",
+    "Ticket: silent.",
+    "Instead: Also accept the WHATWG legacy `C|` drive form, or non-ASCII letters.",
+    "A `file:` URL with a non-empty host is still normalized (`file://host/C:/x` → host `host`, pathname `C:/x`).",
+    "Ticket: silent.",
+    "Instead: Normalize only when the `file:` host is empty, as WHATWG does for drive letters.",
+    "`stringifyParsedURL` is not changed, so a normalized file URL stringifies with two slashes (`file:///C:/foo` → `file://C:/foo`).",
+    "Ticket: silent.",
+    "Instead: Have `stringifyParsedURL` put back a `/` before a drive-letter pathname for `file:` URLs.",
+    "Nothing is rejected: `parseURL` never throws, and inputs that do not qualify are returned as parsed, without normalization.",
+    "Ticket: silent.",
+    "Instead: Throw or return an error marker for malformed drive-letter file URLs.",
+    "Seam (the files the stub writes): src/parse.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/parse.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0765934,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how a stored value is cleaned before matching. Its pick trims, lowercases and collapses separators, so \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" read as their statuses, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings map to a status. Its pick maps only 'in review' and reads every other old spelling as null. So \"under_review\" and \"LIVE\" would come back null, not \"review\" and \"published\".",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what reading an unknown value returns. Its pick returns null and never guesses the nearest status, which matches S3. Item 7 covers the empty and all-spaces cases with the same result, but item 1 is the closer fit to the 'no guessing' rule.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether writing an exact status stores that same string. Item 4 is about variants, and items 5 and 6 are about invalid values, so none of them settles that \"review\" is stored as \"review\".",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts variants such as 'Draft', ' draft' or 'in-review'. Its pick accepts only the exact enum strings and throws for everything else, old spellings included, as S5 expects. Item 5, the error message that includes the raw value, covers only the secondary claim.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how readStatuses reports unreadable values. Its pick lists the raw stored strings, de-duplicated and sorted, which is what S6 expects. Item 8, keeping the row with a null status, covers only the per-row part.",
+      "failing": true
+    }
+  ]
+}

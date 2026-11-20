@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1016611,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Most of S1 is plain adding up, but `2d` and `1d0h0m0s0ms` only work if days are a unit. Item 1 asks which suffixes are accepted, and its pick adds lowercase `d`, so S1 passes. Item 9 (whether `0s` is valid) also fits one example, and it agrees too.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks whether whitespace is allowed around a duration. S2 expects leading and trailing whitespace to be ignored, but the pick rejects all whitespace.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": null,
+      "why": "S3 mixes several questions: empty string (item 6), unitless number (item 5), whitespace (item 3), bad suffixes (item 1). Item 4 covers the most examples: `1.5h`, `-3s`, `+3s`, `05s`, `1_0s` and the full-width `３s`. Its pick does reject decimals and signs. But 'only digit runs' doesn't say whether a leading zero (`05s`) or non-ASCII digits (`３s`) are rejected, so it's too vague to tell.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether one unit's count can go past the size of the next unit (`90m`). Item 2 is about order and repeats, and item 11 is about formatting.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks about out-of-order or repeated units. Its pick rejects any term whose unit isn't strictly smaller than the one before, which rejects every S5 example with ValueError.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about an upper limit. Its pick rejects only totals above 2^53-1, so 9007199254740991 itself parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8's pick rejects totals above 2^53-1 with ValueError, which covers both S7 examples.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "S8 expects the greedy mixed form (`1m30s`, `1h30m`). Item 11's pick takes the shortest string, which gives `90s` and `90m`. Item 10 also clashes: its pick formats 0 as `0s`, but S8 expects `0ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "The shortest-string rule would pick `9007199254740991ms` (18 characters) over `104249991d8h59m991ms` (20 characters), but S9 expects the mixed form.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting then parsing returns the original number. Any exact form round-trips, so no pick changes this result.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks about negatives, bools, floats and other non-ints. Its pick raises ValueError mentioning 'milliseconds' for non-ints (bools included) and for values outside 0 to 2^53-1, which covers all four S11 values.",
+      "failing": false
+    }
+  ]
+}

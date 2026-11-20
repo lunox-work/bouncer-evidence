@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/11",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.056484400000000004,
+  "items": [
+    {
+      "question": "Does the parser accept a day unit (`d`) in addition to the h, m, s and ms units the ticket shows?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts `d` (86400000 ms) as a unit and uses it when formatting large values.",
+      "where": "src/task.go:27",
+      "instead": "Support only h, m, s and ms, so two days would be `48h`."
+    },
+    {
+      "question": "Must units appear from largest to smallest, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Rejects out-of-order or repeated units (`30m1h`, `1m1m`) with an error.",
+      "where": "src/task.go:81",
+      "instead": "Accept any order and repeats and sum them, so `30m1h` is 90 minutes."
+    },
+    {
+      "question": "Is a bare number with no unit (such as `172800` or `0`) accepted?",
+      "ticket": "silent",
+      "chose": "Rejects it with a 'missing or unknown unit' error.",
+      "where": "src/task.go:77",
+      "instead": "Treat a bare number as raw milliseconds, for backward compatibility with the existing config values."
+    },
+    {
+      "question": "What does an empty or whitespace-only string parse to?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an 'is empty' error.",
+      "where": "src/task.go:44",
+      "instead": "Treat it as 0 or as unset, with no error."
+    },
+    {
+      "question": "Is leading or trailing whitespace allowed around the duration?",
+      "ticket": "silent",
+      "chose": "Trims the whole string, so `  1h30m ` parses. Whitespace inside the string is still rejected.",
+      "where": "src/task.go:43",
+      "instead": "Reject any whitespace, or also allow it between components."
+    },
+    {
+      "question": "Are fractional counts (`1.5h`), signs (`-1h`, `+1h`) and uppercase units (`1H`) accepted?",
+      "ticket": "silent",
+      "chose": "Accepts only unsigned ASCII digit counts and lowercase units. Everything else is an error.",
+      "where": "src/task.go:54",
+      "instead": "Allow decimals like Go's time.ParseDuration, or accept uppercase units."
+    },
+    {
+      "question": "Is there an upper limit on the total, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns 0 plus an error above that, with overflow-safe checks.",
+      "where": "src/task.go:89",
+      "instead": "Allow the full int64 range, or clamp to the maximum instead of erroring."
+    },
+    {
+      "question": "Is a zero value such as `0ms` or `0h0m` valid?",
+      "ticket": "silent",
+      "chose": "Accepts zero and returns 0 with no error. Zero components are allowed.",
+      "where": "src/task.go:92",
+      "instead": "Reject a zero timeout as invalid."
+    },
+    {
+      "question": "What does the parser return on invalid input?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an error whose message contains 'duration'.",
+      "where": "src/task.go:58",
+      "instead": "Return -1, or a partial result, or an error without the word 'duration'."
+    },
+    {
+      "question": "How is a millisecond count formatted back to text, and is it normalised?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Splits the value greedily into d, h, m, s and ms and omits zero parts. For example, 90000 becomes `1m30s` and 172800000 becomes `2d`.",
+      "where": "src/task.go:119",
+      "instead": "Use only h, m, s and ms with no days, or keep the raw number when it isn't a clean multiple."
+    },
+    {
+      "question": "What does the formatter return for 0?",
+      "ticket": "silent",
+      "chose": "Returns `0ms`.",
+      "where": "src/task.go:116",
+      "instead": "Return `0s`, or an empty string."
+    },
+    {
+      "question": "What does the formatter do with negative or too-large millisecond values?",
+      "ticket": "silent",
+      "chose": "Returns an empty string and an error mentioning 'milliseconds' for values below 0 or above 2^53-1.",
+      "where": "src/task.go:113",
+      "instead": "Format negatives with a minus sign, or clamp the value."
+    }
+  ]
+}

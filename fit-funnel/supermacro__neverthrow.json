@@ -1,0 +1,15 @@
+{
+  "repo": "supermacro/neverthrow",
+  "package": ".",
+  "language": "typescript",
+  "commit": "5ef3a018bda74fb960e44b68fc3672635ee8037d",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 5
+  }
+}

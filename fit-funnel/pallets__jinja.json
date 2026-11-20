@@ -1,0 +1,15 @@
+{
+  "repo": "pallets/jinja",
+  "package": ".",
+  "language": "python",
+  "commit": "5ef70112a1ff19c05324ff889dd30405b1002044",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 5
+  }
+}

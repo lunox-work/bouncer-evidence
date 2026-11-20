@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/4",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.046738600000000005,
+  "items": [
+    {
+      "question": "Is an empty string (or whitespace-only) a valid duration?",
+      "ticket": "silent",
+      "chose": "Rejects empty text with a ValueError, because the regex needs at least one component to match.",
+      "where": "src/solution.py:33",
+      "instead": "Treat empty as 0 ms, or as 'no timeout'."
+    },
+    {
+      "question": "Are components required to be in descending order, each used at most once (e.g. '30m1h', '1h1h')?",
+      "ticket": "Let's accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts only descending order with each unit at most once. '30m1h' and '1h1h' raise ValueError.",
+      "where": "src/solution.py:18",
+      "instead": "Accept components in any order and repeats, and sum them."
+    },
+    {
+      "question": "Is a bare number with no unit, such as '172800', accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects unitless numbers, because every component must end in a unit suffix.",
+      "where": "src/solution.py:18",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Are unit suffixes case-sensitive, and is surrounding or inner whitespace allowed?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase suffixes and no whitespace. '1H' and '1h 30m' raise ValueError.",
+      "where": "src/solution.py:18",
+      "instead": "Accept case-insensitive units and strip or tolerate whitespace."
+    },
+    {
+      "question": "Are fractional values (e.g. '1.5h'), signs, or non-ASCII digits accepted?",
+      "ticket": "convert them to milliseconds",
+      "chose": "Accepts only runs of ASCII digits 0-9. Decimals and signs are rejected.",
+      "where": "src/solution.py:19",
+      "instead": "Support decimal values like '1.5h', or negative durations."
+    },
+    {
+      "question": "Is there a maximum total, and what happens when it is exceeded?",
+      "ticket": "silent",
+      "chose": "Raises ValueError if the total is above 9007199254740991 ms (2^53-1).",
+      "where": "src/solution.py:39",
+      "instead": "Impose no limit, since Python ints don't overflow, or use a smaller practical cap."
+    },
+    {
+      "question": "Are non-string inputs to parse_duration handled, such as an int or None?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for any non-str input.",
+      "where": "src/solution.py:30",
+      "instead": "Let a TypeError propagate, or pass an int through as raw milliseconds."
+    },
+    {
+      "question": "Are zero-valued or non-normalised components ('0s', '90m', '100s') accepted?",
+      "ticket": "silent",
+      "chose": "Accepts them. '0s' parses to 0 and '90m' to 5400000, with no cap on a component's size.",
+      "where": "src/solution.py:36",
+      "instead": "Reject zero durations, or reject components that exceed their natural range such as minutes over 59."
+    },
+    {
+      "question": "How is a duration of 0 ms printed back?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Returns '0s' for 0 ms.",
+      "where": "src/solution.py:96",
+      "instead": "Return '0ms', or an empty string."
+    },
+    {
+      "question": "What shape does format_duration produce when several forms are equivalent, for example 90000 ms as '1m30s' versus '90s'?",
+      "ticket": "print them back in the same style",
+      "chose": "Searches for the shortest string by character count, so 90000 ms becomes '90s'. Ties go to the lexicographically smaller option. It does not use the natural h/m/s breakdown.",
+      "where": "src/solution.py:65-82",
+      "instead": "Use a greedy largest-unit-first breakdown, so 90000 ms becomes '1m30s'."
+    },
+    {
+      "question": "What does format_duration do with invalid input (negative, bool, float, over the max)?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for bools, non-ints, negatives, and values over 9007199254740991.",
+      "where": "src/solution.py:91-94",
+      "instead": "Coerce floats and bools to ints, or clamp out-of-range values."
+    },
+    {
+      "question": "Does the admin UI display actually change to the new format?",
+      "ticket": "Would also be nice to print them back in the same style in the admin UI instead of the raw number.",
+      "chose": "Only adds a format_duration helper. No admin UI or config-loading code is changed.",
+      "where": "src/solution.py:85-96",
+      "instead": "Wire the formatter into the admin UI and the config loader."
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0886413,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 is about the 14-day expiry and redrawing after a single collision. Item 7 asks what happens when collisions keep happening (a retry limit, then an error), and S1 says nothing about that. No item asks about the expiry length or the unused starting state.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "S2 checks that redeeming grants access to that task only and records who used the code and when. Item 12 asks where access is stored (the registry or accounts), which S2 doesn't settle. Item 10 is about listings. No item asks the question S2 settles.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how typed input is matched for case, spaces and hyphens. Its pick strips whitespace and hyphens and uppercases the input, so lowercase, spaced or hyphenated input finds the same code, as S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a code is still valid at exactly 14 days. The pick treats now >= expiresAt as expired, so the code works at 08:59:59.999 and fails with 'expired' at 09:00:00, matching S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S5 is about someone else redeeming a used code, and the same contributor redeeming their own used code again and succeeding with no change. Item 3 is about a second, different code for the same task. Item 1 is about which check wins when several apply. No item asks about redeeming the same code again.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether codes can be revoked and what revoking does. The pick sets a revoked flag (redeem then reports 'revoked') and throws when asked to revoke a used code, which matches 'a used code cannot be revoked'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks exactly this case. Its pick refuses with 'already has access' and leaves the code unused, as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how concurrent operations are handled. Its pick runs all operations through one in-process queue, one at a time, so only one of two simultaneous redemptions succeeds and the other sees 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what listings show. Its pick lists all of a task's codes with a state computed at the current time, and used codes carry usedBy and usedAt. Together with item 1's pick (the 'used' check runs before 'expired'), a used code stays 'used' after its expiry time.",
+      "failing": false
+    }
+  ]
+}

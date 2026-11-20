@@ -1,0 +1,89 @@
+{
+  "run": "status-normalize-5",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0439477,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "readStatus(\"bogus\")"
+    },
+    {
+      "item": 2,
+      "probe": "readStatus(\"  PUBLISHED \")"
+    },
+    {
+      "item": 3,
+      "probe": "[readStatus(\"in_review\"), readStatus(\"in   review\"), readStatus(\"in-review\"), readStatus(\"_draft-\")]"
+    },
+    {
+      "item": 4,
+      "probe": "[readStatus(\"in review\"), readStatus(\"inreview\"), readStatus(\"in-progress\"), readStatus(\"published\")]"
+    },
+    {
+      "item": 5,
+      "probe": "[\"Draft\",\"in-review\",\" draft\"].map(v => { try { return writeStatus(v) } catch (e) { return e.message } })"
+    },
+    {
+      "item": 6,
+      "probe": "(() => { try { writeStatus(\"Draft\") } catch (e) { return { name: e.name, ctor: e.constructor === Error, message: e.message } } })()"
+    },
+    {
+      "item": 7,
+      "probe": "[readStatus(\"\"), readStatus(\"   \"), (() => { try { return writeStatus(\"\") } catch (e) { return e.message } })()]"
+    },
+    {
+      "item": 8,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"junk\"},{id:\"c\",status:\"Merged\"}]).rows"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:\"1\",status:\"beta\"},{id:\"2\",status:\"alpha\"},{id:\"3\",status:\"Alpha \"},{id:\"4\",status:\"alpha\"},{id:\"5\",status:\"Beta\"},{id:\"6\",status:\"  \"}]).unreadable"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:\"z\",status:\"in review\"},{id:\"a\",status:\"bad\"},{id:\"m\",status:\"CLAIMED\"}]).rows"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "null"
+    },
+    {
+      "item": 2,
+      "actual": "'published'"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'review', 'review', 'review', null ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'review', null, null, 'published' ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'Invalid sandbox status \"Draft\": expected one of draft, review, published, claimed, merged', 'Invalid sandbox status \"in-review\": expected one of draft, review, published, claimed, merged', 'Invalid sandbox status \" draft\": expected one of draft, review, published, claimed, merged' ]"
+    },
+    {
+      "item": 6,
+      "actual": "{ name: 'Error', ctor: true, message: 'Invalid sandbox status \"Draft\": expected one of draft, review, published, claimed, merged' }"
+    },
+    {
+      "item": 7,
+      "actual": "[ null, null, 'Invalid sandbox status \"\": expected one of draft, review, published, claimed, merged' ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ { id: 'a', status: 'draft' }, { id: 'b', status: null }, { id: 'c', status: 'merged' } ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ '  ', 'Alpha ', 'Beta', 'alpha', 'beta' ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { id: 'z', status: 'review' }, { id: 'a', status: null }, { id: 'm', status: 'claimed' } ]"
+    }
+  ]
+}

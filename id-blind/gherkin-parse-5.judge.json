@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0955419,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 is the normal case: feature name, scenarios in order, step keywords, text and line numbers. Item 11 covers a bare keyword or a keyword with no space after it, and S1 says nothing about those. No other item asks about basic scenario and step output.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how free text (a description) is handled. S2 says text between 'Feature:' and the first Background, Scenario or tag line is the description and is skipped. The pick ignores text between Feature and the first Background or Scenario, which does the same thing. Item 12 also matches S2's comment and blank-line rules, but its question is mainly about CRLF and BOM, so item 6 is closer.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks whether Background steps are kept apart from scenario steps. S3 says they come back as the background and are not copied into scenarios. The pick stores them in a separate list.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how doc strings are handled, including indentation. S4 says the doc string goes to the preceding step with the opening quotes' indentation removed. The pick attaches it to the preceding step and strips up to the opening delimiter's indentation. Item 10 covers S4's table part, but S4 is mostly about doc strings.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": false,
+      "why": "Item 2 asks which line is reported when there is no Feature: line. S5 says the error is at the first content line before any Feature line. The pick always reports line 1, which is wrong whenever blank or comment lines come before that content. Items 3, 8 and 9 each match a different S5 clause, and their picks agree with it.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what a file with only a Feature line returns. S6 says it parses with no scenarios. The pick treats it as valid and returns an empty scenarios list.",
+      "failing": false
+    }
+  ]
+}

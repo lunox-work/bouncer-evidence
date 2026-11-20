@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0519257,
+  "items": [
+    {
+      "question": "What columns does the CSV have, in what order, and what are the header labels?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Writes the header \"Requisition ID,Title,Status,Openings,Filled,Created\" and one column per field in that order.",
+      "where": "src/index.ts:11",
+      "instead": "Use different header labels or order, such as raw field names like id,title,status,openings,filled,createdAt, or add a computed column such as remaining openings."
+    },
+    {
+      "question": "What row order does the export use?",
+      "ticket": "silent",
+      "chose": "Sorts a copy of the input by creation time ascending, then by id with plain code-unit comparison.",
+      "where": "src/index.ts:32",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "What is the line terminator, and is there a trailing newline after the last row?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last row and a header-only file, with CRLF.",
+      "where": "src/index.ts:49",
+      "instead": "Join lines with \\n, or with CRLF but no trailing terminator after the last row."
+    },
+    {
+      "question": "Does the output start with a UTF-8 BOM?",
+      "ticket": "silent",
+      "chose": "Prepends a BOM (U+FEFF) to the output string.",
+      "where": "src/index.ts:49",
+      "instead": "Emit no BOM and return plain CSV text."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header line only.",
+      "where": "src/index.ts:49",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Wraps a field in double quotes and doubles any inner quotes when it contains a comma, double quote, CR or LF.",
+      "where": "src/index.ts:57",
+      "instead": "Quote every field, or also guard against spreadsheet formula injection by prefixing fields that start with =, +, - or @."
+    },
+    {
+      "question": "How is a missing or null title rendered?",
+      "ticket": "silent",
+      "chose": "Writes an empty field when the title is null or undefined.",
+      "where": "src/index.ts:39",
+      "instead": "Write a placeholder such as \"(untitled)\" or \"null\", or throw."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full ISO 8601 UTC string with milliseconds, via toISOString().",
+      "where": "src/index.ts:43",
+      "instead": "Write a date-only value such as YYYY-MM-DD, or a locale or employer-timezone format."
+    },
+    {
+      "question": "What happens when a requisition has an unknown or empty status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id, and only accepts open, on_hold, filled and cancelled.",
+      "where": "src/index.ts:15",
+      "instead": "Pass the status string through unchanged, or skip the row."
+    },
+    {
+      "question": "Are invalid counts (negative, fractional, NaN) for openings or filled rejected?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id unless the value is an integer of 0 or more, so zero openings is accepted.",
+      "where": "src/index.ts:18",
+      "instead": "Write the numbers as given, clamp them, or require openings of at least 1."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id, and allows filled equal to openings.",
+      "where": "src/index.ts:24",
+      "instead": "Export the row as is, or clamp filled to openings."
+    },
+    {
+      "question": "What happens with an invalid creation date, and does one bad row abort the whole export?",
+      "ticket": "silent",
+      "chose": "Validates every row before building any output, and throws on the first invalid row (including an invalid date), so no partial CSV is returned.",
+      "where": "src/index.ts:13",
+      "instead": "Skip or blank the bad row and export the rest, or write an empty date field."
+    }
+  ]
+}

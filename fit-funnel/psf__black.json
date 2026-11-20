@@ -1,0 +1,15 @@
+{
+  "repo": "psf/black",
+  "package": ".",
+  "language": "python",
+  "commit": "c0e143e75443afd3be50c3b63ed2ee2fd108f509",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 28
+  }
+}

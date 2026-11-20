@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/10",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0636217,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. the legacy raw-millisecond `172800`) accepted as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects unit-less numbers as InvalidDuration, so existing raw-ms configs would fail to parse.",
+      "where": "src/lib.rs:79-87",
+      "instead": "Accept a bare integer as milliseconds for backward compatibility."
+    },
+    {
+      "question": "What is the largest duration that can be parsed or formatted?",
+      "ticket": "silent",
+      "chose": "Caps totals at 2^53-1 ms; larger values are rejected on parse and on format.",
+      "where": "src/lib.rs:16",
+      "instead": "Allow anything up to u64::MAX, or use a smaller cap such as i64::MAX."
+    },
+    {
+      "question": "Can units be repeated or appear out of order (e.g. `30m1h`, `1h1h`)?",
+      "ticket": "silent",
+      "chose": "Rejects them; each unit may appear at most once and must go in descending order h, m, s, ms.",
+      "where": "src/lib.rs:83-94",
+      "instead": "Accept any order and repeated units and sum them."
+    },
+    {
+      "question": "Which units are supported?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Only h, m, s and ms; days (`d`) and others are rejected.",
+      "where": "src/lib.rs:23",
+      "instead": "Also accept d (and maybe w) for multi-day timeouts like the two-day example."
+    },
+    {
+      "question": "Are unit letters case-sensitive?",
+      "ticket": "silent",
+      "chose": "Only lowercase units are accepted; `1H` and `1S` are rejected.",
+      "where": "src/lib.rs:79",
+      "instead": "Accept units case-insensitively."
+    },
+    {
+      "question": "Is whitespace, a sign, or a decimal allowed (e.g. `1h 30m`, ` 1h`, `+1s`, `1.5h`)?",
+      "ticket": "silent",
+      "chose": "Rejects all of them, along with empty input.",
+      "where": "src/lib.rs:61-75",
+      "instead": "Trim surrounding whitespace, allow spaces between parts, or allow fractional values."
+    },
+    {
+      "question": "Are zero values and leading zeros accepted when parsing?",
+      "ticket": "silent",
+      "chose": "Accepts `0s`, `0ms` and `01h`, and returns 0 for zero values.",
+      "where": "src/lib.rs:76-97",
+      "instead": "Reject zero durations (a zero timeout is meaningless), or reject leading zeros."
+    },
+    {
+      "question": "How is an overflowing or oversized number handled when parsing?",
+      "ticket": "silent",
+      "chose": "Maps integer-parse failure, multiplication or addition overflow, and a total above the cap all to the same InvalidDuration error.",
+      "where": "src/lib.rs:76-93",
+      "instead": "Use a separate overflow or out-of-range error variant."
+    },
+    {
+      "question": "What does formatting 0 ms print?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Returns \"0s\".",
+      "where": "src/lib.rs:149-151",
+      "instead": "Return \"0ms\" or an empty string."
+    },
+    {
+      "question": "How does formatting choose among equivalent representations?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the fewest-character string, so 90 s prints as \"90s\", 5,400,000 ms as \"90m\" and 1,500 ms as \"1500ms\", with ties going to fewer parts.",
+      "where": "src/lib.rs:144-193",
+      "instead": "Use a greedy largest-unit decomposition, giving \"1h30m\", \"1m30s\" and \"1s500ms\"."
+    },
+    {
+      "question": "What happens when formatting a value above the supported maximum?",
+      "ticket": "silent",
+      "chose": "Returns the MillisecondsOutOfRange error.",
+      "where": "src/lib.rs:146-148",
+      "instead": "Format any u64 without error."
+    },
+    {
+      "question": "What error text is shown on a parse or format failure?",
+      "ticket": "silent",
+      "chose": "A single generic message per error that lists the expected syntax and the maximum, with no detail about which part of the input was bad.",
+      "where": "src/lib.rs:34-38",
+      "instead": "Include the offending input or position in the message."
+    }
+  ]
+}

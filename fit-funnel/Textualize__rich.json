@@ -1,0 +1,15 @@
+{
+  "repo": "Textualize/rich",
+  "package": ".",
+  "language": "python",
+  "commit": "3a109ccdffe5b2d0e30684a304fbd388e99ce57b",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 9
+  }
+}

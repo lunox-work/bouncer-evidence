@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1105217,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 covers the BOM, header, row order and CRLF, which items 1, 2, 4 and 5 each address. Item 1 (columns, order and header names) is closest to the scenario's core, 'the header and one row per requisition'. Its run starts with U+FEFF, has the header 'Requisition ID,Title,Status,Openings,Filled,Created', and ends every row, the last included, with CRLF. Item 2's sort (creation time, then id) also matches.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": false,
+      "why": "No item asks how status is displayed. Item 9 asks how the creation time is formatted, which S2 settles as a UTC 'YYYY-MM-DD' date. The run writes the full ISO string '2023-11-14T22:13:20.123Z', not just the date. The runs also show status written as lowercase 'open' rather than 'Open'. Item 8 (empty field for a missing title) agrees, but it covers only a minor part of S2.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an empty list produces. The run returns only the BOM and the header row followed by CRLF, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": null,
+      "why": "Item 6 asks how fields with commas, quotes or line breaks are escaped. The run wraps such a field in quotes and doubles the inner quotes, as S4 requires. But S4 also requires quoting a title that starts or ends with a space. RFC 4180 does not require that, and nothing was run for it, so agreement on that part can't be determined.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": false,
+      "why": "Item 7 asks how formula-like leading characters are handled. The run writes '=SUM(A1)' and '@x' unchanged, but S5 requires a single quote in front.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what happens with bad row data: unknown status, invalid counts, filled greater than openings, or an invalid date. The run throws 'Requisition bad7 has more filled than openings', which names the requisition id as S6 requires.",
+      "failing": true
+    }
+  ]
+}

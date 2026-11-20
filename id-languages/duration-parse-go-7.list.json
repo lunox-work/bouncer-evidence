@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.057955599999999996,
+  "items": [
+    {
+      "question": "Is a string with leading or trailing whitespace accepted?",
+      "ticket": "silent",
+      "chose": "Trims surrounding whitespace with strings.TrimSpace before parsing, so \"  1h30m  \" is valid.",
+      "where": "src/task.go:43",
+      "instead": "Reject any whitespace as invalid input."
+    },
+    {
+      "question": "Is whitespace between components (\"1h 30m\") accepted?",
+      "ticket": "silent",
+      "chose": "Rejects it, because the next component must start with a digit.",
+      "where": "src/task.go:62",
+      "instead": "Allow spaces between components."
+    },
+    {
+      "question": "What does an empty or all-whitespace string return?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an error \"duration: empty string\".",
+      "where": "src/task.go:44",
+      "instead": "Treat it as 0 or as unset, with no error."
+    },
+    {
+      "question": "Is a bare number with no unit (\"30\" or \"0\") accepted as raw milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects any number without a unit, including \"0\", with a \"has no unit\" error.",
+      "where": "src/task.go:75",
+      "instead": "Accept a unitless number as milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Are unit suffixes case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase d, h, m, s and ms, so \"1H\" is an error.",
+      "where": "src/task.go:70",
+      "instead": "Accept units case-insensitively."
+    },
+    {
+      "question": "Can components appear in any order or be repeated (\"1m1h\", \"1h1h\")?",
+      "ticket": "`1h30m`, `90s` or `250ms`",
+      "chose": "Requires units strictly from largest to smallest, each at most once, and rejects anything else.",
+      "where": "src/task.go:81",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Are fractional (\"1.5h\"), signed (\"-1s\", \"+1s\") or negative durations accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them, because only unsigned digit runs are parsed and \".\", \"-\" and \"+\" fail the number check.",
+      "where": "src/task.go:62",
+      "instead": "Allow decimal counts, or a leading + sign, or let negative values through."
+    },
+    {
+      "question": "Is a day unit (\"d\") supported?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Adds a \"d\" unit worth 86,400,000 ms, used both when parsing and when formatting.",
+      "where": "src/task.go:28",
+      "instead": "Support only h, m, s and ms, so two days would be \"48h\"."
+    },
+    {
+      "question": "What is the maximum allowed duration, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Caps the total at 9007199254740991 ms (2^53-1) and returns 0 and an error on overflow. It checks overflow before each addition.",
+      "where": "src/task.go:16",
+      "instead": "Use the full int64 range, or no explicit cap."
+    },
+    {
+      "question": "Are leading zeros in a count (\"007s\") accepted?",
+      "ticket": "silent",
+      "chose": "Accepts them, so \"007s\" parses as 7000.",
+      "where": "src/task.go:55",
+      "instead": "Reject counts with leading zeros."
+    },
+    {
+      "question": "How is a zero duration printed in the admin UI style?",
+      "ticket": "silent",
+      "chose": "Prints \"0ms\".",
+      "where": "src/task.go:118",
+      "instead": "Print \"0s\", or an empty string."
+    },
+    {
+      "question": "How does formatting choose units, and what happens to out-of-range input?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number.",
+      "chose": "Breaks the value greedily into d, h, m, s and ms, omits zero components, and never rolls days up further. Returns \"\" and an error for negative values or values above the cap.",
+      "where": "src/task.go:115",
+      "instead": "Print the largest exact unit only (for example \"90000ms\" for 1m30s), or clamp out-of-range values instead of returning an error."
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11098480000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Two of the rows (`2d`, `1d0h0m0s0ms`) only work if a day unit is accepted, which is what item 1 asks. It accepts `d` as 86,400,000 ms, so 2d gives 172800000. Item 7 (zero) also fits the `0s` row, but item 1 is closer.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks whether whitespace is accepted. The scenario expects leading and trailing whitespace to be ignored. The pick rejects all whitespace and accepts only digits followed by a lowercase unit, so `  45m\\n` would be an error.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Most of the malformed rows (`1.5h`, `-3s`, `+3s`, `3S`, `3 s`, `1h 30m`) are the inputs item 6 asks about. The pick rejects them all, which is what the scenario wants. Items 2 (bare `90`) and 3 (empty string) cover single rows. Leading zeros (`05s`) are not asked about anywhere.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may be larger than one of the next unit up, as in `90m`.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Three of the four rows are out of order (`30m1h`, `5ms1s`, `1s500ms2s`), which is what item 5 asks. The scenario wants them rejected, but the pick accepts any order. Item 4 (repeated units, pick: reject) fits `1h1h` and does agree, but it is less close.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks for the largest duration that parses. Its cap is 2^53-1 ms, which is 9007199254740991, so that value parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 also covers overflow. The pick returns InvalidDuration above 2^53-1 and uses checked u128 arithmetic, so both rows are rejected.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how values are formatted and whether days are used. Writing greedily in d/h/m/s/ms and leaving out zero units gives `1m30s`, `1h30m`, `1d` and `1d1h1m1s1ms`. Item 9 (zero as `0ms`) covers only one row, and it also agrees.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": true,
+      "why": "This is how formatting behaves at the top of the range. Greedy formatting that leaves out zero units turns 9007199254740991 into `104249991d8h59m991ms`, because the seconds count is 0.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives back the original number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what format_duration does above the limit. It returns MillisecondsOutOfRange for anything above 2^53-1, which includes 9007199254740992 and u64::MAX.",
+      "failing": false
+    }
+  ]
+}

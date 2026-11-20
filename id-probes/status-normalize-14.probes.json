@@ -1,0 +1,97 @@
+{
+  "run": "status-normalize-14",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0418144,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(() => { try { return writeStatus(' Draft'); } catch (e) { return 'threw: ' + e.message; } })()"
+    },
+    {
+      "item": 2,
+      "probe": "(() => { try { return writeStatus('in-review'); } catch (e) { return 'threw: ' + e.message; } })()"
+    },
+    {
+      "item": 3,
+      "probe": "(() => { try { return writeStatus('bad \"x\"'); } catch (e) { return e instanceof Error && e.message; } })()"
+    },
+    {
+      "item": 4,
+      "probe": "readStatus('  PUB_ \\t-LISHED '.replace('PUB_ \\t-LISHED','PUBLISHED'))"
+    },
+    {
+      "item": 5,
+      "probe": "[readStatus('in review'), readStatus('In_Review'), readStatus('in-progress'), readStatus('inreview')]"
+    },
+    {
+      "item": 6,
+      "probe": "readStatus('archived')"
+    },
+    {
+      "item": 7,
+      "probe": "[readStatus(''), readStatus('   \\t')]"
+    },
+    {
+      "item": 8,
+      "probe": "[readStatus('pub-lished'), readStatus('in--review'), readStatus('claimed-')]"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:'a',status:'draft'},{id:'b',status:'bogus'}])"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:'1',status:'zeta'},{id:'2',status:' Bad '},{id:'3',status:'zeta'},{id:'4',status:'Alpha'},{id:'5',status:'draft'}]).unreadable"
+    },
+    {
+      "item": 11,
+      "probe": "readStatuses([{id:'z',status:'merged'},{id:'a',status:'Draft'},{id:'z',status:'merged'}]).rows"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'threw: not a sandbox status: \" Draft\"'"
+    },
+    {
+      "item": 2,
+      "actual": "'threw: not a sandbox status: \"in-review\"'"
+    },
+    {
+      "item": 3,
+      "actual": "'not a sandbox status: \"bad \\\\\"x\\\\\"\"'"
+    },
+    {
+      "item": 4,
+      "actual": "'published'"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'review', 'review', null, null ]"
+    },
+    {
+      "item": 6,
+      "actual": "null"
+    },
+    {
+      "item": 7,
+      "actual": "[ null, null ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ null, 'review', 'claimed' ]"
+    },
+    {
+      "item": 9,
+      "actual": "{ rows: [ { id: 'a', status: 'draft' }, { id: 'b', status: null } ], unreadable: [ 'bogus' ] }"
+    },
+    {
+      "item": 10,
+      "actual": "[ ' Bad ', 'Alpha', 'zeta' ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ { id: 'z', status: 'merged' }, { id: 'a', status: 'draft' }, { id: 'z', status: 'merged' } ]"
+    }
+  ]
+}

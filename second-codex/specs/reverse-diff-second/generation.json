@@ -1,0 +1,30 @@
+{
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "01a1f90c-f4b8-7c40-861f-caca1cd7b340",
+        "model": "gpt-6.1-sol",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": null,
+        "turns": 23,
+        "durationMs": 503737,
+        "subtype": "success",
+        "apiError": null,
+        "backend": "codex-cli"
+      }
+    ],
+    "costUsd": 0,
+    "finalText": "Build passes. All tests fail against the unimplemented interface as required.\n\n38 tests in 5 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "tests/private/boundaries.test.ts",
+      "tests/private/hunks.test.ts",
+      "tests/private/paths.test.ts",
+      "tests/private/unchanged.test.ts",
+      "tests/private/unmapped.test.ts"
+    ],
+    "open": []
+  }
+}

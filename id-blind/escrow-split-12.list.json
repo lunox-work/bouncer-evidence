@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0665536,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when the bounty times the share does not divide evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%)",
+      "chose": "Rounds the hidden-test amount down with integer division and gives the leftover unit to the UAT part.",
+      "where": "src/index.ts:13",
+      "instead": "Round to the nearest unit, or round up."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "When the maintainer approves UAT on the merge-back PR, release the remaining escrow balance.",
+      "chose": "Throws an error and records nothing.",
+      "where": "src/index.ts:42-44",
+      "instead": "Release the whole bounty, or ignore the event without an error."
+    },
+    {
+      "question": "What happens when a hidden-tests-passed event arrives again after the release was already made, whether it is a duplicate delivery or a new event?",
+      "ticket": "Release happens once per task",
+      "chose": "Releases nothing more, writes nothing to the store, and returns the current state. This is keyed on the release kind, not the event id.",
+      "where": "src/index.ts:34-36",
+      "instead": "Throw an error on the repeat, or deduplicate by event id."
+    },
+    {
+      "question": "What happens when a repeated uat-approved event arrives?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Silently returns the current state and writes nothing.",
+      "where": "src/index.ts:45-47",
+      "instead": "Throw an error on the duplicate approval."
+    },
+    {
+      "question": "How is the amount of the UAT release worked out?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Sets it to the bounty minus the sum of all earlier releases, which is not the stored split.uat figure.",
+      "where": "src/index.ts:46",
+      "instead": "Use split.uat from splitBounty."
+    },
+    {
+      "question": "What happens when a hidden-test run fails after an earlier pass?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Ignores the failure. The earlier release stays, and no store write happens.",
+      "where": "src/index.ts:38-40",
+      "instead": "Revoke or flag the earlier release, or throw an error."
+    },
+    {
+      "question": "What status does a task with a zero bounty show?",
+      "ticket": "Task shows the bounty as fully released",
+      "chose": "Reports the status as \"pro bono\" in every case, even after UAT approval.",
+      "where": "src/index.ts:92",
+      "instead": "Report \"fully released\" once UAT is approved, or record no status change."
+    },
+    {
+      "question": "How does the handler treat invalid bounty or share values: negative, fractional, above 100%, or beyond the safe-integer range?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError when the handler is created, and also when splitBounty is called.",
+      "where": "src/index.ts:70-80",
+      "instead": "Clamp the values, or reject only when an event is handled."
+    },
+    {
+      "question": "What happens when a share of 100% (10000 bps) is configured?",
+      "ticket": "silent",
+      "chose": "Allows it. The first release is the full bounty, and the status is \"fully released\" straight away.",
+      "where": "src/index.ts:93",
+      "instead": "Reject a 100% share, or require UAT approval before the status shows fully released."
+    },
+    {
+      "question": "How are events that arrive at the same moment handled?",
+      "ticket": "silent",
+      "chose": "Runs events one at a time through a promise queue. A failed event does not block the ones queued behind it.",
+      "where": "src/index.ts:26",
+      "instead": "Use no serialization and rely on the store for atomicity, or use optimistic locking."
+    },
+    {
+      "question": "What does the handler do when the store has no state yet, or when a store write fails?",
+      "ticket": "silent",
+      "chose": "Starts from a locked state with no releases. A store write error is passed to the caller and nothing is recorded, so the event can be retried.",
+      "where": "src/index.ts:29",
+      "instead": "Throw an error on missing state, or swallow store errors."
+    },
+    {
+      "question": "What happens when an event has an unknown kind?",
+      "ticket": "silent",
+      "chose": "Throws an error naming the unknown kind.",
+      "where": "src/index.ts:49-50",
+      "instead": "Ignore the event and return the current state."
+    }
+  ]
+}

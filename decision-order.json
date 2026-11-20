@@ -1,0 +1,181 @@
+{
+  "at": "2026-11-20T06:05:29.799Z",
+  "about": "bin/decisions.mjs byMissRate on evidence/default-match.json's drafted decisions that were kept or changed (243), no model",
+  "kindAgreement": {
+    "agree": 99,
+    "of": 243
+  },
+  "changed": 78,
+  "inFirstHalf": {
+    "specOrder": 42,
+    "missRateOrder": 52
+  },
+  "inFirstQuarter": {
+    "specOrder": 23,
+    "missRateOrder": 27
+  },
+  "perDraft": [
+    {
+      "draft": "archive/csv-export",
+      "decisions": 15,
+      "changed": 3,
+      "firstHalf": {
+        "spec": 3,
+        "ordered": 2
+      }
+    },
+    {
+      "draft": "archive/escrow-split",
+      "decisions": 11,
+      "changed": 0,
+      "firstHalf": {
+        "spec": 0,
+        "ordered": 0
+      }
+    },
+    {
+      "draft": "archive/gherkin-parse",
+      "decisions": 15,
+      "changed": 2,
+      "firstHalf": {
+        "spec": 1,
+        "ordered": 1
+      }
+    },
+    {
+      "draft": "archive/invite-codes",
+      "decisions": 12,
+      "changed": 3,
+      "firstHalf": {
+        "spec": 2,
+        "ordered": 3
+      }
+    },
+    {
+      "draft": "archive/status-normalize",
+      "decisions": 10,
+      "changed": 1,
+      "firstHalf": {
+        "spec": 0,
+        "ordered": 1
+      }
+    },
+    {
+      "draft": "archive/usage-counter",
+      "decisions": 6,
+      "changed": 1,
+      "firstHalf": {
+        "spec": 0,
+        "ordered": 1
+      }
+    },
+    {
+      "draft": "archive/weekly-digest",
+      "decisions": 7,
+      "changed": 0,
+      "firstHalf": {
+        "spec": 0,
+        "ordered": 0
+      }
+    },
+    {
+      "draft": "in-repo/identicon",
+      "decisions": 13,
+      "changed": 4,
+      "firstHalf": {
+        "spec": 1,
+        "ordered": 2
+      }
+    },
+    {
+      "draft": "in-repo/analysis-params",
+      "decisions": 12,
+      "changed": 2,
+      "firstHalf": {
+        "spec": 1,
+        "ordered": 2
+      }
+    },
+    {
+      "draft": "in-repo/step-holds",
+      "decisions": 11,
+      "changed": 3,
+      "firstHalf": {
+        "spec": 1,
+        "ordered": 3
+      }
+    },
+    {
+      "draft": "in-repo/handles",
+      "decisions": 15,
+      "changed": 2,
+      "firstHalf": {
+        "spec": 1,
+        "ordered": 1
+      }
+    },
+    {
+      "draft": "in-repo/limit-jobs",
+      "decisions": 14,
+      "changed": 2,
+      "firstHalf": {
+        "spec": 2,
+        "ordered": 2
+      }
+    },
+    {
+      "draft": "in-repo/recent-reads",
+      "decisions": 15,
+      "changed": 2,
+      "firstHalf": {
+        "spec": 1,
+        "ordered": 2
+      }
+    },
+    {
+      "draft": "in-repo/setup-stage",
+      "decisions": 11,
+      "changed": 6,
+      "firstHalf": {
+        "spec": 4,
+        "ordered": 4
+      }
+    },
+    {
+      "draft": "in-repo/ticket-content",
+      "decisions": 13,
+      "changed": 6,
+      "firstHalf": {
+        "spec": 3,
+        "ordered": 5
+      }
+    },
+    {
+      "draft": "in-repo/jira-spec",
+      "decisions": 16,
+      "changed": 7,
+      "firstHalf": {
+        "spec": 3,
+        "ordered": 4
+      }
+    },
+    {
+      "draft": "in-repo/categories",
+      "decisions": 25,
+      "changed": 19,
+      "firstHalf": {
+        "spec": 10,
+        "ordered": 11
+      }
+    },
+    {
+      "draft": "in-repo/context-sources",
+      "decisions": 22,
+      "changed": 15,
+      "firstHalf": {
+        "spec": 9,
+        "ordered": 8
+      }
+    }
+  ]
+}

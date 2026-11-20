@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.049454,
+  "items": [
+    {
+      "question": "What order are the rows in?",
+      "ticket": "silent",
+      "chose": "Sorts rows by creation time ascending, then by id, on a copy of the input.",
+      "where": "src/index.ts:12",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "Does the file start with a byte order mark?",
+      "ticket": "silent",
+      "chose": "Prepends a UTF-8 BOM to the output.",
+      "where": "src/index.ts:18",
+      "instead": "Emit plain CSV with no BOM."
+    },
+    {
+      "question": "What line terminator ends each row, and is there a trailing one?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:18",
+      "instead": "Join with LF, or with no trailing newline after the last row."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header line only.",
+      "where": "src/index.ts:17",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "What are the column names, their order, and which fields are included?",
+      "ticket": "with status and fill counts",
+      "chose": "Uses the header 'Requisition ID,Title,Status,Openings,Filled,Created'.",
+      "where": "src/index.ts:22",
+      "instead": "Use different labels or snake_case keys, or add a computed column such as remaining openings."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full ISO 8601 UTC timestamp with milliseconds.",
+      "where": "src/index.ts:52",
+      "instead": "Write a date only (YYYY-MM-DD), or a locale-formatted date."
+    },
+    {
+      "question": "What happens when a row has an unknown status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id, and the whole export fails.",
+      "where": "src/index.ts:29",
+      "instead": "Write the status through unchanged, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional, NaN or infinite?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:30",
+      "instead": "Clamp or round the value, skip the row, or write it as is."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:32",
+      "instead": "Export the row as is, or clamp filled to openings."
+    },
+    {
+      "question": "What happens when the creation time is an invalid date?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:33",
+      "instead": "Leave the field blank, or skip the row."
+    },
+    {
+      "question": "How does the output represent a missing or null title?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:48",
+      "instead": "Write the text 'null' or 'undefined', a placeholder such as 'Untitled', or reject the row."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped, and are values that start with =, +, - or @ guarded against spreadsheet formula injection?",
+      "ticket": "silent",
+      "chose": "Quotes fields per RFC 4180 and doubles inner quotes. It does not neutralise leading formula characters.",
+      "where": "src/index.ts:60",
+      "instead": "Prefix formula-leading values with a single quote or similar, or quote every field."
+    }
+  ]
+}

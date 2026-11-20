@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 25,
+  "costUsd": 0.0722786,
+  "items": [
+    {
+      "question": "Can a code be redeemed at the exact instant it expires (14 days after creation)?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired once now is greater than or equal to createdAt + 14 days, so the exact expiry instant is refused.",
+      "where": "src/index.ts:56",
+      "instead": "Allow redemption through the exact expiry instant and treat the code as expired only after it (now > expiresAt)."
+    },
+    {
+      "question": "What happens when a contributor who already has access to the task redeems another code for it?",
+      "ticket": "silent",
+      "chose": "Refuses with reason \"already has access\" and leaves the code unused.",
+      "where": "src/index.ts:114-117",
+      "instead": "Accept the redemption as idempotent and consume the code, or accept it without consuming the code."
+    },
+    {
+      "question": "Which failure reason is reported when a code is both used and expired, or both revoked and expired?",
+      "ticket": "silent",
+      "chose": "Checks in the order used, then revoked, then expired, and reports the first that applies.",
+      "where": "src/index.ts:53-58",
+      "instead": "Report expired first, since time passing is the most basic invalidity, or report revoked first."
+    },
+    {
+      "question": "How is a typed code normalized before lookup?",
+      "ticket": "silent",
+      "chose": "Uppercases the code and strips every character that is not A-Z or 0-9, so case, spaces, dashes and other punctuation are ignored.",
+      "where": "src/index.ts:44-46",
+      "instead": "Only trim whitespace and uppercase, and reject or look up codes containing other characters as they are."
+    },
+    {
+      "question": "What does redeeming an empty or garbage string return?",
+      "ticket": "silent",
+      "chose": "Normalizes to an empty string, finds no record, and returns reason \"unknown\".",
+      "where": "src/index.ts:108-110",
+      "instead": "Throw a validation error, or return a distinct \"invalid format\" failure."
+    },
+    {
+      "question": "What happens when a used code is revoked?",
+      "ticket": "silent",
+      "chose": "Throws an Error saying the code has been used.",
+      "where": "src/index.ts:135",
+      "instead": "Do nothing silently, or revoke the code and also remove the contributor's access."
+    },
+    {
+      "question": "What happens when an unknown code is revoked?",
+      "ticket": "silent",
+      "chose": "Throws an Error \"unknown invite code\".",
+      "where": "src/index.ts:134",
+      "instead": "Return silently as a no-op."
+    },
+    {
+      "question": "What happens when an already-revoked code is revoked again?",
+      "ticket": "silent",
+      "chose": "Returns without error and without writing anything, so the call is idempotent.",
+      "where": "src/index.ts:136",
+      "instead": "Throw an error saying the code is already revoked."
+    },
+    {
+      "question": "What do the codes look like (alphabet, length, grouping) and how are collisions handled?",
+      "ticket": "silent",
+      "chose": "Draws 12 characters from a 32-character alphabet without 0, O, 1 or I, formats them as XXXX-XXXX-XXXX, and redraws on a collision with any stored code, up to 100 draws before throwing.",
+      "where": "src/index.ts:13-19, 180-189",
+      "instead": "Use a longer random token such as a UUID or base64 string, with no retry limit or a different retry limit."
+    },
+    {
+      "question": "Is a code or task ID validated when creating a code, for example a task that does not exist or an empty task ID?",
+      "ticket": "silent",
+      "chose": "Performs no validation and creates a code for any taskId string.",
+      "where": "src/index.ts:82-97",
+      "instead": "Reject an empty or unknown task ID with an error."
+    },
+    {
+      "question": "How are simultaneous operations on the registry handled?",
+      "ticket": "silent",
+      "chose": "Serializes all operations through an in-process promise queue, so concurrent redemptions of one code let exactly one succeed. This does not coordinate across multiple registry instances sharing a store.",
+      "where": "src/index.ts:172-177",
+      "instead": "Use an atomic compare-and-set in the store, or accept the race."
+    },
+    {
+      "question": "In what order does list return a task's codes, and does it include revoked and expired codes?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Returns all of the task's codes in creation order, including used, revoked and expired ones, each with its state. Used codes carry usedBy and usedAt.",
+      "where": "src/index.ts:161-169",
+      "instead": "Return only active codes, or sort newest first."
+    }
+  ]
+}

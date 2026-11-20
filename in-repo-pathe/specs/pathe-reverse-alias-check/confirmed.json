@@ -1,0 +1,53 @@
+{
+  "sha256": "2ca6a10ded75ff57839b89d1e9b9a3494f7eedc6e90b1f40dbdaa253df10009e",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:24:12.775Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "A path exactly equal to a target matches and yields `join(key, \"\")`, e.g. `\"/root\"` with `{\"@\": \"/root\"}` gives `[\"@\"]`.",
+    "Ticket: silent.",
+    "Instead: require a real `/` after the target so exact matches are excluded, or special-case equality and return the key as is.",
+    "The target must end at a segment boundary: the next character must be `/` or `\\`, or the path must end there. `/root` does not match `/rootfoo/a`.",
+    "Ticket: silent.",
+    "Instead: use a plain `startsWith` prefix match and let `/a` match `/ab/c`.",
+    "Results are sorted by the length of the result string, longest first, not by the length of the matched target. Ties keep the order of the normalised aliases: more `/` segments in the key first, then insertion order.",
+    "Ticket: silent.",
+    "Instead: sort by the length of the matched alias value, or keep the insertion order of the aliases object.",
+    "When no alias matches, the result is `[]`.",
+    "Ticket: silent.",
+    "Instead: return `[path]` (the original path), or throw.",
+    "Every matching alias contributes a result. All of them are returned in one array.",
+    "Ticket: silent.",
+    "Instead: return only the single most specific match.",
+    "The input path is normalised with `normalizeWindowsPath`. The alias map is normalised with `normalizeAliases`, which orders the entries and resolves their values against each other, before comparing.",
+    "Ticket: silent.",
+    "Instead: compare the raw strings with no normalisation.",
+    "Backslashes in alias values are not converted, so `{\"~win\": \"C:\\\\src\"}` never matches. This is the same as `resolveAlias`, which does not convert alias keys either.",
+    "Ticket: silent.",
+    "Instead: also run each alias value through `normalizeWindowsPath` before comparing.",
+    "The remainder is combined with the key using `join(key, remainder)`, so results are normalised: duplicate slashes collapse, `.` and `..` resolve, and a trailing slash is kept.",
+    "Ticket: silent.",
+    "Instead: concatenate the key and the remainder as plain strings, keeping the original form.",
+    "A trailing slash on a target is stripped only for the boundary check. The remainder is sliced after the full target, slash included, so `\"/src\"` does not match `{\"@x\": \"/src/\"}` and `\"/src/\"` gives `[\"@x\"]`.",
+    "Ticket: silent.",
+    "Instead: treat the target with and without a trailing slash the same, or reject such aliases.",
+    "Matching is case-sensitive, using `startsWith`.",
+    "Ticket: silent.",
+    "Instead: compare case-insensitively, as Windows paths often are.",
+    "If two aliases produce the same string, both copies are kept. Results are not de-duplicated.",
+    "Ticket: silent.",
+    "Instead: de-duplicate the result array.",
+    "The `aliases` argument is not mutated. Normalisation works on a copy, and the keys keep their order.",
+    "Ticket: silent.",
+    "Instead: normalise the caller's object in place, as some alias helpers do.",
+    "Seam (the files the stub writes): src/utils.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/utils.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "run": "status-normalize-7",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.043395,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "[\"in review\",\"inreview\",\"in progress\",\"pending\",\"done\",\"published\"].map(s=>[s,readStatus(s)])"
+    },
+    {
+      "item": 2,
+      "probe": "[\"in-review\",\"In_Review\",\"-merged_\",\"  DRAFT  \",\"in - review\"].map(s=>readStatus(s))"
+    },
+    {
+      "item": 3,
+      "probe": "[readStatus(\"bogus\"),readStatus(\"\"),readStatus(\"   \"),readStatus(\"drafts\")]"
+    },
+    {
+      "item": 4,
+      "probe": "[\"Draft\",\" draft\",\"in-review\"].map(v=>{try{return writeStatus(v)}catch(e){return e.message}})"
+    },
+    {
+      "item": 5,
+      "probe": "(()=>{try{writeStatus(\" Draft\")}catch(e){return [e.constructor===Error,e.name,e.message]}})()"
+    },
+    {
+      "item": 6,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"bogus\"},{id:\"c\",status:\"\"}]).rows"
+    },
+    {
+      "item": 7,
+      "probe": "readStatuses([{id:\"1\",status:\"Alpha\"},{id:\"2\",status:\"alpha\"},{id:\"3\",status:\"  Alpha \"},{id:\"4\",status:\"Alpha\"}]).unreadable"
+    },
+    {
+      "item": 8,
+      "probe": "readStatuses([{id:\"1\",status:\"b\"},{id:\"2\",status:\"Z\"},{id:\"3\",status:\"a\"},{id:\"4\",status:\"draft\"},{id:\"5\",status:\"B\"}])"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ [ 'in review', 'review' ], [ 'inreview', null ], [ 'in progress', null ], [ 'pending', null ], [ 'done', null ], [ 'published', 'published' ] ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'review', 'review', 'merged', 'draft', 'review' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ null, null, null, null ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'Not a sandbox status: \"Draft\"', 'Not a sandbox status: \" draft\"', 'Not a sandbox status: \"in-review\"' ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ true, 'Error', 'Not a sandbox status: \" Draft\"' ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ { id: 'a', status: 'draft' }, { id: 'b', status: null }, { id: 'c', status: null } ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ '  Alpha ', 'Alpha', 'alpha' ]"
+    },
+    {
+      "item": 8,
+      "actual": "{ rows: [ { id: '1', status: null }, { id: '2', status: null }, { id: '3', status: null }, { id: '4', status: 'draft' }, { id: '5', status: null } ], unreadable: [ 'B', 'Z', 'a', 'b' ] }"
+    },
+    {
+      "item": 9,
+      "actual": "{ rows: [], unreadable: [] }"
+    }
+  ]
+}

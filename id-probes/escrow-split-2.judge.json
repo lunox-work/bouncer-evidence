@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.13387310000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what a passing run releases under the default share, or what status follows. Item 10 mentions the 7500 bps default only inside its pick. Its question is about which share values are valid and when they are checked, so answering it would not settle S1.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how the hidden-test amount is rounded. The pick rounds down with integer division and gives the remainder to UAT. The run splitBounty(10, 3333) → {3, 7} confirms it, so 999 at 7500 bps gives 749 and 250. The pick calls this integer division, which is exact, but the run does not test large bounties near Number.MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "The pick releases the bounty minus everything already released and sets 'fully released' once the bounty is reached. The run with 101 at 3333 bps gives 33 then 68, ending 'fully released'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "The run shows a failed run returns status 'locked' with no releases and nothing written to the store.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "The run throws 'cannot release on UAT approval: the hidden tests have not passed' with 0 writes.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": false,
+      "why": "The status is 'pro bono' as expected. But the run records hidden-tests and uat releases of amount 0 with 2 writes, and S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether duplicates are detected by event id or by the kind of release already recorded, which covers both of S7's clauses. The run shows a second hidden-tests-passed event with a different id writes nothing (1 write in total). Item 3 covers the same-id case.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 6,
+      "agrees": true,
+      "why": "The pick serializes all events for one handler through a promise queue. The run with a slow store gets exactly 1 write for two simultaneous deliveries. Because the queue serializes every event, the different-id and uat-approved cases should behave the same way, though the run does not test them.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "The run shows a store write error reaches the caller as 'disk' with 0 writes, so nothing is recorded. The pick does not mention retrying, but the state is read from the store and nothing was saved, so handling the event again should go through as a fresh release. The run does not test this.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.050729300000000005,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. the old raw-millisecond value \"172800\") still accepted as a duration?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config and people keep getting them wrong",
+      "chose": "Rejects unit-less strings such as \"120\" and \"0\" with a ValueError.",
+      "where": "src/solution.py:45-47",
+      "instead": "Accept a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Is a unit written more than once in one string (e.g. \"1h2h\") allowed?",
+      "ticket": "silent",
+      "chose": "Rejects a repeated unit with a ValueError.",
+      "where": "src/solution.py:49-50",
+      "instead": "Sum the repeated components (1h2h = 3h)."
+    },
+    {
+      "question": "Do components have to appear in descending unit order (e.g. \"30m1h\")?",
+      "ticket": "silent",
+      "chose": "Accepts components in any order, as long as no unit repeats.",
+      "where": "src/solution.py:44-53",
+      "instead": "Require largest-to-smallest order and reject \"30m1h\"."
+    },
+    {
+      "question": "Which units are supported?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Supports d, h, m, s and ms, and adds days, which the ticket never lists.",
+      "where": "src/solution.py:15-21",
+      "instead": "Support only h, m, s and ms, with no days unit."
+    },
+    {
+      "question": "Are unit suffixes case-sensitive, and is whitespace allowed?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase units and no whitespace, so \"1H\", \" 1h\" and \"1 h\" are rejected.",
+      "where": "src/solution.py:26",
+      "instead": "Accept case-insensitive units and trim or allow whitespace."
+    },
+    {
+      "question": "Are fractional values (\"1.5h\") or negative values (\"-1s\") accepted?",
+      "ticket": "silent",
+      "chose": "Accepts digits only and rejects decimals and signs.",
+      "where": "src/solution.py:26",
+      "instead": "Allow decimals such as \"1.5h\" and convert them to whole milliseconds."
+    },
+    {
+      "question": "What happens with empty or non-string input to parse?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for an empty string and for any non-str input.",
+      "where": "src/solution.py:36-39",
+      "instead": "Raise TypeError for non-strings, or treat empty as 0 or None."
+    },
+    {
+      "question": "Is there an upper limit on the parsed total?",
+      "ticket": "silent",
+      "chose": "Rejects totals above 9007199254740991 ms (JS max safe integer) with a ValueError.",
+      "where": "src/solution.py:55-56",
+      "instead": "Impose no limit (Python ints are unbounded) or use a different cap."
+    },
+    {
+      "question": "Is a zero duration (\"0ms\", \"0s\") valid?",
+      "ticket": "silent",
+      "chose": "Accepts it and returns 0.",
+      "where": "src/solution.py:48-53",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "How is 0 ms formatted?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/solution.py:84-85",
+      "instead": "Return \"0ms\" or an empty string."
+    },
+    {
+      "question": "Which spelling does format choose when several are equivalent (e.g. 5400000 ms)?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string, with ties broken by fewer components and then the larger leading unit. 90000 ms gives \"90s\" and 5400000 ms gives \"90m\", not \"1h30m\".",
+      "where": "src/solution.py:87-97",
+      "instead": "Use the canonical greedy decomposition with the largest unit first (\"1m30s\", \"1h30m\")."
+    },
+    {
+      "question": "What does format do with invalid input such as bool, float, negative or too-large values?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for bools, non-ints, negatives and values above the max.",
+      "where": "src/solution.py:80-83",
+      "instead": "Coerce floats and bools, or raise TypeError for wrong types."
+    }
+  ]
+}

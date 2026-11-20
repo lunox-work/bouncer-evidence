@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0533926,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (like the old raw-millisecond config values, e.g. 172800) accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects bare numbers with no unit as InvalidDuration.",
+      "where": "src/lib.rs:75",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Can units be repeated or appear out of order (30m1h, 1h1h)?",
+      "ticket": "silent",
+      "chose": "Requires units to appear at most once each, in strictly descending order, otherwise rejects.",
+      "where": "src/lib.rs:78",
+      "instead": "Accept any order and repeats and sum the segments."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration for empty input.",
+      "where": "src/lib.rs:57",
+      "instead": "Treat empty as 0 or as unset/default."
+    },
+    {
+      "question": "Is there a maximum duration, and what happens above it when parsing?",
+      "ticket": "silent",
+      "chose": "Caps totals at 2^53-1 ms and returns InvalidDuration for anything larger, including u64 overflow.",
+      "where": "src/lib.rs:83",
+      "instead": "Allow the full u64 range and only reject on u64 overflow."
+    },
+    {
+      "question": "Are whitespace, uppercase units, signs, decimals and unknown units like d accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them all, since only lowercase h, m, s, ms with ASCII digits are accepted.",
+      "where": "src/lib.rs:61",
+      "instead": "Trim whitespace, accept uppercase, or support d and fractional values like 1.5s."
+    },
+    {
+      "question": "Is a zero-valued duration such as 0ms or 0s accepted when parsing?",
+      "ticket": "silent",
+      "chose": "Accepts it and returns 0.",
+      "where": "src/lib.rs:83",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "Are zero-count segments in the middle, such as 0h30m, accepted?",
+      "ticket": "silent",
+      "chose": "Accepts them and adds 0 for the segment.",
+      "where": "src/lib.rs:83",
+      "instead": "Reject zero-count segments as malformed."
+    },
+    {
+      "question": "How is 0 formatted back for display?",
+      "ticket": "silent",
+      "chose": "Formats 0 as \"0ms\".",
+      "where": "src/lib.rs:106",
+      "instead": "Format it as \"0s\", or as an empty string or \"0\"."
+    },
+    {
+      "question": "What style does format_duration use, for example 90000 ms and 3,660,000 ms?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number.",
+      "chose": "Picks the shortest string over all subsets of units, with ties going to fewer segments. This gives \"90s\" and \"61m\" instead of \"1m30s\" and \"1h1m\".",
+      "where": "src/lib.rs:110",
+      "instead": "Use a canonical greedy split across all units, giving \"1m30s\" and \"1h1m\"."
+    },
+    {
+      "question": "What does format_duration do with values above the representable maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error for values above 2^53-1.",
+      "where": "src/lib.rs:103",
+      "instead": "Format any u64 value, or clamp it."
+    },
+    {
+      "question": "What error text and type does a failed parse produce?",
+      "ticket": "silent",
+      "chose": "Uses a single InvalidDuration variant with a generic message and no detail on what was wrong or where.",
+      "where": "src/lib.rs:24",
+      "instead": "Use distinct error variants, such as empty, bad unit, overflow, or position."
+    },
+    {
+      "question": "Is hours the largest unit, with no day unit, even though the example is a two-day timeout?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Supports only h, m, s and ms, so two days is written as 48h.",
+      "where": "src/lib.rs:13",
+      "instead": "Add a d unit for days."
+    }
+  ]
+}

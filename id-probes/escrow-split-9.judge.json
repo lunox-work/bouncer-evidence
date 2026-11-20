@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1252348,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 is the basic case: a pass releases the default 75% share and the status becomes 'partially released'. No item asks this. Item 9 gives 7500 as the default in its pick, but its question is which share values are valid and what unit they use, not what a pass releases.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how the share is rounded. Its pick rounds the hidden-test amount down and gives the UAT share the remainder, so the two always add up to the bounty. The run (101 → 75 and 26) shows this, and 999 would give 749 and 250. Nothing in the item tests exactness near MAX_SAFE_INTEGER, but rounding direction and remainder handling, the question S2 settles, match.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what UAT approval releases after a pass. Item 11 is about where state is read from. Its run happens to show a 25 UAT release and 'fully released', but that is not the question it asks.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what a failed run does to the state. The run returns { status: 'locked', releases: [] } with no writes, so nothing is recorded and the task stays locked.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks about UAT approval before the hidden tests pass. The run throws 'Cannot release the UAT share: the hidden tests have not passed' and the store's set is never called, so nothing is recorded.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": false,
+      "why": "Item 7 asks about a zero-bounty task. The status is 'pro bono' as S6 expects, but after a pass the run records { kind: 'hidden-tests', amount: 0 }. S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about repeated release events. The pick deduplicates by release kind. In the run, a second event with a different id ('b') of the same kind returned the current state, and there was only 1 write in total.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 also covers the same event arriving at the same time. Events are queued one at a time and deduplicated by kind, so a concurrent repeat records once whatever its id. The run with Promise.all showed 1 write. The same logic applies to 'uat-approved'.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what happens when the store fails. In the run, the first set threw, handling rejected with 'write boom' and nothing was stored. Handling the same event again then succeeded and recorded the 75 release.",
+      "failing": false
+    }
+  ]
+}

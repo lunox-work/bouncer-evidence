@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10331800000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": false,
+      "why": "The scenario's distinctive rows are '2d' and '1d0h0m0s0ms', so it settles whether a day unit exists. Item 4 asks which units are supported, and its pick rejects d, so \"2d\" would fail.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks whether whitespace is tolerated. Its pick rejects leading and trailing spaces, but the scenario expects them to be ignored.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Most rows are about signs, decimals, inner spaces and non-ASCII digits ('-3s', '1.5h', '1h 30m', '３s'), which is item 6's question. Its pick rejects all of these and accepts only ASCII digits followed by a unit. Items 1, 2, 4 and 5 each cover a single row and also reject.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may exceed the next unit, such as 90m or 90s. Item 3 is about the order of units and repeating them, not the size of a count.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about out-of-order and repeated units. Its pick requires strictly descending units with at most one term each, so all four inputs are rejected.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what the largest parsable duration is. Its pick caps at 2^53-1 = 9007199254740991, which is exactly the value this scenario expects to parse. Item 4's pick rejecting 'd' is a separate question.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what happens above the maximum and on overflow. Its pick returns InvalidDuration for totals above 2^53-1 and for u64 overflow, which matches both rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "Which spelling gets printed decides most rows, and that is item 10's question. Its pick chooses the shortest string, giving '90m' for 5400000 and '90s' for 90000, where the scenario expects '1h30m' and '1m30s'. Item 9 covers only the 0ms row.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 sets the formatting limit. Its pick errors only above 2^53-1, so the maximum itself formats successfully. The exact 'd'-based text depends on items 4 and 10, not on this item.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether format_duration output must parse back to the same value.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what formatting does above the maximum. Its pick returns a MillisecondsOutOfRange error for values above 2^53-1, which covers both 2^53 and u64::MAX. The scenario wants 'milliseconds' in the Display text: the error's name suggests this, but the pick doesn't state the message.",
+      "failing": false
+    }
+  ]
+}

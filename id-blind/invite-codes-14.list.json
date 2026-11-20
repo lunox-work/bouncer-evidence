@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.0740064,
+  "items": [
+    {
+      "question": "Exactly when does a code expire relative to the 14-day mark?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired once now is greater than or equal to createdAt plus 14 days, so the exact 14-day instant is already expired.",
+      "where": "src/index.ts:53",
+      "instead": "Treat the code as valid through the exact 14-day instant and expire it only after (now > expiresAt)."
+    },
+    {
+      "question": "Is the 14-day lifetime counted from creation or from some other point?",
+      "ticket": "expire after 14 days",
+      "chose": "Counts 14 days from the clock time at create, as a fixed 14*24h in milliseconds.",
+      "where": "src/index.ts:99",
+      "instead": "Count calendar days, or let the caller or task set the lifetime."
+    },
+    {
+      "question": "What does redeeming a code that was already used return, and does it take precedence over revoked and expired?",
+      "ticket": "Codes are single-use",
+      "chose": "Returns reason 'used' first, before the revoked and expired checks. A used code stays 'used' after its expiry.",
+      "where": "src/index.ts:120",
+      "instead": "Check expiry or revocation first, or report a generic 'invalid' for any unredeemable code."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Refuses with reason 'already has access' and leaves the code unspent and usable by someone else.",
+      "where": "src/index.ts:126",
+      "instead": "Succeed idempotently and burn the code, or succeed without burning it."
+    },
+    {
+      "question": "How are two simultaneous redemptions of the same code handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Serializes every registry operation through a per-instance promise queue, so the first redeem wins and the others get 'used'.",
+      "where": "src/index.ts:177",
+      "instead": "Rely on an atomic or conditional store write, or leave it unguarded."
+    },
+    {
+      "question": "How is the 'who used it' information recorded and exposed?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Stores usedBy (the contributor id) and a usedAt timestamp on the code, and list() returns both for used codes.",
+      "where": "src/index.ts:128",
+      "instead": "Record only the contributor id with no timestamp, or keep a separate audit log."
+    },
+    {
+      "question": "What format and alphabet do generated codes have?",
+      "ticket": "silent",
+      "chose": "Generates 10 characters from a 31-letter alphabet that omits I, L, O, 0 and 1, and shows them as XXXXX-XXXXX.",
+      "where": "src/index.ts:11",
+      "instead": "Use a UUID, a longer code, or a plain alphanumeric string with no dash."
+    },
+    {
+      "question": "How are typed codes matched on redeem and revoke (case, spaces, dashes)?",
+      "ticket": "silent",
+      "chose": "Removes all whitespace and dashes and uppercases the input before lookup, in both redeem and revoke.",
+      "where": "src/index.ts:28",
+      "instead": "Require an exact match against the displayed code, or only trim and uppercase."
+    },
+    {
+      "question": "What happens on a code collision or a bad random source?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times when the code already exists, then throws. Also throws if randomInt returns an out-of-range or non-integer index.",
+      "where": "src/index.ts:190",
+      "instead": "Retry without a cap, fail on the first collision, or trust the random source."
+    },
+    {
+      "question": "What happens when revoking an unknown code or a used code?",
+      "ticket": "silent",
+      "chose": "Throws an Error for an unknown code and for a used code. Revoking an already revoked code succeeds again silently.",
+      "where": "src/index.ts:141",
+      "instead": "Make revoking an unknown code a no-op, or return a result object instead of throwing."
+    },
+    {
+      "question": "Can a code be created for any task id, including empty or nonexistent tasks, and how many codes can a task have?",
+      "ticket": "Generate single-use invite codes per task",
+      "chose": "Accepts any taskId string with no validation and no cap on the number of codes per task.",
+      "where": "src/index.ts:93",
+      "instead": "Validate the task id (non-empty or existing) or limit the number of outstanding codes per task."
+    },
+    {
+      "question": "What does redeeming an unknown or empty code return, and in what order does list() return codes?",
+      "ticket": "silent",
+      "chose": "Returns reason 'unknown' for any code not in the store, including an empty string. list() returns a task's codes in creation order, including expired and revoked ones.",
+      "where": "src/index.ts:119",
+      "instead": "Throw on empty or malformed input, or sort list() newest first or hide inactive codes."
+    }
+  ]
+}

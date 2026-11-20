@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-12",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0763496,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{const m=new Map();let t=0,n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>n++%b});const c=await r.create('T');t=14*864e5;return await r.redeem(c.code,'u')})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{const m=new Map();let t=0,n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>n++%b});const c=await r.create('T');await r.redeem(c.code,'u');t=15*864e5;return await r.redeem(c.code,'v')})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const c=await r.create('T');await r.redeem(a.code,'u');const res=await r.redeem(c.code,'u');return [res,(await r.list('T')).map(x=>x.state)]})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const c=await r.create('T');const typed=' '+c.code.toLowerCase().replace('-',' - ')+'\\t';return [typed,await r.redeem(typed,'u')]})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const c=await r.create('T');const d=await r.create('T');return [a.code,c.code,d.code]})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const m=new Map();let draws=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>{draws++;return 0}});await r.create('T');draws=0;try{await r.create('T')}catch(e){return [e.message,draws]}return 'no throw'})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const c=await r.create('T');const out=[];const t=async f=>{try{await f();out.push('ok')}catch(e){out.push(e.message)}};await t(()=>r.revoke('ZZZZ-ZZZZ'));await r.redeem(a.code,'u');await t(()=>r.revoke(a.code));await t(()=>r.revoke(c.code));await t(()=>r.revoke(c.code));out.push((await r.list('T')).map(x=>x.state));return out})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{const m=new Map();let n=0;const sl=()=>new Promise(r=>setTimeout(r,10));const r=new InviteRegistry({store:{get:async k=>{await sl();return m.get(k)},set:async(k,v)=>{await sl();m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const c=await r.create('T');return await Promise.all([r.redeem(c.code,'u'),r.redeem(c.code,'v'),r.hasAccess('u','T')])})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{const m=new Map();let t=0,n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>n++%b});const a=await r.create('T');await r.create('T');t=5000;await r.redeem(a.code,'contrib-1');return await r.list('T')})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const c=await r.create('');const res=await r.redeem(c.code,'');return [c,res,await r.hasAccess('','')]})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{const m=new Map();let t=0,n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>n++%b});const a=await r.create('T');t=1000;const b=await r.create('T');t=2000;const c=await r.create('T');await r.create('OTHER');await r.redeem(b.code,'u');await r.revoke(c.code);t=14*864e5+1500;return (await r.list('T')).map(x=>[x.code,x.state])})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{const m=new Map();let n=0,sets=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{if(++sets===2)throw new Error('boom');m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});let err;try{await r.create('T')}catch(e){err=e.message}return [err,[...m.keys()],await r.list('T')]})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ ok: false, reason: 'expired' }"
+    },
+    {
+      "item": 2,
+      "actual": "{ ok: false, reason: 'used' }"
+    },
+    {
+      "item": 3,
+      "actual": "[ { ok: false, reason: 'already has access' }, [ 'used', 'unused' ] ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ ' abcd - efgh\\t', { ok: true, taskId: 'T' } ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'ABCD-EFGH', 'JKLM-NPQR', 'STUV-WXYZ' ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'could not draw an unused invite code', 800 ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ 'unknown invite code', 'cannot revoke a used invite code', 'ok', 'ok', [ 'used', 'revoked' ] ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ { ok: true, taskId: 'T' }, { ok: false, reason: 'used' }, true ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ { code: 'ABCD-EFGH', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'used', usedBy: 'contrib-1', usedAt: 1970-01-01T00:00:05.000Z }, { code: 'JKLM-NPQR', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'un"
+    },
+    {
+      "item": 10,
+      "actual": "[ { code: 'ABCD-EFGH', taskId: '', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }, { ok: true, taskId: '' }, true ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ [ 'ABCD-EFGH', 'expired' ], [ 'JKLM-NPQR', 'used' ], [ 'STUV-WXYZ', 'revoked' ] ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ 'boom', [ 'invite-code:ABCDEFGH' ], [] ]"
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+[06:01:55] csv-export/ticket-haiku/1 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:01:56] csv-export/ticket-haiku/2 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:01:57] csv-export/ticket-haiku/3 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:01:58] csv-export/ticket-haiku/4 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:01:59] csv-export/ticket-haiku/5 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:02:01] escrow-split/ticket-haiku/2 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:02:02] escrow-split/ticket-haiku/3 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:02:04] escrow-split/ticket-haiku/4 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:02:05] escrow-split/ticket-haiku/5 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:02:06] gherkin-parse/ticket-haiku/1 incomplete public 17/18, hidden 46/47 scenarios happy-1
+[06:02:08] gherkin-parse/ticket-haiku/2 incomplete public 17/18, hidden 46/47 scenarios happy-1
+[06:02:09] gherkin-parse/ticket-haiku/3 incomplete public 16/18, hidden 44/47 scenarios happy-1, unhappy-1
+[06:02:11] gherkin-parse/ticket-haiku/4 passed public 18/18, hidden 47/47 
+[06:02:12] gherkin-parse/ticket-haiku/5 passed public 18/18, hidden 47/47 
+[06:12:13] invite-codes/ticket-haiku/1 incomplete public 18/26, hidden 0/47 scenarios boundary-1, boundary-2, boundary-3, concurrency-1, happy-1, happy-2, happy-3, unhappy-1, unhappy-2
+[06:12:15] invite-codes/ticket-haiku/2 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:12:17] invite-codes/ticket-haiku/3 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:12:18] invite-codes/ticket-haiku/4 incomplete public 22/26, hidden 37/47 scenarios happy-1, happy-2, happy-3, unhappy-1, unhappy-2
+[06:12:20] invite-codes/ticket-haiku/5 incomplete public 23/26, hidden 41/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:12:21] status-normalize/ticket-haiku/1 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:12:23] status-normalize/ticket-haiku/2 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:12:24] status-normalize/ticket-haiku/3 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:12:25] status-normalize/ticket-haiku/4 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:12:27] status-normalize/ticket-haiku/5 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:12:29] usage-counter/ticket-haiku/1 passed public 27/27, hidden 50/50 
+[06:12:31] usage-counter/ticket-haiku/2 passed public 27/27, hidden 50/50 
+[06:12:32] usage-counter/ticket-haiku/3 passed public 27/27, hidden 50/50 
+[06:12:34] usage-counter/ticket-haiku/4 passed public 27/27, hidden 50/50 
+[06:12:36] usage-counter/ticket-haiku/5 passed public 27/27, hidden 50/50 
+[06:12:38] weekly-digest/ticket-haiku/1 passed public 28/28, hidden 83/83 
+[06:12:41] weekly-digest/ticket-haiku/2 passed public 28/28, hidden 83/83 
+[06:12:43] weekly-digest/ticket-haiku/3 incomplete public 27/28, hidden 81/83 scenarios happy-4
+[06:12:45] weekly-digest/ticket-haiku/4 incomplete public 27/28, hidden 81/83 scenarios happy-4
+[06:12:47] weekly-digest/ticket-haiku/5 incomplete public 27/28, hidden 81/83 scenarios happy-4
+35 result(s) in results.jsonl
+[06:21:40] csv-export/ticket-sonnet/1 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:21:41] csv-export/ticket-sonnet/2 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:21:42] csv-export/ticket-sonnet/3 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:21:43] csv-export/ticket-sonnet/4 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:21:45] csv-export/ticket-sonnet/5 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:21:46] escrow-split/ticket-sonnet/1 passed public 22/22, hidden 46/46 
+[06:21:48] escrow-split/ticket-sonnet/2 passed public 22/22, hidden 46/46 
+[06:21:49] escrow-split/ticket-sonnet/3 passed public 22/22, hidden 46/46 
+[06:21:51] escrow-split/ticket-sonnet/4 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:21:52] escrow-split/ticket-sonnet/5 passed public 22/22, hidden 46/46 
+[06:21:54] gherkin-parse/ticket-sonnet/1 passed public 18/18, hidden 47/47 
+[06:21:55] gherkin-parse/ticket-sonnet/2 incomplete public 17/18, hidden 46/47 scenarios happy-1
+[06:21:57] gherkin-parse/ticket-sonnet/3 passed public 18/18, hidden 47/47 
+[06:21:58] gherkin-parse/ticket-sonnet/4 incomplete public 17/18, hidden 46/47 scenarios happy-1
+[06:22:00] gherkin-parse/ticket-sonnet/5 passed public 18/18, hidden 47/47 
+[06:22:02] invite-codes/ticket-sonnet/1 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:22:04] invite-codes/ticket-sonnet/2 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:22:05] invite-codes/ticket-sonnet/3 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:22:07] invite-codes/ticket-sonnet/4 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:22:09] invite-codes/ticket-sonnet/5 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:22:10] status-normalize/ticket-sonnet/1 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:22:12] status-normalize/ticket-sonnet/2 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:22:13] status-normalize/ticket-sonnet/3 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:22:14] status-normalize/ticket-sonnet/4 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:22:16] status-normalize/ticket-sonnet/5 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:22:18] usage-counter/ticket-sonnet/1 passed public 27/27, hidden 50/50 
+[06:22:20] usage-counter/ticket-sonnet/2 passed public 27/27, hidden 50/50 
+[06:22:22] usage-counter/ticket-sonnet/3 passed public 27/27, hidden 50/50 
+[06:22:24] usage-counter/ticket-sonnet/4 overfit public 27/27, hidden 49/50 scenarios boundary-1
+[06:22:26] usage-counter/ticket-sonnet/5 passed public 27/27, hidden 50/50 
+[06:22:28] weekly-digest/ticket-sonnet/1 passed public 28/28, hidden 83/83 
+[06:22:30] weekly-digest/ticket-sonnet/2 passed public 28/28, hidden 83/83 
+[06:22:32] weekly-digest/ticket-sonnet/3 passed public 28/28, hidden 83/83 
+[06:22:34] weekly-digest/ticket-sonnet/4 passed public 28/28, hidden 83/83 
+[06:22:36] weekly-digest/ticket-sonnet/5 passed public 28/28, hidden 83/83 
+70 result(s) in results.jsonl
+[06:55:39] csv-export/ticket-opus/1 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:55:40] csv-export/ticket-opus/2 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:55:42] csv-export/ticket-opus/3 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:55:43] csv-export/ticket-opus/4 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:55:44] csv-export/ticket-opus/5 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[06:55:45] escrow-split/ticket-opus/1 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:55:47] escrow-split/ticket-opus/2 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:55:48] escrow-split/ticket-opus/3 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:55:49] escrow-split/ticket-opus/4 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:55:51] escrow-split/ticket-opus/5 incomplete public 20/22, hidden 43/46 scenarios boundary-2
+[06:55:52] gherkin-parse/ticket-opus/1 passed public 18/18, hidden 47/47 
+[06:55:54] gherkin-parse/ticket-opus/2 passed public 18/18, hidden 47/47 
+[06:55:55] gherkin-parse/ticket-opus/3 passed public 18/18, hidden 47/47 
+[06:55:57] gherkin-parse/ticket-opus/4 passed public 18/18, hidden 47/47 
+[06:55:59] gherkin-parse/ticket-opus/5 passed public 18/18, hidden 47/47 
+[06:56:00] invite-codes/ticket-opus/1 incomplete public 23/26, hidden 40/47 scenarios happy-1, happy-2, happy-3, unhappy-1, unhappy-2
+[06:56:02] invite-codes/ticket-opus/2 incomplete public 22/26, hidden 38/47 scenarios happy-1, happy-3, unhappy-1, unhappy-2
+[06:56:04] invite-codes/ticket-opus/3 incomplete public 25/26, hidden 43/47 scenarios happy-1, happy-3, unhappy-1, unhappy-2
+[06:56:05] invite-codes/ticket-opus/4 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[06:56:07] invite-codes/ticket-opus/5 incomplete public 25/26, hidden 43/47 scenarios happy-1, happy-3, unhappy-1, unhappy-2
+[06:56:08] status-normalize/ticket-opus/1 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:56:09] status-normalize/ticket-opus/2 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:56:11] status-normalize/ticket-opus/3 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:56:12] status-normalize/ticket-opus/4 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:56:13] status-normalize/ticket-opus/5 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[06:56:15] usage-counter/ticket-opus/1 passed public 27/27, hidden 50/50 
+[06:56:17] usage-counter/ticket-opus/2 passed public 27/27, hidden 50/50 
+[06:56:19] usage-counter/ticket-opus/3 passed public 27/27, hidden 50/50 
+[06:56:21] usage-counter/ticket-opus/4 passed public 27/27, hidden 50/50 
+[06:56:23] usage-counter/ticket-opus/5 passed public 27/27, hidden 50/50 
+[06:56:25] weekly-digest/ticket-opus/1 passed public 28/28, hidden 83/83 
+[06:56:27] weekly-digest/ticket-opus/2 passed public 28/28, hidden 83/83 
+[06:56:29] weekly-digest/ticket-opus/3 passed public 28/28, hidden 83/83 
+[06:56:30] weekly-digest/ticket-opus/4 passed public 28/28, hidden 83/83 
+[06:56:32] weekly-digest/ticket-opus/5 passed public 28/28, hidden 83/83 
+105 result(s) in results.jsonl
+[07:11:13] csv-export/ticket-public-haiku/1 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:11:14] csv-export/ticket-public-haiku/2 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:11:15] csv-export/ticket-public-haiku/3 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:11:17] csv-export/ticket-public-haiku/4 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:11:18] csv-export/ticket-public-haiku/5 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:11:19] escrow-split/ticket-public-haiku/1 passed public 22/22, hidden 46/46 
+[07:11:21] escrow-split/ticket-public-haiku/2 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:11:22] escrow-split/ticket-public-haiku/3 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:11:24] escrow-split/ticket-public-haiku/4 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:11:25] escrow-split/ticket-public-haiku/5 passed public 22/22, hidden 46/46 
+[07:11:27] gherkin-parse/ticket-public-haiku/1 passed public 18/18, hidden 47/47 
+[07:11:28] gherkin-parse/ticket-public-haiku/2 overfit public 18/18, hidden 46/47 scenarios unhappy-1
+[07:11:30] gherkin-parse/ticket-public-haiku/3 passed public 18/18, hidden 47/47 
+[07:11:32] gherkin-parse/ticket-public-haiku/4 passed public 18/18, hidden 47/47 
+[07:11:33] gherkin-parse/ticket-public-haiku/5 passed public 18/18, hidden 47/47 
+[07:11:35] invite-codes/ticket-public-haiku/1 passed public 26/26, hidden 47/47 
+[07:11:37] invite-codes/ticket-public-haiku/2 passed public 26/26, hidden 47/47 
+[07:11:38] invite-codes/ticket-public-haiku/3 passed public 26/26, hidden 47/47 
+[07:11:40] invite-codes/ticket-public-haiku/4 passed public 26/26, hidden 47/47 
+[07:11:42] invite-codes/ticket-public-haiku/5 passed public 26/26, hidden 47/47 
+[07:11:43] status-normalize/ticket-public-haiku/1 passed public 15/15, hidden 25/25 
+[07:11:45] status-normalize/ticket-public-haiku/2 passed public 15/15, hidden 25/25 
+[07:11:46] status-normalize/ticket-public-haiku/3 passed public 15/15, hidden 25/25 
+[07:11:47] status-normalize/ticket-public-haiku/4 passed public 15/15, hidden 25/25 
+[07:11:48] status-normalize/ticket-public-haiku/5 passed public 15/15, hidden 25/25 
+[07:11:50] usage-counter/ticket-public-haiku/1 passed public 27/27, hidden 50/50 
+[07:11:52] usage-counter/ticket-public-haiku/2 passed public 27/27, hidden 50/50 
+[07:11:54] usage-counter/ticket-public-haiku/3 passed public 27/27, hidden 50/50 
+[07:11:56] usage-counter/ticket-public-haiku/4 passed public 27/27, hidden 50/50 
+[07:11:58] usage-counter/ticket-public-haiku/5 passed public 27/27, hidden 50/50 
+[07:12:00] weekly-digest/ticket-public-haiku/1 passed public 28/28, hidden 83/83 
+[07:12:02] weekly-digest/ticket-public-haiku/2 passed public 28/28, hidden 83/83 
+[07:12:03] weekly-digest/ticket-public-haiku/3 passed public 28/28, hidden 83/83 
+[07:12:05] weekly-digest/ticket-public-haiku/4 passed public 28/28, hidden 83/83 
+[07:12:07] weekly-digest/ticket-public-haiku/5 passed public 28/28, hidden 83/83 
+140 result(s) in results.jsonl
+[07:21:33] csv-export/ticket-public-sonnet/1 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:21:34] csv-export/ticket-public-sonnet/2 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:21:35] csv-export/ticket-public-sonnet/3 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:21:36] csv-export/ticket-public-sonnet/4 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:21:37] csv-export/ticket-public-sonnet/5 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:21:39] escrow-split/ticket-public-sonnet/1 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:21:40] escrow-split/ticket-public-sonnet/2 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:21:42] escrow-split/ticket-public-sonnet/3 passed public 22/22, hidden 46/46 
+[07:21:43] escrow-split/ticket-public-sonnet/4 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:21:45] escrow-split/ticket-public-sonnet/5 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:21:46] gherkin-parse/ticket-public-sonnet/1 passed public 18/18, hidden 47/47 
+[07:21:48] gherkin-parse/ticket-public-sonnet/2 passed public 18/18, hidden 47/47 
+[07:21:49] gherkin-parse/ticket-public-sonnet/3 passed public 18/18, hidden 47/47 
+[07:21:51] gherkin-parse/ticket-public-sonnet/4 passed public 18/18, hidden 47/47 
+[07:21:52] gherkin-parse/ticket-public-sonnet/5 passed public 18/18, hidden 47/47 
+[07:21:54] invite-codes/ticket-public-sonnet/1 passed public 26/26, hidden 47/47 
+[07:21:56] invite-codes/ticket-public-sonnet/2 passed public 26/26, hidden 47/47 
+[07:21:57] invite-codes/ticket-public-sonnet/3 passed public 26/26, hidden 47/47 
+[07:21:59] invite-codes/ticket-public-sonnet/4 passed public 26/26, hidden 47/47 
+[07:22:00] invite-codes/ticket-public-sonnet/5 passed public 26/26, hidden 47/47 
+[07:22:02] status-normalize/ticket-public-sonnet/1 passed public 15/15, hidden 25/25 
+[07:22:03] status-normalize/ticket-public-sonnet/2 passed public 15/15, hidden 25/25 
+[07:22:04] status-normalize/ticket-public-sonnet/3 passed public 15/15, hidden 25/25 
+[07:22:05] status-normalize/ticket-public-sonnet/4 passed public 15/15, hidden 25/25 
+[07:22:07] status-normalize/ticket-public-sonnet/5 passed public 15/15, hidden 25/25 
+[07:22:09] usage-counter/ticket-public-sonnet/1 passed public 27/27, hidden 50/50 
+[07:22:10] usage-counter/ticket-public-sonnet/2 passed public 27/27, hidden 50/50 
+[07:22:12] usage-counter/ticket-public-sonnet/3 passed public 27/27, hidden 50/50 
+[07:22:14] usage-counter/ticket-public-sonnet/4 overfit public 27/27, hidden 49/50 scenarios boundary-1
+[07:22:16] usage-counter/ticket-public-sonnet/5 passed public 27/27, hidden 50/50 
+[07:22:18] weekly-digest/ticket-public-sonnet/1 passed public 28/28, hidden 83/83 
+[07:22:20] weekly-digest/ticket-public-sonnet/2 passed public 28/28, hidden 83/83 
+[07:22:22] weekly-digest/ticket-public-sonnet/3 passed public 28/28, hidden 83/83 
+[07:22:24] weekly-digest/ticket-public-sonnet/4 passed public 28/28, hidden 83/83 
+[07:22:26] weekly-digest/ticket-public-sonnet/5 passed public 28/28, hidden 83/83 
+175 result(s) in results.jsonl
+[07:45:05] csv-export/ticket-public-opus/1 overfit public 12/12, hidden 45/47 scenarios boundary-2, unhappy-1
+[07:45:07] csv-export/ticket-public-opus/2 overfit public 12/12, hidden 44/47 scenarios boundary-2, happy-2, unhappy-1
+[07:45:08] csv-export/ticket-public-opus/3 passed public 12/12, hidden 47/47 
+[07:45:09] csv-export/ticket-public-opus/4 overfit public 12/12, hidden 45/47 scenarios boundary-2, unhappy-1
+[07:45:10] csv-export/ticket-public-opus/5 overfit public 12/12, hidden 46/47 scenarios happy-2
+[07:45:11] escrow-split/ticket-public-opus/1 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:45:13] escrow-split/ticket-public-opus/2 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:45:14] escrow-split/ticket-public-opus/3 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:45:16] escrow-split/ticket-public-opus/4 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:45:17] escrow-split/ticket-public-opus/5 overfit public 22/22, hidden 45/46 scenarios boundary-2
+[07:45:19] gherkin-parse/ticket-public-opus/1 passed public 18/18, hidden 47/47 
+[07:45:20] gherkin-parse/ticket-public-opus/2 passed public 18/18, hidden 47/47 
+[07:45:21] gherkin-parse/ticket-public-opus/3 passed public 18/18, hidden 47/47 
+[07:45:23] gherkin-parse/ticket-public-opus/4 passed public 18/18, hidden 47/47 
+[07:45:24] gherkin-parse/ticket-public-opus/5 passed public 18/18, hidden 47/47 
+[07:45:26] invite-codes/ticket-public-opus/1 passed public 26/26, hidden 47/47 
+[07:45:28] invite-codes/ticket-public-opus/2 passed public 26/26, hidden 47/47 
+[07:45:29] invite-codes/ticket-public-opus/3 passed public 26/26, hidden 47/47 
+[07:45:31] invite-codes/ticket-public-opus/4 passed public 26/26, hidden 47/47 
+[07:45:32] invite-codes/ticket-public-opus/5 passed public 26/26, hidden 47/47 
+[07:45:34] status-normalize/ticket-public-opus/1 passed public 15/15, hidden 25/25 
+[07:45:35] status-normalize/ticket-public-opus/2 passed public 15/15, hidden 25/25 
+[07:45:36] status-normalize/ticket-public-opus/3 passed public 15/15, hidden 25/25 
+[07:45:37] status-normalize/ticket-public-opus/4 passed public 15/15, hidden 25/25 
+[07:45:38] status-normalize/ticket-public-opus/5 passed public 15/15, hidden 25/25 
+[07:45:40] usage-counter/ticket-public-opus/1 passed public 27/27, hidden 50/50 
+[07:45:42] usage-counter/ticket-public-opus/2 passed public 27/27, hidden 50/50 
+[07:45:44] usage-counter/ticket-public-opus/3 passed public 27/27, hidden 50/50 
+[07:45:46] usage-counter/ticket-public-opus/4 passed public 27/27, hidden 50/50 
+[07:45:48] usage-counter/ticket-public-opus/5 passed public 27/27, hidden 50/50 
+[07:45:49] weekly-digest/ticket-public-opus/1 passed public 28/28, hidden 83/83 
+[07:45:51] weekly-digest/ticket-public-opus/2 passed public 28/28, hidden 83/83 
+[07:45:53] weekly-digest/ticket-public-opus/3 passed public 28/28, hidden 83/83 
+[07:45:55] weekly-digest/ticket-public-opus/4 passed public 28/28, hidden 83/83 
+[07:45:57] weekly-digest/ticket-public-opus/5 passed public 28/28, hidden 83/83 
+210 result(s) in results.jsonl

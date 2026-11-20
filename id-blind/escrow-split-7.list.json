@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.0585246,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when the bounty times the share is not a whole number of minor units?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%) to the contributor",
+      "chose": "Rounds the hidden-test amount down with integer BigInt division and gives the leftover unit to the UAT part.",
+      "where": "src/index.ts:17",
+      "instead": "Round to the nearest unit, or round the hidden-test part up."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Throws an Error and records nothing.",
+      "where": "src/index.ts:63-65",
+      "instead": "Release the whole bounty on UAT approval, or ignore the event without error."
+    },
+    {
+      "question": "What happens on a repeat hidden-tests-passed event after the release has been made?",
+      "ticket": "Release happens once per task",
+      "chose": "Returns the current state without writing, so the duplicate is silently ignored.",
+      "where": "src/index.ts:57-59",
+      "instead": "Throw an error on the duplicate, or key de-duplication on the event id."
+    },
+    {
+      "question": "What happens on a repeat uat-approved event?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Returns the current state without writing and without error.",
+      "where": "src/index.ts:66-68",
+      "instead": "Throw an error on the duplicate approval."
+    },
+    {
+      "question": "Is de-duplication keyed on the event id or on the release kind?",
+      "ticket": "silent",
+      "chose": "Keys on the release kind already recorded and ignores the event id.",
+      "where": "src/index.ts:44-45",
+      "instead": "Track processed event ids and ignore only events whose id has been seen."
+    },
+    {
+      "question": "What does a failed hidden-test run do to the stored state?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state, writes nothing to the store, and leaves the task open to a later passing run.",
+      "where": "src/index.ts:54-55",
+      "instead": "Record the failure, or mark the task as terminally failed so a later pass is rejected."
+    },
+    {
+      "question": "What happens when a hidden-tests-passed event arrives after a failed run?",
+      "ticket": "silent",
+      "chose": "Releases the hidden-test share normally, because a failure is never recorded.",
+      "where": "src/index.ts:54-61",
+      "instead": "Refuse to release after a recorded failure, or require a fresh run."
+    },
+    {
+      "question": "What happens for a bounty of 0?",
+      "ticket": "silent",
+      "chose": "Records zero-amount releases for both hidden-tests and uat and reports the status \"pro bono\".",
+      "where": "src/index.ts:23-25",
+      "instead": "Record no releases at all for a zero bounty."
+    },
+    {
+      "question": "What happens when the share is 0%, so the hidden-test release is 0?",
+      "ticket": "silent",
+      "chose": "Still records a hidden-tests release of amount 0, which counts as the one release and unlocks UAT.",
+      "where": "src/index.ts:60",
+      "instead": "Skip recording a zero-amount release."
+    },
+    {
+      "question": "How are invalid bounty or share values handled (negative, fractional, share above 100%)?",
+      "ticket": "silent",
+      "chose": "Throws RangeError when the handler is created, which also covers a share outside 0–10000 basis points.",
+      "where": "src/index.ts:10-15",
+      "instead": "Clamp the values, or report the error when the event is handled."
+    },
+    {
+      "question": "How are concurrent events for the same task handled?",
+      "ticket": "silent",
+      "chose": "Queues events one at a time per store, so concurrent duplicates release once.",
+      "where": "src/index.ts:34",
+      "instead": "Handle events without serialising, or rely on the store for atomicity."
+    },
+    {
+      "question": "What happens when the store write fails?",
+      "ticket": "silent",
+      "chose": "Rejects with the store error and records nothing, and the queue keeps going so the event can be retried.",
+      "where": "src/index.ts:78",
+      "instead": "Swallow the error and retry internally, or leave the queue blocked."
+    }
+  ]
+}

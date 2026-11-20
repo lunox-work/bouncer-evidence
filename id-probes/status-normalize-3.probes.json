@@ -1,0 +1,97 @@
+{
+  "run": "status-normalize-3",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0378135,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "[(() => { try { return writeStatus(\" Draft \") } catch (e) { return e.message } })(), writeStatus(\"draft\")]"
+    },
+    {
+      "item": 2,
+      "probe": "(() => { try { return writeStatus(\"bogus\") } catch (e) { return e.message } })()"
+    },
+    {
+      "item": 3,
+      "probe": "(() => { try { return writeStatus(\"in-review\") } catch (e) { return e.message } })()"
+    },
+    {
+      "item": 4,
+      "probe": "readStatus(\"bogus\")"
+    },
+    {
+      "item": 5,
+      "probe": "[\"in review\",\"in progress\",\"done\",\"in-review\"].map(readStatus)"
+    },
+    {
+      "item": 6,
+      "probe": "[\"  DRAFT \",\"-draft-\",\"In__Review\",\"in - review\"].map(readStatus)"
+    },
+    {
+      "item": 7,
+      "probe": "[readStatus(\"\"), readStatus(\"   \"), readStatus(\"-_-\")]"
+    },
+    {
+      "item": 8,
+      "probe": "[\"constructor\",\"__proto__\",\"toString\",\"hasOwnProperty\"].map(readStatus)"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:\"a\",status:\"Draft\"},{id:\"b\",status:\"zzz\"},{id:\"c\",status:\"in-review\"},{id:\"d\",status:\"\"}])"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:\"1\",status:\"unknown\"},{id:\"2\",status:\"Unknown\"},{id:\"3\",status:\"unknown\"},{id:\"4\",status:\" unknown\"},{id:\"5\",status:\"Zed\"},{id:\"6\",status:\"apple\"}]).unreadable"
+    },
+    {
+      "item": 11,
+      "probe": "readStatuses([])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ 'Not a sandbox status: \" Draft \"', 'draft' ]"
+    },
+    {
+      "item": 2,
+      "actual": "'Not a sandbox status: \"bogus\"'"
+    },
+    {
+      "item": 3,
+      "actual": "'Not a sandbox status: \"in-review\"'"
+    },
+    {
+      "item": 4,
+      "actual": "null"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'review', null, null, 'review' ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'draft', 'draft', 'review', 'review' ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ null, null, null ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ null, null, null, null ]"
+    },
+    {
+      "item": 9,
+      "actual": "{ rows: [ { id: 'a', status: 'draft' }, { id: 'b', status: null }, { id: 'c', status: 'review' }, { id: 'd', status: null } ], unreadable: [ '', 'zzz' ] }"
+    },
+    {
+      "item": 10,
+      "actual": "[ ' unknown', 'Unknown', 'Zed', 'apple', 'unknown' ]"
+    },
+    {
+      "item": 11,
+      "actual": "{ rows: [], unreadable: [] }"
+    }
+  ]
+}

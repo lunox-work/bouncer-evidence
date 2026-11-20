@@ -1,0 +1,15 @@
+{
+  "repo": "trpc/trpc",
+  "package": "packages/server",
+  "language": "typescript",
+  "commit": "596d03d93295f8b4876909cfce86f94a1e6afe51",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 1067 MB",
+    "seconds": 21
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "spec": "csv-export",
+  "model": "claude-fable-5-1",
+  "costUsd": 0.6513167499999999,
+  "ruled": [
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [happy-1] BOM, header, then one row per requisition in creation-time order, each ending CRLF",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [happy-1] requisitions with the same creation time are ordered by id",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [happy-2] statuses, numbers, dates and a missing title are written for people to read",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [happy-2] the creation time is written as its UTC date, whatever the offset it was given in",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [boundary-2] a title holding a comma or a double quote is quoted, with inner quotes doubled",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [boundary-2] line breaks and edge spaces force quotes; inner spaces alone do not",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [unhappy-1] a title starting with a formula character gets a leading single quote",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [unhappy-1] the quoting rule applies to the defused field",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/public/requisitions-csv.test.ts :: [unhappy-2] filled one above openings is refused, while filled equal to openings and zeros are accepted",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] every double quote is doubled, including adjacent and trailing ones",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] a comma at the start, at the end or alone forces quotes",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] CRLF, a lone line break and trailing line breaks are kept inside quotes",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] titles of spaces only, or with spaces at both edges, are quoted",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] a title with several separators is wrapped once and its quotes doubled",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] a title needing no quotes is written as it is, whatever else it holds",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] an empty title is an empty field without quotes",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [boundary-2] in a file of several rows only the titles that need quotes are quoted",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] a title that is only a formula character, or a negative number, is defused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] only the first character is checked: repeated or later formula characters add one quote",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] a title starting with a character outside the list is not defused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] a defused title ending in a space is quoted after the single quote is added",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] a defused title holding a line break, comma or double quote is quoted",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] a formula character after a leading space is not defused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/fields.test.ts :: [unhappy-1] each formula title in a file of several rows is defused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-1] a single requisition gives the BOM, the header and exactly one CRLF-terminated row",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-1] requisitions on the same day are ordered by their full creation time, not by id",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-1] creation times before and after 1970 are ordered chronologically",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] each status is written in its readable form in any order",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] months and days below ten are written with two digits",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] the UTC date changes exactly at UTC midnight, whatever the offset",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] a year before 1000 is still written with four digits",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] counts in the millions are written as plain digits",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] a whole number of 10^21 is written as plain digits, not in exponent form",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] a count of negative zero is written as 0",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/layout.test.ts :: [happy-2] a title absent from the requisition altogether is an empty field",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/refusal.test.ts :: [unhappy-2] filled below openings with more digits is accepted",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/refusal.test.ts :: [unhappy-2] the largest exact whole numbers and every valid status are accepted",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/timezone.test.ts :: [happy-2] the UTC date is written when the local date is a day ahead",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:csv-export:tests/private/timezone.test.ts :: [happy-2] the UTC date is written when the local date is a day behind",
+      "ticket": "open",
+      "quote": ""
+    }
+  ]
+}

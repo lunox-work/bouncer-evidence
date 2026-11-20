@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-20",
+  "registered": "helps when a wrong pick is named in >= 62 of 75 runs with <= 3 false alarms",
+  "runs": 75,
+  "probesWritten": 874,
+  "probesRan": 874,
+  "items": 876,
+  "runsWithAWrongPickNamed": 55,
+  "before": {
+    "runsWithAWrongPickNamed": 57,
+    "falseAlarms": 0
+  },
+  "pointing": {
+    "disagreesFailed": 70,
+    "disagreesPassed": 3,
+    "agreesFailed": 97,
+    "agreesPassed": 304
+  },
+  "costUsd": {
+    "probes": 4.3391715,
+    "judge": 8.861207700000003
+  },
+  "holds": false
+}

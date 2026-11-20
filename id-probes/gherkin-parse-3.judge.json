@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10956010000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 lists the accepted step keywords (Given, When, Then, And, But, *), says they are kept as written, and says text starts after the keyword and a space. That answers item 9's question about which keywords are accepted and how they are matched. Item 9 accepts exactly that set, case-sensitive. Its ran output for '* a' gives keyword '*' and text 'a', so it records the keyword as written and the text after the space.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Items 3 (tags) and 5 (description) each cover one part of S2. Item 10 is the closest match because it asks about comments and blank lines, two of S2's four rules. It skips '#' lines and blank lines, and its ran output shows them skipped while line numbers still count them. Items 3 and 5 also agree with S2: tags go on the next scenario, and the free-text description is skipped.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether Background steps are returned and how they are kept apart from scenario steps. Its ran output shows background [Given b] returned on its own, with the scenario holding only its own steps, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how doc strings and tables on steps are represented. Its ran output shows the doc string as lines with the opening quotes' indentation removed (['line1','  line2']) and the table as rows of trimmed cells ([['a','b'],['1','2']]). Both match S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "S5 is about errors carrying their line number. Item 12 asks how the error exposes that number, and the ran output gives name ParseError, a line property of 3 and a message starting 'line 3: ...'. Items 1, 2, 6, 7 and 11 each cover one listed error case, and their ran outputs also match S5.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a file with a Feature line and nothing else is valid. Item 2 is about an empty file or one with no Feature line. Item 4 says background is null when absent, but it does not settle whether a feature with no scenarios parses.",
+      "failing": false
+    }
+  ]
+}

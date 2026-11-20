@@ -1,0 +1,15 @@
+{
+  "repo": "marshmallow-code/marshmallow",
+  "package": ".",
+  "language": "python",
+  "commit": "f268f0c4d12c4edb43743ca5703eed7954320245",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 3
+  }
+}

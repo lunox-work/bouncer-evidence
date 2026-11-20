@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.061984000000000004,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when the bounty doesn't divide evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%)",
+      "chose": "Rounds the hidden-test amount down with integer division, and the UAT share gets the remainder.",
+      "where": "src/index.ts:13",
+      "instead": "Round to nearest, or round the hidden-test share up."
+    },
+    {
+      "question": "What happens when UAT approval arrives before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Rejects the event with an error and records nothing.",
+      "where": "src/index.ts:39-41",
+      "instead": "Release the whole remaining balance, or ignore the event without an error."
+    },
+    {
+      "question": "What happens when the same release event arrives a second time, in sequence or at the same time?",
+      "ticket": "Release happens once per task",
+      "chose": "Deduplicates by release kind, not event id. Events are queued one at a time, so a repeat returns the current state and writes nothing.",
+      "where": "src/index.ts:27-36",
+      "instead": "Deduplicate by event id, or throw an error on a repeat."
+    },
+    {
+      "question": "What does a failed hidden-test run do to the state?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state (a locked state with no releases if none is stored) and doesn't write to the store.",
+      "where": "src/index.ts:45",
+      "instead": "Record a 'failed' marker in the store, or set a failed status."
+    },
+    {
+      "question": "Can a hidden-test failure arrive after a pass, and does it undo the release?",
+      "ticket": "silent",
+      "chose": "A failed event is a no-op, so an earlier release stays in place.",
+      "where": "src/index.ts:45",
+      "instead": "Revoke or flag the earlier release, or reject the late event."
+    },
+    {
+      "question": "What happens when the event kind is not one of the known kinds?",
+      "ticket": "silent",
+      "chose": "Throws an 'Unknown escrow event kind' error.",
+      "where": "src/index.ts:45-47",
+      "instead": "Ignore the event and return the current state."
+    },
+    {
+      "question": "What is the status of a zero-bounty task?",
+      "ticket": "silent",
+      "chose": "Returns the status 'pro bono' for a zero bounty, and still records a zero-amount hidden-tests release when the tests pass.",
+      "where": "src/index.ts:81-83",
+      "instead": "Treat it as 'fully released' (or 'locked') and record no release of 0."
+    },
+    {
+      "question": "Which bounty values are valid?",
+      "ticket": "silent",
+      "chose": "Rejects any bounty that is not a safe integer or is negative, throwing when the handler is created.",
+      "where": "src/index.ts:67-71",
+      "instead": "Accept decimal bounties, or round them."
+    },
+    {
+      "question": "Which share values are valid, and in what unit is a custom share given?",
+      "ticket": "the configured hidden-test share (default 75%)",
+      "chose": "Takes the share as whole basis points from 0 to 10000, with a default of 7500, and throws for anything else. 0 and 10000 are allowed.",
+      "where": "src/index.ts:21-22,73-77",
+      "instead": "Take the share as a percentage or a fraction, and reject 0 and 100%."
+    },
+    {
+      "question": "What is the result when the configured share is 0% or 100%?",
+      "ticket": "silent",
+      "chose": "Still records the zero-amount release, so a 0% share records a hidden-tests release of 0. A 100% share leaves a UAT release of 0 for the approval step.",
+      "where": "src/index.ts:35-37,42-44",
+      "instead": "Skip zero-amount releases, or release everything at the hidden-test step."
+    },
+    {
+      "question": "Where does the current state come from, and what is the starting state when the store is empty?",
+      "ticket": "silent",
+      "chose": "Reads the store before every event, and starts from a locked state with no releases if the store has nothing.",
+      "where": "src/index.ts:30",
+      "instead": "Keep the state in memory in the handler."
+    },
+    {
+      "question": "What happens when the store read or write fails?",
+      "ticket": "silent",
+      "chose": "Rejects the event's promise with the store error, and later events still run. The write happens only when a release was added.",
+      "where": "src/index.ts:50-52,58-59",
+      "instead": "Swallow the error and retry, or stop all later events after a failure."
+    }
+  ]
+}

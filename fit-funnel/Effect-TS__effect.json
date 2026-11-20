@@ -1,0 +1,15 @@
+{
+  "repo": "Effect-TS/effect",
+  "package": "packages/effect",
+  "language": "typescript",
+  "commit": "ca9de3c912ddb035a52b0f3f24e36ac453e417ae",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 2262 MB",
+    "seconds": 6
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10252649999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "The only open question in S1 is what happens when a newly drawn code repeats an existing one. Item 7 asks exactly that. Its pick redraws, which matches 'is drawn again'. The 14-day expiry here is just a given, not an open question.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "S2 requires the code to show it was used by c1, and when. Item 12 asks what a redeemed code shows about who used it and when. Its pick records usedBy and usedAt. No item asks about access being limited to the code's own task.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether case, spacing or hyphens matter when a code is matched. Its pick strips whitespace and hyphens and uppercases, so lowercase, spaced and hyphenated input all match the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code is still valid at exactly 14 days. Its pick treats now >= createdAt + 14 days as expired. So the code can be redeemed at 08:59:59.999 and is expired at 09:00:00, as S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "What S5 settles is that the same contributor can redeem their own used code again: it succeeds and nothing changes. No item asks that. Item 2 is about redeeming a different code for a task the contributor already has, which is S7. c2 failing with 'used' is not an open question on the list.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "The part of S6 that is a real question is whether a used code can be revoked. Item 4 asks about revoking used, unknown and already revoked codes. Its pick throws for a used code, so a used code cannot be revoked.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what redeeming does when the contributor already has access to the task. Its pick fails with 'already has access' and leaves the code unused, which is exactly what S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how concurrent operations on one code are handled. Its pick runs all operations one at a time, so exactly one redeem wins and the others fail as 'used'. That gives exactly one success and one contributor with access.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "The part of S9 that is open is that a used code in the list shows who used it and when. Item 12 asks that, and its pick records usedBy and usedAt for used codes. Item 10 is about how many codes a task can have and their order, which S9 does not settle. Item 3 is about which failure reason a redeem reports, not the state shown in the list.",
+      "failing": false
+    }
+  ]
+}

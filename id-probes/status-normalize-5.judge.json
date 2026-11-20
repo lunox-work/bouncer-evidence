@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1021552,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether reading ignores case and surrounding whitespace. The pick trims and lowercases, and readStatus(\"  PUBLISHED \") returned 'published'. Item 8's run also read \"Merged\" as 'merged', so all four values come back as the statuses S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which old spellings map to which status. The pick maps only \"in review\" to review and has no other aliases. So \"under_review\" and \"LIVE\" would read as null, but S2 expects 'review' and 'published'. \"In-Review\" does work, through the separator cleaning in item 3.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what a value matching no status or old spelling reads as. The pick returns null and never the nearest status, and readStatus(\"bogus\") returned null. Item 7's run shows \"\" and \"   \" also read as null. That fits S3's no-guessing rule for \"drafts\", \"revew\" and the rest.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what writing a valid enum value stores. Item 5 asks only about values that are not exact enum values. Its pick mentions that exact values pass through, but that is not the question it asks.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what writing a non-enum value does, including old spellings. The pick throws and does not normalise. The run threw for \"Draft\", \"in-review\" and \" draft\", and each message quotes the value exactly as given, so old spellings are refused on write.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how a batch read reports unreadable values: in what form, with what de-duplication and in what order. The pick lists each distinct raw string once, uncleaned and sorted. The run returned ['  ','Alpha ','Beta','alpha','beta'], which is what S6 asks for, and item 8 shows unreadable rows are kept with a null status.",
+      "failing": true
+    }
+  ]
+}

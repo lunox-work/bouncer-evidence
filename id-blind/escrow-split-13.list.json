@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0605344,
+  "items": [
+    {
+      "question": "How is the hidden-test amount rounded when bounty times share is not a whole number?",
+      "ticket": "silent",
+      "chose": "Rounds the hidden-test amount down (integer BigInt division), and the UAT part gets the remainder.",
+      "where": "src/index.ts:87",
+      "instead": "Round to the nearest unit, or round up, or give the remainder to the hidden-test release."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Throws an Error and records nothing.",
+      "where": "src/index.ts:126",
+      "instead": "Release the whole remaining balance, or ignore the event and return the current state."
+    },
+    {
+      "question": "How is a repeated hidden-tests-passed event treated, including the same event id and a different event id?",
+      "ticket": "Release happens once per task",
+      "chose": "Ignores any later pass once a hidden-tests release exists, whatever the event id, and returns the current state.",
+      "where": "src/index.ts:122",
+      "instead": "Deduplicate by event id, or throw an error on a repeat."
+    },
+    {
+      "question": "How is a repeated uat-approved event treated?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Silently returns the existing state without a second release.",
+      "where": "src/index.ts:129",
+      "instead": "Throw an error on the duplicate approval."
+    },
+    {
+      "question": "What happens when two events for the same task arrive at the same time?",
+      "ticket": "silent",
+      "chose": "Queues events in a per-handler promise chain so they run one at a time, which only serializes within a single handler instance.",
+      "where": "src/index.ts:101",
+      "instead": "Rely on a store-level atomic compare-and-set or lock, or apply no serialization."
+    },
+    {
+      "question": "What status does a task with a zero bounty report?",
+      "ticket": "silent",
+      "chose": "Reports the status \"pro bono\" for any release on a zero bounty, ahead of every other status check.",
+      "where": "src/index.ts:147",
+      "instead": "Report \"fully released\" (0 equals 0), or skip recording any release."
+    },
+    {
+      "question": "Which inputs are invalid for the bounty and the share, and how are they rejected?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError for a bounty that is not a non-negative safe integer or a share outside 0–10000 bps. It throws when the handler is created, not when an event arrives.",
+      "where": "src/index.ts:178",
+      "instead": "Accept fractional or negative values by clamping them, or validate only when an event is handled."
+    },
+    {
+      "question": "Is the share given as a percentage, in basis points, or as a fraction, and what is the default when none is configured?",
+      "ticket": "Release 75% of the escrow when hidden tests pass",
+      "chose": "Uses integer basis points (7500 by default, via `hiddenTestShareBps ?? 7500`).",
+      "where": "src/index.ts:1",
+      "instead": "Use a percentage or a 0–1 fraction, or require the share to be configured."
+    },
+    {
+      "question": "What happens when the share is 0% or 100%?",
+      "ticket": "silent",
+      "chose": "Still records a hidden-tests release, with amount 0 at 0% and the full bounty at 100%. At 100% the UAT release later has amount 0.",
+      "where": "src/index.ts:123",
+      "instead": "Skip zero-amount releases, or mark the task fully released at the first release."
+    },
+    {
+      "question": "How much does the UAT release pay, and how does it relate to the amount already released?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Pays the bounty minus the sum of earlier releases, computed from the stored state, not the precomputed split.",
+      "where": "src/index.ts:130",
+      "instead": "Pay the precomputed split.uat value."
+    },
+    {
+      "question": "What happens when the hidden tests fail, and can a later pass still release?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state unchanged with no write, so a later pass can still release.",
+      "where": "src/index.ts:124",
+      "instead": "Record the failure, or lock the task permanently after a failure."
+    },
+    {
+      "question": "What happens when the event kind is unknown, or the store write fails?",
+      "ticket": "silent",
+      "chose": "Throws an Error for an unknown kind. A store write error propagates, nothing is recorded, and the queue keeps accepting later events.",
+      "where": "src/index.ts:135",
+      "instead": "Ignore unknown events, or swallow store errors."
+    }
+  ]
+}

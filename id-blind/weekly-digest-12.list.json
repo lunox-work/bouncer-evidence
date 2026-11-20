@@ -1,0 +1,85 @@
+{
+  "run": "weekly-digest/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0601915,
+  "items": [
+    {
+      "question": "What counts as the last activity for the 14-day no-submissions rule when a task has submissions?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Measures staleness from the latest submission's timestamp, and falls back to the posting time only when there are no submissions.",
+      "where": "src/index.ts:58-61",
+      "instead": "Flag only tasks with zero submissions that are 14 or more days old, or measure from the posting time."
+    },
+    {
+      "question": "Is a task exactly 14 days without activity flagged?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Flags the task when the idle time is greater than or equal to 14×24 hours.",
+      "where": "src/index.ts:72",
+      "instead": "Flag only when the idle time is strictly more than 14 days."
+    },
+    {
+      "question": "Which tasks count as open?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Treats a task as open only when its status is exactly \"open\", so every other status is excluded.",
+      "where": "src/index.ts:22",
+      "instead": "Treat any non-terminal status as open, for example by excluding only merged or closed tasks."
+    },
+    {
+      "question": "What does buildDigest return when nothing is open?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Returns null for an empty list or when no task has status open.",
+      "where": "src/index.ts:23",
+      "instead": "Return an empty digest object, or throw."
+    },
+    {
+      "question": "In what order are tasks listed?",
+      "ticket": "silent",
+      "chose": "Sorts stalled tasks first, then oldest posting first, then by id in code-unit order.",
+      "where": "src/index.ts:28-33",
+      "instead": "Keep the input order, or sort by age descending only, or by id."
+    },
+    {
+      "question": "What does the email subject say?",
+      "ticket": "silent",
+      "chose": "Builds the subject as \"Weekly digest: N open tasks, M stalled\", with no singular form and no date.",
+      "where": "src/index.ts:38",
+      "instead": "Use a fixed subject such as \"Weekly digest\", or include the date or handle pluralization."
+    },
+    {
+      "question": "How is task age computed and rounded?",
+      "ticket": "age",
+      "chose": "Computes age as whole elapsed 24-hour periods, floored, between postedAt and now.",
+      "where": "src/index.ts:69",
+      "instead": "Count calendar days in the organization's time zone, or round up or to the nearest day."
+    },
+    {
+      "question": "How is the furthest gate defined for a task with no submissions?",
+      "ticket": "the furthest gate reached",
+      "chose": "Reports gate 0 when there are no submissions, and otherwise the highest gate across all submissions regardless of order.",
+      "where": "src/index.ts:62-65",
+      "instead": "Use null or undefined for no gate, or take the gate of the latest submission."
+    },
+    {
+      "question": "On which day is the digest due, and in which time zone?",
+      "ticket": "Send a Monday email",
+      "chose": "Due when the weekday in the given time zone is Monday, at any time of that day.",
+      "where": "src/index.ts:60-62",
+      "instead": "Use UTC weekdays, or fire only at a specific hour, or only once per Monday."
+    },
+    {
+      "question": "What happens with an unknown time zone?",
+      "ticket": "silent",
+      "chose": "Throws an Error \"Unknown time zone: <tz>\", and does so even when the task list is empty.",
+      "where": "src/index.ts:47-53",
+      "instead": "Fall back to UTC, or only validate when a time zone is actually needed."
+    },
+    {
+      "question": "Do submissions timestamped after now affect staleness?",
+      "ticket": "silent",
+      "chose": "Includes future-dated submissions in the latest-activity calculation, so the idle time can be negative and the task is not flagged.",
+      "where": "src/index.ts:58-61",
+      "instead": "Ignore submissions dated after now, or treat them as invalid."
+    }
+  ]
+}

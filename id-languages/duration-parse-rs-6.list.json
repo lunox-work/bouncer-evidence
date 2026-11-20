@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.0620488,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. the existing raw-millisecond config values like 172800) accepted as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects bare numbers without a unit as InvalidDuration.",
+      "where": "src/lib.rs:98",
+      "instead": "Treat a unit-less number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Is a day unit `d` supported, given the ticket lists only h, m, s and ms?",
+      "ticket": "like `1h30m`, `90s` or `250ms`",
+      "chose": "Adds `d` (86,400,000 ms) as a supported unit.",
+      "where": "src/lib.rs:21",
+      "instead": "Support only h, m, s and ms, so two days would be `48h`."
+    },
+    {
+      "question": "Can components appear in any order or repeat (e.g. `30m1h`, `1s1s`)?",
+      "ticket": "silent",
+      "chose": "Requires strictly decreasing unit size and rejects repeated or out-of-order units.",
+      "where": "src/lib.rs:104",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration.",
+      "where": "src/lib.rs:118",
+      "instead": "Treat it as 0, or as unset or a default."
+    },
+    {
+      "question": "Is whitespace, a sign, a decimal, or different letter case accepted (` 1s`, `1h 30m`, `-1s`, `1.5h`, `1H`)?",
+      "ticket": "silent",
+      "chose": "Rejects all of these; only lowercase ASCII digits followed by a unit are accepted.",
+      "where": "src/lib.rs:84",
+      "instead": "Trim whitespace, allow spaces between components, accept fractions, or ignore case."
+    },
+    {
+      "question": "What is the maximum allowed duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps at 2^53-1 ms (the largest integer an f64 holds exactly) and returns InvalidDuration above it. The limit is inclusive.",
+      "where": "src/lib.rs:17",
+      "instead": "Allow the full u64 range with checked arithmetic, or choose a smaller sensible cap."
+    },
+    {
+      "question": "Is a zero duration valid (`0ms`, `0s`)?",
+      "ticket": "silent",
+      "chose": "Parses it as Ok(0), and format_duration(0) returns `0ms`.",
+      "where": "src/lib.rs:130",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "What form does format_duration print: the shortest string, or a canonical largest-unit breakdown?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Searches for the fewest-character string, then the fewest components. For example 5,400,000 ms becomes `90m`, not `1h30m`, and 1500 ms becomes `1500ms`.",
+      "where": "src/lib.rs:182",
+      "instead": "Greedy largest-unit decomposition, e.g. `1h30m` and `1s500ms`."
+    },
+    {
+      "question": "Does the formatter search every possible representation to find the shortest?",
+      "ticket": "silent",
+      "chose": "Caps the non-greedy counts tried at 100 for days and 24 for the other units, so the result is only the shortest within those caps.",
+      "where": "src/lib.rs:168",
+      "instead": "Search exhaustively, or use a closed-form rule."
+    },
+    {
+      "question": "What does the formatter do for values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns the MillisecondsOutOfRange error.",
+      "where": "src/lib.rs:127",
+      "instead": "Format any u64 value, or saturate at the maximum."
+    },
+    {
+      "question": "How are `m` and `ms` told apart when parsing?",
+      "ticket": "silent",
+      "chose": "Checks for the `ms` prefix first, so `5ms` is milliseconds and `5m` is minutes. `5m` followed by `s` is not read as minutes then seconds.",
+      "where": "src/lib.rs:89",
+      "instead": "Treat `m` as minutes and fail on a trailing `s`, or require a delimiter between components."
+    },
+    {
+      "question": "What do the error types report about the failure?",
+      "ticket": "silent",
+      "chose": "Uses a single unit-variant error for all parse failures, so syntax, order and overflow are indistinguishable. The message gives an example and the maximum.",
+      "where": "src/lib.rs:37",
+      "instead": "Use distinct variants or messages for empty input, bad unit, bad order and overflow."
+    }
+  ]
+}

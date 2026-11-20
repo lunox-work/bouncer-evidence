@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0784765,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how the share is expressed and what the default is. Its pick is 7500 bps by default, which gives 7500 of a 10000 bounty, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how the hidden-test amount is rounded. Its pick rounds down with BigInt integer division and gives the remainder to UAT. That yields 749 and 250, exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how much the UAT release pays. Its pick is the bounty minus earlier releases, which is the remaining balance S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what a hidden-tests failure does. Its pick returns the state unchanged with no write, so nothing is recorded and the task stays locked.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT is approved before the hidden tests pass. Its pick throws an Error and records nothing, as S5 requires. The pick does not give the error message, but the behaviour matches.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks what status a zero-bounty task reports. Its pick reports 'pro bono' for any release on a zero bounty, which means releases still get recorded. S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks how a repeated hidden-tests-passed event is treated, with the same id or a different one. Its pick ignores any later pass once the release exists, whatever the id, so nothing more is recorded.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what happens when events arrive at the same time. Its pick queues them per handler so they run one at a time. On the single handler S8 uses, that means exactly one release.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 covers a failed store write. Its pick lets the error propagate, records nothing and keeps the queue accepting events, so a retry of the same event can succeed.",
+      "failing": false
+    }
+  ]
+}

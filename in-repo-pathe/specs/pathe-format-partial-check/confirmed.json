@@ -1,0 +1,44 @@
+{
+  "sha256": "01e8bf1984850351841573c79a766053cfae094c3c754e9b2408193341a757f5",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:20:19.886Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "A missing `name` counts as `\"\"`, so the base segment is just the normalised extension, or it is empty and dropped.",
+    "Ticket: \"allow calls with partial arguments (#198)\"",
+    "Instead: Skip the base segment entirely, or throw an error.",
+    "An `ext` without a leading `.` gets one prepended (`\"txt\"` → `\".txt\"`). An `ext` that already starts with `.` is used verbatim, including `\".\"` and `\"..txt\"`.",
+    "Ticket: silent.",
+    "Instead: Append `ext` verbatim, as Node's path.format does for the no-dot case, which Node also normalizes by adding a dot.",
+    "An `ext` that is `undefined` or `\"\"` adds nothing to the name.",
+    "Ticket: silent.",
+    "Instead: Append the value as is, which gives the string 'undefined' with the old code.",
+    "`base` is used whenever it is not `undefined`, and `name` and `ext` are then ignored.",
+    "Ticket: silent.",
+    "Instead: Combine them or let `name` plus `ext` override `base`.",
+    "An empty-string `base` still counts as given. It wins over `name`/`ext` and is then dropped as an empty segment.",
+    "Ticket: silent.",
+    "Instead: Treat an empty `base` as missing and fall back to `name` plus `ext`.",
+    "When every field is empty or missing, the result is `\"\"`, with no root, no `\".\"` and no error.",
+    "Ticket: silent.",
+    "Instead: Return '.' or throw an error.",
+    "Joining is unchanged. With a non-empty `root`, the segments go through `resolve`, which normalises the path and lets an absolute `dir` replace `root`. Without a `root`, the segments are joined with `\"/\"`.",
+    "Ticket: silent.",
+    "Instead: Join with a separator without resolving, as Node's format does.",
+    "Without a `root`, a `dir` that ends in `/` is joined verbatim, which gives a doubled separator (`\"dist//a.js\"`).",
+    "Ticket: silent.",
+    "Instead: Skip the separator when `dir` already ends with one, as Node's format does.",
+    "A relative `root` is out of scope. Its result depends on `process.cwd()`, and this change neither specifies nor alters it.",
+    "Ticket: silent.",
+    "Instead: Specify it as resolved against the current working directory, or treat it as a literal prefix.",
+    "Seam (the files the stub writes): src/_path.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/_path.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

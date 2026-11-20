@@ -1,0 +1,85 @@
+{
+  "run": "status-normalize/4",
+  "model": "claude-sonnet-5-5",
+  "seconds": 25,
+  "costUsd": 0.0516598,
+  "items": [
+    {
+      "question": "What does reading a stored value that matches no status return?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null for any value that is not a status or a known old spelling, and never maps it to the nearest status.",
+      "where": "src/index.ts:33",
+      "instead": "Throw an error, or fall back to a default status such as draft."
+    },
+    {
+      "question": "How loosely are stored values matched to a status when read (case, surrounding whitespace, separators)?",
+      "ticket": "silent",
+      "chose": "Trims the ends, lowercases, and turns each run of whitespace, '-' or '_' into one space. It then matches exactly, so 'Merged-' and '_Review_' read as statuses.",
+      "where": "src/index.ts:19-21",
+      "instead": "Only trim and lowercase, so '-' and '_' are not treated as separators. Or match case-sensitively."
+    },
+    {
+      "question": "Which old free-text spellings are read as a status, and what do they map to?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only the cleaned form 'in review' (so 'in-review', 'In  Review' and similar) to review. No other aliases are mapped.",
+      "where": "src/index.ts:12",
+      "instead": "Map more aliases, such as 'in_progress', 'done' or 'open'. Or map nothing and rely on cleaning alone."
+    },
+    {
+      "question": "Does a separator in the middle of a status word (e.g. 'cla_imed', 're\\tview') still read as that status?",
+      "ticket": "silent",
+      "chose": "No. The separator becomes a space, so the cleaned value no longer matches and the read returns null.",
+      "where": "src/index.ts:20",
+      "instead": "Remove separators entirely, so 'cla_imed' reads as claimed."
+    },
+    {
+      "question": "What does reading an empty or whitespace-only value return?",
+      "ticket": "silent",
+      "chose": "Returns null, because the cleaned empty string matches nothing.",
+      "where": "src/index.ts:31-33",
+      "instead": "Treat it as draft, the default state, or throw."
+    },
+    {
+      "question": "Does writing accept non-canonical input, such as 'Draft' or the old spelling 'in-review', by normalising it first?",
+      "ticket": "Only enum values are written",
+      "chose": "No. Only the exact lowercase enum strings pass. Anything else, including case variants and old spellings, is rejected.",
+      "where": "src/index.ts:42",
+      "instead": "Normalise through readStatus before writing, so 'Draft' is written as 'draft' and 'in-review' as 'review'."
+    },
+    {
+      "question": "How does writing signal an invalid status?",
+      "ticket": "silent",
+      "chose": "Throws a plain Error with the message 'not a sandbox status: \"<value as given>\"'.",
+      "where": "src/index.ts:43",
+      "instead": "Return null or a result object, or throw a custom or typed error."
+    },
+    {
+      "question": "Does writing trim whitespace from the value before checking it?",
+      "ticket": "silent",
+      "chose": "No. The value is checked as given, so ' draft' is rejected.",
+      "where": "src/index.ts:42",
+      "instead": "Trim the value before validating it."
+    },
+    {
+      "question": "When reading many rows, what happens to a row whose status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row with its id and sets its status to null, and does not drop the row or throw.",
+      "where": "src/index.ts:53-57",
+      "instead": "Drop the row from the output, or throw on the first unreadable row."
+    },
+    {
+      "question": "How are unreadable values reported when reading many rows (duplicates, form, order)?",
+      "ticket": "silent",
+      "chose": "Lists the distinct raw stored values, such as 'Ghost ' with its trailing space, sorted with the default string sort.",
+      "where": "src/index.ts:52,58",
+      "instead": "List ids of the unreadable rows, or list every occurrence in input order, or list the cleaned values."
+    },
+    {
+      "question": "Where is the enum applied to written values, given the ticket says to use it 'where the status is set'?",
+      "ticket": "use it where the status is set",
+      "chose": "Only adds writeStatus as a validator function. It changes no existing call sites that set a status, and none appear in the diff.",
+      "where": "src/index.ts:40-44",
+      "instead": "Change the code that sets the status to call the validator or take the enum type."
+    }
+  ]
+}

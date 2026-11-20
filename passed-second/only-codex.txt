@@ -1,0 +1,12 @@
+suite:escrow-split:tests/public/escrow.test.ts :: [boundary-2] a pro bono task records no releases across both gates and redelivery
+suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline
+suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword
+suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] singleton legacy arrays are not automatically treated as permissive
+suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] a parser must consume trailing input even after a permitted OR branch
+suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty
+suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] measures each offset from the old start adjusted only by preceding line-count changes
+suite:reverse-diff:tests/private/unmapped.test.ts :: [unhappy-1] discovers paths from standalone old and new headers in their textual order
+suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool
+suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions
+suite:escrow-split:tests/public/escrow.test.ts :: [boundary-2] pro bono status also holds at both share endpoints
+suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order

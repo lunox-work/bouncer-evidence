@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-2",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.052312899999999996,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:2,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{const a=[{id:\"b\",title:\"x\",status:\"open\",openings:1,filled:0,createdAt:new Date(5)},{id:\"10\",title:\"x\",status:\"open\",openings:1,filled:0,createdAt:new Date(1)},{id:\"9\",title:\"x\",status:\"open\",openings:1,filled:0,createdAt:new Date(1)}];const o=buildRequisitionsCsv(a);return [o,a.map(r=>r.id)]})()"
+    },
+    {
+      "item": 3,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"r2\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 4,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 5,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 6,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"a,b \\\"q\\\"\\nline\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 7,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"r1\",title:null,status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"r2\",status:\"open\",openings:1,filled:0,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(1700000000123)}])"
+    },
+    {
+      "item": 9,
+      "probe": "[\"on_hold\",\"OPEN\"].map(s=>{try{return buildRequisitionsCsv([{id:\"r9\",title:\"T\",status:s,openings:1,filled:0,createdAt:new Date(0)}])}catch(e){return e.message}})"
+    },
+    {
+      "item": 10,
+      "probe": "[-1,1.5,NaN,Infinity].map(v=>{try{return buildRequisitionsCsv([{id:\"r10\",title:\"T\",status:\"open\",openings:v,filled:0,createdAt:new Date(0)}])}catch(e){return e.message}})"
+    },
+    {
+      "item": 11,
+      "probe": "(()=>{try{return buildRequisitionsCsv([{id:\"r11\",title:\"T\",status:\"open\",openings:1,filled:2,createdAt:new Date(0)}])}catch(e){return e.message}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(()=>{try{return buildRequisitionsCsv([{id:\"ok\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"bad\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(NaN)}])}catch(e){return e.message}})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,T,open,2,1,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "[ '﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\n10,x,open,1,0,1970-01-01T00:00:00.001Z\\r\\n9,x,open,1,0,1970-01-01T00:00:00.001Z\\r\\nb,x,open,1,0,1970-01-01T00:00:00.005Z\\r\\n', [ 'b', '10', '9' ] ]"
+    },
+    {
+      "item": 3,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,T,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\nr2,T,open,1,0,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 4,
+      "actual": "65279"
+    },
+    {
+      "item": 5,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 6,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,\"a,b \"\"q\"\"\\nline\",open,1,0,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 7,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\nr2,,open,1,0,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 8,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,T,open,1,0,2023-11-14T22:13:20.123Z\\r\\n'"
+    },
+    {
+      "item": 9,
+      "actual": "[ '﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr9,T,on_hold,1,0,1970-01-01T00:00:00.000Z\\r\\n', 'Requisition r9 has an unknown status' ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ 'Requisition r10 has invalid openings', 'Requisition r10 has invalid openings', 'Requisition r10 has invalid openings', 'Requisition r10 has invalid openings' ]"
+    },
+    {
+      "item": 11,
+      "actual": "'Requisition r11 has more filled than openings'"
+    },
+    {
+      "item": 12,
+      "actual": "'Requisition bad has an invalid creation time'"
+    }
+  ]
+}

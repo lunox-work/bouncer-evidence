@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0792099,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 checks the basic first release: a 7500 bps default share of 10000 gives 7500 and the status 'partially released'. No item asks what the default share is or what status follows the first release. Item 1 is about rounding when the amount does not divide evenly, which does not come up with 10000.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how an uneven hidden-test share is rounded. The pick rounds down with integer division and gives the leftover to UAT, so 999 at 7500 bps gives 749 and 250, as the scenario expects. Integer division also keeps the amount exact for safe integers.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how the UAT release amount is worked out. The pick uses the bounty minus all earlier releases, which is the remaining balance the scenario asks for.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "Item 6 covers a failed run after an earlier pass, when money has already been released. S4 covers a failed run while the task is still locked with nothing released. Answering item 6 would not settle S4, so these are different behaviours.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT is approved before the hidden tests pass. The pick throws and records nothing, which matches the scenario. The pick does not give the error text, but the scenario's main points are the refusal and that nothing is recorded.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what status a zero-bounty task shows. The pick always reports 'pro bono', even after UAT approval, which matches the scenario's 'pro bono' and its claim that no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about a repeated hidden-tests-passed event after the release, whether it is the same event again or a new one. The pick releases nothing and writes nothing, keyed on the release kind, so both the duplicate 'e1' and a different event record nothing.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how events that arrive at the same moment are handled. The pick runs them one at a time through a promise queue, so the second event sees the first release. With the kind-keyed check, that gives exactly one release for either event kind, with the same or different ids.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 covers a failed store write. The pick passes the store's error to the caller, records nothing, and lets the event be retried, which matches the scenario.",
+      "failing": false
+    }
+  ]
+}

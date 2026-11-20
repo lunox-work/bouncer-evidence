@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 12,
+  "costUsd": 0.055458,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. the old raw-millisecond form `172800`) still accepted as a duration?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects bare numbers with InvalidDuration because every digit run must be followed by a unit.",
+      "where": "src/lib.rs:96",
+      "instead": "Accept a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Is a day unit (`d`) supported?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Adds a `d` unit worth 86,400,000 ms.",
+      "where": "src/lib.rs:20",
+      "instead": "Support only h, m, s and ms, as in the ticket's examples."
+    },
+    {
+      "question": "Are fractional values like `1.5h` accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them, because `.` is neither a digit nor a unit.",
+      "where": "src/lib.rs:91",
+      "instead": "Accept decimals and round or truncate to whole milliseconds."
+    },
+    {
+      "question": "Can the same unit appear twice, as in `1h1h`?",
+      "ticket": "silent",
+      "chose": "Rejects a repeated unit with InvalidDuration.",
+      "where": "src/lib.rs:105",
+      "instead": "Sum the repeated components."
+    },
+    {
+      "question": "Do components have to be in descending unit order?",
+      "ticket": "silent",
+      "chose": "Accepts any order, so `30m1h` parses.",
+      "where": "src/lib.rs:96",
+      "instead": "Require largest-to-smallest order and reject others."
+    },
+    {
+      "question": "How are empty strings, whitespace, signs and uppercase units handled?",
+      "ticket": "silent",
+      "chose": "Rejects empty input, whitespace, `+` or `-` signs and uppercase units, since only exact lowercase `<digits><unit>` is accepted.",
+      "where": "src/lib.rs:60",
+      "instead": "Trim whitespace and accept case-insensitive units."
+    },
+    {
+      "question": "What is the maximum parsable duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps at 9,007,199,254,740,991 ms (2^53-1) and returns InvalidDuration beyond that, including mid-digit overflow.",
+      "where": "src/lib.rs:72",
+      "instead": "Cap at u64::MAX, or return a separate overflow error."
+    },
+    {
+      "question": "Does an all-zero duration like `0s` parse?",
+      "ticket": "silent",
+      "chose": "Accepts it and returns 0.",
+      "where": "src/lib.rs:105",
+      "instead": "Reject a zero timeout as invalid."
+    },
+    {
+      "question": "How is a duration printed back: a single unit or a mixed one such as `1h30m`?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string over all unit subsets, so 5,400,000 ms prints as `90m` and 1,500 ms as `1500ms`, not `1h30m` or `1s500ms`.",
+      "where": "src/lib.rs:124",
+      "instead": "Use the canonical greedy breakdown from the largest unit down, e.g. `1h30m`."
+    },
+    {
+      "question": "How are ties in the shortest string broken?",
+      "ticket": "silent",
+      "chose": "Prefers fewer components, then the larger leading unit.",
+      "where": "src/lib.rs:149",
+      "instead": "Prefer the greedy largest-unit-first form, or the first one found."
+    },
+    {
+      "question": "What does formatting 0 ms produce?",
+      "ticket": "silent",
+      "chose": "Returns `0s`.",
+      "where": "src/lib.rs:119",
+      "instead": "Return `0ms`, or an empty string."
+    },
+    {
+      "question": "What does formatting a value above the maximum do?",
+      "ticket": "silent",
+      "chose": "Returns MillisecondsOutOfRange for anything above 2^53-1.",
+      "where": "src/lib.rs:116",
+      "instead": "Format any u64 value."
+    }
+  ]
+}

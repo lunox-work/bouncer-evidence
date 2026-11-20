@@ -1,0 +1,37 @@
+{
+  "spec": "escrow-split",
+  "model": "claude-fable-5-1",
+  "costUsd": 0.39344200000000007,
+  "ruled": [
+    {
+      "id": "suite:escrow-split:tests/public/release.test.ts :: [boundary-2] passing hidden tests on a bounty of 0 records nothing and the task is pro bono",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:escrow-split:tests/public/release.test.ts :: [boundary-2] a bounty of 0 with a full share never records a release through UAT",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:escrow-split:tests/private/release.test.ts :: [boundary-2] passing hidden tests on a bounty of 0 at any share records nothing and the task is pro bono",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:escrow-split:tests/private/release.test.ts :: [boundary-2] repeated passes on a bounty of 0, through new handlers, never record a release",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:escrow-split:tests/private/release.test.ts :: [boundary-2] a UAT approval first on a bounty of 0 records nothing, and nor does a later pass",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:escrow-split:tests/private/release.test.ts :: [boundary-2] a failed run on a bounty of 0 leaves the task pro bono",
+      "ticket": "open",
+      "quote": ""
+    }
+  ]
+}

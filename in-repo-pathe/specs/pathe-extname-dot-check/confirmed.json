@@ -1,0 +1,44 @@
+{
+  "sha256": "85706fc75af553ece48f2f46e121aa7bab621636412c521b80e2c005922d868d",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:12:33.309Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "`extname` returns `\".\"` for a name that ends in one dot, such as `\"file.\"`, which matches Node's `path.extname`.",
+    "Ticket: \"handle inputs ending with dot (#203)\"",
+    "Instead: Return an empty string, treating a trailing dot as no extension.",
+    "`extname(\"..\")` returns `\"\"` through a check for that exact string.",
+    "Ticket: silent.",
+    "Instead: Let the regex decide, which would return `\".\"`, or return an empty string through a more general rule.",
+    "`extname(\".\")` returns `\"\"` because the regex needs a character before the trailing dot and `\".\"` has none.",
+    "Ticket: silent.",
+    "Instead: Return `\".\"`, or add an explicit check for it as is done for `\"..\"`.",
+    "A path whose last segment is `\"..\"` after a separator (`\"foo/..\"`, `\"a/b/..\"`, `\"/..\"`) returns `\".\"`. Only the exact string `\"..\"` returns `\"\"`.",
+    "Ticket: silent.",
+    "Instead: Return an empty string for any path whose last segment is `\"..\"`.",
+    "A dotfile with a trailing dot (`\".file.\"`, `\"foo/.bar.\"`) returns `\".\"`.",
+    "Ticket: silent.",
+    "Instead: Return an empty string, since the leading dot marks a dotfile.",
+    "A name with two or more trailing dots (`\"file..\"`, `\"...\"`) returns `\".\"`.",
+    "Ticket: silent.",
+    "Instead: Return an empty string, or return `\"..\"` if the extension is read as everything after the first dot.",
+    "A path that ends in a separator after a dot (`\"file./\"`) returns `\"\"`, because the trailing separator is not removed.",
+    "Ticket: silent.",
+    "Instead: Ignore the trailing separator and return `\".\"`, as Node does.",
+    "Backslash Windows paths go through `normalizeWindowsPath` and then follow the same trailing-dot rule (`\"a\\\\file.\"` gives `\".\"`). The `\"..\"` check runs on the raw input.",
+    "Ticket: silent.",
+    "Instead: Treat Windows paths separately, or run the `\"..\"` check after normalisation.",
+    "A path whose last segment is `\".\"` after a separator (`\"foo/.\"`, `\"/.\"`, `\"./.\"`) returns `\".\"` through the trailing-dot rule, the same as `\"foo/..\"`. Only the exact string `\".\"` returns `\"\"`. `parse(\"foo/.\")` still has `ext: \"\"`, because its base is the exact string `\".\"`.",
+    "Ticket: silent.",
+    "Instead: Return `\"\"`, as before this change and as Node does.",
+    "Seam (the files the stub writes): src/_path.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/_path.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 19,
+  "costUsd": 0.0511518,
+  "items": [
+    {
+      "question": "Does the CSV start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prepends a BOM (U+FEFF) to the output.",
+      "where": "src/index.ts:11",
+      "instead": "No BOM, so the output is plain UTF-8 text."
+    },
+    {
+      "question": "Which columns appear, in what order, and with what header names?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Writes the header 'Requisition ID,Title,Status,Openings,Filled,Created', so the columns are id, title, status, openings, filled and created.",
+      "where": "src/index.ts:12",
+      "instead": "Use snake_case or field-name headers such as id,title,status,openings,filled,createdAt, or add a computed column such as remaining openings."
+    },
+    {
+      "question": "What line terminator ends each row, and is there one after the last row?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:49",
+      "instead": "Use LF line endings, or leave no trailing newline after the last row."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header row followed by CRLF, with no data rows.",
+      "where": "src/index.ts:49",
+      "instead": "Return an empty string, or throw an error."
+    },
+    {
+      "question": "In what order do rows appear?",
+      "ticket": "silent",
+      "chose": "Sorts by creation time ascending, with ties broken by id in code-unit order.",
+      "where": "src/index.ts:32",
+      "instead": "Keep the input order, or sort newest first."
+    },
+    {
+      "question": "How is the Created timestamp formatted?",
+      "ticket": "silent",
+      "chose": "Writes a full ISO 8601 UTC string with milliseconds, using toISOString().",
+      "where": "src/index.ts:45",
+      "instead": "Write a date-only value, or a locale-formatted or local-timezone value."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Quotes the field per RFC 4180 and doubles any embedded quotes. It applies this to id, title and status only.",
+      "where": "src/index.ts:58",
+      "instead": "Quote every field, or also guard against spreadsheet formula injection by prefixing cells that start with =, +, - or @."
+    },
+    {
+      "question": "What is written when a requisition's title is missing or null?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:41",
+      "instead": "Write a placeholder such as 'Untitled', or throw an error."
+    },
+    {
+      "question": "What happens when a requisition has an unrecognised status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id. The allowed statuses are open, on_hold, filled and cancelled.",
+      "where": "src/index.ts:15",
+      "instead": "Pass the status through unchanged, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional, NaN or infinite?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id unless the value is a non-negative integer. A value of 0 is accepted.",
+      "where": "src/index.ts:18",
+      "instead": "Skip the bad row, clamp or round the value, or write it as it is."
+    },
+    {
+      "question": "What happens when filled exceeds openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:24",
+      "instead": "Export the values as they are, or clamp filled to openings."
+    },
+    {
+      "question": "What happens when createdAt is an invalid date, and is one bad row fatal to the whole export?",
+      "ticket": "silent",
+      "chose": "Validates every row before building anything and throws on the first invalid one, including an invalid createdAt, so the whole export fails.",
+      "where": "src/index.ts:27",
+      "instead": "Skip the bad rows, or write an empty Created cell and continue."
+    }
+  ]
+}

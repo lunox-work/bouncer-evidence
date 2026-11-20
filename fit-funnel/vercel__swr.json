@@ -1,0 +1,15 @@
+{
+  "repo": "vercel/swr",
+  "package": ".",
+  "language": "typescript",
+  "commit": "8148ef012fd5b317d1e8ec2da4b2ca0673f63c0f",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 1104 MB",
+    "seconds": 3
+  }
+}

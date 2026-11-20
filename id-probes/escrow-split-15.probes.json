@@ -1,0 +1,105 @@
+{
+  "run": "escrow-split-15",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0577408,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "splitBounty(101, 7500)"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{const r=[];for(const b of [-1,1.5,Number.MAX_SAFE_INTEGER+1,NaN]){try{splitBounty(b,7500);r.push('ok')}catch(e){r.push(e.name)}}return r})()"
+    },
+    {
+      "item": 3,
+      "probe": "(()=>{const r=[];for(const s of [0.75,-1,10001,7500.5,10000]){try{r.push(splitBounty(100,s))}catch(e){r.push(e.name)}}return r})()"
+    },
+    {
+      "item": 4,
+      "probe": "(()=>{try{createEscrowHandler({bounty:-5},{get:async()=>undefined,set:async()=>{}});return 'no throw'}catch(e){return e.name}})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{let s,n=0;const st={get:async()=>s,set:async(x)=>{n++;s=x}};const h=createEscrowHandler({bounty:100},st);await h.handle({id:'a',kind:'hidden-tests-passed'});const r=await h.handle({id:'b',kind:'hidden-tests-passed'});return {r,writes:n}})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{let n=0;const h=createEscrowHandler({bounty:100},{get:async()=>undefined,set:async()=>{n++}});try{await h.handle({id:'a',kind:'uat-approved'});return 'resolved'}catch(e){return {msg:e.message,writes:n}}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{let s,n=0;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async(x)=>{n++;s=x}});const f=await h.handle({id:'a',kind:'hidden-tests-failed'});const p=await h.handle({id:'b',kind:'hidden-tests-passed'});return {f,writesAfterFail:n,p}})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{let s={status:'partially released',releases:[{kind:'hidden-tests',amount:10}]};const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async(x)=>{s=x}});return await h.handle({id:'a',kind:'uat-approved'})})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{let s;const h=createEscrowHandler({bounty:0},{get:async()=>s,set:async(x)=>{s=x}});await h.handle({id:'a',kind:'hidden-tests-passed'});return await h.handle({id:'b',kind:'uat-approved'})})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const h=createEscrowHandler({bounty:100},{get:async()=>undefined,set:async()=>{}});try{return await h.handle({id:'a',kind:'bogus'})}catch(e){return e.message}})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let s,fail=true;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async(x)=>{if(fail){fail=false;throw new Error('boom')}s=x}});const a=await h.handle({id:'a',kind:'hidden-tests-passed'}).catch(e=>e.message);const b=await h.handle({id:'a',kind:'hidden-tests-passed'});return {a,b}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{const h=createEscrowHandler({bounty:100},{get:async()=>({status:'partially released',releases:[{kind:'hidden-tests',amount:75}]}),set:async()=>{}});const e=createEscrowHandler({bounty:100},{get:async()=>undefined,set:async()=>{}});return {resumed:await h.handle({id:'a',kind:'hidden-tests-failed'}),fresh:await e.handle({id:'b',kind:'hidden-tests-failed'})}})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ hiddenTests: 75, uat: 26 }"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'RangeError', 'RangeError', 'RangeError', 'RangeError' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'RangeError', 'RangeError', 'RangeError', 'RangeError', { hiddenTests: 100, uat: 0 } ]"
+    },
+    {
+      "item": 4,
+      "actual": "'RangeError'"
+    },
+    {
+      "item": 5,
+      "actual": "{\n  r: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] },\n  writes: 1\n}"
+    },
+    {
+      "item": 6,
+      "actual": "{ msg: 'cannot approve UAT: the hidden tests have not passed', writes: 0 }"
+    },
+    {
+      "item": 7,
+      "actual": "{\n  f: { status: 'locked', releases: [] },\n  writesAfterFail: 1,\n  p: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    },
+    {
+      "item": 8,
+      "actual": "{ status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 10 }, { kind: 'uat', amount: 25 } ] }"
+    },
+    {
+      "item": 9,
+      "actual": "{ status: 'pro bono', releases: [ { kind: 'hidden-tests', amount: 0 }, { kind: 'uat', amount: 0 } ] }"
+    },
+    {
+      "item": 10,
+      "actual": "'unknown escrow event kind: bogus'"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  a: 'boom',\n  b: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    },
+    {
+      "item": 12,
+      "actual": "{ resumed: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }, fresh: { status: 'locked', releases: [] } }"
+    }
+  ]
+}

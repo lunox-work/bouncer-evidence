@@ -1,0 +1,105 @@
+{
+  "run": "escrow-split-7",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.058582199999999994,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "splitBounty(10, 3333)"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{const w=[];const s={get:async()=>undefined,set:async x=>{w.push(x)}};try{await createEscrowHandler({bounty:100},s).handle({id:'1',kind:'uat-approved'})}catch(e){return {err:e.message,writes:w.length}}})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{let st;let w=0;const s={get:async()=>st,set:async x=>{st=x;w++}};const h=createEscrowHandler({bounty:100},s);await h.handle({id:'1',kind:'hidden-tests-passed'});const r=await h.handle({id:'2',kind:'hidden-tests-passed'});return {r,w}})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{let st;let w=0;const s={get:async()=>st,set:async x=>{st=x;w++}};const h=createEscrowHandler({bounty:100},s);await h.handle({id:'1',kind:'hidden-tests-passed'});await h.handle({id:'2',kind:'uat-approved'});const r=await h.handle({id:'3',kind:'uat-approved'});return {r,w}})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{let st;let w=0;const s={get:async()=>st,set:async x=>{st=x;w++}};const h=createEscrowHandler({bounty:100},s);await h.handle({id:'same',kind:'hidden-tests-passed'});const r=await h.handle({id:'same',kind:'uat-approved'});return {r,w}})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{let w=0;const s={get:async()=>undefined,set:async x=>{w++}};const r=await createEscrowHandler({bounty:100},s).handle({id:'1',kind:'hidden-tests-failed'});return {r,w}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{let st;const s={get:async()=>st,set:async x=>{st=x}};const h=createEscrowHandler({bounty:100},s);await h.handle({id:'1',kind:'hidden-tests-failed'});return await h.handle({id:'2',kind:'hidden-tests-passed'})})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{let st;const s={get:async()=>st,set:async x=>{st=x}};const h=createEscrowHandler({bounty:0},s);await h.handle({id:'1',kind:'hidden-tests-passed'});return await h.handle({id:'2',kind:'uat-approved'})})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{let st;const s={get:async()=>st,set:async x=>{st=x}};const h=createEscrowHandler({bounty:100,hiddenTestShareBps:0},s);const a=await h.handle({id:'1',kind:'hidden-tests-passed'});const b=await h.handle({id:'2',kind:'uat-approved'});return {a,b}})()"
+    },
+    {
+      "item": 10,
+      "probe": "(()=>{const out=[];for(const t of [{bounty:-1},{bounty:1.5},{bounty:100,hiddenTestShareBps:10001},{bounty:100,hiddenTestShareBps:-1}]){try{createEscrowHandler(t,{get:async()=>undefined,set:async()=>{}});out.push('ok')}catch(e){out.push(e.name)}}return out})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let st;let w=0;const s={get:async()=>{await new Promise(r=>setTimeout(r,5));return st},set:async x=>{st=x;w++}};const h=createEscrowHandler({bounty:100},s);await Promise.all([h.handle({id:'1',kind:'hidden-tests-passed'}),h.handle({id:'1',kind:'hidden-tests-passed'})]);return {w,st}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{let st;let fail=true;const s={get:async()=>st,set:async x=>{if(fail){fail=false;throw new Error('boom')}st=x}};const h=createEscrowHandler({bounty:100},s);let err;try{await h.handle({id:'1',kind:'hidden-tests-passed'})}catch(e){err=e.message}const after=st;const retry=await h.handle({id:'1',kind:'hidden-tests-passed'});return {err,after,retry}})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ hiddenTests: 3, uat: 7 }"
+    },
+    {
+      "item": 2,
+      "actual": "{ err: 'cannot approve UAT: the hidden tests have not passed', writes: 0 }"
+    },
+    {
+      "item": 3,
+      "actual": "{\n  r: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] },\n  w: 1\n}"
+    },
+    {
+      "item": 4,
+      "actual": "{\n  r: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 75 }, { kind: 'uat', amount: 25 } ] },\n  w: 2\n}"
+    },
+    {
+      "item": 5,
+      "actual": "{\n  r: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 75 }, { kind: 'uat', amount: 25 } ] },\n  w: 2\n}"
+    },
+    {
+      "item": 6,
+      "actual": "{ r: { status: 'locked', releases: [] }, w: 0 }"
+    },
+    {
+      "item": 7,
+      "actual": "{ status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }"
+    },
+    {
+      "item": 8,
+      "actual": "{ status: 'pro bono', releases: [ { kind: 'hidden-tests', amount: 0 }, { kind: 'uat', amount: 0 } ] }"
+    },
+    {
+      "item": 9,
+      "actual": "{\n  a: { status: 'locked', releases: [ { kind: 'hidden-tests', amount: 0 } ] },\n  b: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 0 }, { kind: 'uat', amount: 100 } ] }\n}"
+    },
+    {
+      "item": 10,
+      "actual": "[ 'RangeError', 'RangeError', 'RangeError', 'RangeError' ]"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  w: 1,\n  st: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    },
+    {
+      "item": 12,
+      "actual": "{\n  err: 'boom',\n  after: undefined,\n  retry: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    }
+  ]
+}

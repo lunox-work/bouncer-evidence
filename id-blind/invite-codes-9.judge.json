@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09396070000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 says a new code expires 14 days after it was created, which is the question item 2 asks. Item 2's pick, creation time plus 14 × 24 h, gives 2026-03-15T09:00:00Z. S1's line about redrawing a code that repeats one already in the registry is item 8's question, and item 8's pick (redraw) also agrees.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what a successful redeem does: give access to that one task only, and record who used the code and when. Item 12 only covers which fields list shows, not what redeeming changes.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how case, spaces and dashes are matched. Its pick removes whitespace and '-' and uppercases the input, so lowercase, spaced or dashed input finds the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code still works at exactly 14 days. Its pick treats now >= expiresAt as expired, so the code works at 08:59:59.999 and fails with 'expired' at 09:00:00.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S5 settles two things: another contributor gets 'used', and the original user can redeem their own used code again and nothing changes. No item asks either. Item 4 is about redeeming a different code for a task the contributor already has, which is what S7 covers, not re-redeeming the same code.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what redeeming an unrecognised code returns, and its pick returns { ok: false, reason: 'unknown' }. S6's line that a used code cannot be revoked is item 9's question, and item 9's pick (throws for a used code) also agrees. No item asks what redeeming a revoked code returns.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what happens when a contributor redeems a code for a task they already have. Its pick refuses with 'already has access' and leaves the code unused, which is what S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how simultaneous redeems are handled. Its pick runs registry operations one at a time, so exactly one redeem wins and the other gets 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what list returns for a task's codes and which fields an unused code has. Its pick sets usedBy and usedAt only on used codes, which fits S9's 'a used code shows who used it and when'. S9 does not fix an order. S9's 'stays used after its expiry' is close to item 3's precedence question, and item 3's pick (used before expired) agrees, but item 3 is about what redeem returns, not what list shows.",
+      "failing": true
+    }
+  ]
+}

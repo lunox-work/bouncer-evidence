@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-2",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.07322239999999999,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{let t=new Date(0);const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:()=>0});const c=await r.create('t');t=new Date(14*864e5);return r.redeem(c.code,'u')})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{let t=new Date(0);const m=new Map();let i=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>i++%b});const c=await r.create('t');await r.redeem(c.code,'u');t=new Date(30*864e5);return [await r.redeem(c.code,'v'),(await r.list('t'))[0].state]})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{const m=new Map();let i=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>i++%b});const a=await r.create('t');const c=await r.create('t');const x=await r.redeem(a.code,'u');const y=await r.redeem(c.code,'u');return [x,y,(await r.list('t'))[1].state]})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});return r.redeem('AAAA-BBBB-CCCC','u')})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const m=new Map();let i=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>i++%b});const c=await r.create('t');return r.redeem(' '+c.code.toLowerCase().replace(/-/g,' - ')+' ','u')})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const m=new Map();let i=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>i++%b});return r.create('t')})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});await r.create('t');try{return await r.create('t')}catch(e){return 'threw: '+e.message}})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{const m=new Map();let i=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>i++%b});const a=await r.create('t');const c=await r.create('t');await r.redeem(c.code,'u');const o=[];for(const f of [()=>r.revoke(a.code),()=>r.revoke(a.code),()=>r.revoke(c.code),()=>r.revoke('ZZZZ-ZZZZ-ZZZZ')]){try{o.push(await f())}catch(e){o.push('threw: '+e.message)}}return [o,(await r.list('t')).map(x=>x.state)]})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{let t=new Date(0);const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:()=>0});const c=await r.create('t');t=new Date(20*864e5);const before=(await r.list('t'))[0].state;await r.revoke(c.code);return [before,(await r.list('t'))[0].state,await r.redeem(c.code,'u')]})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const m=new Map();const d=()=>new Promise(r=>setTimeout(r,Math.random()*10));const r=new InviteRegistry({store:{get:async k=>{await d();return m.get(k)},set:async(k,v)=>{await d();m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});const c=await r.create('t');return Promise.all([r.redeem(c.code,'a'),r.redeem(c.code,'b'),r.redeem(c.code,'c')])})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let i=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>i++%b});const a=await r.create('t');await r.create('t');await r.create('t');await r.redeem(a.code,'u');return r.list('t')})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});return r.create('no-such-task-\\u00e9 ')})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ ok: false, reason: 'expired' }"
+    },
+    {
+      "item": 2,
+      "actual": "[ { ok: false, reason: 'used' }, 'used' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ { ok: true, taskId: 't' }, { ok: false, reason: 'already has access' }, 'unused' ]"
+    },
+    {
+      "item": 4,
+      "actual": "{ ok: false, reason: 'unknown' }"
+    },
+    {
+      "item": 5,
+      "actual": "{ ok: true, taskId: 't' }"
+    },
+    {
+      "item": 6,
+      "actual": "{ code: 'ABCD-EFGH-JKMN', taskId: 't', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }"
+    },
+    {
+      "item": 7,
+      "actual": "'threw: could not draw an unused code'"
+    },
+    {
+      "item": 8,
+      "actual": "[ [ undefined, undefined, 'threw: code has been used', 'threw: unknown code' ], [ 'revoked', 'used' ] ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ 'expired', 'revoked', { ok: false, reason: 'revoked' } ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { ok: true, taskId: 't' }, { ok: false, reason: 'used' }, { ok: false, reason: 'used' } ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ { code: 'ABCD-EFGH-JKMN', taskId: 't', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'used', usedBy: 'u', usedAt: 1970-01-01T00:00:00.000Z }, { code: 'PQRS-TUVW-XYZ2', taskId: 't', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: '"
+    },
+    {
+      "item": 12,
+      "actual": "{ code: 'AAAA-AAAA-AAAA', taskId: 'no-such-task-é ', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }"
+    }
+  ]
+}

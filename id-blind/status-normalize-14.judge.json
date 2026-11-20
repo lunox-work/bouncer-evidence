@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0828859,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "S1 is about how a stored value is cleaned before matching, which is what item 4 asks. Its pick trims and lowercases, so 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' read as draft, published, merged and claimed.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks which old spellings are recognised on read. Its pick recognises only 'in review'. The scenario expects a longer list, including 'under review' and 'live', so 'under_review' and 'LIVE' would read as null instead of review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what readStatus returns for an unrecognised value. Its pick returns null with no fuzzy or nearest match, which is what the scenario expects for 'closed', 'drafts', 'revew' and similar. Item 7 also covers the empty and whitespace-only cases and agrees too, but item 6 is the closest fit for 'never guessed'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what is stored when a valid status is written. Items 1–3 only cover near-miss, legacy and invalid input on write.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether writeStatus accepts near-miss spellings or rejects them. Its pick throws for anything that is not exactly one of the five lowercase statuses, with no cleaning first. That refuses 'Review', ' draft', 'in-review' and 'closed', as the scenario expects. Items 2 and 3 each cover only part of the scenario (legacy spellings and the error message).",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how unreadable values are reported in a batch read. Its pick lists the distinct original stored strings, deduplicated and sorted. That matches 'each distinct original value once, sorted, exactly as it was stored'.",
+      "failing": true
+    }
+  ]
+}

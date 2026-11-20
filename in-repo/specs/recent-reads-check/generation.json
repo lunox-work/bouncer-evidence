@@ -1,0 +1,74 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "6f81ae80-0ee9-4ecf-87a4-4a1134311c3c",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.2631134,
+        "turns": 9,
+        "durationMs": 57604,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.2631134,
+    "finalText": "I created the contract file `apps/api/src/jira/recent.ts`. Its exports match the spec's list exactly: the `RECENT_JIRA_READ_MS = 60000` constant, the `RecentReads<T>` interface with `get` and `set`, `recentReads<T>(options = {})` with optional `ttlMs`, `now` and `max`, and `issueKey`. Both function bodies are just `throw new Error(\"not implemented\");`. The clock comes in through the `now` option, as the spec says, so tests can control it.\n\n- **Type check:** `npx tsc -p tsconfig.test.json` reports no errors.\n- **One naming change:** the project's compiler settings reject unused parameters. Because the bodies only throw, I put an underscore in front of the parameter names (`_options`, `_organizationId`, `_connectionId`, `_issueId`). Callers see the same types. The implementer can drop the underscores once the parameters are actually used.\n- **Existing tests:** 885 tests, 883 pass, 2 fail. Both failures are DeepSeek client tests (\"the default client posts to /chat/completions…\" and \"…maps a non-2xx status…\"). They fail because the sandbox blocks opening a local port (`listen EPERM`). I got the same result with the new file removed, so the run matches what it was before. To run those two tests, set `sandbox.network.allowLocalBinding: true` in your settings.\n\nNo other files were changed.\n\nAdded: `RECENT_JIRA_READ_MS`, `RecentReads`, `recentReads`, `issueKey`",
+    "problem": null,
+    "sha256": "4ff94c48490b945b7253ed1dab50e9c6f77aab2cd2d51d0f6aa9b79d4c53d3bd"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "6c90dda4-209e-4e14-85e0-887d006fbafc",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.8505364000000001,
+        "turns": 10,
+        "durationMs": 204114,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.8505364000000001,
+    "finalText": "I wrote the test suite in `apps/api/test/recent-reads-check.test.ts`. Each of the spec's 36 scenarios (13 happy, 14 boundary, 6 unhappy, 3 concurrency) has two tests: the scenario as written, and one boundary variant.\n\n`npx tsc -p tsconfig.test.json` reports no errors. Running the suite gives 72 tests, 1 passing and 71 failing with `not implemented`. The one that passes is `[happy-1] RECENT_JIRA_READ_MS equals 60000`, because that constant is already defined in the interface.\n\n- **Style:** it uses `test` from `node:test` and `assert` from `node:assert/strict`, like the two reference files. All tests are flat, each name starts with its scenario key, and two small fake-clock helpers live in the file (one plain, one that counts calls).\n- **Wall-clock scenario (`[happy-3]`):** this one has to use the default `Date.now`. To keep it deterministic I replaced `Date.now` with a fixed function using node:test's `t.mock.method`, which puts it back after each test. The reference files don't use `mock` anywhere, so this is the one tool they don't share.\n- **Boundary variants:** some of these rewind the fake clock so that a newer entry has expired while an older one is still fresh. Without that, some wrong implementations would pass, such as one that clears out expired entries before evicting.\n\n72 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "apps/api/test/recent-reads-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "27fe06ab-ebd1-4f00-8632-d5f5e54a2a04",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.7688217000000002,
+        "turns": 22,
+        "durationMs": 425118,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.7688217000000002,
+    "finalText": "I wrote the hidden suite in `apps/api/test/hidden-recent-reads-check/`, split across five files: defaults, expiry, eviction, values and keys, and issueKey with concurrency. `npx tsc -p tsconfig.test.json` reports no errors. Against the current interface, all 77 tests fail with `not implemented`.\n\n**Coverage**\n- Every scenario has at least one test under its key: happy 1–13, boundary 1–14, unhappy 1–6 and concurrency 1–3.\n- Each public test has at least one hidden test that extends it, named in a comment above the test.\n- The public suite already covers every boundary and unhappy scenario, so the hidden ones go further: other values, larger sizes and other orders.\n- A standalone check that `RECENT_JIRA_READ_MS` equals 60000 would pass against the current code, so the `[happy-1]` test checks the constant together with a cache that uses it as `ttlMs`.\n\n**Checked against a reference implementation:** I wrote one in the scratchpad and ran it on a copy of the compiled tests. All 149 tests passed (77 hidden, 72 public). I then ran shortcut versions that each change one thing:\n\n| Shortcut | Public fails | Hidden fails |\n|---|---|---|\n| Uses a `now` passed as `undefined` instead of defaulting to `Date.now` | 0 | 2 |\n| Stores entries in a plain object, so `toString` and similar keys count as present | 0 | 1 |\n| Clears expired entries when the cache is full | 2 | 4 |\n| Evicts the entry with the earliest stored-at instead of the first inserted | 1 | 2 |\n| Re-set keeps the later of the old and new stored-at | 0 | 2 |\n| Skips `set` when `ttlMs` is 0 or less | 0 | 1 |\n| Treats storing `undefined` as a delete | 0 | 2 |\n| Treats a stored falsy value as a miss | 0 | 2 |\n\nTwo versions that behave the same as the reference passed every hidden test: one reads `Date.now` lazily through a wrapper, and one checks expiry as `storedAt + ttlMs <= now`.\n\n77 tests, in 5 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "apps/api/test/hidden-recent-reads-check/defaults.test.ts",
+      "apps/api/test/hidden-recent-reads-check/eviction.test.ts",
+      "apps/api/test/hidden-recent-reads-check/expiry.test.ts",
+      "apps/api/test/hidden-recent-reads-check/issue-key-concurrency.test.ts",
+      "apps/api/test/hidden-recent-reads-check/values-keys.test.ts"
+    ],
+    "open": []
+  }
+}

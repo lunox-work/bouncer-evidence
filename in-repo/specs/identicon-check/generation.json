@@ -1,0 +1,73 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "ac4c2202-1a54-4741-93c4-f2a046c75d7e",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.19686700000000001,
+        "turns": 6,
+        "durationMs": 26767,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.19686700000000001,
+    "finalText": "I've created the seam at `packages/shared/src/identicon.ts`. `npx tsc -p tsconfig.test.json` reports no errors, and the existing suite still passes (85 of 85).\n\n- **Contents:** the `Identicon` interface (`readonly cells: readonly boolean[]`, `readonly hue: number`) and `identicon(_seed: string): Identicon`, whose body is only `throw new Error(\"not implemented\");`. As the spec requires, the module exports nothing else: no hash helper and no constants.\n- **Parameter name:** the parameter is `_seed` rather than `seed`. The repo's tsconfig rejects unused parameters, and the underscore prefix is the only way to satisfy that while keeping the body to just the `throw`. Callers pass the argument by position, so the signature they use is the same.\n- **Not done:** the spec also says `src/index.ts` should add `export * from \"./identicon.js\";`. I didn't add it because you asked me to write only the seam file, so the spec's entry-point re-export scenario will fail until the implementer adds that line.\n\nAdded: `Identicon`, `identicon`",
+    "problem": null,
+    "sha256": "67e7028d1942c8d379beb45d26a68cfbf3806a71771aecdab8024087b17802a3"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "b0ebe621-52ff-4263-96d0-f72ebbfd3b6e",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.6542248,
+        "turns": 10,
+        "durationMs": 144803,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.6542248,
+    "finalText": "I wrote the test suite in `packages/shared/test/identicon-check.test.ts`. It compiles with `npx tsc -p tsconfig.test.json`, and running it in the repo fails, as expected, because the bodies throw.\n\nTo check that the tests themselves are right, I ran them against a throwaway reference implementation of the spec's algorithm in the scratchpad. All 40 passed. I deleted that copy afterwards, so nothing changed in the repo except the new test file. Before writing the tests I also recomputed every golden and boundary vector in the spec from that algorithm, and they all match.\n\n**How it's organised**\n- There are two flat tests for every scenario: 8 `@happy`, 10 `@boundary`, 1 `@unhappy` and 1 `@concurrency`. Each name starts with its key, from `[happy-1]` to `[concurrency-1]`.\n- Each scenario gets its happy path plus one boundary case. Where a scenario lists several examples, they are split across its two tests: hue 0 and hue 359, the two forced-centre seeds, precomposed vs. decomposed é and the emoji, and changes of case vs. surrounding whitespace.\n- It follows `build-info.test.ts`: `node:test` `test`, `node:assert/strict`, and the same `BuildInfoDto` fixture for the `formatVersion` scenario. Two small helpers keep the assertions short: `grid()` turns the spec's `#`/`.` row strings into the cells array, and `assertFace()` checks the cells and the hue.\n\n**Choices you might question**\n- **Entry-point tests (`[happy-7]`):** `index.ts` doesn't re-export `identicon` yet, so a normal static import wouldn't compile. These two tests load the entry point with a dynamic `import(\"../src/index.js\")` instead, and the comment above that helper explains why.\n- **Boundary cases built from the algorithm:** a few boundary cases use seeds the spec doesn't list, with expectations that follow from the algorithm:\n  - lone low surrogates and surrogates inside a longer seed give the same result as U+FFFD;\n  - the 10,000-character seed gives a different result from 256 characters and from 10,001 characters, so the whole seed is hashed;\n  - the cells follow the hash bits for the hash values in the spec's tables.\n\n40 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "packages/shared/test/identicon-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "0ba37e17-abd0-4e81-a1b9-35a25b2de5e9",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.4303754000000002,
+        "turns": 22,
+        "durationMs": 351923,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.4303754000000002,
+    "finalText": "The hidden suite is in `packages/shared/test/hidden-identicon-check/`, split across four files: `shape-and-golden.test.ts`, `cells.test.ts`, `hue-and-seeds.test.ts` and `purity-and-entry.test.ts`.\n\n**Checks I ran:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Against the interface as it stands, all 43 tests fail with `not implemented`, or because the entry point doesn't re-export `identicon` yet.\n- Against a reference implementation written straight from the spec (in a scratch copy, not the repo), all 43 hidden tests and all 40 public tests pass. That reference also reproduces every vector in the spec.\n- I wrote shortcut implementations that pass the public suite, and the hidden suite fails each one:\n  - a blank-grid check that only looks at bits 0..13;\n  - trimming tab, no-break space or byte-order mark from the seed;\n  - NFC normalization, with the spec's decomposed `é` example special-cased;\n  - truncating long seeds.\n- A shared module-level cells array fails 4 hidden tests (it also fails 2 public ones).\n\n**What the hidden suite adds beyond the public one:**\n- **Each hash bit alone:** a seed for each of bits 0..14 where that is the only low bit set. This tests every bit-to-cell link and the mirror on its own. The single-cell and single-pair grids must not get the centre forced on.\n- **Blank and full grids:** three more blank seeds, two of them with bit 15 set, and two more full ones. One seed has bits 0..13 set and bit 14 clear.\n- **Hue edges:**\n  - 0 when the 17 high bits are 0, which `h % 360` gets wrong;\n  - 0 when they are exactly 360;\n  - 359 with no wrap-around;\n  - 31 when all 17 high bits are set, where a signed shift goes negative.\n- **Sweeps:** 1000-seed checks of cells, mirror, centre and hue against the spec's FNV-1a, which a lookup table of known seeds can't pass. Fixed faces for seeds next to the golden ones (`A`, `aa`, `usr_01HZY3K7Q`, …).\n- **Seed handling:**\n  - the edges of each UTF-8 length, U+0080 to U+10FFFF;\n  - NFC/NFKC traps: the angstrom sign and the `ﬁ` ligature;\n  - tab, newline, no-break space and byte-order mark around a seed;\n  - `ß`, `SS` and `İ` for case;\n  - a NUL seed, which must not be treated as empty;\n  - lone surrogates at the ends of both ranges, one before a valid pair, and one between letters;\n  - a 100,000-character seed, and 150,000-byte multi-byte seeds.\n- **Fresh results:** every earlier result keeps its own cells after later calls; this catches a shared buffer, which the public interleaving test misses. Also covered: 200 microtasks over five seeds, forward versus reverse call order, and fill, reverse and push mutations not leaking into later calls.\n- **Entry point:** the module's only runtime export is `identicon`. The existing exports still behave as before through the entry point; those tests also require `identicon` to be there, so they fail against the current code.\n\n43 tests, in 4 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/shared/test/hidden-identicon-check/cells.test.ts",
+      "packages/shared/test/hidden-identicon-check/hue-and-seeds.test.ts",
+      "packages/shared/test/hidden-identicon-check/purity-and-entry.test.ts",
+      "packages/shared/test/hidden-identicon-check/shape-and-golden.test.ts"
+    ],
+    "open": []
+  }
+}

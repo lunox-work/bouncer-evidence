@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 12,
+  "costUsd": 0.0555176,
+  "items": [
+    {
+      "question": "Is surrounding whitespace allowed around a duration?",
+      "ticket": "silent",
+      "chose": "Trims leading and trailing whitespace before parsing.",
+      "where": "src/duration.go:70",
+      "instead": "Reject any input with surrounding whitespace."
+    },
+    {
+      "question": "Is whitespace between components (e.g. \"1h 30m\" or \"1 h\") allowed?",
+      "ticket": "silent",
+      "chose": "Rejects it, since after the digits a unit must follow immediately and a count must start each component.",
+      "where": "src/duration.go:82",
+      "instead": "Allow spaces between components."
+    },
+    {
+      "question": "Are units case-sensitive (\"1H\")?",
+      "ticket": "silent",
+      "chose": "Only lowercase d, h, m, s and ms are accepted; uppercase is rejected.",
+      "where": "src/duration.go:28",
+      "instead": "Accept units case-insensitively."
+    },
+    {
+      "question": "Must units appear largest to smallest, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Requires strictly decreasing unit order and rejects repeats or out-of-order units such as \"1s1m\" or \"1h1h\".",
+      "where": "src/duration.go:92",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Is a bare number with no unit (e.g. \"5\" or \"0\") accepted as raw milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a number with no unit as an error.",
+      "where": "src/duration.go:88",
+      "instead": "Treat a bare number as milliseconds, for backward compatibility."
+    },
+    {
+      "question": "Is a day unit \"d\" supported?",
+      "ticket": "Let's accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Adds a \"d\" unit equal to 86400000 ms.",
+      "where": "src/duration.go:29",
+      "instead": "Support only h, m, s and ms."
+    },
+    {
+      "question": "Are fractional, negative or signed values (\"1.5h\", \"-1s\", \"+1s\") allowed?",
+      "ticket": "silent",
+      "chose": "Rejects them, because only ASCII digits are accepted as a count.",
+      "where": "src/duration.go:79",
+      "instead": "Allow fractions such as 1.5h, or a leading + sign."
+    },
+    {
+      "question": "Is there an upper limit on the parsed total, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns a \"duration ... exceeds\" error with overflow-safe checks.",
+      "where": "src/duration.go:98",
+      "instead": "Allow any value that fits in int64, or saturate to the maximum."
+    },
+    {
+      "question": "Is a zero-valued duration (\"0ms\", \"0d0h0m0s0ms\") valid, and are leading zeros allowed?",
+      "ticket": "silent",
+      "chose": "Accepts zero and leading-zero counts such as \"007s\" and returns 0 or the value without error.",
+      "where": "src/duration.go:79",
+      "instead": "Reject a zero timeout, or reject leading zeros."
+    },
+    {
+      "question": "What does formatting 0 ms produce?",
+      "ticket": "silent",
+      "chose": "Returns \"0ms\".",
+      "where": "src/duration.go:114",
+      "instead": "Return \"0s\" or an empty string."
+    },
+    {
+      "question": "How does formatting handle negative or too-large millisecond values?",
+      "ticket": "silent",
+      "chose": "Returns an empty string and an error for values below 0 or above 2^53-1.",
+      "where": "src/duration.go:111",
+      "instead": "Format negatives with a leading minus sign, or clamp to the range."
+    },
+    {
+      "question": "How does formatting write large values and skip zero components (e.g. 172800000 ms, 3605000 ms)?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Uses d as the largest unit, so 172800000 ms prints \"2d\", and omits zero-valued components, so 3605000 ms prints \"1h5s\".",
+      "where": "src/duration.go:119",
+      "instead": "Stop at hours (\"48h\"), or print zero components (\"1h0m5s\")."
+    }
+  ]
+}

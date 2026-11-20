@@ -1,0 +1,195 @@
+{
+  "slug": "pathe-unc-resolve-check",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-1] a single backslash or slash UNC argument keeps its prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-1] a single UNC argument with only a server or with redundant segments keeps its prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-1] a trailing separator after a UNC path is dropped",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-1] a trailing backslash after a UNC path is dropped",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-2] a bare UNC prefix gives a bare //",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-2] climbing out of a UNC path to an empty remainder gives a bare //",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-2] a backslash UNC base with a backslash relative segment comes back with //",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-2] mixed-separator UNC bases come back with //",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-3] a relative segment joins onto a UNC base",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-3] several relative segments and dot segments join onto a UNC base",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-3] empty, undefined and null segments after a UNC base are skipped",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-3] trailing empty, undefined and null segments after a UNC base are skipped",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-4] a single .. removes the share component",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-4] .. inside the base, and climbing past the server, are not clamped",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-4] a later absolute posix segment drops the UNC prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-4] a later drive or backslash-rooted segment drops the UNC prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-5] a UNC segment after an earlier posix absolute segment becomes the base",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-5] a UNC segment after a drive or another UNC segment becomes the base",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-5] a / root joined to a relative segment is not UNC",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-5] a / root followed by an absolute segment is not UNC",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-6] three leading slashes collapse to exactly //",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-6] three leading backslashes with doubled inner separators collapse to exactly //",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-6] a UNC working directory gives a UNC result for a relative argument",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-6] a UNC working directory with .., no arguments, or a relative //. segment",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-7] an absolute non-UNC argument ignores a UNC working directory",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-7] an absolute drive argument ignores a UNC working directory",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-7] a UNC argument ignores a non-UNC working directory",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-7] a UNC argument ignores a posix working directory",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-8] a relative //. segment against a non-UNC working directory gets no prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [unhappy-1] with an empty working directory a relative //. segment ends the walk and gets //",
+    "test/pathe-unc-resolve-check.spec.ts :: [unhappy-1] with an empty working directory a //. segment that normalizes to nothing gives //",
+    "test/pathe-unc-resolve-check.spec.ts :: [unhappy-2] with an empty working directory and no UNC segments, . and ./ fall back to .",
+    "test/pathe-unc-resolve-check.spec.ts :: [unhappy-2] with an empty working directory and no UNC segments, .. segments are kept",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-9] resolve drops the . of a //. path where normalize keeps it",
+    "test/pathe-unc-resolve-check.spec.ts :: [boundary-9] resolve on a single forward-slash //. path drops the .",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-8] existing posix resolve results stay as they are",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-8] existing windows resolve results stay as they are",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-8] existing resolve results against the working directory stay as they are",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-9] format with a UNC root keeps the prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-9] format with a backslash UNC root and dir keeps the prefix",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-10] relative between paths on the same UNC share",
+    "test/pathe-unc-resolve-check.spec.ts :: [happy-10] relative between paths on different UNC shares of a server"
+  ],
+  "publicOnSkeleton": {
+    "passed": 14,
+    "total": 42
+  },
+  "publicFailingOnReference": [],
+  "referenceRegressions": [],
+  "hiddenWritten": 54,
+  "kept": [
+    "test/hidden-pathe-unc-resolve-check/format-relative-unc.spec.ts :: [happy-9] format with a backslash UNC root and name and ext keeps the prefix",
+    "test/hidden-pathe-unc-resolve-check/format-relative-unc.spec.ts :: [happy-9] format with a UNC root and a deeper or relative dir keeps the prefix",
+    "test/hidden-pathe-unc-resolve-check/format-relative-unc.spec.ts :: [happy-9] format takes the UNC prefix from the segment resolve stops at",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-1] single UNC arguments with other server and share names keep the prefix",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-1] a UNC prefix written as mixed slash and backslash keeps the prefix",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-1] a UNC path whose first component looks like a drive keeps the full // prefix",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-1] a single UNC argument with dot segments and doubled separators normalizes its remainder",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-1] a long single UNC argument keeps every component and the prefix",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-1] a single UNC argument gives the same result under a posix or empty working directory",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-1] several trailing separators after a UNC path are dropped",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-1] a trailing separator on a relative segment after a UNC base is dropped",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-1] a trailing separator on a UNC working directory is dropped",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-2] a bare mixed-separator UNC prefix gives a bare //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-2] other ways of climbing to an empty UNC remainder give a bare //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-2] a UNC working directory climbed to nothing gives a bare //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-2] a backslash UNC base with several backslash segments comes back with forward slashes only",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-2] other separator mixes in the base and the relative segments come back with //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-3] many relative segments join onto a UNC base",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-3] forty relative segments join onto a UNC base",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-3] a relative segment after a UNC base keeps the prefix under any working directory",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-3] a relative //. segment after a UNC base joins under it",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-3] empty, undefined and null segments around and between segments are skipped",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-3] only empty, undefined and null arguments fall through to a UNC working directory",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-4] climbing past the server and then descending gives a new first component",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-4] .. inside the UNC base and in later segments together climb past the server",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-4] .. from a relative argument climbs a UNC working directory past the share",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-5] a UNC segment after several absolute segments becomes the base",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-5] a UNC segment after a relative first argument becomes the base",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-6] four or five leading separators collapse to exactly //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-6] three leading separators followed by relative segments collapse to exactly //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-6] a working directory with three leading separators collapses to exactly //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-6] a UNC working directory with several relative arguments",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-6] a UNC working directory with relative //. segments and empty arguments",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-7] a UNC argument ignores empty, drive and other UNC working directories",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [unhappy-1] with an empty working directory longer //. segments end the walk and get //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [unhappy-1] with an empty working directory .. above a //. segment is kept after //",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [unhappy-1] with an empty working directory the first of several //. segments ends the walk",
+    "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-9] resolve drops the . of other //. paths where normalize keeps it"
+  ],
+  "dropped": [
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/format-relative-unc.spec.ts :: [happy-10] relative between deeper paths on the same UNC share",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/format-relative-unc.spec.ts :: [happy-10] relative between paths on different UNC servers",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/format-relative-unc.spec.ts :: [happy-10] relative between relative arguments under a UNC working directory",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-4] later absolute non-UNC segments followed by relative segments drop the prefix",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-4] a later absolute non-UNC segment drops the prefix even under a UNC working directory",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-5] a lone / or \\ root is not UNC",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-5] a / root joined to several relative segments is not UNC",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-5] a / working directory joined to a relative segment is not UNC",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-7] drive, root and backslash-rooted arguments ignore a UNC working directory",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-8] relative //. segments against posix and drive working directories get no prefix",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-8] a relative //. segment after an absolute non-UNC argument gets no prefix",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [boundary-8] a relative //. segment that does not end the walk gets no prefix",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [unhappy-2] with an empty working directory, other segments that cancel out fall back to .",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [unhappy-2] with an empty working directory, relative segments stay relative",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-8] other posix resolve results stay as they are",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-unc-resolve-check/resolve-unc.spec.ts :: [happy-8] other resolve results against the working directory stay as they are",
+      "reason": "Passes on the skeleton."
+    }
+  ],
+  "reference": {
+    "public": {
+      "passed": 42,
+      "total": 42
+    },
+    "hidden": {
+      "passed": 38,
+      "total": 38
+    },
+    "touchedOutsideSrc": [],
+    "removed": [],
+    "existing": {
+      "passed": 457,
+      "total": 457
+    },
+    "notes": "`resolve` now keeps the `//` prefix when the path it resolves from is a UNC path. All tests pass: both new suites (96 tests) and the full suite (553 passed, plus 8 skipped and 8 todo).\n\n`resolve` in `src/_path.ts` already had a working body rather than a `not implemented` stub, so I changed it in place. The change is three small additions:\n\n- **Tracking the base:** a `resolvedUNC` flag is set from `_UNC_REGEX.test(path)` on each segment the right-to-left walk processes. It ends up describing the segment where the walk stops, whether that's the last absolute argument, `process.cwd()`, or a relative `//.` segment when the working directory is empty. That covers spec decisions 5–7.\n- **Returning early:** after `normalizeString`, a UNC base returns `` `//${resolvedPath}` `` straight away. This skips the `/` prefix branch and the `\".\"` fallback, so an empty remainder gives a bare `//` (decisions 1 and 9).\n- **Everything else:** inputs without a UNC base go through the old code unchanged. `relative` and `format` pick up the new prefix only through their calls to `resolve`. No exports or signatures changed, and `_UNC_REGEX` is reused as it was.\n\nTests left failing: none",
+    "sessions": [
+      {
+        "sessionId": "2dd759ec-cb79-4d41-8f57-1ea3a406db66",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.2186955,
+        "turns": 6,
+        "durationMs": 36168,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.2186955
+  }
+}

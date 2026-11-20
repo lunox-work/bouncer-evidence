@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0729608,
+  "items": [
+    {
+      "question": "Is a code still redeemable at the exact moment its 14 days end?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired when now >= createdAt + 14 days, so the boundary instant is already expired.",
+      "where": "src/index.ts:42",
+      "instead": "Treat the code as valid through the boundary and expired only when now > expiresAt."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Returns ok:false with reason 'already has access' and leaves the code unspent.",
+      "where": "src/index.ts:116-118",
+      "instead": "Redeem successfully and spend the code, or return ok:true without spending it."
+    },
+    {
+      "question": "Which state is reported when a code is both used and expired, or both revoked and expired?",
+      "ticket": "silent",
+      "chose": "Used takes precedence over revoked, and revoked over expired.",
+      "where": "src/index.ts:38-44",
+      "instead": "Report expired once the time has passed, or report revoked before used."
+    },
+    {
+      "question": "How are typed codes matched: case, spaces and dashes?",
+      "ticket": "silent",
+      "chose": "Strips all whitespace and dashes and uppercases the input before lookup.",
+      "where": "src/index.ts:34-36",
+      "instead": "Require an exact match to the displayed code, or ignore case only."
+    },
+    {
+      "question": "What do the generated codes look like (length, alphabet, format)?",
+      "ticket": "silent",
+      "chose": "Generates 12 characters from a 31-character alphabet that drops I, L, O, 0 and 1. Shows them in dashed blocks of four.",
+      "where": "src/index.ts:9-10",
+      "instead": "Use a different length or alphabet, such as hex or UUID, with no dashes."
+    },
+    {
+      "question": "What happens when a random draw collides with an existing code?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times, then throws an error.",
+      "where": "src/index.ts:177-183",
+      "instead": "Retry without a limit, or throw on the first collision."
+    },
+    {
+      "question": "What does revoking a code that is unknown, already used, or already revoked do?",
+      "ticket": "silent",
+      "chose": "Throws for an unknown code and for a used code. Does nothing for a code that is already revoked.",
+      "where": "src/index.ts:133-135",
+      "instead": "Silently ignore an unknown code, or throw on a repeat revoke."
+    },
+    {
+      "question": "Is a task's invite-only status or existence checked when creating a code?",
+      "ticket": "Company-borne tasks are invite only",
+      "chose": "Creates a code for any taskId string with no validation, including an empty string.",
+      "where": "src/index.ts:81-97",
+      "instead": "Reject an empty or unknown task id."
+    },
+    {
+      "question": "What does a failed redemption return for an empty or unrecognised code?",
+      "ticket": "silent",
+      "chose": "Returns ok:false with reason 'unknown' and does not throw.",
+      "where": "src/index.ts:110",
+      "instead": "Throw a validation error for empty input."
+    },
+    {
+      "question": "How are concurrent redemptions of one code handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Runs all registry operations one at a time through a per-instance promise queue.",
+      "where": "src/index.ts:168-173",
+      "instead": "Use an atomic compare-and-set in the store or a lock. The queue only serialises calls within one instance."
+    },
+    {
+      "question": "How do redeemed codes show who used them, and in what order are codes listed?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Adds usedBy and usedAt only to used codes, which are listed in creation order.",
+      "where": "src/index.ts:55-58",
+      "instead": "Always include usedBy and usedAt as null or undefined, or list newest first."
+    },
+    {
+      "question": "Do a used code's redeemer and state persist after the code's expiry time?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "A used code stays 'used' with its redeemer after expiry.",
+      "where": "src/index.ts:40",
+      "instead": "Report a used code as expired once its time passes, or hide the redeemer."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 12,
+  "costUsd": 0.058112899999999995,
+  "items": [
+    {
+      "question": "Are bare numbers without a unit (e.g. `90`) accepted as milliseconds, as in the old raw config values?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects bare numbers with InvalidDuration.",
+      "where": "src/lib.rs:89",
+      "instead": "Accept a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration.",
+      "where": "src/lib.rs:75",
+      "instead": "Treat it as 0 or as 'no timeout'."
+    },
+    {
+      "question": "Must components be in descending unit order, and may units repeat (e.g. `30m1h`, `1h1h`)?",
+      "ticket": "silent",
+      "chose": "Requires strictly decreasing units with no repeats, and rejects anything else.",
+      "where": "src/lib.rs:101",
+      "instead": "Accept components in any order and sum repeated units."
+    },
+    {
+      "question": "Which units are supported besides h, m, s and ms?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Also accepts `d` (days).",
+      "where": "src/lib.rs:35",
+      "instead": "Support only h, m, s and ms, or add w as well."
+    },
+    {
+      "question": "Are unit suffixes case-sensitive, and is whitespace allowed (e.g. `1H`, `1h 30m`)?",
+      "ticket": "silent",
+      "chose": "Lowercase only, and no whitespace anywhere.",
+      "where": "src/lib.rs:103",
+      "instead": "Accept uppercase units and trim or allow spaces between components."
+    },
+    {
+      "question": "Are fractional, signed, or exponent values such as `1.5h` or `-1s` accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them, since only ASCII digits are accepted before a unit.",
+      "where": "src/lib.rs:86",
+      "instead": "Accept decimals like `1.5h` and convert them to milliseconds."
+    },
+    {
+      "question": "What is the maximum allowed duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns InvalidDuration on overflow or when the cap is exceeded.",
+      "where": "src/lib.rs:113",
+      "instead": "Allow up to u64::MAX, or return a distinct overflow or out-of-range error."
+    },
+    {
+      "question": "Are zero values and leading zeros accepted (e.g. `0s`, `01h`)?",
+      "ticket": "silent",
+      "chose": "Accepts them, so `0s` parses to 0 and `01h05m` parses normally.",
+      "where": "src/lib.rs:93",
+      "instead": "Reject zero durations, since a zero timeout is meaningless, or reject leading zeros."
+    },
+    {
+      "question": "How is a value printed back in the admin UI: the exact components of the input, or a normalised form?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string that parses back, with ties going to the larger unit. So 5400000 prints as `90m` rather than `1h30m`, and 172800000 prints as `2d`.",
+      "where": "src/lib.rs:140",
+      "instead": "Use a canonical greedy decomposition into the largest units, such as `1h30m`."
+    },
+    {
+      "question": "What does formatting 0 produce?",
+      "ticket": "silent",
+      "chose": "Returns `0ms`.",
+      "where": "src/lib.rs:136",
+      "instead": "Return `0s`, or an empty string."
+    },
+    {
+      "question": "What does formatting do with a value above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error.",
+      "where": "src/lib.rs:133",
+      "instead": "Format any u64 value without a limit."
+    },
+    {
+      "question": "How are zero-valued intermediate components shown when formatting (e.g. 1h0m30s)?",
+      "ticket": "silent",
+      "chose": "Omits zero components, so 1 day plus 1 ms prints as `1d1ms`.",
+      "where": "src/lib.rs:159",
+      "instead": "Print zero components explicitly or stop at the first zero remainder."
+    }
+  ]
+}

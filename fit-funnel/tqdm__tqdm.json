@@ -1,0 +1,15 @@
+{
+  "repo": "tqdm/tqdm",
+  "package": ".",
+  "language": "python",
+  "commit": "9cf5a12b1f955468a17f0ba3c59092b23e4258ac",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "the existing suite does not build on a clean install: ERROR: usage: python -m pytest [options] [file_or_dir] [file_or_dir] [...]",
+    "seconds": 1
+  }
+}

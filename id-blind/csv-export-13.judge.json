@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0936571,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 covers several separate questions: the BOM (item 1), the header (item 2), row order (item 5) and CRLF endings (item 3). Item 2 is the closest because the scenario is mainly about the header row. Its pick writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created'. Items 1, 3 and 5 also agree with the scenario.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "No item asks how status is turned into a readable label. Item 6 asks how Created is formatted, which is the main formatting question here. The scenario wants a plain UTC date, YYYY-MM-DD, but the pick writes the full toISOString() value with time and milliseconds. Item 8, about the missing title, does agree with the scenario.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an empty list produces. The pick gives the BOM and the header row with no data rows. The header still ends with CRLF, which S1 requires of every row, so this matches 'the BOM and the header row alone'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": null,
+      "why": "Item 7 asks how fields with commas, quotes or line breaks are escaped. Its pick quotes them per RFC 4180 and doubles inner quotes, which matches the scenario. But the scenario also requires quoting a title that starts or ends with a space. The pick says nothing about spaces, and RFC 4180 does not require it, so I can't tell whether that part is met.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing titles that start with =, +, -, @, a tab or a carriage return.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 9, 10 and 11 each cover one way a row can be invalid. Item 12 covers invalid createdAt and asks whether one bad row stops the whole export, so it fits the scenario best. Its pick checks every row and throws on the first invalid one, so the build fails. It doesn't say the error names the id, but the matching picks in items 9 to 11 all do.",
+      "failing": true
+    }
+  ]
+}

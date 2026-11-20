@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.055485900000000005,
+  "items": [
+    {
+      "question": "Is a bare number such as `10` (or the old raw-millisecond style) accepted as a duration?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a bare number with no unit by raising ValueError.",
+      "where": "src/solution.py:43-45",
+      "instead": "Treat a bare number as raw milliseconds, so existing configs keep working."
+    },
+    {
+      "question": "What does parsing an empty string do?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for the empty string.",
+      "where": "src/solution.py:44",
+      "instead": "Return 0, or treat it as unset and use a default."
+    },
+    {
+      "question": "Must units appear largest first, and may a unit repeat?",
+      "ticket": "Let's accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Requires the order d, h, m, s, ms and allows each unit at most once, so `1s1h` and `1h1h` are rejected.",
+      "where": "src/solution.py:30-32",
+      "instead": "Accept components in any order and sum repeats, so `1s1h` and `1h1h` both parse."
+    },
+    {
+      "question": "Which units are supported?",
+      "ticket": "`1h30m`, `90s` or `250ms`",
+      "chose": "Supports d, h, m, s and ms. It adds days, which the ticket's examples don't show. It rejects w and other units.",
+      "where": "src/solution.py:21-27",
+      "instead": "Support only h, m, s and ms, or also add weeks."
+    },
+    {
+      "question": "Are decimals, signs, whitespace and non-ASCII digits accepted?",
+      "ticket": "silent",
+      "chose": "Rejects decimals such as `1.5h`, signs, surrounding or inner whitespace, underscores and non-ASCII digits.",
+      "where": "src/solution.py:30-32",
+      "instead": "Strip whitespace and allow decimals such as `1.5h`."
+    },
+    {
+      "question": "Are unit letters case-sensitive?",
+      "ticket": "silent",
+      "chose": "Matches case-sensitively, so `1H` and `1S` are rejected.",
+      "where": "src/solution.py:30-32",
+      "instead": "Accept upper-case or mixed-case units."
+    },
+    {
+      "question": "Is there a maximum total, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Raises ValueError when the total exceeds 9007199254740991 ms.",
+      "where": "src/solution.py:53-54",
+      "instead": "Allow any size, since Python ints don't overflow, or clamp to the maximum."
+    },
+    {
+      "question": "Are zero durations and leading zeros accepted?",
+      "ticket": "silent",
+      "chose": "Accepts `0s`, `0ms` and `007s`, returning 0 and 7000.",
+      "where": "src/solution.py:49-52",
+      "instead": "Reject zero as an invalid timeout, or reject leading zeros."
+    },
+    {
+      "question": "How is a non-string input to parse handled?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for non-strings, so an int such as 90 is rejected rather than treated as milliseconds.",
+      "where": "src/solution.py:41-42",
+      "instead": "Pass an int through as raw milliseconds, or raise TypeError."
+    },
+    {
+      "question": "What does formatting 0 ms print?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/solution.py:68-69",
+      "instead": "Return \"0ms\", or an empty string."
+    },
+    {
+      "question": "What does \"the same style\" mean for formatting: which output is chosen, and may it be non-normalised?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Returns the shortest string by character length, with no per-unit cap. 5400000 becomes `90m` rather than `1h30m`, and 90000000 becomes `25h` rather than `1d1h`.",
+      "where": "src/solution.py:73-91",
+      "instead": "Use a greedy decomposition with the largest unit first, giving `1h30m` and `1d1h`."
+    },
+    {
+      "question": "How are invalid format inputs handled: negative values, bool, float, out-of-range values?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for bool, float and other non-int types, and for values below 0 or above the maximum.",
+      "where": "src/solution.py:64-67",
+      "instead": "Accept floats by rounding them, or accept bool as an int, or clamp out-of-range values."
+    }
+  ]
+}

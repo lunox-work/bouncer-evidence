@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.06289040000000001,
+  "items": [
+    {
+      "question": "Is leading or trailing whitespace around a duration string tolerated?",
+      "ticket": "silent",
+      "chose": "Trims surrounding whitespace with strings.TrimSpace before parsing, so \"  1h30m \" is accepted.",
+      "where": "src/task.go:42",
+      "instead": "Reject any string with surrounding whitespace as invalid."
+    },
+    {
+      "question": "Is whitespace between components or between a count and its unit allowed?",
+      "ticket": "silent",
+      "chose": "Rejects it. The unit is read as the run of non-digits, so \"1 h\" and \"1h 30m\" give an unknown-unit error.",
+      "where": "src/task.go:64",
+      "instead": "Allow optional spaces between components, so \"1h 30m\" parses to 5400000."
+    },
+    {
+      "question": "What does an empty or whitespace-only string parse to?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an error saying the duration is empty.",
+      "where": "src/task.go:43",
+      "instead": "Treat empty as 0 or as 'no timeout' without an error."
+    },
+    {
+      "question": "Is a bare number with no unit (such as the old raw milliseconds \"172800\") accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects it with a 'missing unit' error rather than reading it as milliseconds.",
+      "where": "src/task.go:68",
+      "instead": "Treat a bare number as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Are unit suffixes case-sensitive, and which units are supported?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Matches suffixes exactly and in lowercase against d, h, m, s and ms, so \"1H\" is an error. Days are supported even though the ticket's examples don't show them.",
+      "where": "src/task.go:72",
+      "instead": "Match case-insensitively, or add more units such as w, us or ns."
+    },
+    {
+      "question": "Must units appear largest to smallest, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Rejects repeated or out-of-order units, so \"30m1h\" and \"1h1h\" are errors.",
+      "where": "src/task.go:81",
+      "instead": "Accept any order and repeats and sum the components, so \"30m1h\" gives 5400000."
+    },
+    {
+      "question": "Are fractional, signed or negative counts such as \"1.5h\", \"+1h\" or \"-1h\" accepted?",
+      "ticket": "silent",
+      "chose": "Accepts only runs of ASCII digits, so a sign or decimal point gives an 'expected a digit' error.",
+      "where": "src/task.go:57",
+      "instead": "Support fractional values like 1.5h, as Go's time.ParseDuration does, or allow a leading +."
+    },
+    {
+      "question": "Are leading zeros and zero counts valid?",
+      "ticket": "silent",
+      "chose": "Accepts them. \"01h\" is 3600000, and \"0ms\" and \"0d\" parse to 0 with no error.",
+      "where": "src/task.go:54",
+      "instead": "Reject leading zeros, or reject a zero duration as a meaningless timeout."
+    },
+    {
+      "question": "What is the maximum allowed duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns 0 and an overflow error. Each count and the running total are checked before multiplying.",
+      "where": "src/task.go:94",
+      "instead": "Cap at a practical maximum such as int64 max, or wrap or saturate silently."
+    },
+    {
+      "question": "How is a millisecond value printed back, and which units does the output use?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Breaks the value greedily from days down to ms and omits zero components. 172800000 prints as \"2d\" and 90000 as \"1m30s\".",
+      "where": "src/task.go:117",
+      "instead": "Stop at hours, so two days prints as \"48h\", or print the value as a single unit when it divides evenly."
+    },
+    {
+      "question": "How is zero formatted?",
+      "ticket": "silent",
+      "chose": "Returns \"0ms\".",
+      "where": "src/task.go:112",
+      "instead": "Return \"0s\" or \"0\", or an empty string."
+    },
+    {
+      "question": "What does formatting do with negative or over-limit millisecond values?",
+      "ticket": "silent",
+      "chose": "Returns \"\" and an error whose message contains \"milliseconds\" for values below 0 or above 2^53-1.",
+      "where": "src/task.go:109",
+      "instead": "Format negatives with a leading minus sign, or clamp to the limits."
+    }
+  ]
+}

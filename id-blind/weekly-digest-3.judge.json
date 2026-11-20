@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.085746,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks which time zone and which day decide that it is Monday. The pick formats the instant as a weekday in the given zone, so 16:30Z counts as Monday in Singapore and 15:59:59Z still counts as Sunday.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 10,
+      "agrees": true,
+      "why": "The DST case is the same question about which local day decides Monday. Formatting the weekday in America/New_York follows the shifted offset, so 04:30Z is Monday and 03:59:59Z is Sunday.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "The specific thing this scenario settles beyond basic listing is the furthest gate when there are no submissions. Item 8 picks gate 0 and otherwise the highest gate, which matches. Items 4 (merged excluded) and 7 (age) also touch it, but item 8 is the closest fit.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how age is computed and in what unit. The pick counts whole 24-hour periods rounded down, which gives 9 for 9d23h and 10 for exactly 10d.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 1,
+      "agrees": true,
+      "why": "The main rule is the stall threshold and whether the boundary counts. Item 1 picks >= 14×24h, so exactly 14 days is stalled and 13d23h is not. Items 2 and 3 (posting fallback, latest submission) also agree with the rest of the scenario.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks for the list order. The pick puts stalled tasks first, then oldest posted first, then id ascending, which matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks what the subject says and how it handles a count of 1. The pick always writes the plural 'tasks', but the scenario expects '1 open task'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what the digest returns when nothing is open. The pick returns null rather than an empty digest, which matches 'no digest at all'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what happens with an unknown time zone. The pick throws an Error naming the zone, which matches the scenario.",
+      "failing": false
+    }
+  ]
+}

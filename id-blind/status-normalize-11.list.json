@@ -1,0 +1,71 @@
+{
+  "run": "status-normalize/11",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0450764,
+  "items": [
+    {
+      "question": "Which old spellings besides the enum values are read as a status?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Maps only the cleaned form \"in review\" to review, so \"in-review\", \"In Review\" and \"in_review\" all read as review.",
+      "where": "src/index.ts:18",
+      "instead": "Also map other likely variants, such as \"in progress\" or \"pending\", or accept any prefix or near match."
+    },
+    {
+      "question": "How is a stored value cleaned before it is matched?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Lowercases the value, collapses runs of spaces, \"-\" and \"_\" into one space, and trims the ends.",
+      "where": "src/index.ts:23",
+      "instead": "Only trim and lowercase, or strip separators entirely so that \"dr-aft\" reads as draft."
+    },
+    {
+      "question": "What does reading an unrecognised stored value return?",
+      "ticket": "silent",
+      "chose": "Returns null.",
+      "where": "src/index.ts:37",
+      "instead": "Throw an error, or fall back to a default such as draft."
+    },
+    {
+      "question": "What does reading an empty or whitespace-only value return?",
+      "ticket": "silent",
+      "chose": "Returns null, because the cleaned empty string matches nothing.",
+      "where": "src/index.ts:35",
+      "instead": "Treat it as draft, the default status."
+    },
+    {
+      "question": "Does writing a status normalise near-miss input such as \"Draft\" or \"in-review\"?",
+      "ticket": "Only enum values are written",
+      "chose": "Accepts only the exact lowercase enum strings and throws for everything else, including a different case, padding or an old spelling.",
+      "where": "src/index.ts:45",
+      "instead": "Normalise the input with the read logic first and then write the enum value."
+    },
+    {
+      "question": "How does writing an invalid status fail?",
+      "ticket": "silent",
+      "chose": "Throws an Error whose message contains the JSON-quoted value.",
+      "where": "src/index.ts:46",
+      "instead": "Return null or undefined, or return a result object, without throwing."
+    },
+    {
+      "question": "What happens in a batch read when a row's status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row in the output with status null and records the value as unreadable, without failing the batch.",
+      "where": "src/index.ts:57",
+      "instead": "Drop the row from the output, or throw for the whole batch."
+    },
+    {
+      "question": "How are unreadable values reported in a batch read?",
+      "ticket": "silent",
+      "chose": "Lists each original stored string once, de-duplicated by exact raw value (\"Lost\" and \"  Lost  \" stay separate), sorted with the default sort.",
+      "where": "src/index.ts:62",
+      "instead": "De-duplicate on the cleaned form, report the cleaned value, or keep first-seen order."
+    },
+    {
+      "question": "Is the output order of rows kept in a batch read?",
+      "ticket": "silent",
+      "chose": "Keeps the input order, one output row per input row, with duplicate ids kept.",
+      "where": "src/index.ts:57",
+      "instead": "De-duplicate rows by id or sort them."
+    }
+  ]
+}

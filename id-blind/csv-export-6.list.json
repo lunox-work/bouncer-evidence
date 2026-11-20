@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.046685199999999996,
+  "items": [
+    {
+      "question": "In what order are the rows written?",
+      "ticket": "silent",
+      "chose": "Sorts rows by creation time ascending, then by id.",
+      "where": "src/index.ts:17",
+      "instead": "Keep the input order, or sort newest first."
+    },
+    {
+      "question": "How are ties on creation time ordered?",
+      "ticket": "silent",
+      "chose": "Breaks ties by id, comparing UTF-16 code units (not locale-aware).",
+      "where": "src/index.ts:52",
+      "instead": "Keep the input order for ties (stable sort), or compare ids with locale collation."
+    },
+    {
+      "question": "What happens when a requisition has bad data (unknown status, negative or fractional counts, filled over openings, invalid date)?",
+      "ticket": "silent",
+      "chose": "Throws an Error that names the requisition id, so no CSV is produced.",
+      "where": "src/index.ts:25",
+      "instead": "Skip the bad row, or write it as-is or with blank fields."
+    },
+    {
+      "question": "Which statuses are valid?",
+      "ticket": "silent",
+      "chose": "Allows only open, on_hold, filled and cancelled, and throws on any other value.",
+      "where": "src/index.ts:22",
+      "instead": "Pass any status string through unchanged."
+    },
+    {
+      "question": "Are zero openings or zero filled allowed?",
+      "ticket": "silent",
+      "chose": "Accepts any whole number of at least 0 for both.",
+      "where": "src/index.ts:56",
+      "instead": "Require openings of at least 1."
+    },
+    {
+      "question": "Can filled exceed openings?",
+      "ticket": "silent",
+      "chose": "Throws when filled is greater than openings.",
+      "where": "src/index.ts:33",
+      "instead": "Export the row unchanged, since over-filling may be real."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Produces the BOM and header row only.",
+      "where": "src/index.ts:19",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "What are the column names and their order?",
+      "ticket": "Export requisition list to CSV (with status and fill counts)",
+      "chose": "Writes the columns Requisition ID, Title, Status, Openings, Filled, Created.",
+      "where": "src/index.ts:10",
+      "instead": "Use other header labels, snake_case names, or add a computed column such as unfilled count."
+    },
+    {
+      "question": "What line terminator and file prefix does the CSV use?",
+      "ticket": "silent",
+      "chose": "Ends every row, including the last, with CRLF, and starts the file with a UTF-8 BOM.",
+      "where": "src/index.ts:19",
+      "instead": "Use LF with no BOM, and no trailing newline."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full ISO 8601 UTC timestamp with milliseconds.",
+      "where": "src/index.ts:47",
+      "instead": "Write a date only (YYYY-MM-DD), or a localized format."
+    },
+    {
+      "question": "How is a missing or null title written?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:43",
+      "instead": "Throw, or write a placeholder such as \"(untitled)\"."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped, and are spreadsheet formula prefixes (=, +, -, @) neutralized?",
+      "ticket": "silent",
+      "chose": "Quotes per RFC 4180 and doubles inner quotes. It does nothing about formula-leading characters, and it doesn't quote the status field.",
+      "where": "src/index.ts:61",
+      "instead": "Also prefix formula-leading values with a single quote to prevent CSV injection."
+    }
+  ]
+}

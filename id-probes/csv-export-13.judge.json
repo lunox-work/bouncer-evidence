@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11462359999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Items 1 (BOM), 2 (header), 3 (CRLF) and 5 (row order) each cover part of S1. Item 2 is closest because it settles the header row the scenario centres on. Its run shows 'Requisition ID,Title,Status,Openings,Filled,Created' exactly. The others also agree: the run starts with code 65279 (the BOM), every row ends with CRLF including the last, and rows sort by creation time, then id.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "No item asks how status is displayed, but item 6 asks how Created is formatted. S2 wants the UTC date as YYYY-MM-DD; the pick writes the full ISO string, '2023-11-14T22:13:20.123Z'. The runs also write the status raw ('open'), not 'Open'. Item 8 (missing title → empty field) agrees with S2, but it is the smaller point.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an empty list produces. The run gives the BOM plus the header row ending in CRLF, with no data rows. That matches 'the byte order mark and the header row alone', and S1 says every row, the last included, ends in \\r\\n.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": null,
+      "why": "Item 7 asks how fields with separators are escaped. The run quotes comma, quote and newline fields and doubles inner quotes, which matches S4, and plain fields come out unquoted. But the pick only says 'per RFC 4180', and nothing it states or runs shows whether a title starting or ending with a space, or holding a bare \\r, gets quoted. So it is too vague to judge against the whole scenario.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing titles that start like a formula (=, +, -, @, tab, \\r) with a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 9 (unknown status), 10 (non-integer or negative counts), 11 (filled > openings) and 12 (invalid createdAt, and whether one bad row fails the whole export) together cover S6. Item 12 is closest because it settles that one bad requisition fails the build with an error. Its run throws 'Requisition bad has an invalid creation time'. Items 9–11 also throw errors naming the id, and 0 is accepted, so all four agree.",
+      "failing": true
+    }
+  ]
+}

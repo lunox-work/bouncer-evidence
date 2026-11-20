@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0865528,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "S1 requires each scenario to carry its own line. Item 12 asks whether a Scenario keeps its original line number, and its pick records the 1-based line of the keyword line. Item 10 only covers the narrower question of step keyword spacing.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "S2 covers comment lines and blank lines being skipped, which is the question item 11 asks. Tags and descriptions are covered more narrowly by items 7 and 5. Item 11's pick skips '#' lines and blank lines, matching S2.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks whether the Background is returned and kept apart from scenario steps. Its pick returns the background steps separately, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how doc strings and tables are attached. Its pick gives the doc string as lines with the opening indent stripped and the table as rows of trimmed cells, matching S4. Item 11 also treats '#' lines inside doc strings as content.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": false,
+      "why": "S5 bundles several error cases, also touched by items 3, 4, 5 and 9. Its first clause is item 1's question: which line is reported when the Feature line is missing. Item 1's pick always reports line 1, but S5 expects the line of the first content line, which differs when the file starts with comments or blank lines.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a feature with no scenarios is valid. Its pick returns the feature with an empty scenarios list and no error, as S6 expects. Item 8's pick returns null when there is no background, which is consistent with S6.",
+      "failing": false
+    }
+  ]
+}

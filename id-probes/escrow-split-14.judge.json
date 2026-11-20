@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.13007069999999998,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what unit the share is in and what its default is. The pick is basis points with a default of 7500. The run released 75 of a bounty of 100 and set 'partially released', so a bounty of 10000 releases 7500, which is what S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how an uneven share is rounded. The pick uses BigInt integer division, rounds down and gives the leftover to UAT. The run splitBounty(3, 5000) → {1, 2} shows that. So 999 at 7500 gives 749 and 250, and BigInt keeps it exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how much UAT approval releases. The pick is the bounty minus earlier releases. The run released 90 after an earlier 10 and set 'fully released', which matches S3.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what a failed run does and whether it saves. The run returned 'locked' with no releases. The single save it counted came from the later pass, so the failed run saved nothing.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks about UAT approval before the hidden tests pass. The run threw 'cannot release on UAT approval: the hidden tests have not passed', made 0 saves and left the state undefined.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks what a zero bounty does. The status is 'pro bono' as S6 expects, but the run recorded 0-amount releases for both events. S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what a repeated event does. Duplicates are caught by release kind, so the same id or a different id of the same kind changes nothing. The run made 2 saves across 4 events and returned the unchanged state.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how events that arrive at the same time are handled. The pick runs them one at a time through a promise queue. Combined with the check by release kind from item 6, two copies handled at once, with the same or different ids, record exactly one release.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 also asks whether an error blocks later events. The pick says a failed event rejects its own caller without blocking later ones. In the run the first call rejected with the store's 'boom' error, and since the set failed nothing was saved. A retry can then still succeed, though the run's output is cut off before showing it.",
+      "failing": false
+    }
+  ]
+}

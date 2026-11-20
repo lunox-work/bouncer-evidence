@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0558183,
+  "items": [
+    {
+      "question": "Is surrounding whitespace in the input accepted?",
+      "ticket": "silent",
+      "chose": "Trims leading and trailing whitespace before parsing, so \"  1h30m \" is valid.",
+      "where": "src/task.go:42",
+      "instead": "Reject any input with surrounding whitespace as invalid."
+    },
+    {
+      "question": "What does an empty or whitespace-only string parse to?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an error saying the duration is empty.",
+      "where": "src/task.go:43",
+      "instead": "Treat it as 0 ms with no error, or as 'no timeout set'."
+    },
+    {
+      "question": "Which units are accepted besides h, m, s and ms?",
+      "ticket": "Let's accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Adds a 'd' (day) unit of 86400000 ms, and accepts only lowercase d, h, m, s and ms.",
+      "where": "src/task.go:26",
+      "instead": "Accept only h, m, s and ms, or accept uppercase units as well."
+    },
+    {
+      "question": "Can a duration have several components, and in what order?",
+      "ticket": "silent",
+      "chose": "Allows several components but requires them in order from largest to smallest, so \"30m1h\" is an error.",
+      "where": "src/task.go:76",
+      "instead": "Accept components in any order and sum them."
+    },
+    {
+      "question": "Can the same unit appear more than once, as in \"1h1h\"?",
+      "ticket": "silent",
+      "chose": "Rejects a repeated unit with an error.",
+      "where": "src/task.go:76",
+      "instead": "Add the repeated components together."
+    },
+    {
+      "question": "Are fractional counts like \"1.5h\" accepted?",
+      "ticket": "silent",
+      "chose": "Accepts only whole ASCII digit counts, so a decimal point is an error.",
+      "where": "src/task.go:55",
+      "instead": "Accept decimal counts and round or truncate the result to whole milliseconds."
+    },
+    {
+      "question": "Are a sign, spaces between components, or a bare number with no unit accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects \"-1s\", \"+1s\", \"1h 30m\" and \"1\" (a count with no unit) with errors.",
+      "where": "src/task.go:72",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility, and allow spaces between components."
+    },
+    {
+      "question": "Is a zero duration such as \"0s\" or \"0ms\" valid?",
+      "ticket": "silent",
+      "chose": "Accepts zero values and returns 0 with no error.",
+      "where": "src/task.go:91",
+      "instead": "Reject a zero timeout as invalid."
+    },
+    {
+      "question": "Is there a maximum duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms, checked during parsing, and returns 0 and an error above that.",
+      "where": "src/task.go:88",
+      "instead": "Use the int64 limit, or clamp to the maximum instead of erroring."
+    },
+    {
+      "question": "What is the return value when parsing fails?",
+      "ticket": "silent",
+      "chose": "Returns 0 together with a non-nil error on every failure.",
+      "where": "src/task.go:44",
+      "instead": "Return -1 or a partial total alongside the error."
+    },
+    {
+      "question": "How is a millisecond value printed back in the admin UI style?",
+      "ticket": "Would also be nice to print them back in the same style in the admin UI instead of the raw number.",
+      "chose": "Breaks the value into d/h/m/s/ms components, largest first, skipping zero parts, so 90000 becomes \"1m30s\" and 172800000 becomes \"2d\".",
+      "where": "src/task.go:111",
+      "instead": "Print only a single unit, or stop at hours with no day unit."
+    },
+    {
+      "question": "How does the formatter handle zero and out-of-range values?",
+      "ticket": "silent",
+      "chose": "Formats 0 as \"0ms\", and returns \"\" and an error for negative values or values above 2^53-1.",
+      "where": "src/task.go:104",
+      "instead": "Format 0 as an empty string or \"0s\", and format negative values with a minus sign or clamp them."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.055563,
+  "items": [
+    {
+      "question": "Is a bare number string such as \"90\" (no unit) accepted as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects any text without a unit suffix, such as \"1\", with a ValueError.",
+      "where": "src/solution.py:29",
+      "instead": "Accept a bare number as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Raises ValueError because the regex needs at least one number-unit pair.",
+      "where": "src/solution.py:15",
+      "instead": "Return 0, or treat it as unset or None."
+    },
+    {
+      "question": "Are uppercase units, whitespace, signs, decimals, or underscores accepted?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase digit-plus-unit pairs, so \"1H\", \" 1h\", \"1h 30m\", \"1.5h\", \"-5s\" and \"1_000ms\" are all rejected.",
+      "where": "src/solution.py:15",
+      "instead": "Be lenient: trim whitespace, ignore case, allow spaces between parts, or allow fractional values such as 1.5h."
+    },
+    {
+      "question": "Are larger units such as days (\"d\") or weeks supported?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Supports only h, m, s and ms, so \"2d\" is rejected and two days is written \"48h\".",
+      "where": "src/solution.py:14",
+      "instead": "Add a \"d\" unit (and possibly \"w\")."
+    },
+    {
+      "question": "Must the units appear in descending order and each at most once?",
+      "ticket": "`1h30m`, `90s` or `250ms`",
+      "chose": "Accepts any order and repeated units, summing them, so \"30m1h\" and \"1h1h\" both parse.",
+      "where": "src/solution.py:32",
+      "instead": "Reject out-of-order or duplicate units."
+    },
+    {
+      "question": "What is the largest duration parse accepts, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Raises ValueError when the total exceeds 9007199254740991 ms (2^53-1).",
+      "where": "src/solution.py:34",
+      "instead": "Impose no cap, or use a smaller business-sensible limit."
+    },
+    {
+      "question": "What happens when parse is given a non-string such as None, an int, or bytes?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with a \"not a duration\" message instead of TypeError.",
+      "where": "src/solution.py:29",
+      "instead": "Raise TypeError, or pass an int through as raw milliseconds."
+    },
+    {
+      "question": "Is a zero duration such as \"0ms\" valid?",
+      "ticket": "silent",
+      "chose": "Parses \"0ms\" and similar as 0.",
+      "where": "src/solution.py:32",
+      "instead": "Reject a zero timeout as invalid."
+    },
+    {
+      "question": "How is 0 ms printed back?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/solution.py:98",
+      "instead": "Return \"0ms\", or an empty string."
+    },
+    {
+      "question": "Does the formatter pick the canonical largest-unit decomposition or the shortest string?",
+      "ticket": "print them back in the same style",
+      "chose": "Searches for the shortest string, so 1500 gives \"1500ms\", 90000 gives \"90s\", 5400000 gives \"90m\", and 61000 gives \"61s\" rather than \"1m1s\".",
+      "where": "src/solution.py:105",
+      "instead": "Use greedy decomposition into the largest units, for example 5400000 gives \"1h30m\" and 1500 gives \"1s500ms\"."
+    },
+    {
+      "question": "Which string does the formatter pick when several have the same length?",
+      "ticket": "silent",
+      "chose": "Prefers fewer parts, and otherwise the first candidate found, which favours the largest units.",
+      "where": "src/solution.py:108",
+      "instead": "Always use greedy largest-unit form, or favour the most units."
+    },
+    {
+      "question": "What does the formatter do with invalid input (negative, over the maximum, float, bool, string, None)?",
+      "ticket": "silent",
+      "chose": "Raises ValueError mentioning \"milliseconds\" for anything that is not an exact int in [0, 2^53-1], and rejects bools.",
+      "where": "src/solution.py:96",
+      "instead": "Coerce floats and bools, clamp, or raise TypeError for wrong types."
+    }
+  ]
+}

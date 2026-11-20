@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-15",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1077976,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 is about the CSV's layout. Several items each settle one part of it: BOM (4), row order (2) and CRLF line endings (3). Item 1 asks about the columns and header labels, the scenario's main point. Its run writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created' as the first row, after the BOM. Items 2, 3 and 4 would also agree: rows sorted by creation time then id, CRLF after every line, BOM first.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": false,
+      "why": "S2 covers how values are formatted. Item 8 asks how the creation time is formatted. The scenario wants the UTC date only, 'YYYY-MM-DD'. The run wrote '2023-11-14T22:13:20.123Z', the full ISO timestamp. No item asks about status labels, and the runs show raw 'open' rather than 'Open'. Item 7 (missing title gives an empty field) matches the last line of S2 but covers less of it.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what an empty list produces. The run returned the BOM plus the header line with CRLF, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how fields with special characters are escaped. Its pick quotes only for comma, double quote, CR or LF, and doubles inner quotes. S4 also requires quoting a field that starts or ends with a space, which the pick leaves out.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing values that start like a formula (=, +, -, @, tab, CR) with a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 9, 10, 11 and 12 each cover one reason a row is refused, and all of them throw an error naming the id. Item 12 asks whether a bad row aborts the whole export, the closest to 'building fails'. Its run threw 'Requisition bad has an invalid creation time' and returned no CSV.",
+      "failing": true
+    }
+  ]
+}

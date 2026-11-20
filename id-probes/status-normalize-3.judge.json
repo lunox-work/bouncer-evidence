@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09560410000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how case and whitespace are handled on read. Its run reads '  DRAFT ' as 'draft', so lowercasing and trimming turn 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' into themselves.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks which old spellings map to statuses. The pick maps only 'in review'. 'In-Review' would read as review, but 'under_review' and 'LIVE' read as null, not 'review' and 'published'. The run shows 'done' reading as null too.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what readStatus returns for a value that is not a known status. It returns null, with no fuzzy matching, and item 7's run shows empty and space-only values also read as null. That fits 'no status at all, never the nearest'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what gets stored when a valid status is written. Item 1 asks whether variants are accepted, not what the stored value of a valid status is. Its run happens to show writeStatus('draft') returning 'draft', but answering that question would not settle S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether write accepts variants or only the exact spelling, which decides S5's 'Review' and ' draft' cases. The pick accepts exact matches only, and the run rejects ' Draft ' with an error that quotes the value as given. Items 2 and 3 also agree on the error message and on rejecting 'in-review'.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how the batch read reports unreadable values: their form, how duplicates are handled, and the order. The pick keeps the original stored strings, removes exact duplicates and sorts them, which is what S6 expects. Item 9's run shows each row kept with status or null.",
+      "failing": true
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1020225,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how loosely a stored value is cleaned before matching. The pick trims and lowercases, and the run shows \"  DRAFT \" read as \"draft\". So \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" come out as their canonical statuses.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings beyond the ticket's examples map to a status. The pick maps only \"in review\"; the run shows \"done\" giving null. So \"under_review\" and \"LIVE\" would read as null, not \"review\" and \"published\".",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unrecognised or empty stored value reads as. The pick returns null and never throws, and the run gives null for \"bogus\", \"\" and \"   \". Cleaning only normalises separators and case, with no fuzzy matching, so \"drafts\" and \"revew\" also read as null.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what writing an already canonical status stores. Item 4 is about whether non-canonical input is accepted. Item 5 is about how a write fails.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts non-canonical input such as case, padding or old spellings. The pick requires an exact canonical match. The run shows \"Draft\", \" draft\" and \"in-review\" all throwing, with the value quoted exactly as given in the message.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how a batch read reports unreadable values. The pick reports the raw stored strings unmodified, deduplicated and sorted, as the run shows. That matches 'each distinct original value once, sorted, exactly as it was stored'. Item 7, on keeping each row with a null status, also fits but less closely.",
+      "failing": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "psf/requests",
+  "package": ".",
+  "language": "python",
+  "commit": "3c7baaa05ab4aa49cc819ce3a819d260de19c157",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 87
+  }
+}

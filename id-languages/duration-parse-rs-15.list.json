@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.063428,
+  "items": [
+    {
+      "question": "Is a bare number such as `172800` (no unit) accepted as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config and people keep getting them wrong",
+      "chose": "Rejects bare numbers with InvalidDuration, so a unit is always required.",
+      "where": "src/lib.rs:100",
+      "instead": "Accept a bare number as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Must the parts appear in descending unit order, and can a unit repeat?",
+      "ticket": "like `1h30m`, `90s` or `250ms`",
+      "chose": "Rejects out-of-order or repeated units such as `30m1h` and `1h1h`.",
+      "where": "src/lib.rs:105",
+      "instead": "Accept parts in any order and sum them, including repeated units."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration.",
+      "where": "src/lib.rs:70",
+      "instead": "Treat it as 0 ms, or as 'no timeout set'."
+    },
+    {
+      "question": "Is there an upper bound on a parsed duration?",
+      "ticket": "silent",
+      "chose": "Rejects any total above 9,007,199,254,740,991 ms (the JS safe-integer limit), and also rejects overflow.",
+      "where": "src/lib.rs:115",
+      "instead": "Allow up to u64::MAX and reject only on overflow."
+    },
+    {
+      "question": "Are unit letters case-sensitive (`1H`, `1S`)?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase `h`, `m`, `s` and `ms`.",
+      "where": "src/lib.rs:97",
+      "instead": "Accept uppercase units too."
+    },
+    {
+      "question": "Are whitespace, signs, decimals, or other units such as days accepted (`1h 30m`, `-1s`, `1.5h`, `2d`)?",
+      "ticket": "silent",
+      "chose": "Rejects them all, since only ASCII digits followed by h/m/s/ms are allowed.",
+      "where": "src/lib.rs:87",
+      "instead": "Trim surrounding whitespace, allow spaces between parts, support fractions, or add a `d` unit (the ticket's motivating example is a two-day timeout)."
+    },
+    {
+      "question": "Are zero values and leading zeros accepted (`0s`, `007s`)?",
+      "ticket": "silent",
+      "chose": "Accepts them. `0s` parses to 0 and leading zeros are ignored.",
+      "where": "src/lib.rs:78",
+      "instead": "Reject a zero duration, or reject leading zeros."
+    },
+    {
+      "question": "Is a part with a large count in a small unit allowed (`1000ms`, `90s`)?",
+      "ticket": "`90s`",
+      "chose": "Accepts any count up to the max, without normalising it against the next unit up.",
+      "where": "src/lib.rs:112",
+      "instead": "Require counts to be below the next unit's size, e.g. reject `90s` or `1000ms`."
+    },
+    {
+      "question": "What does format_duration print for 0 ms?",
+      "ticket": "silent",
+      "chose": "Returns `0s`.",
+      "where": "src/lib.rs:133",
+      "instead": "Return `0ms`, or an empty string."
+    },
+    {
+      "question": "Which style does format_duration print: the canonical h/m/s/ms split, or the shortest string?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Searches for the shortest string, so 5,400,000 ms prints `90m` and 90,000 ms prints `90s` rather than `1h30m` or `1m30s`.",
+      "where": "src/lib.rs:137",
+      "instead": "Use the canonical greedy split, e.g. `1h30m`."
+    },
+    {
+      "question": "How does format_duration break ties between equal-length outputs?",
+      "ticket": "silent",
+      "chose": "Prefers fewer parts, then the larger unit.",
+      "where": "src/lib.rs:178",
+      "instead": "Prefer the canonical greedy split."
+    },
+    {
+      "question": "What does format_duration do with values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns MillisecondsOutOfRange for any value above 9,007,199,254,740,991.",
+      "where": "src/lib.rs:130",
+      "instead": "Format any u64 without an upper bound."
+    }
+  ]
+}

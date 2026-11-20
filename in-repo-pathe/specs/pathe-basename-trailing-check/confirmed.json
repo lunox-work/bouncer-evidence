@@ -1,0 +1,53 @@
+{
+  "sha256": "b62e5cff18103510b15b0298904adc4ccb54448a9c8a8970238af6729cd76b7c",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:32:38.734Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "Every trailing separator is ignored, not just one: the result is the last non-empty segment, so `a/b//` gives `b`.",
+    "Ticket: \"ignore trailing seperator (#180)\"",
+    "Instead: Strip only a single trailing separator.",
+    "An empty string `p` returns `\"\"`.",
+    "Ticket: silent.",
+    "Instead: Throw, or return `'.'`.",
+    "A root-only path (`/`, `///`, `\\`) returns `\"\"`, because every segment is empty.",
+    "Ticket: silent.",
+    "Instead: Return `'/'` (the root), or the original input.",
+    "Trailing backslashes are ignored too, because backslashes are normalized to `/` first.",
+    "Ticket: \"ignore trailing seperator (#180)\"",
+    "Instead: Strip only `'/'` and leave backslash handling to the platform.",
+    "With a trailing separator, the extension is still stripped from the last non-empty segment: `basename('a/b.js/', '.js')` gives `b`.",
+    "Ticket: silent.",
+    "Instead: Leave the extension alone when a trailing separator is present.",
+    "An extension equal to the whole last segment is stripped, leaving `\"\"`: `basename('a/.js/', '.js')` gives `\"\"`.",
+    "Ticket: silent.",
+    "Instead: Return the segment unchanged when the extension equals the whole name, as Node does.",
+    "When no segment is non-empty, the result is `\"\"` whatever the extension, because the extension check on `\"\"` has no effect.",
+    "Ticket: silent.",
+    "Instead: Return early before the extension logic.",
+    "A drive root (`C:\\`, `c:\\`, `C:/`) returns the drive with its letter upper-cased (`C:`), because the drive is the last non-empty segment. A bare drive with no separator keeps its case (`c:` gives `c:`).",
+    "Ticket: silent.",
+    "Instead: Return `\"\"`, as Node's `path.win32.basename('C:\\\\')` does.",
+    "The last non-empty segment is returned as it is: `.`, `..` and whitespace-only segments are not resolved, skipped or trimmed (`a/../` gives `..`).",
+    "Ticket: silent.",
+    "Instead: Normalize the path (resolve `.` and `..`) before taking the last segment.",
+    "The extension match is a case-sensitive plain suffix, as before. An extension without a dot is matched literally (`'html'` on `myfile.html` gives `myfile.`), and an empty or `undefined` extension strips nothing.",
+    "Ticket: silent.",
+    "Instead: Match extensions case-insensitively, or only when they begin with `.`.",
+    "`parse` picks up the fix through `basename`: for `/home/user/dir/`, `base` and `name` are `dir`, and `root` and `dir` are computed as before.",
+    "Ticket: silent.",
+    "Instead: Keep `parse` on the old last-segment logic, so `base` stays `\"\"` for a trailing separator.",
+    "No input validation is added. `p` is typed `string`, and the spec covers only string inputs, so tests must not pass non-strings.",
+    "Ticket: silent.",
+    "Instead: Throw a `TypeError` for non-string `p`, as Node does.",
+    "Seam (the files the stub writes): src/path.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/path.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

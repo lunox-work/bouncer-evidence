@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0694478,
+  "items": [
+    {
+      "question": "What happens when a file has no scenarios at all?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Treats a Feature with no scenarios as valid and returns an empty scenarios array.",
+      "where": "src/index.ts:188",
+      "instead": "Raise a ParseError because the file has no scenario."
+    },
+    {
+      "question": "How is an empty file, or one with no Feature: line, reported?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Throws a ParseError at line 1 for a file with no Feature: line. If other content comes first, it throws at that content's line.",
+      "where": "src/index.ts:184",
+      "instead": "Report the last line, or no line, or return an empty feature."
+    },
+    {
+      "question": "Are Scenario Outline / Scenario Template and Rule blocks supported?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError saying Scenario Outline or Rule is not supported, at that line.",
+      "where": "src/index.ts:124",
+      "instead": "Parse outlines as scenarios, with Examples tables, or skip them."
+    },
+    {
+      "question": "Are Background steps returned, and where do they go?",
+      "ticket": "silent",
+      "chose": "Collects Background steps into a separate background array and does not copy them into each scenario. The array is null when there is no Background.",
+      "where": "src/index.ts:134",
+      "instead": "Prepend the background steps to every scenario, or ignore the Background."
+    },
+    {
+      "question": "Are tags, doc strings and tables captured, and how?",
+      "ticket": "silent",
+      "chose": "Attaches tags to the next Scenario as strings that keep the '@'. Doc strings become arrays of lines. Tables become arrays of trimmed cell arrays.",
+      "where": "src/index.ts:94",
+      "instead": "Ignore tags, doc strings and tables, or store tags without '@' and doc strings as a single string."
+    },
+    {
+      "question": "What happens to tags placed before the Feature: line?",
+      "ticket": "silent",
+      "chose": "Discards them silently as feature-level tags.",
+      "where": "src/index.ts:114",
+      "instead": "Keep them as feature tags, or raise an error."
+    },
+    {
+      "question": "What happens to tags followed by something other than a Scenario, such as a step, Background or end of file?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the line of the first tag line.",
+      "where": "src/index.ts:155",
+      "instead": "Report the line of the offending following content, or ignore the tags."
+    },
+    {
+      "question": "What happens to free text between the Feature: line and the first block, and to unrecognised lines inside a block?",
+      "ticket": "silent",
+      "chose": "Ignores free text in the feature description. Throws a ParseError for any line inside a Background or Scenario that is not a step. Also throws if a step appears before any block.",
+      "where": "src/index.ts:159",
+      "instead": "Ignore prose in scenarios too, or reject description text."
+    },
+    {
+      "question": "Which step keywords are accepted, and what are the rules for spacing and case?",
+      "ticket": "silent",
+      "chose": "Accepts only Given, When, Then, And, But and '*', case-sensitive, followed by one space and any text. A bare keyword with no text is an error.",
+      "where": "src/index.ts:22",
+      "instead": "Allow case-insensitive or localized keywords, or allow a keyword with empty text."
+    },
+    {
+      "question": "How are CRLF line endings and a byte order mark handled?",
+      "ticket": "silent",
+      "chose": "Strips the trailing \\r from each line and a leading BOM from the first line.",
+      "where": "src/index.ts:46",
+      "instead": "Treat the BOM as content and fail, or leave \\r in the text."
+    },
+    {
+      "question": "How are doc strings delimited, indented and closed?",
+      "ticket": "silent",
+      "chose": "Accepts \"\"\" or ``` as delimiters, strips the opening delimiter's indentation from each line, and keeps comments and blank lines inside. An unclosed doc string errors at the line that opened it. A second table or doc string on one step is rejected.",
+      "where": "src/index.ts:72",
+      "instead": "Accept only \"\"\", keep the raw indentation, or report an unclosed doc string at the end of the file."
+    },
+    {
+      "question": "How are malformed table rows and escapes in cells handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError if a row has text after the last pipe. Unescapes \\|, \\\\ and \\n, and does not check that rows have the same number of cells.",
+      "where": "src/index.ts:215",
+      "instead": "Accept an unterminated row, or require every row to have the same column count."
+    }
+  ]
+}

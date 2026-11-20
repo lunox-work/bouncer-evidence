@@ -1,0 +1,15 @@
+{
+  "repo": "pytest-dev/pluggy",
+  "package": ".",
+  "language": "python",
+  "commit": "93de545c3a31880feaf0f6bb8870b30d602cf681",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 2
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "unjs/defu",
+  "package": ".",
+  "language": "typescript",
+  "commit": "82632b66f5914e9946edce300e10633a3d5c0cb7",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 7
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.05500240000000001,
+  "items": [
+    {
+      "question": "Which units does the duration grammar accept (e.g. days, weeks)?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts only h, m, s and ms; anything else such as `1d` is rejected.",
+      "where": "src/solution.py:25",
+      "instead": "Also accept d (and possibly w) units, so a two-day timeout could be written `2d`."
+    },
+    {
+      "question": "Do the units have to appear in a fixed order?",
+      "ticket": "silent",
+      "chose": "Requires descending order h, m, s, ms, so `30m1h` is rejected.",
+      "where": "src/solution.py:26",
+      "instead": "Accept the components in any order and sum them."
+    },
+    {
+      "question": "Can the same unit appear more than once?",
+      "ticket": "silent",
+      "chose": "Each unit may appear at most once, so `1h1h` is rejected.",
+      "where": "src/solution.py:26",
+      "instead": "Allow repeats and sum them."
+    },
+    {
+      "question": "Is the unit case-sensitive?",
+      "ticket": "silent",
+      "chose": "Lowercase only, so `1H` and `1S` are rejected.",
+      "where": "src/solution.py:26",
+      "instead": "Accept uppercase units too, or lowercase the input first."
+    },
+    {
+      "question": "Is whitespace allowed, either around the string or between components?",
+      "ticket": "silent",
+      "chose": "No whitespace is allowed anywhere, so ` 1s`, `1s ` and `1 s` are rejected.",
+      "where": "src/solution.py:41",
+      "instead": "Strip surrounding whitespace, or allow spaces between components such as `1h 30m`."
+    },
+    {
+      "question": "Are decimals, signs, and a bare number with no unit allowed?",
+      "ticket": "silent",
+      "chose": "Only unsigned ASCII digit runs followed by a unit are accepted, so `1.5h`, `-1s`, `+1s` and `90` are rejected.",
+      "where": "src/solution.py:26",
+      "instead": "Accept fractional values like `1.5h`, or treat a bare number as raw milliseconds for backward compatibility with existing configs."
+    },
+    {
+      "question": "What happens with an empty string?",
+      "ticket": "silent",
+      "chose": "Raises ValueError, because the regex matches but every group is None.",
+      "where": "src/solution.py:42",
+      "instead": "Return 0, or treat it as unset and return a default."
+    },
+    {
+      "question": "Are leading zeros allowed, and does a zero value count as valid?",
+      "ticket": "silent",
+      "chose": "Accepts leading zeros and zero values, so `007s` is 7000 and `0s` is 0.",
+      "where": "src/solution.py:49",
+      "instead": "Reject leading zeros, or reject zero durations as invalid timeouts."
+    },
+    {
+      "question": "What is the maximum allowed duration, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Raises ValueError when the total exceeds 9007199254740991 ms, and rejects over-long digit runs early.",
+      "where": "src/solution.py:50-54",
+      "instead": "Impose no cap, or use a smaller practical cap such as 32-bit milliseconds."
+    },
+    {
+      "question": "What does the parser do with a non-string input, such as the old raw-millisecond number?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Raises ValueError for any non-str input, including an int like 90.",
+      "where": "src/solution.py:39-40",
+      "instead": "Treat an int as raw milliseconds and pass it through, for backward compatibility."
+    },
+    {
+      "question": "What does format_duration print for 0 ms?",
+      "ticket": "silent",
+      "chose": "Returns `0s`.",
+      "where": "src/solution.py:66-67",
+      "instead": "Return `0ms`."
+    },
+    {
+      "question": "How does format_duration choose among equivalent strings, and does it normalise into larger units?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string by character count, with ties going to fewer components, so 5,400,000 ms prints as `90m` and 90,000 ms as `90s` rather than `1h30m` or `1m30s`.",
+      "where": "src/solution.py:94-101",
+      "instead": "Use a greedy largest-unit decomposition, so 5,400,000 ms prints as `1h30m`, matching the ticket's own example."
+    }
+  ]
+}

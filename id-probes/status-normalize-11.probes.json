@@ -1,0 +1,81 @@
+{
+  "run": "status-normalize-11",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.042679999999999996,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "[\"in-review\",\"In Review\",\"in_review\",\"inreview\",\"pending\",\"in  review\"].map(s => readStatus(s))"
+    },
+    {
+      "item": 2,
+      "probe": "readStatus(\"  Draft \") + \"|\" + readStatus(\"IN -_ REVIEW\") + \"|\" + readStatus(\"in\\treview\")"
+    },
+    {
+      "item": 3,
+      "probe": "readStatus(\"archived\")"
+    },
+    {
+      "item": 4,
+      "probe": "[readStatus(\"\"), readStatus(\"   \")]"
+    },
+    {
+      "item": 5,
+      "probe": "[\"Draft\",\" draft\",\"in-review\",\"in review\"].map(v => { try { return writeStatus(v) } catch (e) { return \"threw\" } })"
+    },
+    {
+      "item": 6,
+      "probe": "(() => { try { return writeStatus(\"Draft\") } catch (e) { return e.message } })()"
+    },
+    {
+      "item": 7,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"bogus\"}])"
+    },
+    {
+      "item": 8,
+      "probe": "readStatuses([{id:\"a\",status:\"Lost\"},{id:\"b\",status:\"  Lost  \"},{id:\"c\",status:\"Lost\"},{id:\"d\",status:\"apple\"},{id:\"e\",status:\"Zed\"},{id:\"f\",status:\"\"}]).unreadable"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:\"b\",status:\"merged\"},{id:\"a\",status:\"Draft\"},{id:\"b\",status:\"claimed\"}]).rows"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ 'review', 'review', 'review', null, null, 'review' ]"
+    },
+    {
+      "item": 2,
+      "actual": "'draft|review|null'"
+    },
+    {
+      "item": 3,
+      "actual": "null"
+    },
+    {
+      "item": 4,
+      "actual": "[ null, null ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'threw', 'threw', 'threw', 'threw' ]"
+    },
+    {
+      "item": 6,
+      "actual": "'not a sandbox status: \"Draft\"'"
+    },
+    {
+      "item": 7,
+      "actual": "{ rows: [ { id: 'a', status: 'draft' }, { id: 'b', status: null } ], unreadable: [ 'bogus' ] }"
+    },
+    {
+      "item": 8,
+      "actual": "[ '', '  Lost  ', 'Lost', 'Zed', 'apple' ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ { id: 'b', status: 'merged' }, { id: 'a', status: 'draft' }, { id: 'b', status: 'claimed' } ]"
+    }
+  ]
+}

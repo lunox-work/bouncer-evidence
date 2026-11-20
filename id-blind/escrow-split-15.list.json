@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.06426209999999999,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when the bounty times the share is not a whole number of minor units?",
+      "ticket": "Amount is derived from the bounty, never hard-coded",
+      "chose": "Rounds the hidden-test amount down (BigInt integer division) and gives the remainder to the UAT release.",
+      "where": "src/index.ts:13",
+      "instead": "Round to nearest, or round the hidden-test share up, or reject bounties that do not split evenly."
+    },
+    {
+      "question": "What counts as a valid bounty (negative, fractional, or unsafe-large numbers)?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError unless the bounty is a safe integer of at least 0.",
+      "where": "src/index.ts:71",
+      "instead": "Accept fractional amounts, or clamp or coerce invalid values without throwing."
+    },
+    {
+      "question": "What counts as a valid hidden-test share, and in what unit is it given?",
+      "ticket": "the configured hidden-test share (default 75%)",
+      "chose": "Treats the share as integer basis points and throws a RangeError unless it is a whole number from 0 to 10000.",
+      "where": "src/index.ts:77",
+      "instead": "Take the share as a fraction or percentage, allow fractional values, or clamp out-of-range values."
+    },
+    {
+      "question": "When is an invalid task config (bounty or share) rejected?",
+      "ticket": "silent",
+      "chose": "Throws synchronously when the handler is created, before any event arrives.",
+      "where": "src/index.ts:20",
+      "instead": "Validate lazily and reject when the first event is handled."
+    },
+    {
+      "question": "What happens when the same event or a second event of the same kind arrives after the release has been recorded?",
+      "ticket": "Release happens once per task",
+      "chose": "Returns the current state unchanged and writes nothing, whether it is a redelivery of the same event id or a new event of that kind.",
+      "where": "src/index.ts:50",
+      "instead": "Dedupe by event id only, or throw an error on a duplicate release."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Rejects with an Error and records nothing.",
+      "where": "src/index.ts:42",
+      "instead": "Release the whole escrow on UAT approval, or ignore the event and return the current state."
+    },
+    {
+      "question": "What does a failed hidden-test run do to the state, and can a later pass still release?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns a copy of the current state without saving anything, and a later pass still releases the hidden-test share.",
+      "where": "src/index.ts:36",
+      "instead": "Record the failure or lock the escrow so that a later pass no longer releases."
+    },
+    {
+      "question": "What is the 'remaining escrow balance' released on UAT approval?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Releases the precomputed bounty minus the hidden-test share, not a balance read from the store's recorded releases.",
+      "where": "src/index.ts:24",
+      "instead": "Compute the bounty minus the sum of the releases already recorded in the store."
+    },
+    {
+      "question": "How does a zero-bounty task behave?",
+      "ticket": "silent",
+      "chose": "Reports a 'pro bono' status and still records releases of amount 0 on the gate events.",
+      "where": "src/index.ts:84",
+      "instead": "Record no release at all for a zero bounty, or reject zero bounties."
+    },
+    {
+      "question": "What happens with an event kind that is not recognised?",
+      "ticket": "silent",
+      "chose": "Rejects with an Error naming the unknown kind.",
+      "where": "src/index.ts:47",
+      "instead": "Ignore the event and return the current state."
+    },
+    {
+      "question": "How are concurrent events and store failures handled?",
+      "ticket": "Release happens once per task",
+      "chose": "Runs events one at a time through a promise queue, and a failed store write propagates the error and leaves the queue usable so the event can be retried.",
+      "where": "src/index.ts:60",
+      "instead": "Handle events without serialization, relying on the store for atomicity, or swallow the store errors."
+    },
+    {
+      "question": "What state does the handler start from when the store is empty or already holds releases?",
+      "ticket": "silent",
+      "chose": "Starts from a fresh state with no releases when the store is empty, and resumes from the releases already in the store otherwise.",
+      "where": "src/index.ts:31",
+      "instead": "Keep the state in memory only and ignore what the store holds."
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1098479,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 is mostly about one row per requisition, sorted by creation time and then id. That is item 1's question. Its run sorted z (2024-01-01) first, then a and b, which share a timestamp, by id. Items 3, 5 and 4 also fit: the run shows the BOM, the exact header and CRLF after every line, the last one included.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how the creation time is written, and S2 settles that. S2 wants the UTC date as YYYY-MM-DD, but the run wrote the full ISO string with milliseconds (2024-03-05T10:20:30.123Z). No item asks how status is displayed: the runs write the raw 'open', not 'Open'. Item 7 (missing title gives an empty field) agrees with S2.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what an empty list produces. The run returned the BOM plus the header line and its CRLF, nothing else, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": null,
+      "why": "Item 8 asks how fields holding separators are escaped. The run quoted a title with a comma, quotes and a newline, doubled the inner quotes and left plain fields unquoted, all as S4 expects. But S4 also wants titles that start or end with a space quoted. RFC 4180 doesn't require that and no run tested it, so it can't be told.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about titles that start like a formula (=, +, -, @, tab, CR) or about adding a single quote in front of them.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Items 9, 10, 11 and 12 all ask about rejecting a requisition. Item 10 is closest because its error text matches S6's wording, 'not a whole number of at least 0'. Its run threw for -1, 1.5, NaN and Infinity, and each error names the id. Items 9 and 11 also throw with the id, so they agree too. No item covers an invalid creation time.",
+      "failing": true
+    }
+  ]
+}

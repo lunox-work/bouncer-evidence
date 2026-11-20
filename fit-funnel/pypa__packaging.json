@@ -1,0 +1,15 @@
+{
+  "repo": "pypa/packaging",
+  "package": ".",
+  "language": "python",
+  "commit": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 31
+  }
+}

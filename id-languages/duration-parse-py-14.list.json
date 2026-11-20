@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0523956,
+  "items": [
+    {
+      "question": "Is a bare number string like \"172800\" (no unit) accepted as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects bare numbers with a ValueError, because the regex requires a unit suffix.",
+      "where": "src/solution.py:30",
+      "instead": "Accept a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Is the empty string a valid duration?",
+      "ticket": "silent",
+      "chose": "Rejects empty text with ValueError.",
+      "where": "src/solution.py:31",
+      "instead": "Treat it as 0 ms or as a missing value and return a default."
+    },
+    {
+      "question": "Must units appear in descending order and at most once each?",
+      "ticket": "accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Only accepts h, m, s, ms in that order, each at most once, so \"30m1h\" and \"1s1s\" are rejected.",
+      "where": "src/solution.py:18",
+      "instead": "Accept any order and repeated units and sum them."
+    },
+    {
+      "question": "Which units are supported besides the ones in the examples (d, w, fractional values, uppercase, whitespace, signs)?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Supports only lowercase h, m, s, ms, with no days, decimals, spaces, signs or underscores, and ASCII digits only.",
+      "where": "src/solution.py:18",
+      "instead": "Also accept d (days), decimals like 1.5h, case-insensitive units, or surrounding whitespace."
+    },
+    {
+      "question": "What happens when a component is larger than its natural range, for example \"90m\" or \"100000h\"?",
+      "ticket": "silent",
+      "chose": "Accepts any digit count in any component and just sums the result.",
+      "where": "src/solution.py:18",
+      "instead": "Reject out-of-range components, such as minutes of 60 or more when hours are also given."
+    },
+    {
+      "question": "Is there an upper limit on the parsed total, and is it inclusive?",
+      "ticket": "silent",
+      "chose": "Rejects totals above 9007199254740991 ms and allows exactly that value.",
+      "where": "src/solution.py:37",
+      "instead": "Apply no limit, or use a different limit such as a 32-bit maximum."
+    },
+    {
+      "question": "How are zero values handled when parsing, for example \"0s\" or \"0ms\"?",
+      "ticket": "silent",
+      "chose": "Accepts them and returns 0.",
+      "where": "src/solution.py:33",
+      "instead": "Reject a zero timeout as invalid."
+    },
+    {
+      "question": "What happens when parse_duration gets a non-string input?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with a message containing \"duration\".",
+      "where": "src/solution.py:28",
+      "instead": "Raise TypeError, or pass an int through unchanged."
+    },
+    {
+      "question": "How is 0 ms formatted?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/solution.py:89",
+      "instead": "Return \"0ms\"."
+    },
+    {
+      "question": "What does \"the same style\" mean when formatting, for example 5400000 ms as \"1h30m\" or \"90m\"?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number.",
+      "chose": "Picks the shortest string by character count, so 5400000 becomes \"90m\" and 3661000 becomes \"3661s\".",
+      "where": "src/solution.py:42",
+      "instead": "Use a greedy largest-unit decomposition, giving \"1h30m\" and \"1h1m1s\"."
+    },
+    {
+      "question": "How are ties between equally short formats broken?",
+      "ticket": "silent",
+      "chose": "Prefers fewer parts, then larger units.",
+      "where": "src/solution.py:73",
+      "instead": "Prefer the greedy largest-unit split or the most parts."
+    },
+    {
+      "question": "What does format_duration do with negative values, bools, floats or other non-int input?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with a message containing \"milliseconds\" for negatives, values above the maximum, bools, floats and non-ints.",
+      "where": "src/solution.py:85",
+      "instead": "Accept floats by rounding or truncating, accept bools as ints, or raise TypeError."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "run": "status-normalize/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0497994,
+  "items": [
+    {
+      "question": "What does reading a stored value that matches no status or known old spelling return?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null, never the nearest status.",
+      "where": "src/index.ts:37",
+      "instead": "Throw an error, or fall back to a default status such as draft."
+    },
+    {
+      "question": "Does reading ignore letter case and surrounding whitespace in stored values?",
+      "ticket": "silent",
+      "chose": "Trims both ends and lowercases the value before matching, so \"  PUBLISHED \" reads as published.",
+      "where": "src/index.ts:20",
+      "instead": "Match only exact lowercase values, or lowercase without trimming."
+    },
+    {
+      "question": "How are separators such as hyphens, underscores and repeated spaces treated when reading?",
+      "ticket": "silent",
+      "chose": "Collapses any run of whitespace, \"-\" and \"_\" into one space, so \"in_review\" and \"in   review\" both become \"in review\".",
+      "where": "src/index.ts:20",
+      "instead": "Treat each separator as distinct, or strip separators entirely."
+    },
+    {
+      "question": "Which old spellings map to which enum values?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only \"in review\" (after cleaning) to review. No other aliases exist, and \"inreview\" reads as null.",
+      "where": "src/index.ts:16",
+      "instead": "Add more aliases (for example \"in progress\", \"done\", \"inreview\") or fuzzy matching."
+    },
+    {
+      "question": "What does writing a value do when it is not exactly an enum value, such as \"Draft\" or the old spelling \"in-review\"?",
+      "ticket": "Only enum values are written",
+      "chose": "Throws an Error and does not normalise it. Only exact lowercase enum values pass through.",
+      "where": "src/index.ts:46",
+      "instead": "Normalise the value with the read logic and write the result, throwing only for unknown values."
+    },
+    {
+      "question": "What error does an invalid write raise, and what does its message contain?",
+      "ticket": "silent",
+      "chose": "Throws a plain Error whose message includes the quoted value and the list of valid statuses.",
+      "where": "src/index.ts:47",
+      "instead": "Throw a custom error class, or return null or a result object without throwing."
+    },
+    {
+      "question": "What happens when the value to write or read is an empty or whitespace-only string?",
+      "ticket": "silent",
+      "chose": "Writing \"\" throws. Reading \"\" or \"   \" returns null.",
+      "where": "src/index.ts:36",
+      "instead": "Treat empty as a default status such as draft, or reject empty input separately."
+    },
+    {
+      "question": "When reading many rows, is a row with an unreadable status kept or dropped?",
+      "ticket": "silent",
+      "chose": "Keeps the row in order with its status set to null.",
+      "where": "src/index.ts:57",
+      "instead": "Drop unreadable rows from the output, or throw on the first one."
+    },
+    {
+      "question": "How are unreadable values reported for a batch read: in what form, with what de-duplication, and in what order?",
+      "ticket": "silent",
+      "chose": "Lists each distinct raw stored string once, uncleaned, so \"alpha\" and \"Alpha \" are separate entries, sorted with the default string sort.",
+      "where": "src/index.ts:62",
+      "instead": "Report cleaned values, report row ids, keep first-seen order, or list duplicates."
+    },
+    {
+      "question": "Does batch reading keep the input row order and ids?",
+      "ticket": "silent",
+      "chose": "Maps rows one-to-one, preserving order and ids.",
+      "where": "src/index.ts:57",
+      "instead": "Group or sort rows, or de-duplicate by id."
+    }
+  ]
+}

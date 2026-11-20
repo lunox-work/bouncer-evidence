@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07612950000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 covers several separate questions: the header (item 1), the BOM (item 4), row order (item 2) and CRLF line endings (item 5). Item 1 is closest because the scenario is about the header row. Its pick writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created' in that order. The other three picks also match S1.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": false,
+      "why": "S2 covers how values are written for display. Item 8 asks how the creation time is formatted. S2 wants the UTC date only, 'YYYY-MM-DD', but the pick writes the full toISOString() timestamp with milliseconds. Item 7 (missing title gives an empty field) also fits S2 and matches it. No item asks about the status labels.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an empty list produces. The pick returns the BOM and the header row only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how fields with special characters are escaped. The pick quotes fields with commas, quotes or line breaks, doubles inner quotes, and says it does nothing else. S4 also requires quoting a title that starts or ends with a space, which the pick does not do.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6's escaping question includes formula injection, since the pick mentions it by name. The pick says it does not neutralise a leading =, +, - or @. S5 requires a single quote before those characters and before a leading tab or \\r.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "S6 covers items 9 to 12: unknown status, openings, filled and creation time. Item 9 is closest because unknown status comes first in the scenario. Its pick throws an Error naming the id, which matches S6. Items 10, 11 and 12 also throw errors naming the id, which matches the rest of S6.",
+      "failing": true
+    }
+  ]
+}

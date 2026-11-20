@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1352372,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 is the only one about what create does when a drawn code collides with an existing one. The pick redraws, and the run confirms it keeps redrawing until it gives up after 100 tries. That matches S1's 'drawn again'. The 14-day expiry in S1 is consistent with every run output (createdAt + 14 days).",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks whether redeeming records the contributor's access. In the run, after redeeming, 'invite-access/alice' holds ['t1'] only, hasAccess is true, and the code record has usedBy 'alice' and usedAt. So access goes to that task alone, and the code shows who used it and when.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how typed input is normalised. The pick strips whitespace and hyphens and uppercases the input. The run redeems a lowercase, space-separated, padded version of the code and succeeds.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a code is still valid at exactly 14 days. The pick treats now >= expiresAt as expired, and the run gives { ok: false, reason: 'expired' } at exactly 14 days. A millisecond earlier is before expiresAt, so it is still valid, as S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when the contributor who already used a code redeems that same code again, which is S5's key question (succeeds, nothing changes). Item 3 covers a second, different code for a task the contributor already has. Item 1 covers precedence between used and expired, not who is redeeming.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether codes can be revoked and what that does. The pick throws when revoking a used code, which matches 'a used code cannot be revoked'. The run shows a revoked code redeems as { ok: false, reason: 'revoked' } and an unknown code is rejected. Item 9's run also gives reason 'unknown' for a code that was never made.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks exactly this. The run returns { ok: false, reason: 'already has access' } for the second code, and the listing shows it still 'unused'.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how concurrent operations are handled. The run uses a store whose calls are delayed and fires three redemptions at once. Exactly one succeeds and the other two fail with reason 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": null,
+      "why": "Item 10 asks what listings show. The pick lists every code with createdAt, expiresAt and a state computed at the current time, plus usedBy and usedAt on used codes. But neither the pick nor the cut-off run output shows whether a used code stays 'used' rather than 'expired' after its expiry time. The run gets as far as showing an unused code turning 'expired' and a revoked one staying 'revoked', then stops before the used code.",
+      "failing": false
+    }
+  ]
+}

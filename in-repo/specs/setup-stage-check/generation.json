@@ -1,0 +1,73 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "7e2607d9-7474-4640-a229-c34ffbd02636",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.20843489999999998,
+        "turns": 6,
+        "durationMs": 111825,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.20843489999999998,
+    "finalText": "I created the seam at `apps/web/src/features/onboarding/setup.ts`. It is a new file and the only one I wrote.\n\n- **What it contains:** the exports exactly as the spec gives them, using the codebase's 2-space style with a short doc comment on each. The three function bodies are just `throw new Error(\"not implemented\");`. The spec names no constants, errors or environment inputs, so there are none.\n- **One change from the spec's text:** the parameter is named `_facts` instead of `facts`. The project's type checker rejects unused parameters, and every stub body leaves it unused. The types are unchanged and nothing calls the parameter by name, so callers aren't affected.\n- **Type check:** `npx tsc -p tsconfig.test.json --noEmit` reports no errors.\n- **Existing suite:** 811 tests pass and 2 fail, which matches the result before my change. I confirmed this by stashing my change and re-running. Both failures are in `test/dev-hosts.test.ts`, the \"Vite loads dev hostnames…\" and \"Vite defaults to localhost hosts…\" tests. My guess is that the sandbox blocks the dev server those tests start, but I didn't confirm that.\n\nExported names added: `SetupStage`, `SetupFacts`, `setupStage`, `SetupStepId`, `SetupStep`, `setupSteps`, `setupComplete`",
+    "problem": null,
+    "sha256": "b6e78d30917b6a6de1c5ee888c1c384e31f72f07aa172a5ebae8616dd33176f8"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "a065a9eb-96df-416d-bf0b-518c62c299f6",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.6369457000000001,
+        "turns": 7,
+        "durationMs": 148988,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.6369457000000001,
+    "finalText": "I've written the test suite in `apps/web/test/setup-stage-check.test.ts`. It covers all 26 scenarios in the spec (6 happy, 15 boundary, 5 unhappy), with two tests each: the scenario as the spec states it, and one boundary case.\n\n**Checks:**\n- `npx tsc -p tsconfig.test.json --noEmit` reports no errors.\n- `npx vitest run test/setup-stage-check.` runs 52 tests and all 52 fail. Every failure comes from the `not implemented` stub: 47 are the thrown error itself, and 5 are `not.toThrow` assertions catching that same error.\n\n**How it's built:**\n- It follows `analysis-labels.test.ts`: flat top-level vitest `test`s with `expect`, no `describe`, and each name starts with its scenario key (e.g. `[unhappy-2]`).\n- A `facts(changes)` helper builds the spec's \"nothing connected\" base facts and changes only the fields a scenario names.\n- The spec's tables are written out once as constants. Each row-based scenario loops over its table. The scenarios that cover \"every row of every table in this spec\" (`[boundary-11]`, `[boundary-13]`) loop over all of them.\n- The boundary cases add inputs the spec's tables don't list: `-0`, `Number.MIN_VALUE`, fractions, `±Infinity` and `NaN`, a GitHub account with no repository combined with other states, a tool the server doesn't offer combined with the github stage, and a fixed grid of odd counts for the \"at most one current step\" and \"complete agrees with steps\" rules. Every expected value follows directly from the spec's rules.\n- `[boundary-15]` says \"setting a property on a step\". The test does this with `Reflect.set`, so an implementation that returns frozen step objects isn't failed for something the spec doesn't forbid.\n\nI only added this one file and formatted it with Prettier; nothing else in the repository changed.\n\n52 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "apps/web/test/setup-stage-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "c26243df-133d-419f-982e-e97b376bd3fc",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.1433991000000001,
+        "turns": 11,
+        "durationMs": 273500,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.1433991000000001,
+    "finalText": "I wrote the hidden suite as two files in `apps/web/test/hidden-setup-stage-check/`:\n- **`setup-stage.test.ts`**: tests for `setupStage`.\n- **`setup-steps.test.ts`**: tests for `setupSteps`, `setupComplete` and purity.\n\n**Checks:**\n- `npx tsc -p tsconfig.test.json --noEmit` reports no errors.\n- Against the current interface, all 58 tests fail on the `not implemented` throw.\n- I copied the tests into the folder for a moment, pointed them at a reference implementation of my own in the scratchpad, and ran them; then I deleted the copies. All 58 passed. Nothing is left outside the two test files.\n- I also ran the copies against six deliberately wrong versions. Each was caught, by between 1 and 12 tests:\n  - treating any non-zero count as present (`!!count`), so -1 counts;\n  - choosing the current step before dropping unavailable tools;\n  - leaving the last step current when every step is done;\n  - deciding the GitHub order from `repositories` alone instead of from the stage;\n  - rewriting malformed counts in the input when it isn't frozen;\n  - a second, differently written version of the choose-before-dropping mistake.\n\n**What the suite covers:**\n- **Every scenario.** All 6 `@happy`, 15 `@boundary` and 5 `@unhappy` scenarios have a test that restates them, plus at least one test extending each public test. Each extension names the public test it extends in a comment above it.\n- **Checks against the spec's rules.** About 20,000–40,000 combinations of fact values are compared with the spec's rules written out in the test. The values include `NaN`, ±`Infinity`, `-0`, `Number.MIN_VALUE` and fractions, with tools available or not. These checks cover stage, step order, done/current, completion, the one-current-step rule, `canManage` changing nothing, and the exact keys.\n- **Shortcuts the public suite lets through:**\n  - The GitHub order must follow the stage. Cases reach the github stage through an account alone, or with a malformed Jira count.\n  - A dropped step is never current. For example, GitHub unoffered while the account alone makes the github stage.\n  - Facts that aren't frozen are not changed in place.\n  - A cache keyed by value can't leak a changed result into the next call.\n  - The stage doesn't depend on earlier calls.\n  - `toStrictEqual` is used throughout, so extra keys set to `undefined` are caught.\n\n58 tests, in 2 files.\n\nOpen in the spec:\n- `[boundary-15] a one-step checklist is still a new array of a new object` calls `first.push(...)` on the array `setupSteps` returns. That assumes the array can be added to. The spec says each call returns \"a new array\" of new step objects, but not whether that array may be frozen, and pushing onto a frozen array throws. I didn't test it either way.",
+    "problem": null,
+    "files": [
+      "apps/web/test/hidden-setup-stage-check/setup-stage.test.ts",
+      "apps/web/test/hidden-setup-stage-check/setup-steps.test.ts"
+    ],
+    "open": [
+      "`[boundary-15] a one-step checklist is still a new array of a new object` calls `first.push(...)` on the array `setupSteps` returns. That assumes the array can be added to. The spec says each call returns \"a new array\" of new step objects, but not whether that array may be frozen, and pushing onto a frozen array throws. I didn't test it either way."
+    ]
+  }
+}

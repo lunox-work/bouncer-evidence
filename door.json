@@ -1,0 +1,237 @@
+{
+  "phase": "0. Measure the door before building it (PLAN.md)",
+  "corpus": "local Claude Code transcripts on one machine, one person; main sessions only (subagent files and sidechain events skipped)",
+  "modelCalls": 0,
+  "denominator": "coding sessions (at least one successful Edit/Write/MultiEdit/NotebookEdit) whose final assistant text claims done; share = firesAmongClaimsDone / claimsDoneCoding",
+  "scopes": {
+    "repository": "sessions in a real repository under the home directory (the gate is read here)",
+    "sandbox": "sessions in temp-folder sandboxes, mostly scripted experiment arms with a public suite"
+  },
+  "repository": {
+    "sessions": {
+      "scanned": 373,
+      "withAssistantText": 361,
+      "coding": 174,
+      "claimsDone": 232,
+      "claimsDoneCoding": 127,
+      "claimsTestsPassCoding": 32
+    },
+    "anyRejection": {
+      "firesAmongClaimsDone": 11,
+      "share": 0.0866
+    },
+    "rules": {
+      "never-queued": {
+        "fires": 6,
+        "firesAmongClaimsDone": 6,
+        "share": 0.0472,
+        "shareAmongClaimsTestsPass": 0.1875
+      },
+      "crossed-off": {
+        "fires": 4,
+        "firesAmongClaimsDone": 3,
+        "share": 0.0236
+      },
+      "clipboard": {
+        "fires": 3,
+        "firesAmongClaimsDone": 2,
+        "share": 0.0157
+      },
+      "homemade-id": {
+        "fires": 0,
+        "firesAmongClaimsDone": 0,
+        "share": 0,
+        "shareAmongClaimsTestsPass": 0
+      },
+      "left-a-note": {
+        "fires": 1,
+        "firesAmongClaimsDone": 0,
+        "share": 0
+      },
+      "last-run-red": {
+        "fires": 0,
+        "firesAmongClaimsDone": 0,
+        "share": 0,
+        "shareAmongClaimsTestsPass": 0
+      }
+    }
+  },
+  "sandbox": {
+    "sessions": {
+      "scanned": 6233,
+      "withAssistantText": 6228,
+      "coding": 4088,
+      "claimsDone": 4230,
+      "claimsDoneCoding": 3615,
+      "claimsTestsPassCoding": 2089
+    },
+    "anyRejection": {
+      "firesAmongClaimsDone": 300,
+      "share": 0.083
+    },
+    "rules": {
+      "never-queued": {
+        "fires": 14,
+        "firesAmongClaimsDone": 14,
+        "share": 0.0039,
+        "shareAmongClaimsTestsPass": 0.0067
+      },
+      "crossed-off": {
+        "fires": 30,
+        "firesAmongClaimsDone": 10,
+        "share": 0.0028
+      },
+      "clipboard": {
+        "fires": 0,
+        "firesAmongClaimsDone": 0,
+        "share": 0
+      },
+      "homemade-id": {
+        "fires": 263,
+        "firesAmongClaimsDone": 263,
+        "share": 0.0728,
+        "shareAmongClaimsTestsPass": 0.1259
+      },
+      "left-a-note": {
+        "fires": 19,
+        "firesAmongClaimsDone": 11,
+        "share": 0.003
+      },
+      "last-run-red": {
+        "fires": 2,
+        "firesAmongClaimsDone": 2,
+        "share": 0.0006,
+        "shareAmongClaimsTestsPass": 0.001
+      }
+    }
+  },
+  "all": {
+    "sessions": {
+      "scanned": 6606,
+      "withAssistantText": 6589,
+      "coding": 4262,
+      "claimsDone": 4462,
+      "claimsDoneCoding": 3742,
+      "claimsTestsPassCoding": 2121
+    },
+    "anyRejection": {
+      "firesAmongClaimsDone": 311,
+      "share": 0.0831
+    },
+    "rules": {
+      "never-queued": {
+        "fires": 20,
+        "firesAmongClaimsDone": 20,
+        "share": 0.0053,
+        "shareAmongClaimsTestsPass": 0.0094
+      },
+      "crossed-off": {
+        "fires": 34,
+        "firesAmongClaimsDone": 13,
+        "share": 0.0035
+      },
+      "clipboard": {
+        "fires": 3,
+        "firesAmongClaimsDone": 2,
+        "share": 0.0005
+      },
+      "homemade-id": {
+        "fires": 263,
+        "firesAmongClaimsDone": 263,
+        "share": 0.0703,
+        "shareAmongClaimsTestsPass": 0.124
+      },
+      "left-a-note": {
+        "fires": 20,
+        "firesAmongClaimsDone": 11,
+        "share": 0.0029
+      },
+      "last-run-red": {
+        "fires": 2,
+        "firesAmongClaimsDone": 2,
+        "share": 0.0005,
+        "shareAmongClaimsTestsPass": 0.0009
+      }
+    }
+  },
+  "peakRssMB": 284,
+  "handCheck": {
+    "judgedBy": "model (Claude), not a person",
+    "question": "would a careful human reviewer agree the session should not have been accepted as done for this rule's reason (yes / no / unclear)",
+    "sample": "50 firings among claims-done coding sessions, seeded (seed 4): every repository firing (11) and 39 sandbox firings weighted toward the most frequent rules",
+    "tuning": "patterns were tuned on two earlier seeded draws (seeds 1 and 2) before this one; the repository population is small, so this draw re-reads the same repository sessions",
+    "rules": {
+      "never-queued": {
+        "judged": 14,
+        "yes": 1,
+        "no": 13,
+        "unclear": 0,
+        "upheld": 0.07,
+        "why": {
+          "claim detector matched a non-test claim (quoted copy, domain text, a conditional)": 7,
+          "test runner not recognised (smoke script, wrapped runner)": 3,
+          "no suite in the checkout; the message scopes the claim to its own spot checks": 3
+        }
+      },
+      "crossed-off": {
+        "judged": 9,
+        "yes": 0,
+        "no": 7,
+        "unclear": 2,
+        "upheld": 0,
+        "why": {
+          "assertions rewritten for a behaviour change the task required, or replaced by stronger ones": 5,
+          "deleted file was an artifact or a spec file, not a test": 2,
+          "unclear: assertions removed from the session's own test with no replacement": 2
+        }
+      },
+      "clipboard": {
+        "judged": 2,
+        "yes": 0,
+        "no": 2,
+        "unclear": 0,
+        "upheld": 0,
+        "why": {
+          "config edit unrelated to how tests run": 2
+        }
+      },
+      "homemade-id": {
+        "judged": 17,
+        "yes": 0,
+        "no": 17,
+        "unclear": 0,
+        "upheld": 0,
+        "why": {
+          "fact correct in 17 of 17, but the task asked for its own tests and the message says so": 17
+        }
+      },
+      "left-a-note": {
+        "judged": 6,
+        "yes": 0,
+        "no": 6,
+        "unclear": 0,
+        "upheld": 0,
+        "why": {
+          "the task was to write a not-implemented interface": 6
+        }
+      },
+      "last-run-red": {
+        "judged": 2,
+        "yes": 0,
+        "no": 2,
+        "unclear": 0,
+        "upheld": 0,
+        "why": {
+          "the error came from a non-test command on the same shell line; the tests passed": 2
+        }
+      }
+    },
+    "total": {
+      "judged": 50,
+      "yes": 1,
+      "no": 47,
+      "unclear": 2,
+      "upheld": 0.02
+    }
+  }
+}

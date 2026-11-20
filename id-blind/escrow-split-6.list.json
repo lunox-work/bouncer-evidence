@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 19,
+  "costUsd": 0.0649959,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when it doesn't divide the bounty evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%)",
+      "chose": "Rounds the hidden-test amount down with integer BigInt division, and the UAT release gets the leftover.",
+      "where": "src/index.ts:13",
+      "instead": "Round to nearest, or round the hidden-test share up."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Throws an Error and records nothing.",
+      "where": "src/index.ts:40",
+      "instead": "Release the whole bounty, or ignore the event and return the current state."
+    },
+    {
+      "question": "What happens when UAT is approved after the hidden tests failed?",
+      "ticket": "silent",
+      "chose": "Throws, because no hidden-tests release exists, and saves nothing.",
+      "where": "src/index.ts:40",
+      "instead": "Ignore the event quietly, or release the full bounty on UAT."
+    },
+    {
+      "question": "What does a failed hidden-test run do to the stored state?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns a snapshot of the current state and never calls store.set, so no failure is recorded.",
+      "where": "src/index.ts:37-38",
+      "instead": "Persist a failed marker, or reject so the failure is visible to the caller."
+    },
+    {
+      "question": "What happens to a repeated or duplicate event of an already-released kind?",
+      "ticket": "Release happens once per task",
+      "chose": "Returns the current state without saving. Duplicates are detected by whether a release of that kind exists, and the event id is ignored.",
+      "where": "src/index.ts:102-104",
+      "instead": "Track processed event ids, or throw on a duplicate."
+    },
+    {
+      "question": "Can hidden tests pass again after a failed run, or after a pass has already been recorded?",
+      "ticket": "silent",
+      "chose": "A pass after a failure still releases, because failures leave no trace. A pass after UAT is a no-op, since the hidden-tests release already exists.",
+      "where": "src/index.ts:36-38",
+      "instead": "Make a failed run final and lock the task, or reject a pass that arrives after UAT."
+    },
+    {
+      "question": "What happens when the bounty is 0?",
+      "ticket": "silent",
+      "chose": "Accepts it, reports status \"pro bono\", and still records zero-amount releases.",
+      "where": "src/index.ts:80, src/index.ts:93-94",
+      "instead": "Reject a zero bounty, or skip recording any release and keep the status \"locked\"."
+    },
+    {
+      "question": "What counts as a valid bounty and share, and what happens when they are invalid?",
+      "ticket": "silent",
+      "chose": "Throws RangeError unless the bounty is a non-negative safe integer and the share is an integer from 0 to 10000 bps. The checks run when the handler is created.",
+      "where": "src/index.ts:63-73",
+      "instead": "Allow fractional amounts or a percentage share, clamp out-of-range values, or fail only when an event is handled."
+    },
+    {
+      "question": "What unit and precision does the configured share use?",
+      "ticket": "the configured hidden-test share (default 75%)",
+      "chose": "Reads the share as integer basis points (default 7500), taken from task.hiddenTestShareBps.",
+      "where": "src/index.ts:21, src/index.ts:60",
+      "instead": "Use a fractional or percent value such as 0.75 or 75."
+    },
+    {
+      "question": "How much does the UAT approval release?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Releases bounty minus the sum of all prior releases, recomputed at approval time.",
+      "where": "src/index.ts:43-44",
+      "instead": "Release the precomputed split.uat amount."
+    },
+    {
+      "question": "Are events processed one at a time, and what happens when the store fails?",
+      "ticket": "silent",
+      "chose": "Queues events per handler so they run serially. A store failure rejects that call, the queue keeps going, and a retry works because state is saved only after set succeeds. Serialization covers only a single handler instance.",
+      "where": "src/index.ts:27, src/index.ts:52-56",
+      "instead": "Process events concurrently, or rely on store-level locking or compare-and-set."
+    },
+    {
+      "question": "What happens for an unknown event kind?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the unknown kind.",
+      "where": "src/index.ts:46-47",
+      "instead": "Ignore it and return the current state."
+    }
+  ]
+}

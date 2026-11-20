@@ -1,0 +1,659 @@
+{
+  "at": "2026-11-20T06:16:31.428Z",
+  "model": "claude-fable-5-1",
+  "runs": 75,
+  "cases": 117,
+  "spec": {
+    "refereed": 9,
+    "requires": {
+      "yes": 8,
+      "open": 1
+    },
+    "runsUpheld": 75,
+    "runsUnresolved": 0,
+    "costUsd": 2.6069557999999997
+  },
+  "ticket": {
+    "refereed": 117,
+    "ticket": {
+      "open": 108,
+      "states": 9
+    },
+    "runsBrokeTicket": 4,
+    "runsKnown": 75
+  },
+  "bySpec": {
+    "csv-export": {
+      "rejected": 15,
+      "upheld": 15,
+      "brokeTicket": 0
+    },
+    "escrow-split": {
+      "rejected": 14,
+      "upheld": 14,
+      "brokeTicket": 0
+    },
+    "gherkin-parse": {
+      "rejected": 12,
+      "upheld": 12,
+      "brokeTicket": 0
+    },
+    "invite-codes": {
+      "rejected": 15,
+      "upheld": 15,
+      "brokeTicket": 4
+    },
+    "status-normalize": {
+      "rejected": 15,
+      "upheld": 15,
+      "brokeTicket": 0
+    },
+    "weekly-digest": {
+      "rejected": 4,
+      "upheld": 4,
+      "brokeTicket": 0
+    }
+  },
+  "perRun": [
+    {
+      "run": "csv-export/self-tested-haiku-ticket/1",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/2",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/3",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/4",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/5",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/6",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/7",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/8",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/9",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/10",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/11",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/12",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/13",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/14",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "csv-export/self-tested-haiku-ticket/15",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/1",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/2",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/3",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/4",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/5",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/6",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/7",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/8",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/9",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/11",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/12",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/13",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/14",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "escrow-split/self-tested-haiku-ticket/15",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/1",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": true,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/2",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/3",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": true,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/5",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/6",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/7",
+      "verdict": "overfit",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/8",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/10",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/11",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/12",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/13",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "gherkin-parse/self-tested-haiku-ticket/14",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/1",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/2",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/3",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/4",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": true,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/5",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/6",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/7",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/8",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": true,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/9",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": true,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/10",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/11",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/12",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": true,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/13",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/14",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "invite-codes/self-tested-haiku-ticket/15",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/1",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/2",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/3",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/4",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/5",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/6",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/7",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/8",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/9",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/10",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/11",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/12",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/13",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/14",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "status-normalize/self-tested-haiku-ticket/15",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "weekly-digest/self-tested-haiku-ticket/1",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "weekly-digest/self-tested-haiku-ticket/3",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "weekly-digest/self-tested-haiku-ticket/8",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    },
+    {
+      "run": "weekly-digest/self-tested-haiku-ticket/12",
+      "verdict": "incomplete",
+      "upheld": true,
+      "allTried": false,
+      "brokeTicket": false,
+      "ticketKnown": true
+    }
+  ]
+}

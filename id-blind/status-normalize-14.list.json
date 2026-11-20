@@ -1,0 +1,85 @@
+{
+  "run": "status-normalize/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.050654,
+  "items": [
+    {
+      "question": "Does writeStatus accept near-miss spellings such as 'Draft' or ' draft', normalising them to the enum value, or reject them?",
+      "ticket": "Only enum values are written",
+      "chose": "Throws an error for any value that is not exactly one of the five lowercase statuses, with no cleaning first.",
+      "where": "src/index.ts:41-42",
+      "instead": "Clean the value the same way readStatus does, then write the normalised status."
+    },
+    {
+      "question": "Is a legacy spelling such as 'in-review' accepted by writeStatus and mapped to 'review'?",
+      "ticket": "Only enum values are written",
+      "chose": "Rejects it with an error, because only exact enum values pass.",
+      "where": "src/index.ts:41-42",
+      "instead": "Map known legacy spellings to their enum value when writing."
+    },
+    {
+      "question": "What does writeStatus do with an invalid value?",
+      "ticket": "silent",
+      "chose": "Throws an Error whose message includes the JSON-quoted value.",
+      "where": "src/index.ts:42",
+      "instead": "Return null or a result object, or throw a custom typed error."
+    },
+    {
+      "question": "How is a stored value cleaned before it is matched when read?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Trims, lowercases, turns every run of whitespace, '-' and '_' into one space, then trims again.",
+      "where": "src/index.ts:26-30",
+      "instead": "Only trim and lowercase, or strip separators entirely."
+    },
+    {
+      "question": "Which old spellings are recognised when reading?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Recognises only 'in review' (after cleaning) as a legacy spelling, and maps it to 'review'.",
+      "where": "src/index.ts:12",
+      "instead": "Map more aliases such as 'in progress', 'done', 'wip' or 'submitted', or have no aliases."
+    },
+    {
+      "question": "What does readStatus return for an unrecognised value?",
+      "ticket": "silent",
+      "chose": "Returns null, with no fuzzy or nearest match.",
+      "where": "src/index.ts:32",
+      "instead": "Throw an error, or fall back to a default such as 'draft'."
+    },
+    {
+      "question": "How are empty or whitespace-only stored values read?",
+      "ticket": "silent",
+      "chose": "Reads them as null, because they clean to an empty string that matches nothing.",
+      "where": "src/index.ts:26-32",
+      "instead": "Treat them as 'draft', the default status, or throw."
+    },
+    {
+      "question": "Does a separator inside a status word make it match, for example 'pub-lished' or 'in--review'?",
+      "ticket": "silent",
+      "chose": "Separators become a space, so 'pub-lished' reads as null, while 'in--review' collapses to 'in review' and reads as 'review'. Leading and trailing separators are trimmed, so 'claimed-' reads as 'claimed'.",
+      "where": "src/index.ts:29-30",
+      "instead": "Strip separators fully, or only treat a single separator as valid."
+    },
+    {
+      "question": "In a batch read, what happens to rows that cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row in the output with status null and does not drop it or throw.",
+      "where": "src/index.ts:52-56",
+      "instead": "Drop unreadable rows, or throw on the first one."
+    },
+    {
+      "question": "How are unreadable values reported in a batch read: original or cleaned form, with or without duplicates, and in what order?",
+      "ticket": "silent",
+      "chose": "Lists the distinct original stored strings, deduplicated with a Set and sorted by default string order.",
+      "where": "src/index.ts:51,54,57",
+      "instead": "List the cleaned values, keep duplicates or per-row ids, or keep first-seen order."
+    },
+    {
+      "question": "Does a batch read keep row order and ids as given?",
+      "ticket": "silent",
+      "chose": "Maps rows one to one in input order, keeping each id, and does not deduplicate rows.",
+      "where": "src/index.ts:52-56",
+      "instead": "Deduplicate rows by id, or sort them."
+    }
+  ]
+}

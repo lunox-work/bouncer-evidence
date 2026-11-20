@@ -1,0 +1,105 @@
+{
+  "run": "escrow-split-13",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0601677,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "splitBounty(101, 7500)"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{let s;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async x=>{s=x}});try{return await h.handle({id:'a',kind:'uat-approved'})}catch(e){return {err:e.message,stored:s}}})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{let s;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async x=>{s=x}});await h.handle({id:'a',kind:'hidden-tests-passed'});const r1=await h.handle({id:'a',kind:'hidden-tests-passed'});const r2=await h.handle({id:'b',kind:'hidden-tests-passed'});return {r1,r2}})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{let s,n=0;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async x=>{n++;s=x}});await h.handle({id:'a',kind:'hidden-tests-passed'});await h.handle({id:'b',kind:'uat-approved'});const r=await h.handle({id:'c',kind:'uat-approved'});return {r,writes:n}})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{let s,n=0;const h=createEscrowHandler({bounty:100},{get:async()=>{await new Promise(r=>setTimeout(r,5));return s},set:async x=>{n++;s=x}});const e={id:'a',kind:'hidden-tests-passed'};await Promise.all([h.handle(e),h.handle(e)]);return {writes:n,s}})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{let s;const h=createEscrowHandler({bounty:0},{get:async()=>s,set:async x=>{s=x}});const a=await h.handle({id:'a',kind:'hidden-tests-passed'});const b=await h.handle({id:'b',kind:'uat-approved'});return {a,b}})()"
+    },
+    {
+      "item": 7,
+      "probe": "[()=>createEscrowHandler({bounty:-1},{}),()=>createEscrowHandler({bounty:1.5},{}),()=>createEscrowHandler({bounty:10,hiddenTestShareBps:10001},{}),()=>createEscrowHandler({bounty:10,hiddenTestShareBps:0.5},{}),()=>createEscrowHandler({bounty:NaN},{})].map(f=>{try{f();return 'ok'}catch(e){return e.name+': '+e.message}})"
+    },
+    {
+      "item": 8,
+      "probe": "splitBounty(10000, 7500)"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{const out=[];for(const bps of [0,10000]){let s;const h=createEscrowHandler({bounty:100,hiddenTestShareBps:bps},{get:async()=>s,set:async x=>{s=x}});const a=await h.handle({id:'a',kind:'hidden-tests-passed'});const b=await h.handle({id:'b',kind:'uat-approved'});out.push({bps,a,b})}return out})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{let s={status:'partially released',releases:[{kind:'hidden-tests',amount:10}]};const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async x=>{s=x}});return await h.handle({id:'a',kind:'uat-approved'})})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let s,n=0;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async x=>{n++;s=x}});const a=await h.handle({id:'a',kind:'hidden-tests-failed'});const b=await h.handle({id:'b',kind:'hidden-tests-passed'});return {a,b,writes:n}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{let s,fail=true;const h=createEscrowHandler({bounty:100},{get:async()=>s,set:async x=>{if(fail)throw new Error('boom');s=x}});const out={};try{await h.handle({id:'x',kind:'bogus'})}catch(e){out.unknown=e.message}try{await h.handle({id:'a',kind:'hidden-tests-passed'})}catch(e){out.write=e.message}out.afterFail=s;fail=false;out.later=await h.handle({id:'a',kind:'hidden-tests-passed'});return out})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ hiddenTests: 75, uat: 26 }"
+    },
+    {
+      "item": 2,
+      "actual": "{ err: 'cannot approve UAT: the hidden tests have not passed', stored: undefined }"
+    },
+    {
+      "item": 3,
+      "actual": "{\n  r1: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] },\n  r2: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    },
+    {
+      "item": 4,
+      "actual": "{\n  r: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 75 }, { kind: 'uat', amount: 25 } ] },\n  writes: 2\n}"
+    },
+    {
+      "item": 5,
+      "actual": "{\n  writes: 1,\n  s: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    },
+    {
+      "item": 6,
+      "actual": "{\n  a: { status: 'pro bono', releases: [ { kind: 'hidden-tests', amount: 0 } ] },\n  b: { status: 'pro bono', releases: [ { kind: 'hidden-tests', amount: 0 }, { kind: 'uat', amount: 0 } ] }\n}"
+    },
+    {
+      "item": 7,
+      "actual": "[ 'RangeError: bounty must be a non-negative safe integer, got -1', 'RangeError: bounty must be a non-negative safe integer, got 1.5', 'RangeError: hidden-test share must be an integer from 0 to 10000 bps, got 10001', 'RangeError: hidden-test share must be an integer from 0 to 10000 bps, got 0.5', '"
+    },
+    {
+      "item": 8,
+      "actual": "{ hiddenTests: 7500, uat: 2500 }"
+    },
+    {
+      "item": 9,
+      "actual": "[\n  {\n    bps: 0,\n    a: { status: 'locked', releases: [ { kind: 'hidden-tests', amount: 0 } ] },\n    b: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 0 }, { kind: 'uat', amount: 100 } ] }\n  },\n  {\n    bps: 10000,\n    a: { status: 'fully released', releases: [ { kind: 'hidd"
+    },
+    {
+      "item": 10,
+      "actual": "{ status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 10 }, { kind: 'uat', amount: 90 } ] }"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  a: { status: 'locked', releases: [] },\n  b: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] },\n  writes: 1\n}"
+    },
+    {
+      "item": 12,
+      "actual": "{\n  unknown: 'unknown escrow event kind: bogus',\n  write: 'boom',\n  afterFail: undefined,\n  later: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    }
+  ]
+}

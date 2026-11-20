@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 22,
+  "costUsd": 0.0710752,
+  "items": [
+    {
+      "question": "Is a code that is exactly 14 days old still valid or already expired?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired from the exact instant now >= expiresAt, so it is dead at exactly 14 days.",
+      "where": "src/index.ts:45",
+      "instead": "Treat the code as valid through the 14-day mark and expired only when now is strictly greater than expiresAt."
+    },
+    {
+      "question": "What does redeeming an already-used code return when the code is also expired or revoked?",
+      "ticket": "silent",
+      "chose": "A used code reports 'used' ahead of 'revoked' or 'expired', so used takes precedence.",
+      "where": "src/index.ts:43",
+      "instead": "Report 'expired' (or 'revoked') when the code is past its lifetime, whatever its use history."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Refuses with reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:123",
+      "instead": "Consume the code and return ok: true as an idempotent grant, or refuse and consume the code."
+    },
+    {
+      "question": "How strictly is a typed code matched on redeem and revoke?",
+      "ticket": "silent",
+      "chose": "Strips all whitespace and hyphens and uppercases the input before lookup.",
+      "where": "src/index.ts:33",
+      "instead": "Match the code exactly as displayed, case-sensitive and with the hyphen."
+    },
+    {
+      "question": "What is the format and alphabet of a generated code?",
+      "ticket": "silent",
+      "chose": "Draws 8 characters from a 32-character alphabet without I, O, 0 or 1, and shows them as XXXX-XXXX.",
+      "where": "src/index.ts:10",
+      "instead": "Use a longer code, a full alphanumeric alphabet, or a UUID or hex token with no grouping."
+    },
+    {
+      "question": "What happens if the generator keeps drawing codes that already exist?",
+      "ticket": "silent",
+      "chose": "Retries up to 100 draws, then throws 'could not draw an unused invite code'.",
+      "where": "src/index.ts:189",
+      "instead": "Retry without a limit, or return a typed failure instead of throwing."
+    },
+    {
+      "question": "Can a code be revoked, and what happens when revoke is called on a used, unknown or already revoked code?",
+      "ticket": "silent",
+      "chose": "Adds revoke. It throws for an unknown or used code and does nothing for an already revoked code.",
+      "where": "src/index.ts:137",
+      "instead": "Leave revoke out of the scope, or return silently for an unknown code, or throw on an already revoked code."
+    },
+    {
+      "question": "How are concurrent operations on the registry ordered?",
+      "ticket": "Codes are single-use",
+      "chose": "Runs every operation through a single in-process promise queue so calls never interleave.",
+      "where": "src/index.ts:178",
+      "instead": "Rely on an atomic or conditional store write, or per-code locking, without serialising all operations."
+    },
+    {
+      "question": "What does a redeemed code show about who used it, and when?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Stores the contributor ID as usedBy and the redeem time as usedAt, and shows both in list() only for used codes.",
+      "where": "src/index.ts:124",
+      "instead": "Show only the contributor ID, or show a display name or an account record."
+    },
+    {
+      "question": "Does the registry check the inputs, such as an empty task ID or contributor ID, or a task that does not exist?",
+      "ticket": "silent",
+      "chose": "Does no validation: any string, including an empty one, is accepted for taskId and contributorId.",
+      "where": "src/index.ts:87",
+      "instead": "Reject empty or unknown task IDs and contributor IDs with an error."
+    },
+    {
+      "question": "In what order does list() return a task's codes, and does it include expired, used and revoked ones?",
+      "ticket": "silent",
+      "chose": "Returns every code for the task in creation order, each with its state, with none filtered out.",
+      "where": "src/index.ts:165",
+      "instead": "Return newest first, or return only unused codes."
+    },
+    {
+      "question": "Is the stored code state kept consistent if the store fails partway through create or redeem?",
+      "ticket": "silent",
+      "chose": "Performs separate sequential writes (the code, then the index or access list) with no rollback, so a failure partway leaves partial state.",
+      "where": "src/index.ts:124",
+      "instead": "Write the access grant first and the used marker second, or make the writes atomic or compensate on failure."
+    }
+  ]
+}

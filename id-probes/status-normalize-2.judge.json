@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1003873,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "S1 asks how much case and whitespace cleanup happens before matching. Item 3 trims and lowercases, and its run shows readStatus(\"  DRAFT \") returning 'draft'. That means 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' come back as themselves.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which old spellings map to which statuses. Its pick maps only 'in review', and its run shows readStatus(\"done\") returning null. So 'under review', 'live' and the other legacy spellings in the table would read as null instead of 'review' or 'published'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unmatched value returns. It returns null rather than the nearest status, and its run shows readStatus(\"nonsense\") giving null. Item 9 adds that empty and whitespace-only values also read as null, which fits the rest of S3.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether writes normalise input or accept only exact values. It accepts an exact enum value, so writing 'review' stores 'review'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 rejects anything that isn't an exact enum value, old spellings included. Its run shows writing 'Draft', ' draft' and 'in-review' all throwing errors that quote the value as given, which is what S5 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks whether unreadable values are reported raw or cleaned, and whether duplicates are removed. Its run shows raw strings, de-duplicated and sorted ('zebra', 'zebra '), so each distinct stored value appears once, exactly as stored. Item 6's run also shows every row coming back with its status or null.",
+      "failing": true
+    }
+  ]
+}

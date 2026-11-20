@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09679789999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": false,
+      "why": "The scenario's main open question is the unit set: it expects `2d` and `1d0h0m0s0ms` to parse, so days are accepted. Item 1 asks which units are accepted, and its pick rejects `d`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks whether whitespace is accepted. The scenario expects leading and trailing whitespace to be ignored, but the pick rejects all whitespace because it allows only digits followed by a unit.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Most of the rejected rows are what item 5 asks about: decimals (`1.5h`), signs (`-3s`, `+3s`), inner whitespace (`1h 30m`, `3 s`) and non-ASCII digits. Its pick rejects all of these, as the scenario expects. Other rows touch items 1, 2, 3 and 7, but item 5 covers the most.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may be larger than the next unit allows, as in `90m`. Item 4 is about unit order and repeats, not count size.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether units may repeat or come in any order. Its pick rejects repeated and out-of-order units, which matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks for the largest value that parses. Its pick caps at 2^53-1 ms, the value the scenario expects to parse.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 also asks what happens on overflow. Its pick returns InvalidDuration above 2^53-1 or on u64 overflow, which covers both rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks whether output is a mixed breakdown or a single unit. The scenario expects a mixed breakdown (`1m30s`, `1h30m`), but the pick chooses the shortest string. Items 8 and 12 also disagree with the scenario: it expects `0ms` and `1d`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 9,
+      "agrees": false,
+      "why": "The scenario expects the full mixed breakdown with days. Under item 9's shortest-string pick, the plain `9007199254740991ms` (18 characters) beats the expected 20-character string, and item 12 rules out days altogether.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives the original number back.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what formatting a value above the maximum does. Its pick returns MillisecondsOutOfRange for anything above 2^53-1, and that error name suggests the Display text contains \"milliseconds\".",
+      "failing": false
+    }
+  ]
+}

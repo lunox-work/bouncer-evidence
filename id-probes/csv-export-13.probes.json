@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-13",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.057056499999999996,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:3,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 3,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:3,filled:1,createdAt:new Date(0)}]).slice(-4))"
+    },
+    {
+      "item": 4,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([{id:\"b\",status:\"open\",openings:1,filled:0,createdAt:new Date(2000)},{id:\"z\",status:\"open\",openings:1,filled:0,createdAt:new Date(1000)},{id:\"a\",status:\"open\",openings:1,filled:0,createdAt:new Date(2000)},{id:\"B\",status:\"open\",openings:1,filled:0,createdAt:new Date(2000)}])"
+    },
+    {
+      "item": 6,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(1700000000123)}]).split(\"\\r\\n\")[1]"
+    },
+    {
+      "item": 7,
+      "probe": "buildRequisitionsCsv([{id:\"a,b\",title:\"He said \\\"hi\\\"\\nbye, ok\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:null,status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"r2\",status:\"open\",openings:0,filled:0,createdAt:new Date(1)}])"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([{id:\"r9\",title:\"T\",status:\"archived\",openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 10,
+      "probe": "buildRequisitionsCsv([{id:\"r10\",title:\"T\",status:\"open\",openings:1.5,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 11,
+      "probe": "buildRequisitionsCsv([{id:\"r11\",title:\"T\",status:\"open\",openings:1,filled:2,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 12,
+      "probe": "buildRequisitionsCsv([{id:\"good\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"bad\",title:\"T\",status:\"open\",openings:1,filled:0,createdAt:new Date(NaN)}])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "65279"
+    },
+    {
+      "item": 2,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,T,open,3,1,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 3,
+      "actual": "'\"0Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 4,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 5,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nz,,open,1,0,1970-01-01T00:00:01.000Z\\r\\nB,,open,1,0,1970-01-01T00:00:02.000Z\\r\\na,,open,1,0,1970-01-01T00:00:02.000Z\\r\\nb,,open,1,0,1970-01-01T00:00:02.000Z\\r\\n'"
+    },
+    {
+      "item": 6,
+      "actual": "'r1,T,open,1,0,2023-11-14T22:13:20.123Z'"
+    },
+    {
+      "item": 7,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\n\"a,b\",\"He said \"\"hi\"\"\\nbye, ok\",open,1,0,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 8,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,,open,1,0,1970-01-01T00:00:00.000Z\\r\\nr2,,open,0,0,1970-01-01T00:00:00.001Z\\r\\n'"
+    },
+    {
+      "item": 9,
+      "actual": "throws Error: Requisition r9 has an unknown status: archived"
+    },
+    {
+      "item": 10,
+      "actual": "throws Error: Requisition r10 has invalid openings: 1.5"
+    },
+    {
+      "item": 11,
+      "actual": "throws Error: Requisition r11 has more filled (2) than openings (1)"
+    },
+    {
+      "item": 12,
+      "actual": "throws Error: Requisition bad has an invalid creation time"
+    }
+  ]
+}

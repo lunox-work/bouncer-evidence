@@ -1,0 +1,92 @@
+{
+  "run": "status-normalize/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0488589,
+  "items": [
+    {
+      "question": "Does writing a status accept near-miss spellings (wrong case, padding, old spellings) by normalising them, or reject them?",
+      "ticket": "Only enum values are written",
+      "chose": "Throws an Error for anything that is not exactly one of the five lowercase values, including 'Draft', ' draft' and 'in-review'.",
+      "where": "src/index.ts:43-44",
+      "instead": "Normalise the input through the read path and write the canonical value."
+    },
+    {
+      "question": "What does reading do with a stored value that matches no status or known old spelling?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null instead of throwing or guessing the nearest status.",
+      "where": "src/index.ts:33-34",
+      "instead": "Throw an error, or fall back to a default status such as draft."
+    },
+    {
+      "question": "Which old spellings are mapped to enum values?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only 'in review' (after cleaning) to review. No other aliases are accepted, such as 'in_progress', 'done' or 'pending'.",
+      "where": "src/index.ts:12",
+      "instead": "Map a wider alias set, or none beyond case and separator cleaning."
+    },
+    {
+      "question": "How is a stored value cleaned before matching: which case, whitespace and separator variants count as the same status?",
+      "ticket": "silent",
+      "chose": "Trims, lowercases, and collapses every run of whitespace, '-' and '_' into one space. 'In_Review' and 'in   review' both read as review.",
+      "where": "src/index.ts:15-17",
+      "instead": "Only trim and lowercase, or treat '-' and '_' as removed rather than as spaces."
+    },
+    {
+      "question": "Does a separator-only difference inside a single-word status still match?",
+      "ticket": "silent",
+      "chose": "Does not match. 'cla_imed' becomes 'cla imed' and reads as null. Leading and trailing separators are trimmed after being turned into spaces, so '-merged-' reads as merged.",
+      "where": "src/index.ts:16",
+      "instead": "Strip separators entirely, or refuse any value with leading or trailing separators."
+    },
+    {
+      "question": "What does reading an empty or whitespace-only stored value return?",
+      "ticket": "silent",
+      "chose": "Returns null.",
+      "where": "src/index.ts:32-34",
+      "instead": "Treat it as a default status such as draft, or throw."
+    },
+    {
+      "question": "What happens when the input is not a string (null, undefined, a number) in readStatus and writeStatus?",
+      "ticket": "silent",
+      "chose": "readStatus returns null for a non-string. writeStatus throws an Error that contains the value.",
+      "where": "src/index.ts:31",
+      "instead": "Throw a TypeError in both, or let the call fail naturally."
+    },
+    {
+      "question": "What type of error does writeStatus throw, and what does its message contain?",
+      "ticket": "silent",
+      "chose": "Throws a plain Error with the message 'Invalid sandbox status: \"<value>\"'.",
+      "where": "src/index.ts:44",
+      "instead": "Throw a custom or typed error, or return null or a result object instead of throwing."
+    },
+    {
+      "question": "In a batch read, does one unreadable row make the whole call fail?",
+      "ticket": "silent",
+      "chose": "Does not fail. The row is kept with status null, and the call continues with the other rows.",
+      "where": "src/index.ts:54-58",
+      "instead": "Throw on the first unreadable row, or drop unreadable rows from the result."
+    },
+    {
+      "question": "How are unreadable values reported in a batch read: raw or cleaned, deduplicated or not, and in what order?",
+      "ticket": "silent",
+      "chose": "Reports the raw stored strings, deduplicated by exact string, sorted with the default sort. 'zeta' and ' Zeta ' are separate entries.",
+      "where": "src/index.ts:56,59",
+      "instead": "Report the cleaned values, keep first-seen order, or list unreadable row ids."
+    },
+    {
+      "question": "Does a batch read keep the row order and the duplicate rows from the input?",
+      "ticket": "silent",
+      "chose": "Keeps every input row in its original order, with only id and status in the output.",
+      "where": "src/index.ts:54-58",
+      "instead": "Deduplicate by id, or sort the rows."
+    },
+    {
+      "question": "What does a batch read return for empty input?",
+      "ticket": "silent",
+      "chose": "Returns empty rows and an empty unreadable list.",
+      "where": "src/index.ts:54-59",
+      "instead": "Throw an error, or return null or undefined."
+    }
+  ]
+}

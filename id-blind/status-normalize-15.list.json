@@ -1,0 +1,85 @@
+{
+  "run": "status-normalize/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0515212,
+  "items": [
+    {
+      "question": "How is a stored value with different case or surrounding whitespace read?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Trims the value, lowercases it, and collapses runs of space, '-' and '_' into one space before matching.",
+      "where": "src/index.ts:19-24",
+      "instead": "Only lowercase and trim, or match case-insensitively without touching separators."
+    },
+    {
+      "question": "Which old spellings besides the case variants are mapped to an enum value?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...), so filters miss tasks.",
+      "chose": "Maps only 'in review' (the cleaned form of 'in-review') to 'review'. No other aliases are mapped.",
+      "where": "src/index.ts:12",
+      "instead": "Map more aliases such as 'in progress', 'done' or 'pending', or have no alias table at all."
+    },
+    {
+      "question": "What does reading a value that matches no status return?",
+      "ticket": "silent",
+      "chose": "Returns null, and never guesses the nearest status.",
+      "where": "src/index.ts:36-37",
+      "instead": "Throw an error, or fall back to a default such as 'draft'."
+    },
+    {
+      "question": "Does the separator cleanup apply inside a status word?",
+      "ticket": "silent",
+      "chose": "Collapses separators into spaces and trims, so '-claimed-' reads as 'claimed' and 'dr__aft' is null.",
+      "where": "src/index.ts:23-24",
+      "instead": "Strip only whitespace, so '-claimed-' is unreadable."
+    },
+    {
+      "question": "Does writing a status normalise its input, or only accept exact enum values?",
+      "ticket": "Only enum values are written",
+      "chose": "Accepts only exact lowercase enum strings. 'Draft', ' draft' and old spellings like 'in-review' throw.",
+      "where": "src/index.ts:40",
+      "instead": "Normalise through readStatus first and write the canonical value, throwing only when that returns null."
+    },
+    {
+      "question": "How does writing an invalid value fail?",
+      "ticket": "silent",
+      "chose": "Throws an Error whose message includes the JSON-quoted value as given.",
+      "where": "src/index.ts:41",
+      "instead": "Return null or a result object, or throw a custom error type."
+    },
+    {
+      "question": "How is an empty or whitespace-only stored value read?",
+      "ticket": "silent",
+      "chose": "Reads it as null (unreadable).",
+      "where": "src/index.ts:35-37",
+      "instead": "Treat it as a default status such as 'draft'."
+    },
+    {
+      "question": "How does the batch read report values that could not be read?",
+      "ticket": "silent",
+      "chose": "Keeps every row with status null, and lists each distinct raw unreadable value once, sorted.",
+      "where": "src/index.ts:56-62",
+      "instead": "Throw on the first unreadable row, drop unreadable rows, or list the unreadable row ids."
+    },
+    {
+      "question": "Are unreadable values reported as stored or in cleaned form?",
+      "ticket": "silent",
+      "chose": "Reports the raw stored string, untrimmed and with its original case.",
+      "where": "src/index.ts:59",
+      "instead": "Report the cleaned (trimmed, lowercased) value, so ' Drafts ' and 'drafts' count as one."
+    },
+    {
+      "question": "What order do the rows and the unreadable list come back in?",
+      "ticket": "silent",
+      "chose": "Rows keep input order, and the unreadable list uses the default string sort.",
+      "where": "src/index.ts:62",
+      "instead": "Report unreadable values in first-seen order, or sort with a locale-aware comparison."
+    },
+    {
+      "question": "What does reading an empty list of rows return?",
+      "ticket": "silent",
+      "chose": "Returns empty rows and an empty unreadable list.",
+      "where": "src/index.ts:56-62",
+      "instead": "Throw, or return null."
+    }
+  ]
+}

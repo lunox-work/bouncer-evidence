@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0864143,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 is the basic case: passing hidden tests with the default share releases 7500 and the task becomes 'partially released'. Item 9 asks which share values are valid and what unit they use. It does not ask what the default is or what the release does, even though its pick happens to mention 7500. No item asks this question.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how the hidden-test share is rounded when the bounty doesn't divide evenly. Its pick rounds down with integer division and gives the remainder to UAT. For a bounty of 999 that gives 749 and 250, which add up to the bounty, as S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "S3 is the basic case where UAT approval releases the rest and the task becomes 'fully released'. No item asks this. Item 1 is about rounding when the bounty doesn't divide evenly, not about what UAT approval does in general.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what a failed hidden-test run does to the state. Its pick returns the current state, which is locked with no releases if nothing is stored, and writes nothing. That matches S4: nothing recorded and the task stays 'locked'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT approval arrives before the hidden tests pass. Its pick rejects the event with an error and records nothing, as S5 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": false,
+      "why": "Item 7 asks the status of a zero-bounty task. Its pick returns 'pro bono' but still records a zero-amount hidden-tests release. S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens when the same release event arrives a second time in sequence. Its pick deduplicates by release kind and writes nothing on a repeat. That covers both the same id 'e1' and a different id of the same kind after the release, so nothing more is recorded.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 also asks about the same event arriving at the same time. Its pick queues events one at a time and deduplicates by kind, so two concurrent deliveries record exactly one release, whether the ids match or not. This holds for both event kinds.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what happens when the store read or write fails. Its pick rejects with the store's error and lets later events still run. Because the failed write never saved the release, handling the same event again succeeds.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "slug": "reverse-diff-second",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "tests/public/hunks.test.ts :: hunk content: whole-word identifiers are mapped in context, removed, added lines and the @@ text",
+    "tests/public/hunks.test.ts :: hunk content: words containing the public name are left, while it is mapped at line edges",
+    "tests/public/hunks.test.ts :: one pass: a replaced name is not replaced again",
+    "tests/public/hunks.test.ts :: one pass: the result does not depend on table order",
+    "tests/public/paths.test.ts :: file headers: every public path in the header lines becomes the real path",
+    "tests/public/paths.test.ts :: file headers: a file entry does not map a longer file name that shares its prefix",
+    "tests/public/paths.test.ts :: directory entry: maps every path under the directory",
+    "tests/public/paths.test.ts :: directory entry: matches whole path segments only, so ledgers/x.ts is not mapped",
+    "tests/public/paths.test.ts :: renames: rename from and rename to lines are mapped",
+    "tests/public/paths.test.ts :: new and deleted files: /dev/null headers are left as they are",
+    "tests/public/paths.test.ts :: most specific path entry wins over a covering directory entry",
+    "tests/public/paths.test.ts :: most specific path entry wins regardless of table order, and siblings use the directory entry",
+    "tests/public/unchanged.test.ts :: unchanged: lines without public names, no-newline markers and a missing final newline are kept",
+    "tests/public/unchanged.test.ts :: unchanged: CRLF and LF line endings are each kept on mapped and unmapped lines",
+    "tests/public/unmapped.test.ts :: unmapped: a path no entry covers is left untouched and reported once",
+    "tests/public/unmapped.test.ts :: unmapped: paths are reported in the order they first appear, skipping mapped ones"
+  ],
+  "publicFailingOnReference": [],
+  "hiddenWritten": 38,
+  "kept": [
+    "tests/private/boundaries.test.ts :: [boundary-1] renames across directories and exact file entries map each side independently",
+    "tests/private/boundaries.test.ts :: [boundary-1] multiple creations and deletions keep both null header forms and map all real paths",
+    "tests/private/boundaries.test.ts :: [boundary-1] null headers remain unchanged when the name table is empty",
+    "tests/private/boundaries.test.ts :: [boundary-2] four overlapping path levels choose the longest covering entry in multiple table orders",
+    "tests/private/boundaries.test.ts :: [boundary-2] a longer partial-segment candidate cannot defeat a shorter covering directory",
+    "tests/private/boundaries.test.ts :: [boundary-2] rename metadata uses the same specificity rule as ordinary file headers",
+    "tests/private/hunks.test.ts :: [happy-3] several identifiers map at every occurrence across multiple hunk ranges and suffixes",
+    "tests/private/hunks.test.ts :: [happy-3] whole words map beside punctuation but not inside longer identifier words",
+    "tests/private/hunks.test.ts :: [happy-3] header-like added and removed code stays hunk content and path entries do not rewrite code",
+    "tests/private/hunks.test.ts :: [happy-3] identifiers in file names and index metadata are preserved while code words map",
+    "tests/private/hunks.test.ts :: [happy-3] dozens of identifier entries and repeated long lines map across two files",
+    "tests/private/hunks.test.ts :: [boundary-3] a six-name chain substitutes original tokens once throughout a hunk",
+    "tests/private/hunks.test.ts :: [boundary-3] cyclic identifier mappings work in every table permutation",
+    "tests/private/hunks.test.ts :: [boundary-3] swaps and identity entries remain one pass across successive files and hunks",
+    "tests/private/hunks.test.ts :: [happy-3] distinct case spellings are separate identifier words",
+    "tests/private/paths.test.ts :: [happy-1] distinct old and new file paths and several file blocks are all mapped",
+    "tests/private/paths.test.ts :: [happy-1] transport prefixes are distinct from a and b segments in actual file names",
+    "tests/private/paths.test.ts :: [happy-1] file names containing regex punctuation are matched literally",
+    "tests/private/paths.test.ts :: [happy-1] identifier entries do not rename file header components",
+    "tests/private/paths.test.ts :: [happy-2] multiple directories map many deeply nested descendants while preserving each suffix",
+    "tests/private/paths.test.ts :: [happy-2] directory prefixes cannot consume part of a segment or match later in the path",
+    "tests/private/paths.test.ts :: [happy-2] several near matches of a file path stay untouched beside an exact match",
+    "tests/private/paths.test.ts :: [happy-2] only the covering directory prefix changes when its name repeats in the suffix",
+    "tests/private/paths.test.ts :: [happy-1] a header maps to its entry's real path even when that path is another public name",
+    "tests/private/paths.test.ts :: [happy-2] an identity directory entry still covers its descendants for reporting purposes",
+    "tests/private/paths.test.ts :: [happy-2] path segment spelling is case sensitive",
+    "tests/private/unchanged.test.ts :: [boundary-4] the empty diff stays empty with either an empty or nonempty table",
+    "tests/private/unchanged.test.ts :: [boundary-4] a complete diff with no matching names retains blank lines tabs and trailing spaces",
+    "tests/private/unchanged.test.ts :: [boundary-4] mapping the final hunk line or final file header does not append a newline",
+    "tests/private/unchanged.test.ts :: [boundary-4] mixed line endings survive multiple files renames hunk suffixes and EOF markers",
+    "tests/private/unchanged.test.ts :: [boundary-4] no-newline markers remain literal even when their words are identifier public names",
+    "tests/private/unchanged.test.ts :: [boundary-4] an empty table preserves a multi-hunk diff byte for byte while still reporting file paths",
+    "tests/private/unmapped.test.ts :: [unhappy-1] repeated uncovered paths are deduplicated across separate file blocks and both header sides",
+    "tests/private/unmapped.test.ts :: [unhappy-1] identifier entries with matching names do not count as path coverage",
+    "tests/private/unmapped.test.ts :: [unhappy-1] coverage is determined from input public paths even when mapped and unmapped outputs coincide",
+    "tests/private/unmapped.test.ts :: [unhappy-1] pure rename diffs report uncovered source and destination paths and skip covered sides",
+    "tests/private/unmapped.test.ts :: [unhappy-1] report paths retain literal a and b segments and case distinctions",
+    "tests/private/unmapped.test.ts :: [unhappy-1] a long stream of interleaved covered files and repeated misses keeps global encounter order"
+  ],
+  "dropped": [],
+  "reference": {
+    "source": "the first suite's reference, no session (bin/second.mjs)",
+    "public": {
+      "passed": 16,
+      "total": 16
+    },
+    "hidden": {
+      "passed": 38,
+      "total": 38
+    }
+  },
+  "writer": {
+    "backend": "codex-cli",
+    "model": "gpt-6.1-sol"
+  },
+  "of": "reverse-diff"
+}

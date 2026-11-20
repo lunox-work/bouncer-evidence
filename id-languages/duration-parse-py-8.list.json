@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.049011400000000004,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. \"90\") a valid duration, as the old raw-millisecond config values were?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects unit-less text, because every token needs a unit suffix.",
+      "where": "src/solution.py:25",
+      "instead": "Treat a bare number as milliseconds so existing configs keep working."
+    },
+    {
+      "question": "Is whitespace around the string or between parts (\"1h 30m\", \" 90s \") allowed?",
+      "ticket": "silent",
+      "chose": "Strips leading and trailing whitespace but rejects whitespace between tokens.",
+      "where": "src/solution.py:37",
+      "instead": "Reject any whitespace, or allow it between tokens."
+    },
+    {
+      "question": "How are an empty or blank string handled?",
+      "ticket": "silent",
+      "chose": "Raises ValueError (\"invalid duration: empty string\").",
+      "where": "src/solution.py:38",
+      "instead": "Return 0, or treat it as unset/None."
+    },
+    {
+      "question": "Can a unit appear more than once (\"1h1h\")?",
+      "ticket": "silent",
+      "chose": "Raises ValueError when a unit is repeated.",
+      "where": "src/solution.py:49",
+      "instead": "Sum the repeats (1h1h = 2h)."
+    },
+    {
+      "question": "Must units appear in descending order (\"30m1h\")?",
+      "ticket": "silent",
+      "chose": "Accepts any order of units.",
+      "where": "src/solution.py:44",
+      "instead": "Require largest-to-smallest order and reject \"30m1h\"."
+    },
+    {
+      "question": "Which units are supported besides h, m, s and ms?",
+      "ticket": "`1h30m`, `90s` or `250ms`",
+      "chose": "Also accepts \"d\" for days.",
+      "where": "src/solution.py:16",
+      "instead": "Support only h, m, s and ms (and maybe w)."
+    },
+    {
+      "question": "Are fractional (\"1.5h\"), negative (\"-5s\") or signed values accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them, because only unsigned digit runs are matched.",
+      "where": "src/solution.py:25",
+      "instead": "Accept decimals such as 1.5h and convert them to ms."
+    },
+    {
+      "question": "Is the unit case-sensitive (\"1H\", \"90S\")?",
+      "ticket": "silent",
+      "chose": "Case-sensitive: uppercase units are rejected.",
+      "where": "src/solution.py:25",
+      "instead": "Accept units case-insensitively."
+    },
+    {
+      "question": "What happens when the parsed total is very large?",
+      "ticket": "silent",
+      "chose": "Raises ValueError if the total exceeds 9007199254740991 ms (2^53-1).",
+      "where": "src/solution.py:55",
+      "instead": "Allow any size, or use a smaller cap such as 32-bit ms."
+    },
+    {
+      "question": "What happens when parse_duration gets a non-string?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with a \"duration\" message.",
+      "where": "src/solution.py:35",
+      "instead": "Raise TypeError, or pass an int through as milliseconds."
+    },
+    {
+      "question": "What style does the formatter use to print milliseconds back, and does it carry over to larger units (e.g. 90m vs 1h30m)?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Picks the shortest string by character count, which can use non-canonical splits (5400000 gives \"90m\", 3599999 gives \"3599999ms\"), and can return zero-padded-free mixed units.",
+      "where": "src/solution.py:73",
+      "instead": "Use a greedy largest-unit decomposition (5400000 gives \"1h30m\")."
+    },
+    {
+      "question": "How does the formatter handle 0 and invalid input (negative, bool, float, too large)?",
+      "ticket": "silent",
+      "chose": "Returns \"0ms\" for 0 and raises ValueError for negatives, bools, non-ints or values above the max.",
+      "where": "src/solution.py:104",
+      "instead": "Return \"0s\" or an empty string for 0, and coerce floats or bools."
+    }
+  ]
+}

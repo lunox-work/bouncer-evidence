@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0927393,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 mainly settles where the 14-day lifetime starts: it expects created + 14 days (09:00 on 03-01 to 09:00 on 03-15). Item 2 counts a fixed 14*24h from the clock time at create, which gives that result. The redraw-on-collision line is item 9's question, but it is secondary here.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "S2 expects the code to show who used it and when. Item 6 stores usedBy and usedAt on the code and exposes them, which matches.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "S3 settles how typed codes are matched on redeem. Item 8 removes whitespace and dashes and uppercases the input, so lowercase, spaced and dashed input all resolve to the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "S4 expects the code to still work 1ms before the 14-day mark and to fail as 'expired' at exactly that instant. Item 1 treats now >= createdAt+14d as expired, which matches.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": false,
+      "why": "S5 settles what redeeming an already-used code returns. Item 3 returns 'used' first, before any other check, and makes no exception for the contributor who used it. So when c1 redeems again they would get 'used', but S5 expects that to succeed with nothing changed.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "S6's main point is that redeeming a code that was never made returns 'unknown'. Item 12 returns 'unknown' for any code not in the store. Item 10 (revoking a used code throws) covers a secondary line and also agrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 4,
+      "agrees": true,
+      "why": "S7 expects 'already has access' and the second code to stay unused. Item 4 refuses with that reason and leaves the code unspent.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 5,
+      "agrees": true,
+      "why": "S8 settles how two redemptions at the same time are handled. Item 5 runs every operation through a promise queue, so the first wins and the other gets 'used', giving exactly one success.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "S9 expects list() to show who used a code and when. Item 6 says list() returns usedBy and usedAt for used codes. That a used code stays 'used' after expiry comes from item 3, whose pick also agrees.",
+      "failing": false
+    }
+  ]
+}

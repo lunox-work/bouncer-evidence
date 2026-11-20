@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1207395,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a pass releases the share or which status follows. Item 1 covers rounding and item 9 covers a 100% share; neither settles the basic 7500 / 'partially released' outcome.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how an uneven share is rounded. It rounds down with integer division and gives the leftover to UAT: splitBounty(101, 7500) returns 75/26, which adds up to the bounty. That matches 749/250 for a bounty of 999.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how the UAT amount is worked out. It is the bounty minus earlier releases, i.e. the remaining balance, and the status becomes 'fully released' (the run returned 90 after 10).",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "Item 6 only covers a failure after an earlier pass, where a release already exists. No item asks what a failed run does from the locked state with nothing released, so none settles 'stays locked, nothing recorded'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT is approved before the tests pass. The run threw 'cannot approve UAT: the hidden tests have not passed' with 0 writes, as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": false,
+      "why": "Item 7 asks how a zero bounty behaves. The status is 'pro bono', but the run recorded releases of amount 0 (hidden-tests and then uat), while the scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 covers both a duplicate delivery and a new hidden-tests-passed event after the release. It is keyed on the release kind, so either one records nothing: the run showed one write and a single release.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how events arriving at the same moment are handled. A promise queue runs them one at a time. In the run, two concurrent hidden-tests-passed events gave one release, the UAT gave one release, and there were 2 writes in total. Because releases are keyed on kind (item 3), different ids give the same result.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what happens when a store write fails. The run passed 'disk full' to the caller, the state stayed undefined, and the retry of the same event succeeded.",
+      "failing": false
+    }
+  ]
+}

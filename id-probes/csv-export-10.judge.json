@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1134371,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Items 1, 2, 3 and 5 each cover part of S1: the header, the BOM, the CRLF endings and the row order. Item 1, about the header row, is the closest. Its run output starts with U+FEFF, has the exact header 'Requisition ID,Title,Status,Openings,Filled,Created' and ends every line with \\r\\n. Item 5's run also sorts by createdAt and then id, so every part of S1 holds.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "No item asks how status is displayed. The closest match is item 6, on how the creation time is formatted. It writes the full toISOString() value (e.g. 2009-02-13T23:31:30.123Z), but S2 expects just the UTC date, YYYY-MM-DD. The run outputs also show status written as raw 'open' rather than 'Open'. The missing-title part does match (item 7).",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an empty list produces. Its run returns the BOM plus the header line and nothing else, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": null,
+      "why": "Item 8 asks how fields with separators are escaped. Its run quotes a title containing a comma, quotes and \\n, and doubles the inner quotes, which matches S4's main rule. S4 also requires quoting for titles that contain \\r or start or end with a space. The pick lists only commas, quotes and line breaks, and the run doesn't test spaces, so whether that part holds can't be told.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks about neutralising formula injection. The pick does nothing, and the run writes '@SUM(A1)' and '+3' unchanged. S5 expects a leading single quote before those characters.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 10, 11 and 12 together cover S6's invalid cases. Item 12 is the closest because it asks whether a bad row (filled > openings or an invalid date) fails the whole export. It throws an error naming the id ('Requisition bad: ...'). Items 10 and 11 likewise throw with the id for an unknown status and for non-whole-number counts, so all of S6 holds.",
+      "failing": true
+    }
+  ]
+}

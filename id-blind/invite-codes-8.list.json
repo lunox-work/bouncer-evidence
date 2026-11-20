@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0715777,
+  "items": [
+    {
+      "question": "Is a code usable at the exact 14-day expiry instant?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired once now >= createdAt + 14 days, so the expiry instant itself is already expired.",
+      "where": "src/index.ts:53",
+      "instead": "Treat the code as valid through the expiry instant and expired only after it (now > expiresAt)."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Returns { ok: false, reason: \"already has access\" } and leaves the code unused.",
+      "where": "src/index.ts:128",
+      "instead": "Succeed idempotently and consume the code, or succeed without consuming it."
+    },
+    {
+      "question": "Which state is reported for a code that is both used and past expiry, or both revoked and past expiry?",
+      "ticket": "silent",
+      "chose": "Uses the order used, then revoked, then expired, so a code keeps the first state it reached.",
+      "where": "src/index.ts:50-55",
+      "instead": "Report expired once the time has passed, whatever happened to the code before."
+    },
+    {
+      "question": "How is a typed code matched: case, whitespace and dashes?",
+      "ticket": "silent",
+      "chose": "Strips all whitespace and \"-\" characters and uppercases the input before lookup.",
+      "where": "src/index.ts:30-32",
+      "instead": "Require an exact match on the displayed code, or only trim and uppercase it."
+    },
+    {
+      "question": "What does a redemption report for a code that doesn't exist?",
+      "ticket": "silent",
+      "chose": "Returns { ok: false, reason: \"unknown\" } without throwing.",
+      "where": "src/index.ts:121",
+      "instead": "Throw an error."
+    },
+    {
+      "question": "What does revoking a code that was never made, or one already used, do?",
+      "ticket": "silent",
+      "chose": "Throws an Error for an unknown code and for a used code.",
+      "where": "src/index.ts:146-147",
+      "instead": "Do nothing for an unknown code, or return a result object rather than throwing."
+    },
+    {
+      "question": "What does revoking an already-revoked code do?",
+      "ticket": "silent",
+      "chose": "Does nothing and resolves successfully, writing nothing.",
+      "where": "src/index.ts:148",
+      "instead": "Throw because the code is already revoked."
+    },
+    {
+      "question": "What does the code look like (length, alphabet, format)?",
+      "ticket": "silent",
+      "chose": "Makes 8 characters from a 32-character alphabet without I, O, 0 and 1, shown as XXXX-XXXX.",
+      "where": "src/index.ts:14-16",
+      "instead": "Use a longer code, such as a UUID or 12+ characters, or a full alphanumeric alphabet with no dash."
+    },
+    {
+      "question": "How are simultaneous operations on the same registry handled?",
+      "ticket": "silent",
+      "chose": "Queues every operation in a promise chain so that they run one at a time within the instance.",
+      "where": "src/index.ts:185-189",
+      "instead": "Use a store-level atomic compare-and-set or lock, or leave concurrent calls unguarded."
+    },
+    {
+      "question": "Does a code's expiry run from creation time?",
+      "ticket": "expire after 14 days",
+      "chose": "Sets expiresAt to the clock's time at creation plus a fixed 14 days.",
+      "where": "src/index.ts:97-102",
+      "instead": "Make the lifetime configurable, or run it from a different start such as first listing or first use."
+    },
+    {
+      "question": "What does list return for a task with no codes, and in what order?",
+      "ticket": "silent",
+      "chose": "Returns an empty array for a task with no codes, and otherwise returns codes in creation order.",
+      "where": "src/index.ts:174-179",
+      "instead": "Sort newest first, or throw for an unknown task."
+    },
+    {
+      "question": "Does create check that the task exists or that its id is valid?",
+      "ticket": "silent",
+      "chose": "Accepts any taskId string without validation, including an empty string.",
+      "where": "src/index.ts:93-109",
+      "instead": "Reject an empty or unknown task id."
+    }
+  ]
+}

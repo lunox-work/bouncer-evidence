@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0984275,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how much case and whitespace cleaning is done before matching. The pick trims and lowercases, and readStatus(\"  PUBLISHED  \") returned 'published'. So \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" all read as their canonical status, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which old spellings count as known legacy values. The pick maps only \"in review\" to review, and the run shows \"done\" reading as null. So \"under_review\" and \"LIVE\" would read as null, but S2 expects \"review\" and \"published\" and lists many more legacy spellings.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unmatched stored value returns. The pick returns null and never guesses the nearest status (readStatus(\"archived\") → null). Item 10 shows empty and whitespace-only values also read as null. This matches S3's 'no status, never the nearest one'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether an exact canonical value is stored unchanged on write. Item 5 is only about non-canonical values, so answering it would not settle what S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether writing accepts non-canonical but readable values, including old spellings. The pick accepts only exact enum strings, and \"Draft\", \"in-review\", \" draft\" and \"in review\" all threw. Item 6 confirms the error message quotes the value as given (\"\\\" Draft \\\" is not a sandbox status\"), which covers the rest of S5.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how the batch read reports unreadable values. The pick returns a list of distinct raw values, exactly as stored and sorted, and the run returned [ 'Alpha', 'Bogus', 'alpha', 'zeta ' ]. Item 7 confirms each unreadable row is kept with status null. Both match S6.",
+      "failing": true
+    }
+  ]
+}

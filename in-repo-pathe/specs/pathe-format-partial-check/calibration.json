@@ -1,0 +1,112 @@
+{
+  "slug": "pathe-format-partial-check",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "test/pathe-format-partial-check.spec.ts :: [happy-1] only an extension is given",
+    "test/pathe-format-partial-check.spec.ts :: [happy-1] only a multi-part extension is given",
+    "test/pathe-format-partial-check.spec.ts :: [happy-2] directory and extension without a name",
+    "test/pathe-format-partial-check.spec.ts :: [happy-2] directory and extension with an empty name",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-1] name explicitly undefined",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-1] name explicitly undefined with a root",
+    "test/pathe-format-partial-check.spec.ts :: [happy-3] name without a usable extension",
+    "test/pathe-format-partial-check.spec.ts :: [happy-3] name with an empty extension under a root and directory",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-2] name that itself starts with a dot",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-2] dotted name inside a directory",
+    "test/pathe-format-partial-check.spec.ts :: [happy-4] extension dot handling",
+    "test/pathe-format-partial-check.spec.ts :: [happy-4] multi-part extension without a leading dot gets one",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-3] only one leading dot is checked",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-3] double-dot extension kept verbatim inside a directory",
+    "test/pathe-format-partial-check.spec.ts :: [happy-5] base given together with name or ext",
+    "test/pathe-format-partial-check.spec.ts :: [happy-5] base wins over name and ext inside a directory",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-4] base explicitly undefined falls back to name and ext",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-4] base explicitly undefined falls back to name alone",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-5] empty base",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-5] empty base with a root ignores name and ext",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-6] nothing to format",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-6] every field explicitly undefined",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-7] only one non-empty segment",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-7] only a windows directory is normalised",
+    "test/pathe-format-partial-check.spec.ts :: [happy-6] root given, segments resolved and normalised",
+    "test/pathe-format-partial-check.spec.ts :: [happy-6] root given with a lower-case drive letter",
+    "test/pathe-format-partial-check.spec.ts :: [happy-7] no root, segments joined with slash and not normalised",
+    "test/pathe-format-partial-check.spec.ts :: [happy-7] no root keeps dot segments of a relative dir",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-8] no root and a dir with a trailing separator keeps both separators",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-8] trailing-separator dir with name and ext keeps both separators",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-9] no root and only a dir with a trailing separator",
+    "test/pathe-format-partial-check.spec.ts :: [boundary-9] trailing-separator dir with empty name and ext"
+  ],
+  "publicOnSkeleton": {
+    "passed": 16,
+    "total": 32
+  },
+  "publicFailingOnReference": [],
+  "referenceRegressions": [],
+  "hiddenWritten": 30,
+  "kept": [
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-1] only an extension is given, other extensions",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-1] only an extension is given with other fields explicitly undefined",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-1] only an extension is given through posix, win32 and default",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-2] directory and extension without a name, other directories",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-2] root, directory and extension without a name",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-1] name explicitly undefined, other combinations",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-1] a missing name never produces the text undefined",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-3] name without a usable extension, other names",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-3] name without an extension from a frozen object, called twice",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-3] a missing ext never produces the text undefined",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-2] dotted name with an extension or a root",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-4] extension dot handling, other extensions",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-4] name ending with a dot and a dot-less extension",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-3] only one leading dot is checked, more dots",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-3] leading dots are neither stripped nor doubled",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-5] base wins over a name and dot-less ext that would otherwise apply",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-5] base wins over ext alone",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-4] base explicitly undefined, other fallbacks",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-5] empty base is not treated like an undefined base",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-5] empty base with only a root and a name",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-6] nothing to format with only an empty name or ext",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-6] nothing to format is not a dot",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-7] only one non-empty segment with empty name or ext",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-7] only a name-derived base segment",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-6] root given with partial name or ext, segments resolved",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-6] drive root with a missing ext or name",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-7] no root with partial name or ext, joined verbatim",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [happy-7] no root, lower-case drive dir is upper-cased",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-8] trailing-separator dir with partial name or ext",
+    "test/hidden-pathe-format-partial-check/format-partial.spec.ts :: [boundary-9] only a trailing-separator dir with empty name or ext"
+  ],
+  "dropped": [],
+  "reference": {
+    "public": {
+      "passed": 32,
+      "total": 32
+    },
+    "hidden": {
+      "passed": 30,
+      "total": 30
+    },
+    "touchedOutsideSrc": [],
+    "removed": [],
+    "existing": {
+      "passed": 375,
+      "total": 375
+    },
+    "notes": "I fixed `format` in `src/_path.ts`. The whole suite now passes: 437 tests across 4 files, including both new suites. Prettier and ESLint report no problems.\n\n`format` already existed, so nothing in `src/_path.ts` was throwing `not implemented`. The bug was only in how it builds the last part of the path, so that's the only line I changed:\n\n- **Missing name:** a missing `name` now counts as `\"\"`.\n- **Extension:** an `ext` that is missing or `\"\"` adds nothing. A non-empty `ext` without a leading `.` gets one added; one that already starts with `.` is used as given, including `\".\"` and `\"..txt\"`.\n- **Base:** `base` still wins whenever it isn't `undefined`, even when it's `\"\"`.\n\nHow the parts are joined, with or without `root`, is unchanged, as the spec says.\n\nTests left failing: none",
+    "sessions": [
+      {
+        "sessionId": "577fcf10-0831-498e-8add-855083b99548",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.1433486,
+        "turns": 4,
+        "durationMs": 19866,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.1433486
+  }
+}

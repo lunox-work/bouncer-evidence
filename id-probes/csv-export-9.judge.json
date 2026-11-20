@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.113677,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 covers four things: the BOM, the header, row order and CRLF line endings. Items 5, 2, 1 and 4 each answer one of them, and all four picks agree. Item 1 is the closest single match because it asks the row-order question (creation time, then id). Its run returned rows 2, 9, 10: the two rows with the same time are ordered by id, and the later row comes last. The same output also shows the BOM, the exact header and CRLF after every row, including the last.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 asks how the date is formatted, which is the main human-readable formatting question in S2. Its pick is a full UTC ISO-8601 string with milliseconds, e.g. 1970-01-01T00:00:00.000Z, not the 'YYYY-MM-DD' that S2 expects. The runs also show status written raw ('open') instead of 'Open', though no item asks about that. Item 7 (missing title gives an empty field) agrees with that one line of S2.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an empty list produces. Its run returned only the BOM and the header row, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks when and how text fields are quoted. Its pick quotes only for a comma, quote, CR or LF. S4 also requires quoting a title that starts or ends with a space, and the pick as written does not do that.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing titles that start like a formula ('=', '+', '-', '@', tab, CR). Item 6 covers quoting only, not adding a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Items 8, 9, 10 and 11 each ask about one of S6's refusal cases, and all four throw an error naming the id. Item 9 is the closest because it matches S6's 'whole number of at least 0' wording and accepts 0. Its run threw 'Requisition r1 has invalid openings: 2.5'.",
+      "failing": true
+    }
+  ]
+}

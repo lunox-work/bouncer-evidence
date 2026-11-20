@@ -1,0 +1,15 @@
+{
+  "repo": "colinhacks/zod",
+  "package": "packages/zod",
+  "language": "typescript",
+  "commit": "e32e08836e451e26f53f5ff6efe4fb92b07a47ad",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "the dependencies do not install on a clean copy (pnpm): To fix the lockfile, run 'pnpm install --no-frozen-lockfile'.",
+    "seconds": 1
+  }
+}

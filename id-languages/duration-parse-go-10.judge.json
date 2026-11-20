@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10179280000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "S1's distinctive rows (2d = 172800000, 1d… = 86400000) settle whether days are a supported unit and what a day is worth. The pick adds d at 86400000 ms. The zero-count rows (0s, 1d0h0m0s0ms) also touch item 8, but the main question here is which units exist.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S2 settles whether whitespace around the duration is allowed. The pick trims it before parsing, so \"  45m\\n\" gives 2700000.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 8,
+      "agrees": false,
+      "why": "S3 is a catch-all, and items 1, 3, 5 and 7 each settle some of its rows; all of them agree. Item 8 is the one whose answer decides the 05s row, and S3 expects leading zeros to be rejected. The pick accepts `01h`, so `05s` would parse instead of erroring.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may go over the size of the next unit up (90m allowed instead of needing 1h30m). Item 6 covers order and repeats, not count size.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "S5 settles unit order and repeats. The pick requires strictly descending units, so 30m1h, 1h1h, 1s500ms2s and 5ms1s are all errors.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": true,
+      "why": "S6 settles the maximum value. The pick caps it at 2^53-1 ms, so exactly 9007199254740991 parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "S7 settles what happens above the maximum. The pick returns 0 with an error past 2^53-1 and checks for overflow at each digit and on each sum, which covers both rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "S8 settles how milliseconds are printed. The pick breaks the value into d/h/m/s/ms, leaves out zero parts and prints 0 as `0ms`, which matches every row.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": true,
+      "why": "S9 settles how large values are printed. The pick makes days the largest unit, so 2^53-1 comes out as 104249991d8h59m991ms.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatted output must parse back to the same number. Items 11 and 12 cover formatting only.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "S11 settles formatting of negative or too-large values. The pick returns an empty string and an error below 0 or above 2^53-1. The scenario's wording rule that the message contains \"milliseconds\" isn't covered by the pick, but the behaviour matches.",
+      "failing": false
+    }
+  ]
+}

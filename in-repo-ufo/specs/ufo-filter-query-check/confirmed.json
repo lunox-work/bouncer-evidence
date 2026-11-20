@@ -1,0 +1,28 @@
+{
+  "sha256": "ce43197b570c1efd2834cbe44e842e585b0db434b8c113fc759ba2ef718d6287",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T01:35:30.021Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "The predicate keeps an entry when it returns `true` and drops it when it returns `false`.",
+    "If the input contains no \"?\", it is returned unchanged without being parsed, and the predicate is not called.",
+    "The predicate receives decoded keys and values, as `parseQuery` / `getQuery` produce them.",
+    "A repeated key is grouped into one `string[]`, and the predicate is called once for that key and keeps or drops all its occurrences together.",
+    "If every parameter is dropped, search is set to the stringified empty query, so the result has no \"?\". Path, host and hash stay.",
+    "The kept parameters are rebuilt with `stringifyQuery` from the parsed object, so their encoding is normalized and their order follows the object's key order (integer-like keys first).",
+    "Whether there is a query is decided first by a plain `includes(\"?\")` check and then by `parseURL`. A \"?\" only in the hash, or a bare \"?\", leaves no parameters, but the input is still re-stringified.",
+    "A parameter with an empty value or no \"=\" is passed to the predicate with the value `\"\"`. If kept, a single empty value is written as `key` and an empty item in an array as `key=`.",
+    "The predicate is called in the parsed object's key order, which is the same order as the output.",
+    "The keys `__proto__` and `constructor` are always removed and never passed to the predicate, as `parseQuery` already does.",
+    "An error thrown by the predicate propagates unchanged, and later keys are not visited.",
+    "Seam (the files the stub writes): src/utils.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/utils.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0506042,
+  "items": [
+    {
+      "question": "What row order does the CSV use?",
+      "ticket": "silent",
+      "chose": "Sorts rows by creation time ascending, then by id ascending, on a copy of the input.",
+      "where": "src/index.ts:27",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "What does the CSV contain when the requisition list is empty?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header line only.",
+      "where": "src/index.ts:46",
+      "instead": "Return an empty string, or the header without a BOM."
+    },
+    {
+      "question": "Does the CSV start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prefixes the output with a BOM (U+FEFF).",
+      "where": "src/index.ts:46",
+      "instead": "Emit no BOM."
+    },
+    {
+      "question": "Which line terminator does the CSV use?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:46",
+      "instead": "Use LF, and leave off the final newline."
+    },
+    {
+      "question": "What are the column names and their order?",
+      "ticket": "with status and fill counts",
+      "chose": "Uses the header 'Requisition ID,Title,Status,Openings,Filled,Created'.",
+      "where": "src/index.ts:11",
+      "instead": "Use snake_case or field-name headers (id,title,status,openings,filled,createdAt), or add other columns such as a remaining count."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full UTC ISO 8601 string with milliseconds.",
+      "where": "src/index.ts:40",
+      "instead": "Write a date only (YYYY-MM-DD) or a locale-formatted date."
+    },
+    {
+      "question": "How is a null or undefined title written?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:36",
+      "instead": "Write the text 'null' or 'undefined', or reject the requisition."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Quotes the field per RFC 4180 and doubles any embedded quotes.",
+      "where": "src/index.ts:55",
+      "instead": "Do the same and also quote or neutralise fields starting with =, +, -, @ to block spreadsheet formula injection."
+    },
+    {
+      "question": "What happens when a requisition has an unrecognised status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id, and only four statuses are accepted: open, on_hold, filled, cancelled.",
+      "where": "src/index.ts:15",
+      "instead": "Pass the status through unchanged, or skip the row."
+    },
+    {
+      "question": "What counts as a valid openings or filled count?",
+      "ticket": "silent",
+      "chose": "Accepts only safe integers of 0 or more, and throws for negative, fractional, NaN, infinite or unsafe-large values.",
+      "where": "src/index.ts:17",
+      "instead": "Accept any number, or clamp invalid values to 0."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id.",
+      "where": "src/index.ts:21",
+      "instead": "Export the row as it is, or clamp filled to openings."
+    },
+    {
+      "question": "What happens when one requisition is invalid among valid ones?",
+      "ticket": "silent",
+      "chose": "Validates every requisition before building anything, and one bad row makes the whole build throw.",
+      "where": "src/index.ts:13",
+      "instead": "Skip the bad rows and export the rest, or collect all errors and report them together."
+    }
+  ]
+}

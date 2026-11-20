@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.12670710000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "S1 is spread over items 1 (header), 2 (row order) and 12 (BOM and CRLF). Item 12 is closest because it settles two of S1's four clauses: the BOM and CRLF after every row, including the last. Its ran output starts with the BOM and ends each line with \\r\\n. The header and the createdAt-then-id order shown in items 1 and 2 also match S1.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": false,
+      "why": "No item asks how status labels or dates are formatted for display. Item 9 is the only fit, and only for the missing-title clause, which it handles as S2 expects (empty field). But its ran output writes status as 'open' rather than 'Open' and createdAt as a full ISO timestamp rather than a YYYY-MM-DD date, both against S2.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 says what an empty list returns. Its ran output for [] is the BOM and the header row followed by \\r\\n, nothing else, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 10,
+      "agrees": null,
+      "why": "Item 10 asks how fields with separators are quoted. Its ran output wraps the field and doubles inner quotes for a comma, quote and \\n, as S4 says. But the pick, 'RFC 4180', doesn't cover S4's rule that a field starting or ending with a space must also be quoted, and RFC 4180 doesn't require that, so its behaviour there can't be told.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks whether formula-leading characters are neutralised. The pick does nothing: its ran output writes =SUM(A1) and +1 as they are, with no leading single quote as S5 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "S6 lists four refusal cases, each the subject of its own item: 3 (unknown status), 4 (bad counts), 5 (filled > openings) and 7 (invalid creation time). Item 3 is named, but every one of these items throws an Error naming the id, as their ran outputs show, which matches S6.",
+      "failing": true
+    }
+  ]
+}

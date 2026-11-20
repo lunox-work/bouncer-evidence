@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0983339,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Most of S1 is plain summing that nobody left open. The part that was open is whether `2d` (and `1d...`) parse, which is item 2's question about which units are supported. The pick supports d, h, m, s and ms, so 2d gives 172800000. Item 6 (zero) also touches the `0s` row, but days is the closer fit.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks whether whitespace such as ` 1s` is accepted. S2 expects leading and trailing whitespace to be ignored, but the pick rejects all whitespace.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "S3 mixes several open questions: empty string (5), bare number (1), unknown unit (2) and case (8). Most of its rows (`1.5h`, `-3s`, `+3s`, `1h 30m`, `3 s`) fall under item 4's whitespace, sign and decimal question. The pick rejects all of them, as S3 expects.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether one component's count may exceed the size of the next unit up (`90m`). Item 3 is about unit order and repeats, and item 9 is about formatting, not parsing.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether units may come out of order or repeat. The pick requires strictly decreasing units and rejects the rest, matching S5.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what the maximum duration is. The pick caps it at 2^53-1 ms, so 9007199254740991 is accepted.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 also covers what happens above the maximum. The pick returns InvalidDuration both for totals over 2^53-1 and for u64 overflow, which is what S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks whether output uses the compound style or the shortest form. S8 expects greedy compound output (5400000 → `1h30m`), but the pick chooses the shortest form and prints `90m`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 9,
+      "agrees": false,
+      "why": "This is again item 9's formatting-style question. Under the shortest-form rule, `9007199254740991ms` (18 chars) beats `104249991d8h59m991ms` (20 chars), so the pick does not give the compound string S9 expects.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting then parsing must give back the original value.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what formatting does with a value above the maximum. The pick returns a MillisecondsOutOfRange error for anything above 2^53-1, which covers both rows of S11.",
+      "failing": false
+    }
+  ]
+}

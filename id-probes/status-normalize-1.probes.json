@@ -1,0 +1,105 @@
+{
+  "run": "status-normalize-1",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0469288,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "readStatus(\"banana\")"
+    },
+    {
+      "item": 2,
+      "probe": "[readStatus(\"  DRAFT \"), readStatus(\"In___Review\"), readStatus(\"in - review\"), readStatus(\"in\\t\\n review\")]"
+    },
+    {
+      "item": 3,
+      "probe": "[readStatus(\"in-review\"), readStatus(\"in progress\"), readStatus(\"done\"), readStatus(\"In Review\")]"
+    },
+    {
+      "item": 4,
+      "probe": "(() => { const r = []; for (const v of [\"Draft\", \" draft\", \"in-review\", \"draft\"]) { try { r.push(writeStatus(v)); } catch (e) { r.push(\"throws\"); } } return r; })()"
+    },
+    {
+      "item": 5,
+      "probe": "(() => { try { return writeStatus(\"Bogus\"); } catch (e) { return e.constructor.name + \": \" + e.message; } })()"
+    },
+    {
+      "item": 6,
+      "probe": "(() => { try { return writeStatus(\"\"); } catch (e) { return \"throws: \" + e.message; } })()"
+    },
+    {
+      "item": 7,
+      "probe": "[readStatus(\"\"), readStatus(\"   \"), readStatus(\"\\n\\t\")]"
+    },
+    {
+      "item": 8,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"junk\"},{id:\"c\",status:\"in-review\"}])"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:\"1\",status:\"Zed\"},{id:\"2\",status:\" apple\"},{id:\"3\",status:\"Zed\"},{id:\"4\",status:\"\"},{id:\"5\",status:\"banana\"},{id:\"6\",status:\"DONE\"}]).unreadable"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:\"z\",status:\"merged\"},{id:\"a\",status:\"x\"},{id:\"z\",status:\"merged\"},{id:\"m\",status:\"draft\"}]).rows"
+    },
+    {
+      "item": 11,
+      "probe": "[readStatus(\"constructor\"), readStatus(\"__proto__\"), readStatus(\"toString\"), readStatus(\"hasOwnProperty\")]"
+    },
+    {
+      "item": 12,
+      "probe": null
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "null"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'draft', 'review', 'review', 'review' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'review', null, null, 'review' ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'throws', 'throws', 'throws', 'draft' ]"
+    },
+    {
+      "item": 5,
+      "actual": "'Error: not a sandbox status: \"Bogus\"'"
+    },
+    {
+      "item": 6,
+      "actual": "'throws: not a sandbox status: \"\"'"
+    },
+    {
+      "item": 7,
+      "actual": "[ null, null, null ]"
+    },
+    {
+      "item": 8,
+      "actual": "{ rows: [ { id: 'a', status: 'draft' }, { id: 'b', status: null }, { id: 'c', status: 'review' } ], unreadable: [ 'junk' ] }"
+    },
+    {
+      "item": 9,
+      "actual": "[ '', ' apple', 'DONE', 'Zed', 'banana' ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { id: 'z', status: 'merged' }, { id: 'a', status: null }, { id: 'z', status: 'merged' }, { id: 'm', status: 'draft' } ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ null, null, null, null ]"
+    },
+    {
+      "item": 12,
+      "actual": null
+    }
+  ]
+}

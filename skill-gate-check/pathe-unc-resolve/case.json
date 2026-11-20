@@ -1,0 +1,8 @@
+{
+  "repo": "https://github.com/unjs/pathe.git",
+  "commit": "b52fcacc59717a1e4a8783d4bbfae7fa81b4db07",
+  "base": "55a21be8a14b70ec67098d3f68f54a34f3796fd4",
+  "run": "runs/pathe-unc-resolve-confirmed/ticket-sonnet/1",
+  "maintainers": "8 of 10 acceptance tests pass",
+  "idPattern": "unc|server|share|trailing|//"
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "statelyai/xstate",
+  "package": "packages/core",
+  "language": "typescript",
+  "commit": "268d54efb0ecabc3fd118e379aa3db5fe1295ab0",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 1820 MB",
+    "seconds": 6
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.074155,
+  "items": [
+    {
+      "question": "At what exact moment does a code expire: is it still valid at exactly 14 days after creation?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired once now is greater than or equal to createdAt plus 14 days, so it is invalid at exactly 14 days.",
+      "where": "src/index.ts:53",
+      "instead": "Treat the code as valid through exactly 14 days and expire it only when now is strictly greater than expiresAt."
+    },
+    {
+      "question": "When a code is both used and expired or revoked, which state or failure reason is reported?",
+      "ticket": "silent",
+      "chose": "Checks used first, then revoked, then expired, so a used code always reports 'used'.",
+      "where": "src/index.ts:51",
+      "instead": "Report expired (or revoked) ahead of used, or check expiry first."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Fails with reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:130",
+      "instead": "Succeed idempotently and consume the code, or succeed without consuming it."
+    },
+    {
+      "question": "What does redeeming a code that does not exist do?",
+      "ticket": "silent",
+      "chose": "Returns { ok: false, reason: 'unknown' } instead of throwing.",
+      "where": "src/index.ts:120",
+      "instead": "Throw an error."
+    },
+    {
+      "question": "How is a typed code matched: how are case, whitespace and hyphens handled?",
+      "ticket": "silent",
+      "chose": "Strips all whitespace and hyphens and uppercases the input before lookup, so differently formatted input matches the same code.",
+      "where": "src/index.ts:34",
+      "instead": "Match the code exactly as issued, or only trim and uppercase it."
+    },
+    {
+      "question": "What format, alphabet and length do generated codes have?",
+      "ticket": "silent",
+      "chose": "Draws 12 characters from a 31-character alphabet without look-alike characters and shows them as three hyphen-separated groups of four.",
+      "where": "src/index.ts:13",
+      "instead": "Use a UUID or a longer or shorter random token, with a full alphanumeric alphabet and no grouping."
+    },
+    {
+      "question": "What happens if a freshly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 100 times, then throws 'could not draw an unused code'.",
+      "where": "src/index.ts:195",
+      "instead": "Retry without a limit, or fail on the first collision."
+    },
+    {
+      "question": "Can an unused code be revoked, and what happens when a used, unknown or already revoked code is revoked?",
+      "ticket": "silent",
+      "chose": "Revokes unused codes, throws for unknown or used codes, and does nothing when the code is already revoked.",
+      "where": "src/index.ts:151",
+      "instead": "Throw on an already revoked code, or return silently for an unknown code."
+    },
+    {
+      "question": "Does an expired code that was never used count as revokable, and does revoking change its state?",
+      "ticket": "silent",
+      "chose": "Allows revoking an expired unused code and sets the revoked flag. Revoked then takes precedence over expired when reporting state.",
+      "where": "src/index.ts:153",
+      "instead": "Refuse to revoke an expired code, or keep reporting it as expired."
+    },
+    {
+      "question": "How are overlapping calls to the registry handled?",
+      "ticket": "silent",
+      "chose": "Runs every operation one at a time through an in-process promise queue.",
+      "where": "src/index.ts:187",
+      "instead": "Rely on the store's atomicity, or use a compare-and-set or lock on the store."
+    },
+    {
+      "question": "What does list return for used codes versus unused ones, and in what order?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Returns codes in creation order, adds usedBy and usedAt only for used codes, and reports a state of unused, used, revoked or expired.",
+      "where": "src/index.ts:65",
+      "instead": "Always include usedBy and usedAt as undefined or null, order the codes by newest first, or hide expired or revoked codes."
+    },
+    {
+      "question": "Is the task checked for existence or invite-only status when a code is created?",
+      "ticket": "Generate single-use invite codes per task",
+      "chose": "Creates a code for any taskId string with no validation.",
+      "where": "src/index.ts:93",
+      "instead": "Validate that the task exists and is invite-only, and reject an empty or invalid taskId."
+    }
+  ]
+}

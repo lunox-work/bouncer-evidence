@@ -1,0 +1,41 @@
+{
+  "sha256": "c3f9954724acee863b076d124d2b0ac477690b2e7e3518859c08300097ebd277",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T00:44:10.681Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "Repository documents are only `.md`, `.mdx` and `.markdown` files, in any letter case.",
+    "Boilerplate stems (changelog, changes, history, license, licence, copying, code_of_conduct, security, notice, authors, contributors, codeowners) are dropped anywhere in the tree.",
+    "Documents under the skipped directories of `repo/stack.ts` or under `.github` are not read.",
+    "Files of 0 bytes or over 262144 bytes are skipped and not counted as omitted. A document blank after trimming is dropped and counted.",
+    "Documents are ranked by tier (root README, root guides named contributing, architecture, design, development, agents, claude, conventions or overview, docs, module READMEs, rest) with a keyword boost of 3 score points (1.5 tiers), floored at 1 so the root README stays first. Ties go to depth, then path order. Other root documents rank in the last tier (`NOTES.md` after `src/README.md`).",
+    "Keywords are lowercased title words of 4 or more characters, unique, matched as substrings of the lowercased path.",
+    "Text is normalized to LF, trimmed, and cut to 12000 characters or the room left of 48000, whichever is smaller. A document with no room left is dropped and counted.",
+    "Jira fields shown leave out unset values, empty lists, the issue key, statusCategory, the parent key and link keys. The parent is shown as hasParent, subtasks as a count, and estimates as hours rounded to 0.1.",
+    "The Jira key, link keys and repository name are not rendered. Documents show only their paths.",
+    "A Jira section renders whenever Jira context exists, even as `{}`. No documents section renders for zero documents, and no context gives \"\".",
+    "A step is behind only when the overview holds a newer version of the source than the step used, or the step used none.",
+    "Approved-task snapshots get an optional `context` (`ApprovedTaskContext`, each source's version with its content) and stay at schema version 3.",
+    "Keyword splitting treats every character outside ASCII `[a-z0-9]` as a separator, including accented letters and underscores.",
+    "Docs directories are any directory segment named `docs`, `doc`, `documentation`, `adr` or `adrs`, in any case. `docs/README.md` ranks as a docs document, not a module README.",
+    "Skipped-directory names match case-sensitively and only against directory segments, not the file name.",
+    "Boilerplate stems must match exactly (`code-of-conduct.md` and `CHANGELOG.old.md` are kept).",
+    "Every listed entry is counted, so a repeated path takes two slots. Input order does not affect the result.",
+    "A character cut falls at exactly the code-unit count, even when it splits a surrogate pair.",
+    "`keptDocuments` caps only characters, not the number of documents, which `contextDocuments` already caps.",
+    "Jira output keys are `issueType, status, priority, labels, components, fixVersions, dueDate, storyPoints, originalEstimateHours, remainingEstimateHours, votes, watchers, subtasks, hasParent, links`, in that order. The label, component and version arrays are the context's own, not copies.",
+    "`updated` is never shown: it is the revision the context was read at, not a field the ticket lists.",
+    "Only null counts as unset (`\"\"` and `0` are shown), except that a subtask count of 0 is left out like an empty list.",
+    "Hours round half up via `Math.round(seconds / 360) / 10`.",
+    "The rendered format uses `Jira fields:` with compact one-line JSON, `Repository documents:` with a `--- path ---` line per document, and ` (cut short)` inside that line for cut text. omitted, branch and commit are not rendered.",
+    "Seam (the files the stub writes): packages/core/src/sources.ts",
+    "Allowed paths (what the implementer may change): packages/core/src/"
+  ],
+  "seam": [
+    "packages/core/src/sources.ts"
+  ],
+  "allowedPaths": [
+    "packages/core/src/"
+  ]
+}

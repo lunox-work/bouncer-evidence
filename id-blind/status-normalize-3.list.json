@@ -1,0 +1,85 @@
+{
+  "run": "status-normalize/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 23,
+  "costUsd": 0.047891,
+  "items": [
+    {
+      "question": "Does writing a status accept variants such as other casing or surrounding whitespace, or only the exact enum spelling?",
+      "ticket": "Only enum values are written",
+      "chose": "writeStatus accepts only an exact, case-sensitive match and does not normalise the input.",
+      "where": "src/index.ts:46",
+      "instead": "Normalise the input first (trim, lowercase) and write the canonical status."
+    },
+    {
+      "question": "What happens when writeStatus gets a value that is not a status?",
+      "ticket": "silent",
+      "chose": "Throws an Error whose message contains the JSON-quoted value.",
+      "where": "src/index.ts:47",
+      "instead": "Return null or a result object, or coerce the value to a default status such as draft."
+    },
+    {
+      "question": "Is an old spelling such as 'in-review' accepted on write?",
+      "ticket": "Only enum values are written",
+      "chose": "Rejects old spellings on write, so only readStatus maps them.",
+      "where": "src/index.ts:46",
+      "instead": "Map old spellings to their enum value on write."
+    },
+    {
+      "question": "What does readStatus return for a stored value that is not a known status?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null.",
+      "where": "src/index.ts:37",
+      "instead": "Throw an error, or return the cleaned or original string, or fall back to a default such as draft."
+    },
+    {
+      "question": "Which old spellings are mapped to enum values?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only 'in review' (after cleaning) to review. Any other legacy spelling, such as 'in progress' or 'done', reads as null.",
+      "where": "src/index.ts:19",
+      "instead": "Add more aliases (for example 'approved' or 'pending review'), or accept prefix and fuzzy matches."
+    },
+    {
+      "question": "How are case, whitespace and separators handled when reading?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Lowercases, trims, and collapses runs of whitespace, '-' and '_' into one space. Leading and trailing separators are dropped, so '-draft-' reads as draft.",
+      "where": "src/index.ts:25",
+      "instead": "Only trim and lowercase, treating '-' and '_' as significant. Alternatively, collapse separators to a hyphen or underscore."
+    },
+    {
+      "question": "What does reading an empty or whitespace-only value return?",
+      "ticket": "silent",
+      "chose": "Returns null, since the cleaned string matches no status.",
+      "where": "src/index.ts:37",
+      "instead": "Treat it as a default status such as draft, or throw."
+    },
+    {
+      "question": "Do inherited object keys such as 'constructor' or '__proto__' read as statuses?",
+      "ticket": "silent",
+      "chose": "Looks values up in Maps so these keys return null.",
+      "where": "src/index.ts:10",
+      "instead": "Use a plain object lookup, or a Set, with no special guard."
+    },
+    {
+      "question": "How does the batch read treat rows with unreadable statuses?",
+      "ticket": "silent",
+      "chose": "Keeps every row in order with status null and does not throw.",
+      "where": "src/index.ts:57",
+      "instead": "Drop unreadable rows, or throw on the first one."
+    },
+    {
+      "question": "How are unreadable values reported by the batch read: which form, how duplicates are handled, and in what order?",
+      "ticket": "silent",
+      "chose": "Reports the original stored strings, deduplicated by exact stored form (so 'Unknown' and 'unknown' are separate) and sorted with the default sort.",
+      "where": "src/index.ts:59",
+      "instead": "Report the cleaned form, or return row ids, or keep duplicates in first-seen order."
+    },
+    {
+      "question": "Does the batch read return an empty result for empty input?",
+      "ticket": "silent",
+      "chose": "Returns empty rows and an empty unreadable list.",
+      "where": "src/index.ts:62",
+      "instead": "Throw on empty input, or return null."
+    }
+  ]
+}

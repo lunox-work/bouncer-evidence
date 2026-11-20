@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.08574899999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks what happens when a newly drawn code matches an existing one. The scenario says such a code is drawn again, and the pick redraws (giving up only after 1000 tries), so they agree. No item asks about the 14-day expiry or the unused starting state.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "Nothing on the list asks whether redeeming grants access to that task only, or whether the code records who used it and when.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how typed input is matched for case, spaces and dashes. The pick removes whitespace and '-' and uppercases before lookup, so lowercase, spaced or dashed input finds the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code still works at the exact 14-day instant. The pick counts a code as expired once now >= expiresAt, so it works at 08:59:59.999 and fails as 'expired' at 09:00:00.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "Item 3 is about redeeming a different code for a task the person can already reach. Item 4 is about which reason wins when several apply. Neither asks whether the person who used a code can redeem it again and succeed with nothing changing, and that is the open question here.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether codes can be revoked and what happens when you revoke a used, unknown or already-revoked code. The pick adds revocation and throws for used codes, which matches 'a used code cannot be revoked'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about redeeming a code for a task the person can already reach. The pick fails with reason 'already has access' and leaves the code unused, which is exactly what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how simultaneous operations are handled. The pick runs every operation one at a time through a promise queue, so of two simultaneous redemptions one succeeds and the other sees 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what state a code used before expiry shows once its expiry time passes. The pick keeps it 'used' because the used check comes before the expiry check, which matches the scenario.",
+      "failing": false
+    }
+  ]
+}

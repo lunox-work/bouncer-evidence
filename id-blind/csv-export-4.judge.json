@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0832909,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "S1 answers four list questions: header (8), BOM (9), row order (1) and CRLF (10). Item 8 is closest because the scenario is mainly about the header row. Its pick matches the exact header text. Items 1, 9 and 10 also agree with S1.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 7,
+      "agrees": false,
+      "why": "The main thing S2 settles is how the Created date is written, which is item 7's question. Item 7 writes a full ISO 8601 timestamp with milliseconds, but S2 wants only the UTC date as YYYY-MM-DD. No item asks about status labels. Item 12 covers the missing-title part, which does agree.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how an empty list is exported. Its pick returns the BOM and header line only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 asks how fields with commas, quotes or line breaks are handled. Its pick quotes only for comma, quote, CR or LF. S4 also requires quoting a title that starts or ends with a space, so the pick falls short.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item's question asks about titles that start like a formula. Item 12's pick happens to say there is no formula-injection guard, which goes against S5. But item 12's question only covers missing titles and separator characters, and the instructions say to match on the question, not the pick.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Items 2-5 each cover one kind of bad requisition. Item 6 asks whether any bad record fails the whole export, which is the outcome S6 settles. Its pick throws and returns no CSV, so building fails. Item 6 doesn't say the error names the id, but items 2, 4 and 5 do.",
+      "failing": true
+    }
+  ]
+}

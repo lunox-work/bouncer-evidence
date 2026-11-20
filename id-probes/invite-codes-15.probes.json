@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-15",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0722448,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{const m=new Map();let t=new Date(0);const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>0});const c=await r.create('t');t=new Date(14*864e5);return r.redeem(c.code,'u')})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('t');const c=await r.create('t');const x=await r.redeem(a.code,'u');const y=await r.redeem(c.code,'u');return [x,y,await r.list('t')]})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{const m=new Map();let t=new Date(0);const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>0});const c=await r.create('t');await r.redeem(c.code,'u');const d=await r.create('t').catch(e=>e.message);t=new Date(15*864e5);const used=await r.redeem(c.code,'v');return [used,d]})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>10});const c=await r.create('t');return [c.code,await r.redeem(' cccc.cccc cccc ','u')]})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});return [await r.redeem('','u'),await r.redeem('--!!  ','u')]})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});const c=await r.create('t');await r.redeem(c.code,'u');return r.revoke(c.code).then(()=>'no error',e=>e.message)})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{const r=new InviteRegistry({store:{get:async k=>undefined,set:async()=>{}},now:()=>new Date(0),randomInt:b=>0});return r.revoke('ABCD-EFGH-JKLM').then(()=>'no error',e=>e.message)})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{const m=new Map();let w=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{w++;m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});const c=await r.create('t');await r.revoke(c.code);const before=w;const res=await r.revoke(c.code).then(()=>'no error',e=>e.message);return {res,writesOnSecondRevoke:w-before}})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{const m=new Map();let g=0;const r=new InviteRegistry({store:{get:async k=>{if(k.startsWith('code:'))g++;return m.get(k)},set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const a=await r.create('t');const r2=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});await r2.create('x');const e=await r2.create('x').catch(e=>e.message);return [a.code,e]})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});return [await r.create(''),await r.create('no-such-task')]})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>{await new Promise(s=>setTimeout(s,Math.random()*5));return m.get(k)},set:async(k,v)=>{await new Promise(s=>setTimeout(s,Math.random()*5));m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});const c=await r.create('t');return Promise.all([r.redeem(c.code,'a'),r.redeem(c.code,'b'),r.redeem(c.code,'c')])})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{const m=new Map();let n=0;let t=new Date(0);const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>n++%b});const a=await r.create('t');const b=await r.create('t');const c=await r.create('t');const d=await r.create('other');await r.redeem(a.code,'u');await r.revoke(b.code);t=new Date(20*864e5);return r.list('t')})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ ok: false, reason: 'expired' }"
+    },
+    {
+      "item": 2,
+      "actual": "[ { ok: true, taskId: 't' }, { ok: false, reason: 'already has access' }, [ { code: '2345-6789-ABCD', taskId: 't', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'used', usedBy: 'u', usedAt: 1970-01-01T00:00:00.000Z }, { code: 'EFGH-JKLM-NPQR', taskId: 't', createdA"
+    },
+    {
+      "item": 3,
+      "actual": "[ { ok: false, reason: 'used' }, 'could not draw a free invite code' ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'CCCC-CCCC-CCCC', { ok: true, taskId: 't' } ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ { ok: false, reason: 'unknown' }, { ok: false, reason: 'unknown' } ]"
+    },
+    {
+      "item": 6,
+      "actual": "'invite code has been used'"
+    },
+    {
+      "item": 7,
+      "actual": "'unknown invite code'"
+    },
+    {
+      "item": 8,
+      "actual": "{ res: 'no error', writesOnSecondRevoke: 0 }"
+    },
+    {
+      "item": 9,
+      "actual": "[ 'BYGR-RHRG-VKDF', 'could not draw a free invite code' ]"
+    },
+    {
+      "item": 10,
+      "actual": "throws Error: could not draw a free invite code"
+    },
+    {
+      "item": 11,
+      "actual": "[ { ok: true, taskId: 't' }, { ok: false, reason: 'used' }, { ok: false, reason: 'used' } ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ { code: '2345-6789-ABCD', taskId: 't', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'used', usedBy: 'u', usedAt: 1970-01-01T00:00:00.000Z }, { code: 'EFGH-JKLM-NPQR', taskId: 't', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: '"
+    }
+  ]
+}

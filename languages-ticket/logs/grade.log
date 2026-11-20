@@ -1,0 +1,46 @@
+[22:14:44] duration-parse-go/ticket-haiku/1 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:15:01] duration-parse-go/ticket-haiku/2 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:15:19] duration-parse-go/ticket-haiku/3 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:15:36] duration-parse-go/ticket-haiku/4 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:15:53] duration-parse-go/ticket-haiku/5 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:16:10] duration-parse-go/ticket-haiku/6 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:16:27] duration-parse-go/ticket-haiku/7 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:16:44] duration-parse-go/ticket-haiku/8 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:17:02] duration-parse-go/ticket-haiku/9 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:17:19] duration-parse-go/ticket-haiku/10 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:17:36] duration-parse-go/ticket-haiku/11 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:17:54] duration-parse-go/ticket-haiku/12 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:18:11] duration-parse-go/ticket-haiku/13 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:18:28] duration-parse-go/ticket-haiku/14 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:18:47] duration-parse-go/ticket-haiku/15 incomplete public 63/65, hidden 155/159 scenarios unhappy-1
+[22:18:50] duration-parse-py/ticket-haiku/1 incomplete public 59/71, hidden 129/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-3, unhappy-1
+[22:18:53] duration-parse-py/ticket-haiku/2 incomplete public 47/71, hidden 103/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1, unhappy-2
+[22:18:56] duration-parse-py/ticket-haiku/3 incomplete public 53/71, hidden 111/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1
+[22:18:59] duration-parse-py/ticket-haiku/4 incomplete public 53/71, hidden 111/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1
+[22:19:02] duration-parse-py/ticket-haiku/5 incomplete public 56/71, hidden 122/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-3, unhappy-1, unhappy-2
+[22:19:05] duration-parse-py/ticket-haiku/6 incomplete public 57/71, hidden 122/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-3, unhappy-1, unhappy-2
+[22:19:08] duration-parse-py/ticket-haiku/7 incomplete public 59/71, hidden 129/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-3, unhappy-1
+[22:19:11] duration-parse-py/ticket-haiku/8 incomplete public 60/71, hidden 129/159 scenarios boundary-3, boundary-4, happy-3, unhappy-1, unhappy-2
+[22:19:14] duration-parse-py/ticket-haiku/9 incomplete public 53/71, hidden 111/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1
+[22:19:17] duration-parse-py/ticket-haiku/10 incomplete public 56/71, hidden 116/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1
+[22:19:19] duration-parse-py/ticket-haiku/11 incomplete public 59/71, hidden 129/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-3, unhappy-1
+[22:19:22] duration-parse-py/ticket-haiku/12 incomplete public 56/71, hidden 123/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-3, unhappy-1, unhappy-2
+[22:19:25] duration-parse-py/ticket-haiku/13 incomplete public 53/71, hidden 112/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1
+[22:19:28] duration-parse-py/ticket-haiku/14 incomplete public 53/71, hidden 111/159 scenarios boundary-1, boundary-2, boundary-3, boundary-4, happy-1, happy-2, happy-3, unhappy-1
+[22:19:31] duration-parse-py/ticket-haiku/15 incomplete public 62/71, hidden 137/159 scenarios boundary-3, boundary-4, happy-3, unhappy-1
+[22:19:33] duration-parse-rs/ticket-haiku/1 incomplete public 41/45, hidden 102/110 scenarios boundary-1, boundary-2, unhappy-1
+[22:19:35] duration-parse-rs/ticket-haiku/2 incomplete public 37/45, hidden 98/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1
+[22:19:36] duration-parse-rs/ticket-haiku/3 incomplete public 36/45, hidden 98/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1
+[22:19:38] duration-parse-rs/ticket-haiku/4 incomplete public 37/45, hidden 98/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1
+[22:19:40] duration-parse-rs/ticket-haiku/5 incomplete public 32/45, hidden 84/110 scenarios boundary-1, boundary-2, boundary-3, happy-1, happy-2, happy-3, unhappy-1
+[22:19:42] duration-parse-rs/ticket-haiku/6 incomplete public 37/45, hidden 98/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1
+[22:19:43] duration-parse-rs/ticket-haiku/7 incomplete public 33/45, hidden 84/110 scenarios boundary-1, boundary-2, boundary-3, happy-1, happy-2, happy-3, unhappy-1
+[22:19:45] duration-parse-rs/ticket-haiku/8 incomplete public 37/45, hidden 98/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1
+[22:19:47] duration-parse-rs/ticket-haiku/9 incomplete public 36/45, hidden 98/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1
+[22:19:48] duration-parse-rs/ticket-haiku/10 incomplete public 32/45, hidden 84/110 scenarios boundary-1, boundary-2, boundary-3, happy-1, happy-2, happy-3, unhappy-1
+[22:19:50] duration-parse-rs/ticket-haiku/11 incomplete public 40/45, hidden 97/110 scenarios boundary-1, boundary-2, unhappy-1, unhappy-2
+[22:19:52] duration-parse-rs/ticket-haiku/12 incomplete public 33/45, hidden 84/110 scenarios boundary-1, boundary-2, boundary-3, happy-1, happy-2, happy-3, unhappy-1
+[22:19:53] duration-parse-rs/ticket-haiku/13 incomplete public 34/45, hidden 93/110 scenarios boundary-1, boundary-2, boundary-3, happy-3, unhappy-1, unhappy-2
+[22:19:55] duration-parse-rs/ticket-haiku/14 incomplete public 32/45, hidden 84/110 scenarios boundary-1, boundary-2, boundary-3, happy-1, happy-2, happy-3, unhappy-1
+[22:19:57] duration-parse-rs/ticket-haiku/15 incomplete public 32/45, hidden 84/110 scenarios boundary-1, boundary-2, boundary-3, happy-1, happy-2, happy-3, unhappy-1
+45 result(s) in results.jsonl

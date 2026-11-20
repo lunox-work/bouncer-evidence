@@ -1,0 +1,85 @@
+{
+  "run": "status-normalize/10",
+  "model": "claude-sonnet-5-5",
+  "seconds": 25,
+  "costUsd": 0.0547648,
+  "items": [
+    {
+      "question": "Which old spellings of a status are recognised when reading?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Maps only \"in review\" (after cleaning) to review; every other non-enum value, such as \"in progress\" or \"done\", reads as null.",
+      "where": "src/index.ts:16",
+      "instead": "Also map other legacy spellings (for example \"pending\" or \"in-progress\"), or define the alias table differently."
+    },
+    {
+      "question": "How loosely is a stored value matched to a status when reading (case, whitespace, separators)?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Lowercases, turns every run of whitespace, \"-\" and \"_\" into one space and trims the ends, so \"-Merged-\" reads as merged.",
+      "where": "src/index.ts:21",
+      "instead": "Only trim and lowercase, or only treat whitespace as a separator, so \"-Merged-\" would not match."
+    },
+    {
+      "question": "What does reading return for a stored value that is not a status and not a known old spelling?",
+      "ticket": "silent",
+      "chose": "Returns null.",
+      "where": "src/index.ts:33",
+      "instead": "Throw an error, or fall back to a default such as draft."
+    },
+    {
+      "question": "What does reading return for an empty or whitespace-only value?",
+      "ticket": "silent",
+      "chose": "Returns null, because the cleaned empty string is neither a status nor an alias.",
+      "where": "src/index.ts:31",
+      "instead": "Treat it as draft (the default), or throw."
+    },
+    {
+      "question": "Does reading match near-miss values such as typos, plurals or prefixes (\"drafts\", \"pub\")?",
+      "ticket": "silent",
+      "chose": "No. It only accepts an exact match after cleaning, so near misses return null.",
+      "where": "src/index.ts:32",
+      "instead": "Fuzzy or prefix matching to the nearest status."
+    },
+    {
+      "question": "Does writing normalise a value that is not exactly an enum value (\"Draft\", \"in-review\", \" review\")?",
+      "ticket": "Only enum values are written",
+      "chose": "No. Writing accepts only the exact lowercase enum strings and throws on anything else, including old spellings and differently cased or padded values.",
+      "where": "src/index.ts:40",
+      "instead": "Run the value through the read normalisation first, then write the normalised status."
+    },
+    {
+      "question": "How does writing report an invalid status?",
+      "ticket": "silent",
+      "chose": "Throws an Error with the message `Invalid sandbox status: \"<value as given>\"`.",
+      "where": "src/index.ts:41",
+      "instead": "Return null or a result object, or throw a custom error type."
+    },
+    {
+      "question": "How does bulk reading handle a row whose status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row with status null and does not throw.",
+      "where": "src/index.ts:67",
+      "instead": "Drop the unreadable rows, or throw on the first one."
+    },
+    {
+      "question": "How does bulk reading report unreadable values?",
+      "ticket": "silent",
+      "chose": "Returns the raw stored strings (not cleaned), deduplicated by exact string and sorted, so \"bogus\" and \"Bogus\" both appear.",
+      "where": "src/index.ts:68",
+      "instead": "Report row ids instead, report the cleaned values, or keep duplicates in input order."
+    },
+    {
+      "question": "Does bulk reading keep the input row order and any duplicate ids?",
+      "ticket": "silent",
+      "chose": "Keeps the input order and one output row per input row, with no deduplication.",
+      "where": "src/index.ts:66",
+      "instead": "Deduplicate by id or sort the rows."
+    },
+    {
+      "question": "Is the enum exposed as a runtime enum or constant, or only as a type?",
+      "ticket": "Introduce a status enum with draft, review, published, claimed, merged",
+      "chose": "Keeps the existing string-literal union type and adds a private Set of the values, with no exported runtime enum or list.",
+      "where": "src/index.ts:4",
+      "instead": "Export a TypeScript `enum` or a const array so callers can enumerate the values."
+    }
+  ]
+}

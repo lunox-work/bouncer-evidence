@@ -1,0 +1,52 @@
+{
+  "spec": "gherkin-parse",
+  "model": "claude-fable-5-1",
+  "costUsd": 0.444448,
+  "ruled": [
+    {
+      "id": "suite:gherkin-parse:tests/public/valid-files.test.ts :: [happy-1] a step's text is what follows the keyword and exactly one space",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/private/valid-files.test.ts :: [happy-1] only one space after each keyword is dropped from the step's text",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/public/valid-files.test.ts :: [happy-2] comments that look like keywords are skipped and tags from several tag lines all go to the next scenario",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/private/errors.test.ts :: [unhappy-1] a step on line 10 after tags and comments, before the Background:, fails at line 10",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/private/valid-files.test.ts :: [happy-2] a description ended by a tag line is skipped and tags separated by several spaces are read",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/public/errors.test.ts :: [unhappy-1] a step before any Background: or Scenario: fails at that line",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/private/errors.test.ts :: [unhappy-1] a step with any keyword after a tag line and before any Scenario: fails at that line",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/private/errors.test.ts :: [unhappy-1] a free-text line straight after Scenario: fails at that line",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:gherkin-parse:tests/private/errors.test.ts :: [unhappy-1] a tagged Scenario Outline: on line 11 after a background fails at line 11",
+      "ticket": "open",
+      "quote": ""
+    }
+  ]
+}

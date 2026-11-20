@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.13402619999999998,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks where the 14-day lifetime starts and how it is counted. The run shows expiresAt is exactly createdAt plus 14×24h, so a code created at 2026-03-01T09:00Z expires at 2026-03-15T09:00Z, as the scenario expects. The redraw-on-collision clause is also covered by item 9, which redraws too, but the scenario's main point is the expiry.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how 'who used it' is recorded. The run shows the redeemed code has usedBy set to the contributor and a usedAt timestamp, which matches 'shows it was used by c1, and when'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how typed codes are matched. The pick strips spaces and dashes and uppercases the input. The run shows ' abcde - fghjk ' redeems successfully, so it is read as the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks exactly when a code expires around the 14-day mark. Its rule is now >= createdAt+14d, so the exact instant fails with 'expired' and one millisecond earlier still works. The run returns reason 'expired' at exactly 14 days, matching the scenario.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks what redeeming an already-used code returns. The pick returns 'used' before any other check, with no exception for the person who already used it. So when c1 redeems again they get a failure ('used', or at best 'already has access'). The scenario expects that second redemption by c1 to succeed with no change.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what redeeming an unknown code returns. The run gives reason 'unknown', matching the scenario's first line. The 'used code cannot be revoked' part is item 10, whose run also throws, so that part agrees too.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what happens when a contributor redeems a code for a task they already have access to. The run refuses with 'already has access' and leaves the code unused: another contributor then redeems it successfully.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how simultaneous redemptions of one code are handled. In the run the store calls are delayed, and of three concurrent redeems exactly one succeeds and the others fail with 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how usage is exposed through list(). The run shows list() returns code, createdAt, expiresAt, state, usedBy and usedAt. Item 3's run also shows a used code still listed as 'used' after its expiry time.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.08044200000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 is mainly about the header row and its columns. Item 1 picks that exact six-column header in that order. S1's other points are also settled by matching picks: row order by createdAt then id is item 2, and the BOM and CRLF after every line including the last are item 12.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "No item asks how status labels, dates or numbers are formatted. Item 9 is the only one about how a value is written: it covers the missing title, and its pick of an empty field for undefined or null matches S2. It settles only that one clause.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 says what an empty list returns. Its pick returns only the BOM and the header, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 10,
+      "agrees": null,
+      "why": "Item 10 asks when and how fields are quoted. Its RFC 4180 pick matches S4 for commas, quotes and line breaks, and doubles inner quotes. It says nothing about quoting a title that starts or ends with a space, which S4 requires and RFC 4180 does not, so we can't tell whether it fully agrees.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks whether formula characters at the start of a field are neutralised. Its pick does nothing special, but S5 requires a leading single quote before =, +, -, @, tab or \\r.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "S6 settles that one bad requisition fails the whole build with an error. That is the question item 8 asks, and its pick (validate every row, throw on the first bad one, return no partial output) agrees. The individual conditions and the error naming the id are also covered by items 3, 4, 5 and 7, whose picks agree as well.",
+      "failing": true
+    }
+  ]
+}

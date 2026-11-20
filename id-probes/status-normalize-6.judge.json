@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10322509999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how loosely a stored value is cleaned before matching, which is the question S1 settles. The pick trims and lowercases. The run shows ' DRAFT ' read as 'draft', and 'merged' is a status it recognises, so 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' would come back as their statuses.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings are accepted, which is the question S2 settles. The pick accepts only 'in review'. The run shows 'in progress' and 'approved' return null. So 'under_review' and 'LIVE' would read as null, not 'review' and 'published'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unrecognised stored status reads as. The pick returns null for anything that is not a status or the one known alias, with no fuzzy matching, so 'closed', 'drafts' and 'revew' read as null. Item 9's run also shows empty and whitespace-only values read as null.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether an exact status is stored unchanged when written. Item 4 is about values that are not exactly a status. Its run does show writeStatus('draft') returning 'draft', but its question is about refusing other values, not this simple case.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts values that are not exactly a status, including other casing, padding and old spellings. The run shows 'Draft', ' draft' and 'in-review' all throw, and each error message contains the value as given in quotes. That matches S5, including that old spellings are refused on write.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how unreadable values are reported: as stored or cleaned, whether duplicates are removed, and in what order. The pick lists the raw stored strings, removes exact duplicates and sorts them. The run shows [' Zed ','Bogus','apple','bogus'], which is each distinct value once, sorted, exactly as stored. Item 6's run also shows unreadable rows kept with status null.",
+      "failing": true
+    }
+  ]
+}

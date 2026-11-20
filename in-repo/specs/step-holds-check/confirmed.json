@@ -1,0 +1,33 @@
+{
+  "sha256": "8995cf730ad9d23e6bcf4594f9d86eb0feb6ca1dd6a97e60f5ca0c5b17d1ae05",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-19T23:14:23.761Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "When both the scope and the price are unapproved, `stepHeldBy` checks the scope first and returns `\"scope\"` without looking at the price.",
+    "The scope counts as approved only through `scopeApproved`, so an approval of an older (or any other) version leaves the scope unapproved.",
+    "The price counts as approved only when the proposal status is exactly `\"approved\"`. It is not checked against the current scope version.",
+    "A null proposal never holds the price step. It holds only the sandbox, with `\"price\"` as the holder.",
+    "For step `\"price\"`, `stepHeldBy` looks only at the scope and ignores the proposal argument.",
+    "`stepHeldReason(\"price\", …)` returns \"Approve the scope before changing the price.\" whatever `heldBy` is.",
+    "`stepHeldReason(\"sandbox\", \"scope\")` returns \"Approve the scope and the price before changing the sandbox.\", and `stepHeldReason(\"sandbox\", \"price\")` returns \"Approve the price before changing the sandbox.\"",
+    "`stepHeldReason(\"price\", \"price\")`, a pair `stepHeldBy` never produces, returns the price step's scope sentence and does not throw.",
+    "`stepHeldBy` looks only at earlier steps. It takes no input for the step's own state and holds whenever an earlier step is unapproved.",
+    "A snapshot counts as built (`snapshotBuilt(runs)` is true) when graphify has succeeded and every other required builder has finished as succeeded or failed. The deepwiki builder is excluded: `REQUIRED_BUILDERS` is `CONTEXT_BUILDERS` without `\"deepwiki\"`. (This is in `packages/core/src/analysis.ts`, outside this seam. It is recorded here and not specified by scenarios.)",
+    "A snapshot with no runs is not built (`snapshotBuilt([])` is false), because no graphify run succeeded. (This is in `analysis.ts`, outside this seam. It is recorded here and not specified by scenarios.)",
+    "A planned bounty issue gets an optional onboarding flag that may be true, false or undefined. (This is in `packages/core/src/sizing.ts`, outside this seam. It is recorded here and not specified by scenarios.)",
+    "The sentences are returned only by `stepHeldReason`. No string constants are exported for them.",
+    "`stepHeldBy` reads the proposal only from its third argument, never from a `proposal` field on `bounty` (unlike `bountyStatus`).",
+    "There is no runtime validation. Inputs outside the declared types (for example step `\"scope\"`) are rejected only by the TypeScript compiler, and both functions never throw for typed inputs.",
+    "Both functions are synchronous and stateless, so calls cannot overlap and the result depends only on the arguments. No `@concurrency` scenario applies.",
+    "Seam (the files the stub writes): packages/core/src/stages.ts",
+    "Allowed paths (what the implementer may change): packages/core/src/"
+  ],
+  "seam": [
+    "packages/core/src/stages.ts"
+  ],
+  "allowedPaths": [
+    "packages/core/src/"
+  ]
+}

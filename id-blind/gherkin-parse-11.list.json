@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/11",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.0718132,
+  "items": [
+    {
+      "question": "What does a Scenario Outline (or Scenario Template) do?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError saying Scenario Outline is not supported.",
+      "where": "src/index.ts:107",
+      "instead": "Parse it as an ordinary scenario, or parse it along with its Examples tables."
+    },
+    {
+      "question": "Is a feature file with no scenarios valid?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Returns a Feature with an empty scenarios array.",
+      "where": "src/index.ts:161",
+      "instead": "Raise an error because no scenario was found."
+    },
+    {
+      "question": "What happens on empty input or input with no Feature: line?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError at line 1 saying a Feature: line is expected.",
+      "where": "src/index.ts:158",
+      "instead": "Return an empty result, or report the error at the last line."
+    },
+    {
+      "question": "How is a second Feature: line handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError on the line of the second Feature:.",
+      "where": "src/index.ts:98",
+      "instead": "Start a second feature, or ignore the extra line."
+    },
+    {
+      "question": "How is free-form description text between Feature: and the first Background or Scenario treated?",
+      "ticket": "silent",
+      "chose": "Silently skips any unrecognised line while the phase is still 'feature'. The skip also hides step-like lines that follow, such as ones indented under the description.",
+      "where": "src/index.ts:154",
+      "instead": "Reject the text as an error, or keep it as a feature description."
+    },
+    {
+      "question": "How are unrecognised lines inside a scenario or background handled, and what line is reported?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Throws a ParseError on the offending line, reporting 'unrecognised line'.",
+      "where": "src/index.ts:155",
+      "instead": "Treat the line as a continuation or description of the previous step, or ignore it."
+    },
+    {
+      "question": "What happens to a step that appears before any Background or Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError on the step's line.",
+      "where": "src/index.ts:140",
+      "instead": "Ignore the step, or treat it as part of an implicit scenario."
+    },
+    {
+      "question": "Which lines are treated as errors for tags, and which line number is reported for dangling tags?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Throws a ParseError if tags are followed by anything other than a Scenario. The error is reported at the first tag line, not at the offending line or end of file. Tags before Feature: are discarded. Tags before a Background are an error.",
+      "where": "src/index.ts:110",
+      "instead": "Report the line of the non-scenario line that followed the tags. Alternatively, allow tags on Background or the Feature and keep them."
+    },
+    {
+      "question": "Are Background steps returned, and where do they go?",
+      "ticket": "silent",
+      "chose": "Stores them in a separate feature.background array (null if absent). They are not merged into each scenario's steps. A second Background, or one after a scenario, is an error.",
+      "where": "src/index.ts:113",
+      "instead": "Prepend the background steps to each scenario, or ignore the background."
+    },
+    {
+      "question": "How are doc strings and data tables attached to steps, and what is validated?",
+      "ticket": "silent",
+      "chose": "Attaches a doc string (delimited by \"\"\" or ```) or a table to the preceding step. A table row whose cell count differs from the first row is an error. An unclosed doc string is reported at its opening line. A doc string or table with no preceding step is an error. A table directly after a doc string is an error, and so is a doc string directly after a table.",
+      "where": "src/index.ts:48",
+      "instead": "Ignore doc strings and tables, or allow ragged rows, or report an unclosed doc string at end of file."
+    },
+    {
+      "question": "How are table cells and doc string lines processed?",
+      "ticket": "silent",
+      "chose": "Trims table cells and handles the \\|, \\\\ and \\n escapes. Strips the opening delimiter's indentation from doc string lines. Returns doc string content as an array of lines.",
+      "where": "src/index.ts:165",
+      "instead": "Keep cells raw, apply no escape handling, and return the doc string as a single string."
+    },
+    {
+      "question": "Which input formats and keywords are accepted: CRLF, BOM, comments, Example:, '*' steps, and language?",
+      "ticket": "silent",
+      "chose": "Strips the BOM and trailing CR. Skips whole-line comments, including '# language:' without interpreting it. Accepts 'Example:' as a synonym for 'Scenario:' and '*' as a step keyword. Only English keywords are recognised.",
+      "where": "src/index.ts:22",
+      "instead": "Reject a BOM or CRLF, support other languages via '# language:', or reject '*' and 'Example:'."
+    }
+  ]
+}

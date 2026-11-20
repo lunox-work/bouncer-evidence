@@ -1,0 +1,67 @@
+[
+ {
+  "key": "gherkin-parse/double-blind-haiku/1",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/2",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/3",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/6",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/7",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/8",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/9",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/10",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/11",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/12",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/13",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "gherkin-parse/double-blind-haiku/15",
+  "sonnetVerdict": "passed",
+  "hidden": "27/27"
+ },
+ {
+  "key": "reverse-diff/double-blind-haiku/1",
+  "sonnetVerdict": "passed",
+  "hidden": "29/29"
+ }
+]

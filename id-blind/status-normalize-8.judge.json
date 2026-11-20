@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07395370000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how loosely a stored value is cleaned before it is matched. S1 depends on that answer: case and padding must be ignored. The pick trims and lowercases, so \"Draft\", \" PUBLISHED \" and \"Merged\" read as draft, published and merged.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings map to a status. S2 expects a table of eleven, including under review, live, assigned and done. The pick maps only \"in review\", so \"under_review\" and \"LIVE\" would read as null instead of review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unrecognised or empty stored value reads as. The pick returns null for those, and for whitespace-only values, without guessing the nearest status. That matches S3, which expects no status at all.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "S4 only checks that a canonical status is stored unchanged. No item asks about that. Item 4 covers non-canonical input, and how it is answered doesn't change what S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts non-canonical input such as other case, padding or old spellings. S5 says it must not. The pick requires an exact canonical match, so \"Review\", \"in-review\" and \" draft\" throw. The error message from item 5 includes the value, which also fits S5.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how unreadable values are reported from a batch read. S6 wants each distinct original value listed once, sorted, exactly as stored. The pick reports the raw strings unmodified, removes duplicates and sorts them. Item 7 only covers part of S6, which is why item 8 is the closer match.",
+      "failing": true
+    }
+  ]
+}

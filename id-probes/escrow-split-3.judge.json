@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11871960000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what the default share is or what the basic hidden-tests release looks like. Item 1 is about rounding and item 3 is about rejecting invalid shares; neither settles that a 10000 bounty at the default share releases 7500 and becomes 'partially released'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how a fractional share is rounded. The pick rounds the hidden-test part down using BigInt integer division and gives the remainder to UAT (101 → 75/26). At 999 that gives 749/250, and BigInt keeps the result exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how the UAT release amount is computed. The pick releases the bounty minus earlier releases, which is the remaining balance. The run returned uat 90 after a hidden-tests release of 10, with status 'fully released'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what a failed hidden-test run does. The run returned status 'locked' with no releases and 0 writes.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about UAT approval before the hidden tests pass. The run rejected with 'cannot approve UAT: the hidden tests have not passed', made 0 writes, and the store stayed undefined.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks what a bounty of 0 does. The status is 'pro bono', but the run recorded releases of amount 0 for both hidden-tests and uat. The scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks about a repeated hidden-tests pass. The pick ignores any later pass once a hidden-tests release exists, whatever its id, so the same id and a different id are both covered. The run made only 1 write and kept a single release.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how concurrent events are handled, including through different handlers on the same store. The pick runs them one at a time through a per-store queue. The run sent concurrent duplicate passes through two handlers against a slow store and got exactly one hidden-tests release and one uat release. With items 7 and 8, the serialised duplicates (different ids, repeated UAT) record nothing.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks about a store write failure. The run rejected with 'disk', left the store undefined, and the retry of the same event succeeded with a 75 release.",
+      "failing": false
+    }
+  ]
+}

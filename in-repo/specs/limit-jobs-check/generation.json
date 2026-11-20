@@ -1,0 +1,70 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "f97aa3b5-71c3-4552-ad31-a57ee5908b11",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.2004851,
+        "turns": 5,
+        "durationMs": 33364,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.2004851,
+    "finalText": "I created `apps/worker/src/evaluation/limit.ts`. It exports exactly what the spec lists and nothing more:\n\n- **`EVALUATION_JOBS_MAX = 2`**: a real exported value, so tests that import it will load.\n- **`limitJobs(provider: EvaluationProvider, max: number): EvaluationProvider`**: the body is just `throw new Error(\"not implemented\");`. It takes its types from `sandbox-factory`, the same way `local-process.ts` does. The returned `create` and job methods are the repository's own `EvaluationProvider` and `EvaluationJob` types, so I didn't add any new types. The doc comment covers the spec's error rules: `create` rejects with the same error when the underlying `create` throws or rejects, and a waiting caller rejects with `signal.reason` when its signal aborts.\n\nThe repo's compiler settings reject unused parameters, so the two parameters are named `_provider` and `_max`. Callers don't see parameter names, so this doesn't change the contract.\n\n`npx tsc -p tsconfig.test.json` reports no errors, and the existing suite passes: 120 tests, 0 failures. Apart from the build output that test command writes, no other files changed.\n\nExported names added: `EVALUATION_JOBS_MAX`, `limitJobs`",
+    "problem": null,
+    "sha256": "c7576812e00e53422258abdd63b4d64359e4b71d812888ec33d87130f45883cf"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "c5ed209a-4387-4f87-a0b5-30664ef9742c",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.2203443,
+        "turns": 11,
+        "durationMs": 294300,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.2203443,
+    "finalText": "I wrote the test suite in `apps/worker/test/limit-jobs-check.test.ts`. It covers all 30 scenarios in the spec, with two tests each: the happy path and one boundary case. `npx tsc -p tsconfig.test.json` reports no errors, and running the file fails all 60 tests with `not implemented`, as expected.\n\n**How it's built**\n- It follows `local-process.test.ts`: `node:test`'s `test`, `node:assert/strict`, and flat top-level tests with unique names.\n- Each name starts with its scenario key, from `[happy-1]` to `[concurrency-4]`.\n- The fixtures are in the same file, because extra helper files would break the naming rule. They are:\n  - a hand-driven fake provider named `\"fake\"` that records each `create` and lets the test resolve, reject or throw it;\n  - fake jobs whose `stage`, `exec`, `read` and `destroy` record their calls and return what the test sets;\n  - helpers to track whether a promise has settled, to get a rejection value, and to flush (`setImmediate` turns).\n- No clock, randomness, network or filesystem. The \"arbitrary order\" scenario (10 overlapping jobs) settles calls in a fixed, deterministic order.\n- For the scenario outlines, the happy test covers some rows and the boundary test the rest, so every Examples row is checked.\n\n**Checking the tests themselves**\nI copied the compiled output to the scratchpad and swapped in a throwaway reference implementation of `limitJobs`. All 60 tests passed against it. I then made seven deliberate mistakes in that copy, one at a time. Each was caught by 3 to 19 failing tests:\n- calling the underlying `create` synchronously;\n- serving waiters last in, first out;\n- freeing the slot when `destroy` starts rather than when it settles;\n- not freeing the slot when `create` fails;\n- checking an already-aborted signal before looking for a free slot;\n- freeing the slot again on a second `destroy`;\n- copying extra properties from the underlying job onto the wrapped job.\n\nThe reference implementation never touched the repo. The only change in the repository is the new test file; `dist-test/` is build output and is ignored by git.\n\n60 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "apps/worker/test/limit-jobs-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "8e34c82e-503a-471c-914c-78f1c5aeed91",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 2.0805514000000005,
+        "turns": 19,
+        "durationMs": 475233,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 2.0805514000000005,
+    "finalText": "The hidden suite is written: one file, `apps/worker/test/hidden-limit-jobs-check/limit-jobs.test.ts`.\n\n**Checks run:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Against the current interface, all 74 tests fail with `Error: not implemented`.\n- I also wrote a reference implementation of the spec in the scratchpad, outside the repo. It passes all 74 hidden tests and all 60 public ones, so the suite doesn't demand anything beyond the spec.\n- I tried seven shortcut implementations and five were useful. Four pass the public suite but fail the hidden one:\n  - rounding `max` (caught with 1.2 and 2.7);\n  - setting the job's `id` from the label instead of the underlying job;\n  - `read` returning `|| null`, which turns `\"\"` into `null`;\n  - a `destroy` that doesn't release the slot when the underlying `destroy` throws synchronously.\n  \n  The fifth, which frees the slot and re-offers it to the queue a turn later so a new caller can take it first, fails two public tests and two hidden ones.\n\n**Coverage:**\n- All scenario keys: happy-1 to 9, boundary-1 to 8, unhappy-1 to 9 and concurrency-1 to 4.\n- Each test has a comment naming the public test it extends.\n- Main additions over the public suite:\n  - other caps (5, 4, 10 of 25, 1.2, 2.7, 0.5, −Infinity);\n  - prototype-based providers and jobs;\n  - non-Error rejection and abort values, and a signal shared by two waiters;\n  - aborting the middle or the oldest waiter;\n  - repeated failed creates, triple and overlapping destroys;\n  - a slot taken in the same turn leaving none for a create whose signal is already aborted;\n  - creates made at the moment a slot is handed off;\n  - larger overlapping runs that check the peak equals `max` exactly.\n\n**Two judgement calls:**\n- **Synchronous throw from `destroy`:** I read \"if the underlying destroy throws\" as covering a synchronous throw too. The test accepts the error arriving either as a throw or as a rejection, but requires the slot to be freed.\n- **Two keys:** \"a slot granted synchronously, then the signal aborts before the underlying create runs\" is keyed `[boundary-5]`. \"A same-turn create takes the slot, so an already-aborted create is refused\" is keyed `[unhappy-7]`. In each case I keyed the test to the scenario whose outcome it checks.\n\n74 tests in 1 file.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "apps/worker/test/hidden-limit-jobs-check/limit-jobs.test.ts"
+    ],
+    "open": []
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "sha256": "82dafdba0368719fd3c63f46d31c94e195c8a81970a5a30fe72595b9c6f3b803",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T01:58:18.862Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "Characters that count as a boundary after the base in `withBase`: only end of string, `/` or `?`. `#` is not a boundary, so `/admin#top` is joined onto the base again.",
+    "`withoutBase` with `#` right after the base: the input is left unchanged, so `/admin#top` stays `/admin#top`.",
+    "`withBase` with an input that only looks like it has the base (`/admin-dashboard` with base `/admin`): the base and input are joined, giving `/admin/admin-dashboard`.",
+    "`withoutBase` with an input that only shares a string prefix with the base: the input is returned unchanged.",
+    "Trailing slash on the base: it is removed (with `withoutTrailingSlash`) before the next character of the input is checked against the boundary set.",
+    "Case sensitivity: the comparison stays case-sensitive, so `/Admin/x` does not match base `/admin`.",
+    "Input exactly equal to the normalized base: `withBase` returns it unchanged, and `withoutBase` returns `/`.",
+    "Segment rule or character allowlist: a fixed allowlist of next characters (end, `/`, `?`). `.`, `;`, `:`, `&` and the like are not boundaries, so `/admin.json` does not have base `/admin`.",
+    "Backslash and percent-encoded slash after the base: `\\` and `%2F` are not boundaries. The input is not decoded or slash-normalized before the check.",
+    "Base with more than one trailing slash: only one `/` is removed, so base `/admin//` matches `/admin//x` but not `/admin/x`.",
+    "Remainder after stripping in `withoutBase`: it is returned as it is, apart from adding a leading `/`. `/admin//x` with base `/admin` gives `//x`.",
+    "Rejected inputs: no pair of strings makes either function throw. Inputs that don't match are joined (`withBase`) or returned unchanged (`withoutBase`).",
+    "Overlapping calls: both functions are pure and keep no shared state, so the order of calls never changes a result.",
+    "Seam (the files the stub writes): src/utils.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/utils.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

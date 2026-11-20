@@ -1,0 +1,92 @@
+{
+  "run": "weekly-digest/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0618574,
+  "items": [
+    {
+      "question": "How long without activity makes a task stalled, and is the boundary inclusive?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Flags a task as stalled when at least 14 × 24 hours have passed since its last activity (>=, so exactly 14 days counts).",
+      "where": "src/index.ts:46",
+      "instead": "Use a strict greater-than, so exactly 14 days is not flagged. Or count whole calendar days."
+    },
+    {
+      "question": "For a task with no submissions, when does the 14-day clock start?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Counts from the posting time when there are no submissions.",
+      "where": "src/index.ts:28",
+      "instead": "Never flag a task that has no submissions. Or count from the first time the task was opened or assigned."
+    },
+    {
+      "question": "For a task that has submissions, is the 14 days measured from the latest submission or the first?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Measures from the latest submission time, so a task stalls when its most recent submission is 14 or more days old.",
+      "where": "src/index.ts:29",
+      "instead": "Flag only tasks that have had no submissions at all in the last 14 days since posting. Or measure from the first submission."
+    },
+    {
+      "question": "Which tasks count as open?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Includes only tasks whose status is exactly \"open\". All other statuses are excluded.",
+      "where": "src/index.ts:66",
+      "instead": "Treat other in-progress statuses as open too. Or exclude only closed and merged tasks."
+    },
+    {
+      "question": "What does the digest return when nothing is open?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Returns null when there are no open tasks, including when the task list is empty.",
+      "where": "src/index.ts:67",
+      "instead": "Return a digest with an empty task list. Or throw."
+    },
+    {
+      "question": "In what order are tasks listed?",
+      "ticket": "silent",
+      "chose": "Puts stalled tasks first, then oldest posted first, then by id ascending.",
+      "where": "src/index.ts:73",
+      "instead": "Keep the input order. Or sort by age descending or by furthest gate."
+    },
+    {
+      "question": "How is a task's age computed and what unit is used?",
+      "ticket": "listing each open task with its age",
+      "chose": "Reports age as whole 24-hour periods from posting to now, rounded down and never negative (a future posting date gives 0).",
+      "where": "src/index.ts:23",
+      "instead": "Round to the nearest day or round up. Or count calendar days in the organization's time zone."
+    },
+    {
+      "question": "What is the furthest gate for a task with no submissions?",
+      "ticket": "the furthest gate reached",
+      "chose": "Reports gate 0 when there are no submissions, and otherwise the highest gate among all submissions.",
+      "where": "src/index.ts:36",
+      "instead": "Return null or undefined to show that no gate was reached."
+    },
+    {
+      "question": "What does the digest subject say and how does it handle singular counts?",
+      "ticket": "silent",
+      "chose": "Builds the subject \"Weekly digest: N open tasks, M stalled\" and always uses the plural \"tasks\", even for 1.",
+      "where": "src/index.ts:81",
+      "instead": "Use a fixed subject, pluralize correctly, or leave out the counts."
+    },
+    {
+      "question": "Which time zone, and which day, decides that it is Monday?",
+      "ticket": "Send a Monday email",
+      "chose": "Formats the instant as an English weekday name in the given time zone and checks it equals \"Monday\".",
+      "where": "src/index.ts:56",
+      "instead": "Use the UTC weekday. Or let the caller decide and add no due check."
+    },
+    {
+      "question": "What happens with an unknown time zone, or when the time zone is irrelevant (no open tasks)?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the zone, and buildDigest validates the zone before the empty check, so it throws even when there are no tasks.",
+      "where": "src/index.ts:65",
+      "instead": "Skip time zone validation in buildDigest, since it does not use the zone, and return null for an empty list. Or fall back to UTC."
+    },
+    {
+      "question": "Does buildDigest check that it is Monday before building?",
+      "ticket": "Send a Monday email",
+      "chose": "Builds the digest on any day, without calling isDigestDue.",
+      "where": "src/index.ts:63",
+      "instead": "Return null when it is not Monday."
+    }
+  ]
+}

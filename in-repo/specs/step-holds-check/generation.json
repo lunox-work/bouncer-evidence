@@ -1,0 +1,71 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "db447064-f17b-48ee-a8ad-e73d7b2a8fde",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.2066903,
+        "turns": 7,
+        "durationMs": 34924,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.2066903,
+    "finalText": "I added the two functions from the spec to the end of `packages/core/src/stages.ts`, with the signatures exactly as the spec gives them. Each body is just `throw new Error(\"not implemented\");`. Nothing that was already in the file changed, and the package root already re-exports them through `export * from \"./stages.js\"`.\n\n- **Parameter names:** the parameters are named `_step`, `_bounty`, `_proposal` and `_heldBy`. The shared tsconfig turns on `noUnusedParameters`, and its own comment says to put `_` in front of a parameter that has to stay in a signature. Without that, compiling fails because the placeholder bodies never use them. The names don't affect callers, and the implementation can drop the `_` once it uses them.\n- **No constants or errors:** I exported no constants, because the spec says not to export the three sentences. Neither doc comment says the function throws, because the spec says neither one throws.\n- **Checks:** `npx tsc -p tsconfig.test.json` reports no errors, and the existing suite still passes (248 tests, 0 failures). `src/stages.ts` is the only file I changed.\n\nAdded: `stepHeldBy`, `stepHeldReason`",
+    "problem": null,
+    "sha256": "7896ca81237b1c9bc6a5724ea407925a4247773c40713fa387714257bf5953dd"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "972b007a-1f1e-4694-8bb6-d9b0d70dcc7f",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.4200414,
+        "turns": 7,
+        "durationMs": 79339,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.4200414,
+    "finalText": "I wrote the test suite in one file, `packages/core/test/step-holds-check.test.ts`. `npx tsc -p tsconfig.test.json` reports no errors.\n\nRunning the files: 24 of the 26 tests fail with `not implemented`, as expected. The other 2 pass now. Those are the `[happy-5]` tests, which check behaviour that already exists and must not change: `scopeApproved`, `bountyStatus` and `BOUNTY_STEPS`.\n\n- **Coverage:** each of the 13 scenarios (5 happy, 5 boundary, 3 unhappy) has two tests, keyed `[kind-n]` in spec order. One runs the scenario's own example or table. The other is a boundary case that follows directly from the spec: for example, a status of `\"approved \"` with a trailing space, scope version 0 approved at version 0, or frozen arguments to check that nothing is changed.\n- **Style:** the tests follow `stages.test.ts` (`node:test`'s `test`, `node:assert/strict`, flat top-level tests, no `describe`). The one fixed date is `new Date(\"2026-10-10T00:00:00Z\")`, passed to `bountyStatus` the same way the existing tests do; no real clock is used.\n- **Other output:** compiling wrote build output to `dist-test/`, which git ignores. No other files were touched.\n\n26 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "packages/core/test/step-holds-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "813d60dd-95ec-4e45-aa26-80482843969f",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.7074320000000001,
+        "turns": 11,
+        "durationMs": 157856,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.7074320000000001,
+    "finalText": "I wrote the hidden suite in two files under `packages/core/test/hidden-step-holds-check/`:\n\n- **`held-by.test.ts`** has 21 tests for `stepHeldBy`, plus a check that the result agrees with `scopeApproved`.\n- **`held-reason.test.ts`** has 7 tests for `stepHeldReason`, how the two functions combine, the export list, and the existing functions staying unchanged.\n\n**Results:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Against the stub, all 28 tests fail with `not implemented`.\n- I also ran them against a minimal correct implementation patched into a copy of the compiled output in the scratchpad. The repository wasn't touched. There, the public and hidden suites together pass 54/54.\n- `git status` shows nothing new outside the hidden folder.\n\n**Coverage:** every scenario from `[happy-1]` to `[happy-5]`, `[boundary-1]` to `[boundary-5]` and `[unhappy-1]` to `[unhappy-3]` has at least one test. Each test names the public test it extends in a comment above it. The shortcuts these tests catch, which the public suite does not:\n\n- **Treating any approval as approved:** approvals one above, one below or far from the scope version, including the 0/1 cases.\n- **Loose status checks:** statuses that merely contain `\"approved\"`, such as `\"unapproved\"`, `\"disapproved\"` and `\"approvedx\"`, which catch `includes`, `endsWith`, `startsWith`, lower-casing and trimming.\n- **Checking the price before the scope:** both steps unapproved, across every reason the price can be unapproved.\n- **Checking the price against the scope version:** an approved proposal that carries an older `scopeVersion` still releases the sandbox.\n- **Falling back to `bounty.proposal`:** with a null or near-miss third argument.\n- **Caching results per object:** the same bounty and proposal objects are changed between calls and must give the new result.\n- **Order-dependent or call-counting answers:** sentences called in other orders and repeatedly, and `(\"price\", \"price\")` called after the sandbox's price sentence.\n- **Exported sentence constants:** `stages.ts` must export exactly the names the spec lists, and none of them may be one of the sentences.\n- **Every reachable combination:** a grid of bounties, proposals and steps checking both the holder and the sentence for each hold.\n\nThe existing functions in `[happy-5]` don't throw on the stub, so to make those tests fail as required I paired them with `stepHeldBy` calls.\n\n28 tests, in 2 files.\n\nOpen in the spec:\n- `[happy-3] the sentences have no surrounding whitespace and the sandbox's vary by holder`: it asserts the three sentences are all different, which the spec only implies through the exact strings. That one is stated, so it isn't open. A separate gap: the spec doesn't say how `stepHeldReason(\"sandbox\", …)` should behave beyond the two listed holders, so I didn't test anything outside the declared types either way.\n- `[boundary-4] a published sandbox on the bounty does not release the sandbox hold` and `[boundary-3] a proposal field on the bounty…`: these pass bounties with extra fields (`sandbox`, `proposal`). The spec covers this for `proposal` only, through `[boundary-3]` and its Decided item. For other extra fields it only says a step's own state \"is not an input\". I followed it in the same way, so this is consistent and not open.\n\nCorrection to the list above: neither item is a real open question. The public suite asserts nothing the spec leaves open.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/core/test/hidden-step-holds-check/held-by.test.ts",
+      "packages/core/test/hidden-step-holds-check/held-reason.test.ts"
+    ],
+    "open": []
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "a5bb3c76-80ba-42c3-9869-3d2fac10065d",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.1541621,
+        "turns": 6,
+        "durationMs": 23587,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.1541621,
+    "finalText": "I added `filterQuery` to `src/utils.ts`, right after `getQuery`. Every existing export in the file is unchanged.\n\n- **Signature:** `filterQuery(input: string, predicate: (key: string, value: ParsedQuery[string]) => boolean): string`. `ParsedQuery[string]` is the `string | string[]` value type from `src/query.ts`, which the spec asks for.\n- **Body:** `throw new Error(\"not implemented\");`. The doc comment says the predicate's error is rethrown unchanged, which is the only failure the spec describes.\n- **Package entry:** `src/index.ts` already has `export * from \"./utils\"`, so the function is exported from the package without any change there.\n- **Nothing else added:** the spec names no new types or constants, so there are none.\n\n`npx tsc -p tsconfig.json --noEmit` reports no errors, and `npx vitest run` passes all 474 tests in 13 files. `src/utils.ts` is the only file I changed.\n\nAdded exports: `filterQuery`",
+    "problem": null,
+    "sha256": "7620477da97060b01a7b7a2f7eb286b7ecbda3f02a792f0808f6d0337c18947b"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "1c5f749d-f20a-4393-9328-2d9c35aa039b",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.39606469999999994,
+        "turns": 9,
+        "durationMs": 95842,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.39606469999999994,
+    "finalText": "I wrote the test suite in `test/ufo-filter-query-check.test.ts`. The type check (`tsc --noEmit`) reports no errors, and all 56 tests currently fail with `not implemented`, as expected.\n\nTo check the tests themselves, I ran a temporary copy against a short reference version of `filterQuery` built from the existing helpers. All 56 passed, and I then deleted both temporary files. Only the new test file remains; `src/utils.ts`, the config and the other tests are untouched.\n\n**What's covered:**\n- **Scenarios with an examples table:** every row is its own test, so the rows serve as the boundary cases.\n- **Single-example scenarios:** each has its happy-path test plus one extra boundary test that follows directly from the spec's rules:\n  - **`[happy-1]`:** dropping the last parameter instead of the first.\n  - **`[happy-3]`:** no value matches, so the result is `/foo`.\n  - **`[happy-5]`:** a key repeated three times gives one call with all values in order.\n  - **`[boundary-2]`:** `HTTP://Foo.com/a?` becomes `http://Foo.com/a`.\n  - **`[boundary-6]`:** the opposite predicate keeps only `z=1`.\n  - **`[boundary-9]`:** number-like keys are sorted as numbers, so `9` comes before `10`.\n  - **`[unhappy-2]`:** when the predicate throws on the last key, the error is still rethrown and the predicate has been called twice.\n\nTests are flat `test` / `expect` calls from vitest, with no `describe`. Each name starts with its scenario key, for example `[boundary-4]`. Calls are recorded by a small hand-written predicate rather than a mock library, because the existing tests don't use one.\n\n56 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "test/ufo-filter-query-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "24d39ee8-efd5-42b9-955d-b133da292cae",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.8248442,
+        "turns": 9,
+        "durationMs": 198011,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.8248442,
+    "finalText": "I wrote the hidden suite in three files under `test/hidden-ufo-filter-query-check/`: `happy.test.ts`, `boundary.test.ts` and `unhappy.test.ts`. It covers all 17 scenario keys (`[happy-1]`–`[happy-6]`, `[boundary-1]`–`[boundary-9]`, `[unhappy-1]`–`[unhappy-2]`). Each test that extends a public test names it in a comment above.\n\n**Checks:**\n- **Against a throwaway reference implementation:** all 107 tests passed. The reference was the obvious way to build it from the spec: return early when there's no \"?\", then `parseURL` → `parseQuery` → filter by `Object.keys` → `stringifyQuery` → `stringifyParsedURL`. I used it only to confirm the expected values and then deleted it, so nothing is left outside the test folder's three files.\n- **Against the current interface (bodies throw `not implemented`):** all 107 fail.\n- **Type check:** `npx tsc -p tsconfig.json --noEmit` reports no errors. That config only covers `src`, so I also checked the test files under `--strict`, also with no errors.\n\n**Shortcuts the suite is built to catch:**\n- **Filtering the raw query text instead of rebuilding it:** caught by the re-encoding cases (`a b`→`a+b`, `/x/`→`%2Fx%2F`, `%7e`→`~`, `é`→`%C3%A9`, `&&&`), the integer-key ordering cases, and a hash containing `?b=3` that has to survive untouched.\n- **Calling the predicate once per occurrence of a repeated key:** caught by cases like `value === \"1\"` on `a=1&a=2&b=1`, which must give `/foo?b=1`, and `value === \"\"` on `a=&a=1&b`, which must give `/foo?b`.\n- **Returning the input unchanged whenever the parsed query is empty:** caught by `HTTP://Foo.com/a#?x=1`, which must come back as `http://Foo.com/a#?x=1`. The input contains a \"?\", so the spec says it is still rebuilt.\n- **Parsing inputs that have no \"?\":** caught by inputs that a parse-and-rebuild would change (backslashes, leading spaces, an uppercase protocol with auth, `#`, `/foo#`), and by a predicate that throws if called.\n- **Calling the predicate in input order:** caught by call-order checks, including a predicate that throws on key `\"1\"` when `\"1\"` appears last in the input but comes first in parsed order.\n- **Dropping prototype keys by matching the literal text:** caught by percent-encoded `__pro%74o__` and `con%73tructor`. Look-alike keys such as `toString`, `prototype` and `Constructor` must still reach the predicate.\n- **Wrapping or swallowing the predicate's error:** caught by checking the thrown object is the same instance (including a `TypeError` subclass), its message, and which calls happened before it.\n\n107 tests in 3 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "test/hidden-ufo-filter-query-check/boundary.test.ts",
+      "test/hidden-ufo-filter-query-check/happy.test.ts",
+      "test/hidden-ufo-filter-query-check/unhappy.test.ts"
+    ],
+    "open": []
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.051575600000000006,
+  "items": [
+    {
+      "question": "What order do the rows come out in?",
+      "ticket": "silent",
+      "chose": "Sorts rows by creation time ascending, with ties broken by id compared as strings, and leaves the input array unchanged.",
+      "where": "src/index.ts:31",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "Which columns appear, in what order, and under what header text?",
+      "ticket": "requisition list (with status and fill counts)",
+      "chose": "Writes the header 'Requisition ID,Title,Status,Openings,Filled,Created'.",
+      "where": "src/index.ts:37",
+      "instead": "Use other header labels or column order, for example snake_case field names, or add a computed open-slots column."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header row with a trailing CRLF and no data rows.",
+      "where": "src/index.ts:51",
+      "instead": "Return an empty string, or the header only without a BOM."
+    },
+    {
+      "question": "Which line terminator is used, and does the last row end with one?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:51",
+      "instead": "Join lines with '\\n', or with CRLF and no trailing terminator."
+    },
+    {
+      "question": "Does the output start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prepends U+FEFF to the output.",
+      "where": "src/index.ts:51",
+      "instead": "Emit plain CSV with no BOM and leave Excel compatibility to the download layer."
+    },
+    {
+      "question": "How are text fields escaped when they contain commas, quotes or line breaks?",
+      "ticket": "silent",
+      "chose": "Wraps the field in double quotes and doubles any inner quotes (RFC 4180) when it contains a comma, quote, CR or LF.",
+      "where": "src/index.ts:60",
+      "instead": "Quote every text field, or also neutralize leading =, +, - or @ to prevent spreadsheet formula injection."
+    },
+    {
+      "question": "How is a missing (null or undefined) title rendered?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:42",
+      "instead": "Write a placeholder such as 'Untitled' or '-', or throw."
+    },
+    {
+      "question": "What happens when a requisition has a status outside open, on_hold, filled or cancelled?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id and the status.",
+      "where": "src/index.ts:14",
+      "instead": "Write the status through as-is, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional, NaN or infinite?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id, and accepts 0 as valid for both counts.",
+      "where": "src/index.ts:17",
+      "instead": "Clamp or round the value, skip the row, or require openings of at least 1."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:23",
+      "instead": "Export the row as-is, or cap filled at openings."
+    },
+    {
+      "question": "What happens when createdAt is not a valid Date?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:26",
+      "instead": "Write an empty date cell, or skip the row."
+    },
+    {
+      "question": "Does one bad requisition abort the whole export, and how is the date formatted?",
+      "ticket": "silent",
+      "chose": "Validates every row before building any output, so one invalid row throws for the whole export, and formats createdAt as a full UTC ISO-8601 string with milliseconds.",
+      "where": "src/index.ts:12",
+      "instead": "Skip invalid rows or collect the errors, and format the date as a date-only value (YYYY-MM-DD) or in the employer's local time zone."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.0565736,
+  "items": [
+    {
+      "question": "Which units can a duration string use?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts only h, m, s and ms. Anything else, such as days (`1d`), is rejected.",
+      "where": "src/solution.py:24",
+      "instead": "Also accept days or weeks, for example `2d`."
+    },
+    {
+      "question": "Are unit letters case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts lowercase units only. `1H` and `1S` are rejected.",
+      "where": "src/solution.py:25",
+      "instead": "Accept either case, or lowercase the input first."
+    },
+    {
+      "question": "Must units appear in descending order, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Each unit appears at most once, in the order h, m, s, ms. `30m1h` and `1h1h` are rejected.",
+      "where": "src/solution.py:25",
+      "instead": "Allow any order, or sum repeated units."
+    },
+    {
+      "question": "Are whitespace, signs and fractions allowed in the input?",
+      "ticket": "silent",
+      "chose": "Rejects them. The full-match pattern allows only digits and unit letters, so `1.5h`, `-1s`, ` 1s` and `1 h` fail.",
+      "where": "src/solution.py:40",
+      "instead": "Strip surrounding whitespace, allow `1h 30m`, or allow fractional values like `1.5h`."
+    },
+    {
+      "question": "Is a bare number with no unit, like the old raw milliseconds, accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects it. `1` is not a valid duration, and a non-string such as `90` raises ValueError.",
+      "where": "src/solution.py:38",
+      "instead": "Treat a bare number or an int as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "What happens with an empty string?",
+      "ticket": "silent",
+      "chose": "Raises ValueError. The pattern matches the empty string, so there is an explicit `text == \"\"` check.",
+      "where": "src/solution.py:41",
+      "instead": "Return 0, or fall back to a default."
+    },
+    {
+      "question": "Is there an upper limit on the parsed total?",
+      "ticket": "silent",
+      "chose": "Raises ValueError when the total exceeds 9007199254740991 ms (the JS safe-integer limit).",
+      "where": "src/solution.py:53",
+      "instead": "Allow any size, since Python ints are unbounded, or use a smaller practical cap."
+    },
+    {
+      "question": "Are zero durations and leading zeros accepted?",
+      "ticket": "silent",
+      "chose": "Accepts `0s` and `0ms` as 0, and also accepts leading zeros such as `007s`. Zero is not rejected.",
+      "where": "src/solution.py:43",
+      "instead": "Reject zero or non-positive timeouts, since a zero timeout is meaningless."
+    },
+    {
+      "question": "Can a component exceed its natural range, such as `90s` or `90m`?",
+      "ticket": "`90s`",
+      "chose": "Accepts it with no normalisation or range check on any unit.",
+      "where": "src/solution.py:43",
+      "instead": "Require minutes and seconds below 60, or only allow overflow in the largest unit."
+    },
+    {
+      "question": "How is `1m5ms` told apart from minutes followed by seconds?",
+      "ticket": "silent",
+      "chose": "The minutes group has a `(?!s)` lookahead, so `m` followed by `s` is read as ms and not as minutes.",
+      "where": "src/solution.py:26",
+      "instead": "Use a tokenizer that matches `ms` before `m`. The result is the same, but the mechanism differs."
+    },
+    {
+      "question": "What style does format_duration print: the most readable form or the shortest?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string, so 5,400,000 ms prints as `90m` and not `1h30m`. 90,000 ms prints as `90s`.",
+      "where": "src/solution.py:146",
+      "instead": "Use canonical decomposition with the largest units first, for example `1h30m` and `1m30s`."
+    },
+    {
+      "question": "What does format_duration return for 0, and which inputs does it reject?",
+      "ticket": "silent",
+      "chose": "Returns `0s` for 0. It raises ValueError for negatives, values above the max, floats, bools and non-ints.",
+      "where": "src/solution.py:139",
+      "instead": "Return `0ms`, or coerce floats and bools instead of rejecting them."
+    }
+  ]
+}

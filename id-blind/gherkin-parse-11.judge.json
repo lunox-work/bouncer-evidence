@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10388159999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 covers the basic output: feature name, scenarios in file order, and each step's keyword, text and line. No item asks about that. Item 12 mentions '*' as a step keyword, but it is about which input formats are accepted, not about what the parser returns.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "The part of S2 that an item actually asks about is how description text between Feature: and the first Background, Scenario or tag line is handled. Item 5 asks that. Its pick skips unrecognised lines while still in the feature phase, which matches 'are the feature's description and are skipped'. Comments (item 12) and tags (item 8) come up in S2 only as side points.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks whether Background steps are returned and where they go. Its pick keeps them in a separate feature.background and does not merge them into scenarios, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "What S4 checks is how the content is processed: doc string lines with the opening quotes' indentation removed, and table cells trimmed. Item 11 asks that question. Its pick strips the delimiter's indentation, returns the doc string as an array of lines and trims cells, which matches. Item 10, about attaching content to the preceding step, also fits but less closely.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": false,
+      "why": "S5 bundles several error cases, covered by items 3, 4, 6, 7, 10 and 1. Its lead clause, about a file with no Feature: line and which line the error names, is item 3's question. S5 says the error is at the first line of other content. Item 3's pick always reports line 1, which is wrong when blank or comment lines come before that content.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a feature with no scenarios is valid. Its pick returns a Feature with an empty scenarios array, and item 9's pick sets background to null when there is none. That matches 'no scenarios and no background'.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0932845,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 says each step keeps its keyword as written (Given, When, Then, And, But or *) and its text after the keyword. Item 9 asks which step keywords are accepted. Its pick accepts exactly those six, case-sensitive, followed by whitespace, which fits S1. The rest of S1 (feature name, scenario order, line numbers) is basic output shape that no item asks about.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "S2 settles four questions: comments, tags, descriptions and blank lines. Items 3 (tags) and 5 (description) cover parts of it too, but item 10 covers two of the four, comments and blank lines. Its pick skips lines starting with # and blank lines everywhere, which is what S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether Background steps are returned and how they are kept apart from scenario steps. Its pick puts them in a separate background list, not copied into the scenarios, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks whether doc strings and tables are supported and how they are stored. Its pick attaches a doc string as lines with the opening quotes' indentation removed, and a table as rows of trimmed cells, both on the step before them. That matches S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "S5 is a mix of error cases, which items 2, 6, 7, 11 and 1 each touch. The question running through the whole scenario is how an error reports its line, and that is item 12. Its pick is a ParseError with a line property and a message prefixed 'line <n>: ', which meets S5's 'includes line <n>'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": null,
+      "agrees": null,
+      "why": "S6 settles whether a file with only a Feature line is valid and gives no scenarios and no background. No item asks that. Item 2 is about an empty file or a missing Feature line, and item 4 is about how a Background is represented, not whether an empty feature parses.",
+      "failing": false
+    }
+  ]
+}

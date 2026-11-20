@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-12",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0480289,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:'b',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02T00:00:00Z')},{id:'z',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01T00:00:00Z')},{id:'a',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02T00:00:00Z')}])"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([])"
+    },
+    {
+      "item": 3,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 4,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([]).split('\\r\\n')[0]"
+    },
+    {
+      "item": 6,
+      "probe": "buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:new Date('2024-03-05T10:20:30.123Z')}])"
+    },
+    {
+      "item": 7,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',title:null,status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'b',status:'open',openings:1,filled:0,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 8,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',title:'He said \"hi\", ok\\nnext',status:'open',openings:1,filled:0,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([{id:'req-9',status:'closed',openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 10,
+      "probe": "[-1,1.5,NaN,Infinity,2**53,3].map(n=>{try{return buildRequisitionsCsv([{id:'r',status:'open',openings:n,filled:0,createdAt:new Date(0)}]).length}catch(e){return e.message}})"
+    },
+    {
+      "item": 11,
+      "probe": "buildRequisitionsCsv([{id:'req-11',status:'open',openings:1,filled:2,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 12,
+      "probe": "buildRequisitionsCsv([{id:'good',status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'bad',status:'nope',openings:1,filled:0,createdAt:new Date(1)}])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nz,,open,1,0,2024-01-01T00:00:00.000Z\\r\\na,,open,1,0,2024-01-02T00:00:00.000Z\\r\\nb,,open,1,0,2024-01-02T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\n'"
+    },
+    {
+      "item": 3,
+      "actual": "65279"
+    },
+    {
+      "item": 4,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 5,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created'"
+    },
+    {
+      "item": 6,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,,open,1,0,2024-03-05T10:20:30.123Z\\r\\n'"
+    },
+    {
+      "item": 7,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\nb,,open,1,0,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 8,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,\\\\\"He said \\\\\"\\\\\"hi\\\\\"\\\\\", ok\\\\nnext\\\\\",open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 9,
+      "actual": "throws Error: Requisition req-9 has an unknown status: closed"
+    },
+    {
+      "item": 10,
+      "actual": "[ 'Requisition r has openings that is not a whole number of at least 0', 'Requisition r has openings that is not a whole number of at least 0', 'Requisition r has openings that is not a whole number of at least 0', 'Requisition r has openings that is not a whole number of at least 0', 'Requisition r"
+    },
+    {
+      "item": 11,
+      "actual": "throws Error: Requisition req-11 has filled greater than openings"
+    },
+    {
+      "item": 12,
+      "actual": "throws Error: Requisition bad has an unknown status: nope"
+    }
+  ]
+}

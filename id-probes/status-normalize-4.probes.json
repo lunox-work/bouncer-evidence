@@ -1,0 +1,97 @@
+{
+  "run": "status-normalize-4",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0393545,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "readStatus(\"ghost\")"
+    },
+    {
+      "item": 2,
+      "probe": "[readStatus(\"Merged-\"), readStatus(\"_Review_\"), readStatus(\"  PUBLISHED \")]"
+    },
+    {
+      "item": 3,
+      "probe": "[readStatus(\"in-review\"), readStatus(\"In  Review\"), readStatus(\"in_review\"), readStatus(\"inreview\"), readStatus(\"under review\"), readStatus(\"pending\")]"
+    },
+    {
+      "item": 4,
+      "probe": "[readStatus(\"cla_imed\"), readStatus(\"re\\tview\"), readStatus(\"dra-ft\")]"
+    },
+    {
+      "item": 5,
+      "probe": "[readStatus(\"\"), readStatus(\"   \"), readStatus(\"\\t\\n\")]"
+    },
+    {
+      "item": 6,
+      "probe": "(() => { const r = []; for (const v of [\"Draft\", \"in-review\", \"draft\"]) { try { r.push(writeStatus(v)); } catch (e) { r.push(\"threw: \" + e.message); } } return r; })()"
+    },
+    {
+      "item": 7,
+      "probe": "(() => { try { writeStatus(\"Bogus\"); } catch (e) { return { name: e.name, ctor: e.constructor.name, message: e.message }; } })()"
+    },
+    {
+      "item": 8,
+      "probe": "(() => { try { return writeStatus(\" draft\"); } catch (e) { return e.message; } })()"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"Ghost \"},{id:\"c\",status:\"in-review\"}]).rows"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:\"1\",status:\"zeta\"},{id:\"2\",status:\"Ghost \"},{id:\"3\",status:\"Ghost \"},{id:\"4\",status:\"Ghost\"},{id:\"5\",status:\"alpha\"},{id:\"6\",status:\"draft\"}]).unreadable"
+    },
+    {
+      "item": 11,
+      "probe": null
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "null"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'merged', 'review', 'published' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'review', 'review', 'review', null, null, null ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ null, null, null ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ null, null, null ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'threw: not a sandbox status: \"Draft\"', 'threw: not a sandbox status: \"in-review\"', 'draft' ]"
+    },
+    {
+      "item": 7,
+      "actual": "{ name: 'Error', ctor: 'Error', message: 'not a sandbox status: \"Bogus\"' }"
+    },
+    {
+      "item": 8,
+      "actual": "'not a sandbox status: \" draft\"'"
+    },
+    {
+      "item": 9,
+      "actual": "[ { id: 'a', status: 'draft' }, { id: 'b', status: null }, { id: 'c', status: 'review' } ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ 'Ghost', 'Ghost ', 'alpha', 'zeta' ]"
+    },
+    {
+      "item": 11,
+      "actual": null
+    }
+  ]
+}

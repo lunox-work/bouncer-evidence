@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07633619999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "S1 covers several list items: the BOM (2), the header (5), row order (1) and CRLF on every line (3). Item 5 is the closest because the scenario is about the header and the rows that follow it. Its header string matches exactly, and the picks for items 1, 2 and 3 also match the scenario.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "The most specific thing S2 settles is how the creation time is written, which is item 6. The scenario wants a UTC date only (YYYY-MM-DD), but the pick writes the full ISO 8601 timestamp with milliseconds. Item 11 (empty field for a missing title) agrees, but no item asks how status labels are shown.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an empty list produces. The pick returns the BOM and the header line only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 12,
+      "agrees": null,
+      "why": "Item 12 asks how fields with commas, quotes or line breaks are escaped. 'Quotes fields per RFC 4180 and doubles inner quotes' covers the separator cases. It doesn't say whether a title that starts or ends with a space gets quoted (RFC 4180 doesn't require that), or whether plain fields are left unquoted, so it can't be checked against the whole scenario.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 also asks whether values starting with =, +, - or @ are guarded against formula injection. The pick explicitly does not neutralise leading formula characters, but S5 requires a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 7,
+      "agrees": true,
+      "why": "S6 combines items 7 (unknown status), 8 (bad numbers), 9 (filled greater than openings) and 10 (invalid date). Item 7 is the closest single match. Each of those picks throws an Error naming the requisition id, which is what S6 expects.",
+      "failing": true
+    }
+  ]
+}

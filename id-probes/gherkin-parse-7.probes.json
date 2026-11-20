@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-7",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.055737,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"\")"
+    },
+    {
+      "item": 2,
+      "probe": "parseFeature(\"Feature: F\\n\")"
+    },
+    {
+      "item": 3,
+      "probe": "parseFeature(\"Feature: F\\n\\nScenario Outline: x\\n  Given a\\n\")"
+    },
+    {
+      "item": 4,
+      "probe": "parseFeature(\"Feature: F\\nRule: r\\n\")"
+    },
+    {
+      "item": 5,
+      "probe": "parseFeature(\"Feature: F\\nBackground:\\n  Given b\\nScenario: s\\n  When w\\nBackground:\\n  Given c\\n\")"
+    },
+    {
+      "item": 6,
+      "probe": "parseFeature(\"@top\\nFeature: F\\n@a @b\\nScenario: s\\n  Given x\\n@c\\nGiven y\\n\")"
+    },
+    {
+      "item": 7,
+      "probe": "parseFeature(\"Feature: F\\nScenario: s\\n  Given a\\n    | a | b |\\n    | 1 | 2 |\\n  When d\\n    \\\"\\\"\\\"\\n    line1\\n      line2\\n    \\\"\\\"\\\"\\n\")"
+    },
+    {
+      "item": 8,
+      "probe": "parseFeature(\"Feature: F\\n  some description\\nScenario: s\\n  more text\\n  Given a\\n  trailing text\\n\")"
+    },
+    {
+      "item": 9,
+      "probe": "parseFeature(\"Feature: F\\nScenario: s\\n  Given   two spaces   \\n  *\\tstar\\n  And\\n\").scenarios[0].steps"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"Feature: F\\nGiven a\\nFeature: G\\n\")"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"Feature: F\\nScenario: s\\n  Given a\\n\\n@x\\n\\n@y\\n\")"
+    },
+    {
+      "item": 12,
+      "probe": "parseFeature(\"\\uFEFFFeature: F\\r\\n# c\\r\\n\\r\\nScenario: s\\r\\n  Given a\\r\\n    \\\"\\\"\\\"\\r\\n    # kept\\r\\n    \\\"\\\"\\\"\\r\\n\")"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "throws ParseError: line 1: expected a \"Feature:\" line"
+    },
+    {
+      "item": 2,
+      "actual": "{ name: 'F', background: null, scenarios: [] }"
+    },
+    {
+      "item": 3,
+      "actual": "throws ParseError: line 3: \"Scenario Outline:\" is not supported"
+    },
+    {
+      "item": 4,
+      "actual": "throws ParseError: line 2: unrecognised line \"Rule: r\""
+    },
+    {
+      "item": 5,
+      "actual": "throws ParseError: line 6: \"Background:\" must be the only one and come before any scenario"
+    },
+    {
+      "item": 6,
+      "actual": "throws ParseError: line 7: tags must be followed by a \"Scenario:\" line"
+    },
+    {
+      "item": 7,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 's', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 3, docString: null, table: [Array] }, { keyword: 'When', text: 'd', line: 6, docString: [Array], table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 8,
+      "actual": "throws ParseError: line 6: unrecognised line \"trailing text\""
+    },
+    {
+      "item": 9,
+      "actual": "[ { keyword: 'Given', text: '  two spaces', line: 3, docString: null, table: null }, { keyword: '*', text: 'star', line: 4, docString: null, table: null }, { keyword: 'And', text: '', line: 5, docString: null, table: null } ]"
+    },
+    {
+      "item": 10,
+      "actual": "throws ParseError: line 2: a step must come after a \"Background:\" or \"Scenario:\" line"
+    },
+    {
+      "item": 11,
+      "actual": "throws ParseError: line 5: tags must be followed by a \"Scenario:\" line"
+    },
+    {
+      "item": 12,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 's', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 5, docString: [Array], table: null } ] }\n  ]\n}"
+    }
+  ]
+}

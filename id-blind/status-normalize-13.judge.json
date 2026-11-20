@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07423570000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how case and separator variants are normalised. Its pick lowercases, collapses whitespace and trims, so \"Draft\" reads as draft and \" PUBLISHED \" as published, which is what S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings are accepted on read. Its pick maps only \"in review\" and reads every other old spelling as null. S2 expects \"under review\", \"live\" and the other listed spellings to map too, so \"under_review\" and \"LIVE\" would come back null instead of review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unrecognised, empty or whitespace-only value reads as. Its pick returns null with no guessing and no default, which matches \"no status at all, never the nearest one\".",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts only exact enum values. Its pick accepts the exact lowercase \"review\" and stores it unchanged.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing normalises input or accepts only exact enum values, which is the main thing S5 settles. Its pick throws on \"Draft\", \" review\" and \"in-review\", so variants and old spellings are refused on write. Item 5's pick also quotes the value as given in the error, which fits the error part of S5.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how unreadable values are reported: duplicates, ordering and form. Its pick lists distinct raw values once each, sorted and exactly as stored, which matches S6. Item 6 covers keeping rows with a null status, which also agrees.",
+      "failing": true
+    }
+  ]
+}

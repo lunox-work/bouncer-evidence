@@ -1,0 +1,97 @@
+{
+  "run": "status-normalize-10",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0462315,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "[\"in review\",\"In-Review\",\"in progress\",\"done\"].map(readStatus)"
+    },
+    {
+      "item": 2,
+      "probe": "[\"-Merged-\",\"  DRAFT \",\"in__review\",\"Pub_lished\"].map(readStatus)"
+    },
+    {
+      "item": 3,
+      "probe": "readStatus(\"bogus\")"
+    },
+    {
+      "item": 4,
+      "probe": "[readStatus(\"\"),readStatus(\"   \")]"
+    },
+    {
+      "item": 5,
+      "probe": "[\"drafts\",\"pub\",\"reviews\",\"publishe\"].map(readStatus)"
+    },
+    {
+      "item": 6,
+      "probe": "[\"Draft\",\"in-review\",\" review\",\"review\"].map(v=>{try{return writeStatus(v)}catch(e){return 'throws'}})"
+    },
+    {
+      "item": 7,
+      "probe": "(()=>{try{writeStatus(\" Draft\")}catch(e){return [e instanceof Error,e.message]}})()"
+    },
+    {
+      "item": 8,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"bogus\"}])"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([{id:\"a\",status:\"bogus\"},{id:\"b\",status:\"Bogus\"},{id:\"c\",status:\"bogus\"},{id:\"d\",status:\" draft\"},{id:\"e\",status:\"\"}]).unreadable"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:\"b\",status:\"merged\"},{id:\"a\",status:\"draft\"},{id:\"b\",status:\"claimed\"},{id:\"b\",status:\"merged\"}]).rows"
+    },
+    {
+      "item": 11,
+      "probe": "Object.keys({SandboxStatus:typeof SandboxStatus,STATUSES:typeof STATUSES,SANDBOX_STATUSES:typeof SANDBOX_STATUSES})"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ 'review', 'review', null, null ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'merged', 'draft', 'review', null ]"
+    },
+    {
+      "item": 3,
+      "actual": "null"
+    },
+    {
+      "item": 4,
+      "actual": "[ null, null ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ null, null, null, null ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'throws', 'throws', 'throws', 'review' ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ true, 'Invalid sandbox status: \" Draft\"' ]"
+    },
+    {
+      "item": 8,
+      "actual": "{ rows: [ { id: 'a', status: 'draft' }, { id: 'b', status: null } ], unreadable: [ 'bogus' ] }"
+    },
+    {
+      "item": 9,
+      "actual": "[ '', 'Bogus', 'bogus' ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { id: 'b', status: 'merged' }, { id: 'a', status: 'draft' }, { id: 'b', status: 'claimed' }, { id: 'b', status: 'merged' } ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ 'SandboxStatus', 'STATUSES', 'SANDBOX_STATUSES' ]"
+    }
+  ]
+}

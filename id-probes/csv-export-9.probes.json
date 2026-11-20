@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-9",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.050250600000000006,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(() => { const a = [{id:\"10\",title:\"a\",status:\"open\",openings:1,filled:0,createdAt:new Date(2024,0,2)},{id:\"9\",title:\"b\",status:\"open\",openings:1,filled:0,createdAt:new Date(2024,0,1)},{id:\"2\",title:\"c\",status:\"open\",openings:1,filled:0,createdAt:new Date(2024,0,1)}]; const out = buildRequisitionsCsv(a); return JSON.stringify({out, order: a.map(r=>r.id)}); })()"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:2,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 3,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 4,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:2,filled:1,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0).toString(16)"
+    },
+    {
+      "item": 6,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"r1\",title:\"A, \\\"B\\\"\\nC\",status:\"open\",openings:2,filled:1,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 7,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"r1\",title:null,status:\"open\",openings:2,filled:1,createdAt:new Date(0)},{id:\"r2\",status:\"open\",openings:2,filled:1,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"paused\",openings:2,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:2.5,filled:-1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 10,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:1,filled:2,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 11,
+      "probe": "buildRequisitionsCsv([{id:\"r1\",title:\"T\",status:\"open\",openings:2,filled:1,createdAt:new Date(NaN)}])"
+    },
+    {
+      "item": 12,
+      "probe": "buildRequisitionsCsv([{id:\"good\",title:\"T\",status:\"open\",openings:2,filled:1,createdAt:new Date(0)},{id:\"bad\",title:\"T\",status:\"nope\",openings:2,filled:1,createdAt:new Date(0)}])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'{\"out\":\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n2,c,open,1,0,2023-12-31T16:00:00.000Z\\\\r\\\\n9,b,open,1,0,2023-12-31T16:00:00.000Z\\\\r\\\\n10,a,open,1,0,2024-01-01T16:00:00.000Z\\\\r\\\\n\",\"order\":[\"10\",\"9\",\"2\"]}'"
+    },
+    {
+      "item": 2,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,T,open,2,1,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 3,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 4,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,T,open,2,1,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 5,
+      "actual": "'feff'"
+    },
+    {
+      "item": 6,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,\\\\\"A, \\\\\"\\\\\"B\\\\\"\\\\\"\\\\nC\\\\\",open,2,1,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 7,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,,open,2,1,1970-01-01T00:00:00.000Z\\\\r\\\\nr2,,open,2,1,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 8,
+      "actual": "throws Error: Requisition r1 has an unknown status: paused"
+    },
+    {
+      "item": 9,
+      "actual": "throws Error: Requisition r1 has invalid openings: 2.5"
+    },
+    {
+      "item": 10,
+      "actual": "throws Error: Requisition r1 has filled (2) greater than openings (1)"
+    },
+    {
+      "item": 11,
+      "actual": "throws Error: Requisition r1 has an invalid creation time"
+    },
+    {
+      "item": 12,
+      "actual": "throws Error: Requisition bad has an unknown status: nope"
+    }
+  ]
+}

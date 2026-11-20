@@ -1,0 +1,15 @@
+{
+  "repo": "jd/tenacity",
+  "package": ".",
+  "language": "python",
+  "commit": "aac059c906170ee7b6ce1aa086a226f3aded5c99",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 7
+  }
+}

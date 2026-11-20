@@ -1,0 +1,97 @@
+[05:47:51] 75 rejected runs, 117 distinct failing tests
+[05:47:51] spec round 1: 75 runs unresolved, 8 case(s)
+[05:47:51] 8 case(s), 8 to referee on claude-cli (claude-fable-5-1); out /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/referee-ticket/spec.jsonl
+[05:48:30] suite csv-export yes typical BOM, header, then one row per requisition in creation-time order, each
+[05:49:04] suite escrow-split yes edge passing hidden tests on a bounty of 0 records nothing and the task is 
+[05:49:40] suite gherkin-parse open edge a step's text is what follows the keyword and exactly one space
+[05:50:20] suite gherkin-parse yes edge a step on line 10 after tags and comments, before the Background:, fai
+[05:50:53] suite gherkin-parse yes edge a free-text line straight after Scenario: fails at that line
+[05:51:26] suite invite-codes yes typical a new code is unused, made now and expires 14 days later
+[05:51:52] suite status-normalize yes typical old spellings with dashes, underscores and capitals are read as their 
+[05:52:27] suite weekly-digest yes typical the subject reads 1 open task and 0 stalled when one task is open and 
+| cases | n | spec requires the test | open | test wrong | typical / edge / adversarial |
+| --- | ---: | ---: | ---: | ---: | --- |
+| suite test fails a run, any arm | 8 | 7 | 1 | 0 | 4 / 4 / 0 |
+| … hidden tests only | 2 | 2 | 0 | 0 | 0 / 2 / 0 |
+| suite test fails a run whose own tests pass | 8 | 7 | 1 | 0 | 4 / 4 / 0 |
+| own test fails the reference | 0 | 0 | 0 | 0 | 0 / 0 / 0 |
+
+runs rejected: 75; failing a test the spec requires: 73
+
+own-green runs rejected: 75; failing a test the spec requires: 73
+[05:52:27] spec round 2: 2 runs unresolved, 1 case(s)
+[05:52:27] 1 case(s), 1 to referee on claude-cli (claude-fable-5-1); out /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/referee-ticket/spec.jsonl
+[05:53:07] suite gherkin-parse yes edge only one space after each keyword is dropped from the step's text
+| cases | n | spec requires the test | open | test wrong | typical / edge / adversarial |
+| --- | ---: | ---: | ---: | ---: | --- |
+| suite test fails a run, any arm | 9 | 8 | 1 | 0 | 4 / 5 / 0 |
+| … hidden tests only | 3 | 3 | 0 | 0 | 0 / 3 / 0 |
+| suite test fails a run whose own tests pass | 9 | 8 | 1 | 0 | 4 / 5 / 0 |
+| own test fails the reference | 0 | 0 | 0 | 0 | 0 / 0 / 0 |
+
+runs rejected: 75; failing a test the spec requires: 75
+
+own-green runs rejected: 75; failing a test the spec requires: 75
+[05:54:27] csv-export ticket: 0 states, 39 open, 0 contradicts
+[05:55:23] escrow-split ticket: 0 states, 6 open, 0 contradicts
+[05:56:26] gherkin-parse ticket: 0 states, 9 open, 0 contradicts
+[05:59:17] invite-codes ticket: 9 states, 41 open, 0 contradicts
+[05:59:51] status-normalize ticket: 0 states, 10 open, 0 contradicts
+[06:00:25] weekly-digest ticket: 0 states, 3 open, 0 contradicts
+{
+  "at": "2026-11-20T06:00:25.005Z",
+  "model": "claude-fable-5-1",
+  "runs": 75,
+  "cases": 117,
+  "spec": {
+    "refereed": 9,
+    "requires": {
+      "yes": 8,
+      "open": 1
+    },
+    "runsUpheld": 75,
+    "runsUnresolved": 0,
+    "costUsd": 2.6069557999999997
+  },
+  "ticket": {
+    "refereed": 117,
+    "ticket": {
+      "open": 108,
+      "states": 9
+    },
+    "runsBrokeTicket": 4,
+    "runsKnown": 75
+  },
+  "bySpec": {
+    "csv-export": {
+      "rejected": 15,
+      "upheld": 15,
+      "brokeTicket": 0
+    },
+    "escrow-split": {
+      "rejected": 14,
+      "upheld": 14,
+      "brokeTicket": 0
+    },
+    "gherkin-parse": {
+      "rejected": 12,
+      "upheld": 12,
+      "brokeTicket": 0
+    },
+    "invite-codes": {
+      "rejected": 15,
+      "upheld": 15,
+      "brokeTicket": 4
+    },
+    "status-normalize": {
+      "rejected": 15,
+      "upheld": 15,
+      "brokeTicket": 0
+    },
+    "weekly-digest": {
+      "rejected": 4,
+      "upheld": 4,
+      "brokeTicket": 0
+    }
+  }
+}

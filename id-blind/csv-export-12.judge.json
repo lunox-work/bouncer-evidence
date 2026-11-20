@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0797825,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "S1 covers several list items: BOM (3), header (5), row order (1) and CRLF (4). Item 5 is the closest because S1 is built around the header row. Its pick uses exactly 'Requisition ID,Title,Status,Openings,Filled,Created'. Items 1, 3 and 4 also agree with S1.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "S2 mainly settles how values are formatted for people to read. Item 6 asks how the creation time is formatted. Its pick writes the full UTC ISO 8601 string with milliseconds, but S2 expects only the UTC date, YYYY-MM-DD. Item 7 (empty field for a missing title) agrees with S2. No item asks about the human-readable status labels.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what an empty list produces. Its pick returns the BOM and the header line only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": null,
+      "why": "Item 8 asks how fields with commas, quotes or line breaks are escaped. Its pick (RFC 4180 quoting with doubled quotes) matches that core. S4 also requires quoting a title that starts or ends with a space. RFC 4180 does not require that, and the pick does not say whether it does it.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing values that start like a formula (=, +, -, @, tab, CR) by adding a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "S6 covers refusing invalid requisitions with an error that names the id. That spans items 9, 10 and 11. Item 9 (unknown status) is the closest match and throws an Error naming the id, as S6 expects. Items 10 and 11 also throw. No item covers an invalid creation time, and item 12's question about batch behaviour is not settled by S6.",
+      "failing": true
+    }
+  ]
+}

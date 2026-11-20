@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-6",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.053068199999999996,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:'b',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')},{id:'a',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-03')},{id:'c',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'B',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'_',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'A',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 3,
+      "probe": "buildRequisitionsCsv([{id:'REQ-9',status:'bogus',openings:1,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 4,
+      "probe": "buildRequisitionsCsv([{id:'R1',status:'Open',openings:1,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([{id:'R1',status:'open',openings:0,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 6,
+      "probe": "buildRequisitionsCsv([{id:'R1',status:'open',openings:2,filled:3,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 7,
+      "probe": "buildRequisitionsCsv([])"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([]).split('\\r\\n')[0]"
+    },
+    {
+      "item": 9,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'R1',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')}]))"
+    },
+    {
+      "item": 10,
+      "probe": "buildRequisitionsCsv([{id:'R1',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01T10:20:30.456Z')}])"
+    },
+    {
+      "item": 11,
+      "probe": "buildRequisitionsCsv([{id:'R1',title:null,status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'R2',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')}])"
+    },
+    {
+      "item": 12,
+      "probe": "buildRequisitionsCsv([{id:'R1',title:'=SUM(A1), \"x\"\\nline2',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'R2',title:'@cmd',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')}])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nc,,open,1,0,2024-01-01T00:00:00.000Z\\r\\nb,,open,1,0,2024-01-02T00:00:00.000Z\\r\\na,,open,1,0,2024-01-03T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nA,,open,1,0,2024-01-01T00:00:00.000Z\\r\\nB,,open,1,0,2024-01-01T00:00:00.000Z\\r\\n_,,open,1,0,2024-01-01T00:00:00.000Z\\r\\na,,open,1,0,2024-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 3,
+      "actual": "throws Error: Requisition REQ-9: unknown status \"bogus\""
+    },
+    {
+      "item": 4,
+      "actual": "throws Error: Requisition R1: unknown status \"Open\""
+    },
+    {
+      "item": 5,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nR1,,open,0,0,2024-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 6,
+      "actual": "throws Error: Requisition R1: filled is greater than openings"
+    },
+    {
+      "item": 7,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\n'"
+    },
+    {
+      "item": 8,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created'"
+    },
+    {
+      "item": 9,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nR1,,open,1,0,2024-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 10,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nR1,,open,1,0,2024-01-01T10:20:30.456Z\\r\\n'"
+    },
+    {
+      "item": 11,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nR1,,open,1,0,2024-01-01T00:00:00.000Z\\r\\nR2,,open,1,0,2024-01-02T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 12,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nR1,\"=SUM(A1), \"\"x\"\"\\nline2\",open,1,0,2024-01-01T00:00:00.000Z\\r\\nR2,@cmd,open,1,0,2024-01-02T00:00:00.000Z\\r\\n'"
+    }
+  ]
+}

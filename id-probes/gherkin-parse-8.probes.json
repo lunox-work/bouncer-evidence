@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-8",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0631137,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"Feature: F\\n\")"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{try{return parseFeature(\"\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 3,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\n\\nRule: R\\n\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 4,
+      "probe": "parseFeature(\"Feature: F\\nBackground:\\n Given a\\nScenario: S\\n When b\\n\")"
+    },
+    {
+      "item": 5,
+      "probe": "parseFeature(\"Feature: F\\n@a @b\\nScenario: S\\n Given x\\n \\\"\\\"\\\"\\n l1\\n l2\\n \\\"\\\"\\\"\\n When y\\n | a | b |\\n | c | d |\\n\")"
+    },
+    {
+      "item": 6,
+      "probe": "parseFeature(\"@top\\nFeature: F\\n@a\\nScenario: S\\n Given x\\n\")"
+    },
+    {
+      "item": 7,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\nScenario: S\\n Given x\\n@t\\n Given y\\n\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 8,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\nsome free text\\nScenario: S\\n garbage here\\n\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 9,
+      "probe": "['Given x','given x','Given  x','Given','Given ','*  x','Gıven x'].map(s=>{try{return parseFeature(\"Feature: F\\nScenario: S\\n \"+s+\"\\n\").scenarios[0].steps}catch(e){return [e.line,e.message]}})"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"\\uFEFFFeature: F\\r\\nScenario: S\\r\\n Given x\\r\\n\")"
+    },
+    {
+      "item": 11,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\nScenario: S\\n Given x\\n   ```\\n    a\\n\\n # c\\n  b\\n   ```\\n\").scenarios[0].steps[0].docString}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\nScenario: S\\n Given x\\n | a\\\\|b | c\\\\\\\\d | e\\\\nf |\\n | z |\\n\").scenarios[0].steps[0].table}catch(e){return [e.line,e.message]}})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ name: 'F', background: null, scenarios: [] }"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'ParseError', 1, 'line 1: the file has no \"Feature:\" line' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'ParseError', 3, 'line 3: \"Rule:\" is not supported' ]"
+    },
+    {
+      "item": 4,
+      "actual": "{\n  name: 'F',\n  background: [ { keyword: 'Given', text: 'a', line: 3, docString: null, table: null } ],\n  scenarios: [\n    { name: 'S', line: 4, tags: [], steps: [ { keyword: 'When', text: 'b', line: 5, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 5,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'S', line: 3, tags: [ '@a', '@b' ], steps: [ { keyword: 'Given', text: 'x', line: 4, docString: [Array], table: null }, { keyword: 'When', text: 'y', line: 9, docString: null, table: [Array] } ] }\n  ]\n}"
+    },
+    {
+      "item": 6,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'S', line: 4, tags: [ '@a' ], steps: [ { keyword: 'Given', text: 'x', line: 5, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 7,
+      "actual": "[ 'ParseError', 4, 'line 4: tags must be followed by a \"Scenario:\" line' ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ 'ParseError', 4, 'line 4: unrecognised line in scenario: \"garbage here\"' ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ [ { keyword: 'Given', text: 'x', line: 3, docString: null, table: null } ], [ 3, 'line 3: unrecognised line in scenario: \"given x\"' ], [ { keyword: 'Given', text: ' x', line: 3, docString: null, table: null } ], [ 3, 'line 3: unrecognised line in scenario: \"Given\"' ], [ 3, 'line 3: unrecognised li"
+    },
+    {
+      "item": 10,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'S', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'x', line: 3, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 11,
+      "actual": "[ ' a', '', '# c', 'b' ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ [ 'a|b', 'c\\\\d', 'e\\nf' ], [ 'z' ] ]"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "urllib3/urllib3",
+  "package": ".",
+  "language": "python",
+  "commit": "d9f9b0ad5b99247e06aa9a50b7a5747aa5c2e35d",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 65
+  }
+}

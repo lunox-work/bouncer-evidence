@@ -1,0 +1,97 @@
+duration-parse-go/1: 12 items, 17s, failing in list 1/1
+duration-parse-go/2: 12 items, 16s, failing in list 1/1
+duration-parse-go/3: 12 items, 24s, failing in list 1/1
+duration-parse-go/4: 12 items, 18s, failing in list 0/1
+duration-parse-go/5: 12 items, 17s, failing in list 1/1
+duration-parse-go/6: 12 items, 15s, failing in list 1/1
+duration-parse-go/7: 12 items, 16s, failing in list 1/1
+duration-parse-go/8: 12 items, 12s, failing in list 1/1
+duration-parse-go/9: 12 items, 18s, failing in list 1/1
+duration-parse-go/10: 12 items, 15s, failing in list 1/1
+duration-parse-go/11: 12 items, 13s, failing in list 1/1
+duration-parse-go/12: 12 items, 16s, failing in list 1/1
+duration-parse-go/13: 12 items, 18s, failing in list 1/1
+duration-parse-go/14: 12 items, 21s, failing in list 1/1
+duration-parse-go/15: 12 items, 24s, failing in list 1/1
+duration-parse-py/1: 12 items, 16s, failing in list 5/6
+duration-parse-py/2: 12 items, 14s, failing in list 7/9
+duration-parse-py/3: 12 items, 14s, failing in list 7/8
+duration-parse-py/4: 12 items, 16s, failing in list 7/8
+duration-parse-py/5: 12 items, 13s, failing in list 6/7
+duration-parse-py/6: 12 items, 13s, failing in list 6/7
+duration-parse-py/7: 12 items, 12s, failing in list 5/6
+duration-parse-py/8: 12 items, 13s, failing in list 4/5
+duration-parse-py/9: 12 items, 15s, failing in list 7/8
+duration-parse-py/10: 12 items, 17s, failing in list 6/8
+duration-parse-py/11: 12 items, 12s, failing in list 5/6
+duration-parse-py/12: 12 items, 13s, failing in list 6/7
+duration-parse-py/13: 12 items, 13s, failing in list 6/8
+duration-parse-py/14: 12 items, 13s, failing in list 7/8
+duration-parse-py/15: 12 items, 13s, failing in list 3/4
+duration-parse-rs/1: 12 items, 13s, failing in list 3/3
+duration-parse-rs/2: 12 items, 12s, failing in list 5/5
+duration-parse-rs/3: 12 items, 13s, failing in list 5/5
+duration-parse-rs/4: 12 items, 12s, failing in list 5/5
+duration-parse-rs/5: 12 items, 13s, failing in list 6/7
+duration-parse-rs/6: 12 items, 14s, failing in list 5/5
+duration-parse-rs/7: 12 items, 13s, failing in list 6/7
+duration-parse-rs/8: 12 items, 14s, failing in list 5/5
+duration-parse-rs/9: 12 items, 13s, failing in list 5/5
+duration-parse-rs/10: 12 items, 15s, failing in list 6/7
+duration-parse-rs/11: 11 items, 13s, failing in list 4/4
+duration-parse-rs/12: 12 items, 13s, failing in list 6/7
+duration-parse-rs/13: 12 items, 12s, failing in list 6/6
+duration-parse-rs/14: 12 items, 14s, failing in list 6/7
+duration-parse-rs/15: 12 items, 13s, failing in list 7/7
+{
+  "what": "bouncer id (prompts/id.md, claude-sonnet-5-5) on the rejected runs of evidence/languages-ticket/runs/*/ticket-haiku, the stored ticket.md and diff.patch only; judged by claude-opus-5-5 given the list (questions and the agent's picks) and every scenario unlabelled, never the diff, the grades or which scenarios failed: blind to the outcome, not to the picks",
+  "date": "2026-11-20",
+  "runs": 45,
+  "listed": 45,
+  "judged": 45,
+  "runsWithAFailingScenarioInList": 44,
+  "failingScenarios": {
+    "total": 205,
+    "inList": 181
+  },
+  "passingScenarios": {
+    "total": 290,
+    "inList": 227
+  },
+  "pointing": {
+    "matchedWithAVerdict": 406,
+    "disagreesFailed": 103,
+    "disagreesPassed": 0,
+    "agreesFailed": 76,
+    "agreesPassed": 227,
+    "accuracy": 0.813,
+    "failedFlaggedAsDisagree": 0.575
+  },
+  "runsWithADisagreeingPickOnAFailingScenario": 35,
+  "itemsAtTheCap": 44,
+  "medianItems": 12,
+  "medianSeconds": 14,
+  "medianListCostUsd": 0.0558183,
+  "bySpec": {
+    "duration-parse-go": {
+      "runs": 15,
+      "inList": 14
+    },
+    "duration-parse-py": {
+      "runs": 15,
+      "inList": 15
+    },
+    "duration-parse-rs": {
+      "runs": 15,
+      "inList": 15
+    }
+  },
+  "misses": [
+    {
+      "run": "duration-parse-go/4",
+      "failing": [
+        "unhappy-1"
+      ]
+    }
+  ]
+}

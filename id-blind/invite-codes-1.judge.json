@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1000225,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what happens when a random draw repeats an existing code. S1 expects that code to be drawn again, and the pick redraws (with a 1000-try cap the scenario never reaches). The 14-day expiry in S1 is plain behaviour, not the boundary question in item 1.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how redeemed codes show who used them. S2 expects the code to show it was used by c1 and when, and the pick adds usedBy and usedAt to used codes. No item covers the basic access grant itself.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks how case, spaces and dashes are matched. The pick strips whitespace and dashes and uppercases, so lowercase, spaced or dashed input finds the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code can still be redeemed at the exact 14-day instant. The pick treats now >= createdAt + 14 days as expired, so 08:59:59.999 works and 09:00:00 fails, as S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": false,
+      "why": "Item 2 asks what happens when a contributor redeems a code for a task they already have access to. That covers c1 redeeming their own used code again. S5 expects that to succeed with no change, but the pick returns ok:false with 'already has access'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks what a failed redemption returns for an unrecognised code. The pick returns ok:false with reason 'unknown' and does not throw, which matches S6. Item 7, on revoking a used code, covers only S6's last clause.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 is the same question: redeeming another code for a task the contributor already has. The pick returns 'already has access' and leaves the code unspent, as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how concurrent redemptions of one code are handled. The pick runs every registry operation one at a time through a per-instance queue, so with a slow store the second redemption sees the code as used and fails with 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks whether a used code keeps its redeemer and state after its expiry time. S9 expects it to stay 'used' with who and when, and the pick does that. Item 11 covers only the who-and-when display and the listing order.",
+      "failing": false
+    }
+  ]
+}

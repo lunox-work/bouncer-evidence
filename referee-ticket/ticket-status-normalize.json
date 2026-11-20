@@ -1,0 +1,57 @@
+{
+  "spec": "status-normalize",
+  "model": "claude-fable-5-1",
+  "costUsd": 0.3811335,
+  "ruled": [
+    {
+      "id": "suite:status-normalize:tests/public/read-status.test.ts :: [happy-2] old spellings with dashes, underscores and capitals are read as their status",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/public/read-status.test.ts :: [happy-2] every known old spelling is read as its status",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/public/read-status.test.ts :: [happy-2] a mixed run of spaces, dashes and underscores counts as one space",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/public/read-statuses.test.ts :: [happy-4] unreadable values are listed once each, sorted, exactly as stored",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/private/read-status.test.ts :: [happy-2] other old spellings with capitals, dashes and underscores read as their status",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/private/read-status.test.ts :: [happy-2] every known old spelling in upper case, padded or with other separators reads as its status",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/private/read-status.test.ts :: [happy-2] long and mixed separator runs between words count as one space",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/private/read-statuses.test.ts :: [happy-4] a table of every status and old spelling reads each row and lists only the unreadable",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/private/read-statuses.test.ts :: [happy-4] many rows that all read as statuses list nothing unreadable",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:status-normalize:tests/private/read-statuses.test.ts :: [happy-4] each row keeps its own id and status when ids are given out of order",
+      "ticket": "open",
+      "quote": ""
+    }
+  ]
+}

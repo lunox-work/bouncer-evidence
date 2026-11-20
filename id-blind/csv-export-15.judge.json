@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/15",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.083827,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 combines several separate questions: the BOM (item 4), header (item 1), row order (item 2) and CRLF on every line including the last (item 3). Item 1 is the closest because the scenario is mainly about the header row, and its pick writes exactly \"Requisition ID,Title,Status,Openings,Filled,Created\". Items 2, 3 and 4 also agree with S1.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": false,
+      "why": "S2 is about how values are rendered for people to read. Item 8 asks how the creation time is formatted. Its pick writes the full ISO string with milliseconds from toISOString(), but S2 expects only the UTC date, YYYY-MM-DD. Item 7 (missing title gives an empty field) agrees with one line of S2 but covers less of it. No item asks about the human-readable status labels.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what an empty list produces. Its pick returns the BOM and the header line only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how fields with commas, quotes or line breaks are escaped. Its pick quotes on comma, double quote, CR or LF and doubles inner quotes. It does not quote a field that starts or ends with a space, which S4 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing formula injection, that is, adding a single quote before a leading =, +, -, @, tab or CR. Item 6 covers quoting only, which is a different behaviour.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "S6 covers all invalid-row cases. Items 9, 10 and 11 each cover one case (status, counts, filled greater than openings). Item 12 is the closest because it covers the invalid creation date and whether a bad row makes the whole build fail. Its pick checks every row and throws on the first invalid one, so the build fails as S6 expects. Item 12 does not itself say the error names the id, but items 9 to 11 do. Their picks also agree with S6.",
+      "failing": true
+    }
+  ]
+}

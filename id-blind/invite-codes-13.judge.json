@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09481800000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 says expiry is createdAt + 14 days (09:00 on 03-01 becomes 09:00 on 03-15), so it settles item 2's question of where the 14 days start. The pick counts from the clock time at create, which matches. The redraw-on-collision clause is item 9's question, but S1 is mainly about when the code expires.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "S2 covers the basic redeem: access to that task only, and usedBy/usedAt recorded. None of the open questions asks this. Item 7 is about a partial write failure and item 12 is about list output, so neither is this behaviour.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how typed variants of a code are handled. The pick says redeem ignores case, whitespace and '-', which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "S4 decides whether a code expires at the 14-day mark or after it: it is still valid 1 ms before and expired at exactly createdAt + 14 days. The pick's `>=` check makes it expire at exactly that moment, which matches.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": false,
+      "why": "The open part of S5 is c1 redeeming a code again when c1 already has access to the task. That falls under item 3's question. S5 expects this to succeed and change nothing, but the pick fails with 'already has access'. Under item 5's precedence it would fail with 'used' instead. Either way it does not succeed.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether codes can be revoked and what happens when you revoke a used code. The pick adds revoke and throws for used codes, which fits 'a used code cannot be revoked'. Item 4 covers only the 'unknown' clause, so item 6 is the closer match.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "This is exactly item 3's question: redeeming another code for a task the contributor already has access to. The pick fails with 'already has access' and leaves the code unused, as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how concurrent redeems of one code are handled. Running every registry operation one at a time through a promise queue means only one redeem can win and the other sees 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what list returns. The pick returns all codes, including used, expired and revoked ones, each with its state and with usedBy and usedAt when used. That matches S9. 'Stays used after expiry' agrees with item 5's precedence, which puts used before expired.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1389549,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "S1's open question is what happens when a newly drawn code repeats one already in the registry. Item 8 asks exactly that. Its pick redraws, and the run with a fixed randomInt went on redrawing until it hit the cap and threw, so a duplicate is never handed out. The 14-day expiry and the 'unused' state at creation aren't questions any item asks; item 10's run shows them in passing (createdAt 00:00 Jan 1, expiresAt Jan 15, state 'unused').",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether redeeming grants access only to that code's task, or whether the code records who used it and when. Item 12 is about the order of a contributor's task list. Item 9 is about what list returns. Neither settles S2.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether codes are matched exactly or leniently. Its pick uppercases the code and strips whitespace and dashes. The run redeemed a lowercase code with spaces and dashes ('zzhd - xh3r - ...') and got ok: true.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks where the 14-day boundary falls. The run shows the code is still 'unused' 1 ms before 14 days, is 'expired' at exactly 14 days, and redeeming then fails with reason 'expired'. That is what S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when a second contributor redeems a used code, or when the original contributor redeems their own used code again. Item 1 is about a different, unused code for a task the contributor already has. Item 5 is about which reason wins between used, revoked and expired.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about revoking, including revoking a used code. Its run threw 'code has been used' and left that code 'used', so a used code can't be revoked. Item 5's run also shows a revoked code fails with 'revoked', and item 11 shows unknown codes fail with 'unknown'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what happens when a contributor redeems another code for a task they already have. The run returned reason 'already has access' and the second code stayed 'unused'.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how simultaneous redemptions of one code are handled. With a store whose calls are delayed, the run had three concurrent redeems: exactly one returned ok: true and the other two failed with 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks what list returns. Its pick gives each code with its state at the current clock time, and the run shows the state plus usedBy for a used code. Nothing in it contradicts S9. Item 5's used-before-expired order also supports a used code staying 'used'. However, no run lists a used code after its expiry time, so that clause isn't shown directly.",
+      "failing": false
+    }
+  ]
+}

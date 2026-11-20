@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0982283,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "The main open question here is the day unit (`2d` = 172800000, `1d0h0m0s0ms` = 86400000). Item 2 adds `d` worth 86,400,000 ms, which matches. Item 8 (`0s` → 0) also fits the scenario and agrees, but it covers only one row.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how whitespace is handled. The scenario expects leading and trailing whitespace to be trimmed (`  45m\\n` → Ok(2700000)), but the pick rejects any whitespace.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 covers the most rows: empty input, `-3s`/`+3s`, `3S`, `1h 30m`, `3 s`. Its pick rejects all of them, as the scenario expects. Items 1 (`90`) and 3 (`1.5h`) cover single rows and also agree.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether parsing accepts a count bigger than the next unit up, like `90m`. Item 5 is about unit order and item 9 is about formatting.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Three of the four rows (`30m1h`, `1s500ms2s`, `5ms1s`) break descending order. That is item 5's question. The scenario rejects them, but the pick accepts any order. Item 4, on repeated units, would agree for `1h1h`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 sets the maximum at 2^53-1 = 9007199254740991 ms. The scenario expects exactly that value to parse.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 also covers overflow: it rejects totals above 2^53-1, including overflow partway through a digit run. That matches both rejected rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks whether output uses a single unit or mixed units. The scenario expects mixed output in descending units (`1h30m`, `1m30s`). The pick picks the shortest string and would print `90m` for 5400000.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 9,
+      "agrees": false,
+      "why": "The scenario expects all mixed units, `104249991d8h59m991ms` (20 characters). The shortest-string pick would choose `9007199254740991ms` (18 characters) instead.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing returns the original number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what happens when formatting a value above the maximum. The pick returns MillisecondsOutOfRange for anything above 2^53-1, which fits an error mentioning \"milliseconds\" for both rows.",
+      "failing": false
+    }
+  ]
+}

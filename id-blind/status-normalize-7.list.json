@@ -1,0 +1,71 @@
+{
+  "run": "status-normalize/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.046234,
+  "items": [
+    {
+      "question": "Which old free-text spellings count as known statuses on read besides the exact enum values?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...), so filters miss tasks.",
+      "chose": "Only \"in review\" (after cleaning) is mapped to review; every other non-enum value is unreadable.",
+      "where": "src/index.ts:13",
+      "instead": "Map more aliases (for example \"in progress\", \"done\", \"approved\") or make the alias table configurable."
+    },
+    {
+      "question": "How is a stored value cleaned before it is matched on read (case, whitespace, separators)?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Lowercases, turns every run of whitespace, \"-\" and \"_\" into one space, and trims, so \"in-review\", \"In_Review\" and \"-merged_\" all read.",
+      "where": "src/index.ts:22",
+      "instead": "Only trim and lowercase, and treat hyphen or underscore variants as unreadable. Or treat \"-\" and \"_\" as removable and not as spaces."
+    },
+    {
+      "question": "What does reading an unrecognised, empty or whitespace-only stored value return?",
+      "ticket": "silent",
+      "chose": "Returns null and does not guess the nearest status.",
+      "where": "src/index.ts:37",
+      "instead": "Throw an error, or fall back to a default such as draft."
+    },
+    {
+      "question": "Does writing a status normalise a near-miss such as \"Draft\", \" draft\" or the old \"in-review\"?",
+      "ticket": "Only enum values are written",
+      "chose": "Writes only exact lowercase enum values and does no cleaning or aliasing.",
+      "where": "src/index.ts:46",
+      "instead": "Normalise the input with the read logic first, then write the canonical value."
+    },
+    {
+      "question": "How does writing an invalid status fail?",
+      "ticket": "Only enum values are written",
+      "chose": "Throws a plain Error whose message quotes the value as given.",
+      "where": "src/index.ts:49",
+      "instead": "Return null or a result object, or throw a custom or typed error."
+    },
+    {
+      "question": "What does a bulk read do with rows whose status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row with status null and does not drop it or throw.",
+      "where": "src/index.ts:61",
+      "instead": "Drop the unreadable rows, or throw on the first one."
+    },
+    {
+      "question": "How does a bulk read report unreadable values: the raw stored text or the cleaned text, and are duplicates collapsed?",
+      "ticket": "silent",
+      "chose": "Collects the raw stored strings in a Set, so each distinct raw value appears once and \"Alpha\", \"alpha\" and \"  Alpha \" are kept separate.",
+      "where": "src/index.ts:62",
+      "instead": "Report cleaned values, or report ids or counts, or keep duplicates."
+    },
+    {
+      "question": "In what order does a bulk read return the unreadable values and the rows?",
+      "ticket": "silent",
+      "chose": "Rows keep input order. Unreadable values are sorted with the default string sort, which compares UTF-16 code units, so uppercase sorts before lowercase.",
+      "where": "src/index.ts:66",
+      "instead": "List unreadable values in first-seen order, or sort case-insensitively or by locale."
+    },
+    {
+      "question": "What does a bulk read return for empty input?",
+      "ticket": "silent",
+      "chose": "Returns empty rows and an empty unreadable list.",
+      "where": "src/index.ts:66",
+      "instead": "Throw, or return null."
+    }
+  ]
+}

@@ -1,0 +1,1042 @@
+{
+  "at": "2026-11-20T08:06:50.519Z",
+  "set": "evidence/in-repo-pathe",
+  "totals": {
+    "haiku": {
+      "runs": 30,
+      "allPass": 30,
+      "cases": 6
+    },
+    "haiku-no-public": {
+      "runs": 30,
+      "allPass": 29,
+      "cases": 6
+    },
+    "ticket-haiku": {
+      "runs": 30,
+      "allPass": 26,
+      "cases": 6
+    },
+    "ticket-sonnet": {
+      "runs": 30,
+      "allPass": 24,
+      "cases": 6
+    },
+    "codex-cli": {
+      "runs": 17,
+      "allPass": 17,
+      "cases": 4
+    }
+  },
+  "cases": {
+    "pathe-unc-resolve": {
+      "commit": "b52fcacc59717a1e4a8783d4bbfae7fa81b4db07",
+      "subject": "fix(resolve): preserve UNC prefix (#245) (#246)",
+      "testFiles": [
+        "test/index.spec.ts"
+      ],
+      "acceptance": 10,
+      "acceptanceIds": [
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\server\\\\share\\\\file') should be '//server/share/file'",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\server\\\\share\\\\file') should be '//server/share/file' on Windows",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\unc-server-name\\\\unc-path') should be '//unc-server-name/unc-path'",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\unc-server-name\\\\unc-path') should be '//unc-server-name/unc-path' on Windows",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\server\\\\share\\\\file','..\\\\path') should be '//server/share/path'",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\server\\\\share\\\\file','..\\\\path') should be '//server/share/path' on Windows",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\server\\\\share\\\\file','sub') should be '//server/share/file/sub'",
+        "test/index.spec.ts :: resolve > resolve('\\\\\\\\server\\\\share\\\\file','sub') should be '//server/share/file/sub' on Windows",
+        "test/index.spec.ts :: resolve > resolve('//server/share/file','../path') should be '//server/share/path'",
+        "test/index.spec.ts :: resolve > resolve('//server/share/file','../path') should be '//server/share/path' on Windows"
+      ],
+      "variants": {
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 2,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 3,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 4,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 5,
+              "passed": 10,
+              "of": 10
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 4,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 2,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 3,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 4,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 5,
+              "passed": 0,
+              "of": 10
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 2,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 3,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 4,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 5,
+              "passed": 10,
+              "of": 10
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 4,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 8,
+              "of": 10
+            },
+            {
+              "run": 2,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 3,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 4,
+              "passed": 10,
+              "of": 10
+            },
+            {
+              "run": 5,
+              "passed": 10,
+              "of": 10
+            }
+          ]
+        }
+      }
+    },
+    "pathe-extname-dot": {
+      "commit": "e78663c58ef172169f9c1c4d4dbc64191eee3885",
+      "subject": "fix(extname): handle inputs ending with dot (#203)",
+      "testFiles": [
+        "test/index.spec.ts"
+      ],
+      "acceptance": 4,
+      "acceptanceIds": [
+        "test/index.spec.ts :: extname > extname('foo.') should be '.'",
+        "test/index.spec.ts :: extname > extname('foo.') should be '.' on Windows",
+        "test/index.spec.ts :: extname > extname('...') should be '.'",
+        "test/index.spec.ts :: extname > extname('...') should be '.' on Windows"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        }
+      }
+    },
+    "pathe-format-partial": {
+      "commit": "4353c6aa69db3ec90adc4a30fd54bbe1f5f0b675",
+      "subject": "fix(format): allow calls with partial arguments (#198)",
+      "testFiles": [
+        "test/index.spec.ts"
+      ],
+      "acceptance": 8,
+      "acceptanceIds": [
+        "test/index.spec.ts :: format > format({'name':'file'}) should be 'file'",
+        "test/index.spec.ts :: format > format({'name':'file'}) should be 'file' on Windows",
+        "test/index.spec.ts :: format > format({'ext':'ext'}) should be '.ext'",
+        "test/index.spec.ts :: format > format({'ext':'ext'}) should be '.ext' on Windows",
+        "test/index.spec.ts :: format > format({'ext':'.ext'}) should be '.ext'",
+        "test/index.spec.ts :: format > format({'ext':'.ext'}) should be '.ext' on Windows",
+        "test/index.spec.ts :: format > format({'dir':'/foo','name':'file'}) should be '/foo/file'",
+        "test/index.spec.ts :: format > format({'dir':'/foo','name':'file'}) should be '/foo/file' on Windows"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 2,
+          "allPass": 2,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 2,
+              "passed": 8,
+              "of": 8
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 2,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 3,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 4,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 5,
+              "passed": 8,
+              "of": 8
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 2,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 3,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 4,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 5,
+              "passed": 8,
+              "of": 8
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 2,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 2,
+              "passed": 6,
+              "of": 8
+            },
+            {
+              "run": 3,
+              "passed": 6,
+              "of": 8
+            },
+            {
+              "run": 4,
+              "passed": 6,
+              "of": 8
+            },
+            {
+              "run": 5,
+              "passed": 8,
+              "of": 8
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 1,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 6,
+              "of": 8
+            },
+            {
+              "run": 2,
+              "passed": 6,
+              "of": 8
+            },
+            {
+              "run": 3,
+              "passed": 8,
+              "of": 8
+            },
+            {
+              "run": 4,
+              "passed": 6,
+              "of": 8
+            },
+            {
+              "run": 5,
+              "passed": 6,
+              "of": 8
+            }
+          ]
+        }
+      }
+    },
+    "pathe-reverse-alias": {
+      "commit": "91582889fc1fecefe023690bf8badabe5d38084f",
+      "subject": "feat(utils): add `reverseResolveAlias` util (#173)",
+      "testFiles": [
+        "test/utils.spec.ts"
+      ],
+      "acceptance": 44,
+      "acceptanceIds": [
+        "test/utils.spec.ts :: alias > normalizeAliases",
+        "test/utils.spec.ts :: alias > resolveAlias > @foo/bar/utils",
+        "test/utils.spec.ts :: alias > resolveAlias > @foo/bar",
+        "test/utils.spec.ts :: alias > resolveAlias > ~/",
+        "test/utils.spec.ts :: alias > resolveAlias > ~win/",
+        "test/utils.spec.ts :: alias > resolveAlias > @",
+        "test/utils.spec.ts :: alias > resolveAlias > bingpot",
+        "test/utils.spec.ts :: alias > resolveAlias > test",
+        "test/utils.spec.ts :: alias > resolveAlias > ~",
+        "test/utils.spec.ts :: alias > resolveAlias > ~win",
+        "test/utils.spec.ts :: alias > resolveAlias > respects path separators",
+        "test/utils.spec.ts :: alias > resolveAlias > unchanged",
+        "test/utils.spec.ts :: alias > resolveAlias > respect ending with /",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"@foo/bar/dist/utils.mjs\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"@foo/bar/dist/index.mjs\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"/src\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"C:/src\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"/root\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"/root/bingpot/index.ts\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"@bingpot/index.ts\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"/root/index.js\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > reverseResolveAlias(\"C:/root/index.js\")",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > respects path separators",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > no match",
+        "test/utils.spec.ts :: alias > reverseResolveAlias > respect ending with /",
+        "test/utils.spec.ts :: filename > test.html",
+        "test/utils.spec.ts :: filename > /temp/myfile.html",
+        "test/utils.spec.ts :: filename > ./myfile.html",
+        "test/utils.spec.ts :: filename > /Users/john.doe/foo/myFile.js",
+        "test/utils.spec.ts :: filename > /Users/john.doe/foo/myFile",
+        "test/utils.spec.ts :: filename > ./.hidden/myFile.ts",
+        "test/utils.spec.ts :: filename > ./.hidden/myFile",
+        "test/utils.spec.ts :: filename > /temp/.gitignore",
+        "test/utils.spec.ts :: filename > ./foo.bar.baz.js",
+        "test/utils.spec.ts :: filename > C:\\temp\\",
+        "test/utils.spec.ts :: filename > C:\\temp\\myfile.html",
+        "test/utils.spec.ts :: filename > \\temp\\myfile.html",
+        "test/utils.spec.ts :: filename > .\\myfile.html",
+        "test/utils.spec.ts :: filename > .\\john.doe\\myfile.js",
+        "test/utils.spec.ts :: filename > .\\john.doe\\myfile",
+        "test/utils.spec.ts :: filename > .\\.hidden\\myfile.js",
+        "test/utils.spec.ts :: filename > .\\.hidden\\myfile",
+        "test/utils.spec.ts :: filename > C:\\temp\\.gitignore",
+        "test/utils.spec.ts :: filename > C:\\temp\\foo.bar.baz.js"
+      ],
+      "variants": {
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 2,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 3,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 4,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 5,
+              "passed": 44,
+              "of": 44
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 2,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 3,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 4,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 5,
+              "passed": 44,
+              "of": 44
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 4,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 2,
+              "passed": 43,
+              "of": 44
+            },
+            {
+              "run": 3,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 4,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 5,
+              "passed": 44,
+              "of": 44
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 4,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 2,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 3,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 4,
+              "passed": 44,
+              "of": 44
+            },
+            {
+              "run": 5,
+              "passed": 41,
+              "of": 44
+            }
+          ]
+        }
+      }
+    },
+    "pathe-filename-dot": {
+      "commit": "e68f5cd2c9360a000c2907d53a9dfc06582c712e",
+      "subject": "fix(utils/filename): handle files beginning with a period or without ext (#185)",
+      "testFiles": [
+        "test/utils.spec.ts"
+      ],
+      "acceptance": 2,
+      "acceptanceIds": [
+        "test/utils.spec.ts :: filename > /Users/john.doe/foo/myFile",
+        "test/utils.spec.ts :: filename > .\\john.doe\\myfile"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 2,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 3,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 4,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 5,
+              "passed": 2,
+              "of": 2
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 2,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 3,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 4,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 5,
+              "passed": 2,
+              "of": 2
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 2,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 3,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 4,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 5,
+              "passed": 2,
+              "of": 2
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 2,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 3,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 4,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 5,
+              "passed": 2,
+              "of": 2
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 2,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 3,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 4,
+              "passed": 2,
+              "of": 2
+            },
+            {
+              "run": 5,
+              "passed": 2,
+              "of": 2
+            }
+          ]
+        }
+      }
+    },
+    "pathe-basename-trailing": {
+      "commit": "7534c0cba5c688c255d39b338847f7a99ca406d1",
+      "subject": "fix(basename): ignore trailing seperator (#180)",
+      "testFiles": [
+        "test/index.spec.ts"
+      ],
+      "acceptance": 16,
+      "acceptanceIds": [
+        "test/index.spec.ts :: basename > basename('/foo/bar/') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('/foo/bar/') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('/foo/bar///') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('/foo/bar///') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('./foo/bar/') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('./foo/bar/') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('./foo/bar///') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('./foo/bar///') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('C:\\\\foo\\\\bar\\\\') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('C:\\\\foo\\\\bar\\\\') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('C:\\\\foo\\\\bar\\\\\\\\\\\\') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('C:\\\\foo\\\\bar\\\\\\\\\\\\') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('.\\\\foo\\\\bar\\\\') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('.\\\\foo\\\\bar\\\\') should be 'bar' on Windows",
+        "test/index.spec.ts :: basename > basename('.\\\\foo\\\\bar\\\\\\\\\\\\') should be 'bar'",
+        "test/index.spec.ts :: basename > basename('.\\\\foo\\\\bar\\\\\\\\\\\\') should be 'bar' on Windows"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 2,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 3,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 4,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 5,
+              "passed": 16,
+              "of": 16
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 2,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 3,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 4,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 5,
+              "passed": 16,
+              "of": 16
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 2,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 3,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 4,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 5,
+              "passed": 16,
+              "of": 16
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 2,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 3,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 4,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 5,
+              "passed": 16,
+              "of": 16
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 2,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 3,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 4,
+              "passed": 16,
+              "of": 16
+            },
+            {
+              "run": 5,
+              "passed": 16,
+              "of": 16
+            }
+          ]
+        }
+      }
+    }
+  }
+}

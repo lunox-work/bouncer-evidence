@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.08637600000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "The release of 7500 on a bounty of 10000 comes from the default share. Item 6 asks what the share and its default are, and its pick uses a default of 7500 basis points, which gives 7500.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how an uneven share is rounded. Its pick rounds the hidden-test share down with integer BigInt division and gives the leftover to UAT. That yields 749 and 250, and it stays exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how the UAT amount is calculated. Its pick releases the bounty minus what has already been released, which is the remaining balance the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "Item 8 asks whether a later pass is still honoured after a failure. S4 doesn't test that. It only checks that a failed run records nothing and leaves the task locked, and no item asks what a failed run itself does.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT is approved before the hidden tests pass. Its pick throws an Error and records nothing, which matches the refusal. The pick doesn't give the error message's wording.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks what happens with a zero bounty. Its pick records and saves a zero-amount release and accepts UAT. The scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what happens when hidden-tests-passed repeats after the release was made. Its pick ignores the repeat and saves nothing, whatever the event id, so it covers both the same id and a different id.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks whether events run concurrently and how duplicates are caught. Its pick queues events one at a time and checks which release kinds already exist. So two deliveries at once, with the same id or different ids, record exactly one release.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how store errors are handled. Its pick passes the write failure to the caller, records nothing, and keeps the queue going so a retry works, as the scenario expects.",
+      "failing": false
+    }
+  ]
+}

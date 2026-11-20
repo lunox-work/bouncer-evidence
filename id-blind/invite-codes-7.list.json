@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0701177,
+  "items": [
+    {
+      "question": "At exactly 14 days after creation, is the code still redeemable?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats the code as expired once now is greater than or equal to expiresAt, so it fails at exactly 14 days.",
+      "where": "src/index.ts:64",
+      "instead": "Treat it as expired only when now is strictly after expiresAt, so the exact 14-day instant still redeems."
+    },
+    {
+      "question": "What happens if a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Returns ok:false with reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:139",
+      "instead": "Succeed idempotently and consume the code, or fail but still mark the code used."
+    },
+    {
+      "question": "Which failure reason is reported when a code is both used and revoked or expired?",
+      "ticket": "silent",
+      "chose": "Used takes precedence over revoked, and revoked takes precedence over expired.",
+      "where": "src/index.ts:62",
+      "instead": "Report expired first, or whichever condition the code reached first."
+    },
+    {
+      "question": "Can a used code be revoked?",
+      "ticket": "silent",
+      "chose": "Throws an Error when the code is used or unknown.",
+      "where": "src/index.ts:158",
+      "instead": "Silently ignore the revoke, or return a result object instead of throwing."
+    },
+    {
+      "question": "What does revoking an already-revoked code do?",
+      "ticket": "silent",
+      "chose": "Returns without error and writes nothing (idempotent).",
+      "where": "src/index.ts:162",
+      "instead": "Throw an error because the code is already revoked."
+    },
+    {
+      "question": "How is typed code input normalised before lookup?",
+      "ticket": "silent",
+      "chose": "Uppercases the input and strips all whitespace and hyphens, then looks up the result. Other characters are not handled, for example 0, 1, I, L and O are not mapped to look-alikes.",
+      "where": "src/index.ts:36",
+      "instead": "Match exactly as typed, or also map look-alike characters such as O to 0 and I to 1."
+    },
+    {
+      "question": "What format and length do generated codes have?",
+      "ticket": "silent",
+      "chose": "Generates 12 characters from a 31-character alphabet without look-alikes, displayed as hyphen-separated groups of 4.",
+      "where": "src/index.ts:13",
+      "instead": "Use a different length or alphabet, such as a plain UUID or an unseparated code."
+    },
+    {
+      "question": "What happens when a generated code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times, then throws 'could not draw an unused invite code'.",
+      "where": "src/index.ts:210",
+      "instead": "Draw indefinitely, or fail on the first collision."
+    },
+    {
+      "question": "Does create check that the task ID is valid, non-empty or exists?",
+      "ticket": "silent",
+      "chose": "Accepts any taskId string without validation and creates a code for it.",
+      "where": "src/index.ts:106",
+      "instead": "Reject empty or unknown task IDs."
+    },
+    {
+      "question": "How are concurrent operations on the registry handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Runs every operation one at a time through an in-process promise queue, so two concurrent redeems of one code cannot both succeed.",
+      "where": "src/index.ts:199",
+      "instead": "Use an atomic compare-and-set in the store, or no locking at all."
+    },
+    {
+      "question": "In what order does list return a task's codes?",
+      "ticket": "silent",
+      "chose": "Returns codes in creation order, and skips any code whose record is missing from the store.",
+      "where": "src/index.ts:190",
+      "instead": "Sort newest first, or throw on a dangling reference."
+    },
+    {
+      "question": "How does redeem report who used a code?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Stores the contributor ID and the redemption time on the code, and list shows them as usedBy and usedAt only for used codes.",
+      "where": "src/index.ts:142",
+      "instead": "Show only the user ID with no timestamp, or keep a separate audit log."
+    }
+  ]
+}

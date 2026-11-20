@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0773517,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 depends on how loosely stored values are cleaned before matching. Item 2 trims and lowercases, so \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" read as their statuses.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "S2 settles which old spellings count as aliases. Item 3's pick accepts only 'in review'. So \"under_review\" (cleaned to 'under review') and \"LIVE\" ('live') would read as null, not review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unrecognised stored value reads as. Its pick returns null for anything that is not a status or known alias, with no nearest-match guessing. So 'closed', 'drafts', 'revew' and blank values read as no status. Item 9 covers only the empty case.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "S4 is the plain case where an exact status is stored unchanged. No item asks this. Item 4 is about values that are not exactly a status, and any answer to it still stores 'review' as 'review'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts other casing, padding or old spellings. Its pick throws on anything but an exact lowercase enum value, so 'Review', 'in-review', ' draft' and 'closed' are refused. Item 5 adds that the error message contains the value.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how unreadable values are listed in a bulk read: raw or cleaned, deduplication, and order. Its pick lists raw stored strings, deduplicated exactly and sorted, which matches 'each distinct original value once, sorted, exactly as it was stored'. Item 6 covers only the row-with-null part.",
+      "failing": true
+    }
+  ]
+}

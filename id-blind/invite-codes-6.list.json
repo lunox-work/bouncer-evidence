@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0730296,
+  "items": [
+    {
+      "question": "Exactly when does a code expire: is a code still valid at the 14-day mark?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired once now is greater than or equal to createdAt + 14 days, so it is already expired at exactly 14 days.",
+      "where": "src/index.ts:46",
+      "instead": "Treat the code as valid through exactly 14 days and expired only after that (strict >)."
+    },
+    {
+      "question": "What does redeeming a code do when the contributor already has access to that task?",
+      "ticket": "redeeming one grants access to that task",
+      "chose": "Fails with reason \"already has access\" and leaves the code unused.",
+      "where": "src/index.ts:101-102",
+      "instead": "Succeed idempotently and consume the code, or succeed without consuming it."
+    },
+    {
+      "question": "Which failure reason is reported when a code is both used and revoked or expired?",
+      "ticket": "silent",
+      "chose": "Used takes priority over revoked, and revoked takes priority over expired.",
+      "where": "src/index.ts:43-48",
+      "instead": "Report expired first, or report the most recent state change."
+    },
+    {
+      "question": "Can a code be revoked, and what happens when you revoke a used, unknown, or already revoked code?",
+      "ticket": "silent",
+      "chose": "Revoke throws for an unknown code and for a used code. Revoking an already revoked code is a silent no-op.",
+      "where": "src/index.ts:116-118",
+      "instead": "Return a result object instead of throwing, or throw on an already revoked code."
+    },
+    {
+      "question": "How is a typed code matched: is case, spacing, or hyphenation significant?",
+      "ticket": "silent",
+      "chose": "Strips all whitespace and hyphens and uppercases the input before lookup.",
+      "where": "src/index.ts:33-35",
+      "instead": "Require an exact match on the displayed code, or only trim and uppercase."
+    },
+    {
+      "question": "What format and length do generated codes have?",
+      "ticket": "silent",
+      "chose": "Generates 8 characters from a 31-character alphabet that omits 0, 1, I, L, and O, displayed as XXXX-XXXX.",
+      "where": "src/index.ts:10-11",
+      "instead": "A longer or UUID-style code, or a full alphanumeric alphabet."
+    },
+    {
+      "question": "What happens when a newly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 100 times, then throws an error.",
+      "where": "src/index.ts:158-168",
+      "instead": "Retry without a limit, or fail on the first collision."
+    },
+    {
+      "question": "What happens when the random source returns an out-of-range value?",
+      "ticket": "silent",
+      "chose": "Throws an error if the index is not an integer within the alphabet bounds.",
+      "where": "src/index.ts:162-163",
+      "instead": "Trust the random source, or wrap or clamp the value."
+    },
+    {
+      "question": "Does create validate the task id, for example an empty or nonexistent task?",
+      "ticket": "silent",
+      "chose": "Accepts any task id string without validation and creates the code.",
+      "where": "src/index.ts:71-83",
+      "instead": "Reject empty or unknown task ids."
+    },
+    {
+      "question": "Can many unused codes exist for one task at once, and are they listed in what order?",
+      "ticket": "silent",
+      "chose": "Allows any number of concurrent codes per task. list returns them in creation order, including used, expired, and revoked ones.",
+      "where": "src/index.ts:138-146",
+      "instead": "Limit the active codes per task, or list only active codes or sort newest first."
+    },
+    {
+      "question": "How are concurrent operations on the same code handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Serializes every registry operation through one promise queue, so exactly one concurrent redeem wins and the rest fail as \"used\".",
+      "where": "src/index.ts:150-154",
+      "instead": "Use a store-level atomic compare-and-set, or leave the race unhandled."
+    },
+    {
+      "question": "What does a redeemed code show about who used it and when?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Records the contributor id as usedBy and a usedAt timestamp. These fields are omitted from the view for unused codes.",
+      "where": "src/index.ts:104",
+      "instead": "Show only usedBy, or include null fields on unused codes."
+    }
+  ]
+}

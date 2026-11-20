@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1112513,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Most of the rows are ordinary sums. The row that depends on an open question is \"2d\" = 172800000, which needs a day unit. Item 9 asks whether there is a day unit and its pick adds d. Item 7 (\"0s\" and zero components accepted) also agrees, but it is the less central question here.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether surrounding whitespace is allowed. Its pick trims before parsing, so \"  45m\\n\" gives 2700000 as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "The scenario mixes several questions. Item 6 covers the most rows: 1.5h, -3s, +3s, 1h 30m, 1h,30m, 3 s and the fullwidth digit. Its pick accepts only unsigned integer counts and fails on any other character. The quoted messages may be fragments, so whether they contain \"duration\" is unclear. Other rows belong to other items: empty (3), \"90\" (1), \"3S\" (4) and \"3w\" (9) agree, but \"05s\" conflicts with item 7, which accepts leading zeros.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count can be larger than the next unit allows, as in 90m. Item 5 covers order and repetition, not the size of a count.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether units may come out of order or repeat. Its pick requires largest to smallest, each unit at most once, and errors otherwise, which rejects all four rows.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks for the maximum parseable duration. Its pick caps at 2^53-1 = 9007199254740991 ms, so that exact value parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 also asks what happens on overflow. Its pick returns 0 with a 'duration too large' error and checks per digit and per component, so both rows are rejected and the message contains \"duration\".",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how zero is formatted and whether zero components are shown. Its pick formats 0 as \"0ms\" and leaves out zero components, so 86400000 gives \"1d\", matching the scenario.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 12,
+      "agrees": true,
+      "why": "This tests the upper edge of FormatDuration's range: the maximum must still format. Item 12 asks what happens above the maximum. Its pick rejects only values beyond it, so 2^53-1 formats, and leaving out the zero s component matches item 11.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting then parsing gives the original number back.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what FormatDuration does with negative values or values above the maximum. Its pick returns \"\" with an 'out of range' error. That quoted text may be a fragment, so whether the message contains \"milliseconds\" is unclear.",
+      "failing": false
+    }
+  ]
+}

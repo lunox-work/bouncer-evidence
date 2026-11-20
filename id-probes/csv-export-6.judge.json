@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11455180000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 covers four things, and three items each answer part of it: item 1 (row order), item 8 (header) and item 9 (BOM and CRLF on every row). Item 9 is the closest because it settles two of the four clauses. The run shows the BOM at the start and CRLF after every row, the last one included. Items 1 and 8 also agree: the header is 'Requisition ID,Title,Status,Openings,Filled,Created', and rows are sorted by creation time, then id.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": false,
+      "why": "No item asks how the status is shown to readers. Item 4 is only about which input statuses are valid. The closest is item 10, which asks how the creation time is formatted. S2 wants the UTC date only, as YYYY-MM-DD, but the run wrote '2024-01-01T10:20:30.456Z'. The run for item 4 also shows status written raw ('open'), not 'Open'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "An empty list produced just the BOM and the header row, ending in CRLF, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 12,
+      "agrees": null,
+      "why": "Item 12 asks how fields with separators are escaped. The run shows a comma, quote and newline being quoted with the quote doubled, and '@cmd' written without quotes. But S4 also wants quoting when a title starts or ends with a space. Neither 'quotes per RFC 4180' nor the run says what happens then, so I can't tell.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 also asks whether formula prefixes are neutralized. The pick says they are not, and the run shows '=SUM(...)' and '@cmd' written without the leading single quote that S5 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens with bad data: unknown status, bad counts, filled over openings, or an invalid date. It throws an Error that names the id ('Requisition REQ-9: unknown status \"bogus\"'), which matches S6.",
+      "failing": true
+    }
+  ]
+}

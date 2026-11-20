@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0707504,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 covers the header row, the BOM, row order and line endings, so items 4, 2 and 5 also apply. Item 1 is the closest because the scenario is mainly about the header and its exact columns. Its pick writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created'. The other three picks also match: a U+FEFF prefix, sorting by createdAt then id, and CRLF on every row including the last.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": false,
+      "why": "S2 expects readable status labels ('Open', 'On hold', ...), but item 9's pick writes the raw value such as 'on_hold'. Item 8 also applies and also disagrees: it writes the full ISO timestamp with milliseconds, not 'YYYY-MM-DD'. Only item 7, an empty cell for a missing title, matches its part.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an empty list produces. Its pick returns the BOM and the header row only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks when a cell is quoted. Its pick quotes only for a comma, a double quote, CR or LF. S4 also requires quoting a title that starts or ends with a space, and the pick would leave that unquoted.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing titles that start like a formula (a leading '=', '+', '-', '@', tab or CR). Item 6 only covers when to quote and escape, which is a different behaviour.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what happens with an unknown status, invalid counts, filled > openings or an invalid date. Its pick throws an Error naming the requisition id, as S6 expects. Item 11's pick also matches S6's limits: counts that are whole numbers of at least 0 are accepted.",
+      "failing": true
+    }
+  ]
+}

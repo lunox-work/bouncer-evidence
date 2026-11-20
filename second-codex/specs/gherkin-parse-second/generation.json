@@ -1,0 +1,31 @@
+{
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "01a1f904-f9f0-72a3-865e-a04096f97dc4",
+        "model": "gpt-6.1-sol",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": null,
+        "turns": 21,
+        "durationMs": 483929,
+        "subtype": "success",
+        "apiError": null,
+        "backend": "codex-cli"
+      }
+    ],
+    "costUsd": 0,
+    "finalText": "Build passes. All 43 tests fail against the unimplemented interface.\n\n43 tests in 4 files.\n\nOpen in the spec:\n\n- “skips comments, descriptions and blank lines, and gives tags to the next scenario” asserts tag order; the spec does not explicitly guarantee that order.",
+    "problem": null,
+    "files": [
+      "tests/private/attachments.test.ts",
+      "tests/private/empty-features.test.ts",
+      "tests/private/invalid-files.test.ts",
+      "tests/private/ordered-files.test.ts"
+    ],
+    "open": [
+      "“skips comments, descriptions and blank lines, and gives tags to the next scenario” asserts tag order; the spec does not explicitly guarantee that order."
+    ]
+  }
+}

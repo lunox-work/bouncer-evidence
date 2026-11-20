@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.0601777,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when bounty × share doesn't divide evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%)",
+      "chose": "Rounds the hidden-test amount down (BigInt integer division) and gives the leftover unit to the UAT release.",
+      "where": "src/index.ts:13",
+      "instead": "Round to nearest, or round up, so the contributor gets the extra unit at the first release."
+    },
+    {
+      "question": "What unit and format is the configured share in?",
+      "ticket": "the configured hidden-test share (default 75%)",
+      "chose": "Treats the share as integer basis points (hiddenTestShareBps, default 7500) out of 10000.",
+      "where": "src/index.ts:21",
+      "instead": "A fraction (0.75) or a percentage (75)."
+    },
+    {
+      "question": "What happens when the bounty is negative, fractional or larger than the safe integer range?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError unless the bounty is a safe integer of at least 0.",
+      "where": "src/index.ts:74",
+      "instead": "Accept fractional amounts, or clamp or coerce the value."
+    },
+    {
+      "question": "What happens when the configured share is out of range or not a whole number?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError unless the share is an integer from 0 to 10000 basis points. This check runs when the handler is created.",
+      "where": "src/index.ts:80",
+      "instead": "Clamp the share to 0–100%, or fail only when the event is handled."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Rejects the event with an error and records nothing.",
+      "where": "src/index.ts:44",
+      "instead": "Release the full bounty on UAT approval, or ignore the event without error."
+    },
+    {
+      "question": "What does a repeated hidden-tests-passed or uat-approved event do?",
+      "ticket": "Release happens once per task",
+      "chose": "Returns the current state unchanged, with no error and no second save. The check uses the release kind, not the event id.",
+      "where": "src/index.ts:38",
+      "instead": "Throw an error on the duplicate, or de-duplicate by event id."
+    },
+    {
+      "question": "What does a failed hidden-test run do to the state, and is anything persisted?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state without saving. A later pass can still release, so a failure is not terminal.",
+      "where": "src/index.ts:41",
+      "instead": "Record a failed state that blocks later releases, or persist the initial state."
+    },
+    {
+      "question": "How much does UAT approval release?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Releases bounty minus the sum of all earlier releases, not the precomputed uat split.",
+      "where": "src/index.ts:48",
+      "instead": "Release the precomputed split.uat amount."
+    },
+    {
+      "question": "What does a zero bounty do?",
+      "ticket": "silent",
+      "chose": "Sets the status to \"pro bono\" and still records releases of amount 0 for both events.",
+      "where": "src/index.ts:86",
+      "instead": "Record no release for a zero amount, or treat the status as locked or fully released."
+    },
+    {
+      "question": "What status does a task have before any release, and after the first partial one?",
+      "ticket": "Task shows the bounty as fully released",
+      "chose": "Uses \"locked\" before any release, \"partially released\" after some release while a balance remains, and \"fully released\" once the remainder is 0.",
+      "where": "src/index.ts:94",
+      "instead": "Use different status names, or derive \"fully released\" from the UAT event rather than the balance."
+    },
+    {
+      "question": "How are concurrent or overlapping events handled, and does an error block later events?",
+      "ticket": "silent",
+      "chose": "Runs events one at a time through a promise queue. A failed event rejects its own caller but does not block later events.",
+      "where": "src/index.ts:27",
+      "instead": "Handle events independently with no serialization, or rely on a store-level lock."
+    },
+    {
+      "question": "What happens on an unrecognized event kind?",
+      "ticket": "silent",
+      "chose": "Throws an error naming the unknown kind.",
+      "where": "src/index.ts:51",
+      "instead": "Ignore the event and return the current state."
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "slug": "pathe-filename-dot-check",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "test/pathe-filename-dot-check.spec.ts :: [happy-1] directories are removed for POSIX and Windows paths",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-1] a file directly under a root separator loses the separator",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-2] a plain name with an extension",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-2] a one-character name with a one-character extension",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-1] mixed separators are all treated as separators",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-1] a backslash after the last slash still splits the segment",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-2] a dot in a directory name does not affect the result",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-2] several dotted directories before an extensionless name",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-3] a trailing separator or an empty path gives undefined",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-3] a lone backslash or repeated separators give undefined",
+    "test/pathe-filename-dot-check.spec.ts :: [unhappy-1] the segment before a trailing separator is not used",
+    "test/pathe-filename-dot-check.spec.ts :: [unhappy-1] a segment with an extension before a trailing backslash is not used",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-3] files without an extension",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-3] a one-character name without an extension",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-4] dotfiles with no further dot are returned whole",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-4] a dotfile whose name is a single character after the dot",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-4] a dotfile with another dot loses only its last extension",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-4] a dotfile with three dots keeps all but the last extension",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-5] names with several dots",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-5] a name with many dots loses only the final segment",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-6] a trailing dot is removed as an empty extension",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-6] only the final one of two trailing dots is removed",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-7] current and parent directory segments",
+    "test/pathe-filename-dot-check.spec.ts :: [boundary-7] three dots lose only the last one",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-5] resolveAlias is unchanged",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-5] resolveAlias leaves a path whose alias prefix is not followed by a separator",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-6] normalizeAliases is unchanged",
+    "test/pathe-filename-dot-check.spec.ts :: [happy-6] normalizeAliases does not resolve a value whose alias prefix is not followed by a separator"
+  ],
+  "publicOnSkeleton": {
+    "passed": 21,
+    "total": 28
+  },
+  "publicFailingOnReference": [],
+  "referenceRegressions": [],
+  "hiddenWritten": 33,
+  "kept": [
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-1] directories with dots are removed even when the file has no extension",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-1] repeated leading separators before the file are removed",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-1] a path with hundreds of dotted directories keeps only the last name",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-1] mixed separators with dotted directories and no extension",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-2] other dotted directories before extensionless names",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-2] dotted directories before names with dots or dotfiles",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-2] a hundred dotted directories before an extensionless name",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-3] trailing separators after dotted segments give undefined",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-3] special and dot segments followed by a separator give undefined",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-3] many trailing separators give undefined",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-3] the empty-segment result is exactly undefined, not an empty string",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [unhappy-1] a dotted segment before a trailing slash is not used",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [unhappy-1] segments before trailing separators in several forms are not used",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-3] extensionless names under dotted directories are returned whole",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-3] long and punctuated names without a dot are returned unchanged",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-6] a trailing dot is removed under dotted and Windows directories",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-6] only the final one of many trailing dots is removed",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-7] dot segments after dotted directories and other separators",
+    "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-7] runs of more than three dots lose only the last one"
+  ],
+  "dropped": [
+    {
+      "id": "test/hidden-pathe-filename-dot-check/aliases.spec.ts :: [happy-5] resolveAlias resolves every alias of the existing table to its target",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/aliases.spec.ts :: [happy-5] resolveAlias respects aliases ending with a separator",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/aliases.spec.ts :: [happy-5] resolveAlias prefers the more specific alias with deeper paths",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/aliases.spec.ts :: [happy-6] normalizeAliases gives the existing table's normalised result",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-1] deeper POSIX, Windows and UNC paths keep only the last segment's name",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-2] plain names with extensions of various lengths",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-2] a colon is not a separator and a very long name keeps all of it",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-1] many alternating separators all split the path",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-4] other dotfiles under various directories are returned whole",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [happy-4] a dotfile with a long name is returned whole",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-4] dotfiles with further dots under dotted directories",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-4] a name starting with two dots loses everything after its last dot",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-5] other names with several dots lose only the final extension",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-pathe-filename-dot-check/filename.spec.ts :: [boundary-5] a name with a thousand dots loses only the final segment",
+      "reason": "Passes on the skeleton."
+    }
+  ],
+  "reference": {
+    "public": {
+      "passed": 28,
+      "total": 28
+    },
+    "hidden": {
+      "passed": 19,
+      "total": 19
+    },
+    "touchedOutsideSrc": [],
+    "removed": [],
+    "existing": {
+      "passed": 330,
+      "total": 330
+    },
+    "notes": "I rewrote `filename` in `src/utils.ts` to follow the spec's algorithm, and the whole suite now passes (391 tests across 5 files, including both target suites). Type-checking and lint on the file printed no errors.\n\n`filename` was not one of the stubs throwing `not implemented`. It already had a body built on the old regex `FILENAME_RE`, which gets dotfiles and dotted directory names wrong. I replaced that body:\n\n- It splits the path on both `/` and `\\` and keeps the last piece.\n- If that piece is empty (an empty path or a trailing separator), it returns `undefined`.\n- Otherwise it finds the last `.` in the piece. If there is none, or the only one is the first character, it returns the whole piece; if not, it returns everything before that dot.\n\nThe old regex is gone; in its place is a private constant, `PATH_SEPARATOR_RE`. The names and signatures of all three exports are unchanged, and the alias functions behave as before.\n\nTests left failing: none",
+    "sessions": [
+      {
+        "sessionId": "7ce6b8e3-0025-4a5a-a36e-4cfff6ab967b",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.21614860000000002,
+        "turns": 4,
+        "durationMs": 22774,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.21614860000000002
+  }
+}

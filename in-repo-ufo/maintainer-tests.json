@@ -1,0 +1,921 @@
+{
+  "at": "2026-11-20T07:57:11.186Z",
+  "set": "evidence/in-repo-ufo",
+  "totals": {
+    "codex-cli": {
+      "runs": 25,
+      "allPass": 25,
+      "cases": 5
+    },
+    "haiku": {
+      "runs": 25,
+      "allPass": 25,
+      "cases": 5
+    },
+    "haiku-no-public": {
+      "runs": 25,
+      "allPass": 25,
+      "cases": 5
+    },
+    "ticket-haiku": {
+      "runs": 25,
+      "allPass": 20,
+      "cases": 5
+    },
+    "ticket-sonnet": {
+      "runs": 25,
+      "allPass": 25,
+      "cases": 5
+    }
+  },
+  "cases": {
+    "ufo-filter-query": {
+      "commit": "3c4b43de1128f2c04c2131db9a7e9fe2c7daf0d5",
+      "subject": "feat: add `filterQuery` utility (#287)",
+      "testFiles": [
+        "test/query.test.ts"
+      ],
+      "acceptance": 3,
+      "acceptanceIds": [
+        "test/query.test.ts :: filterQuery > /foo filter \"bar\"",
+        "test/query.test.ts :: filterQuery > /foo?bar=1 filter \"bar\"",
+        "test/query.test.ts :: filterQuery > /foo?bar=1&baz=2 filter \"bar\""
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 2,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 3,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 4,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 5,
+              "passed": 3,
+              "of": 3
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 2,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 3,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 4,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 5,
+              "passed": 3,
+              "of": 3
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 2,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 3,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 4,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 5,
+              "passed": 3,
+              "of": 3
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 2,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 3,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 4,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 5,
+              "passed": 3,
+              "of": 3
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 2,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 3,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 4,
+              "passed": 3,
+              "of": 3
+            },
+            {
+              "run": 5,
+              "passed": 3,
+              "of": 3
+            }
+          ]
+        }
+      }
+    },
+    "ufo-join-relative": {
+      "commit": "69e26f8983a6a67aa5bf8c50d9b9c06f17d32796",
+      "subject": "feat: `joinRelativeURL` (#220)",
+      "testFiles": [
+        "test/base.test.ts",
+        "test/join.test.ts"
+      ],
+      "acceptance": 27,
+      "acceptanceIds": [
+        "test/base.test.ts ::  > withBase > \"/foo/\" + \"/\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL() === \"\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/\") === \"/\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(, \"./\") === \"./\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"./\", \"a\") === \"./a\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"./a\", \"./b\") === \"./a/b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a\") === \"/a\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"a\", \"b\") === \"a/b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/\", \"/b\") === \"/b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"a\", \"b/\", \"c\") === \"a/b/c\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"a\", \"b/\", \"/c\") === \"a/b/c\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/\", \"./\") === \"/\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/\", \"./foo\") === \"/foo\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/\", \"./foo/\") === \"/foo/\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/\", \"./foo\", \"bar\") === \"/foo/bar\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a\", \"../b\") === \"/b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a/b/c\", \"../../d\") === \"/a/d\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a\", \"../../d\") === \"/d\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a\", \".././../d\") === \"/d\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a\", \"../../../d\") === \"../d\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"/a/b\", \"../../../d\") === \"/d\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"../a\", \"../b\") === \"b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"../a\", \"./../b\") === \"b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"../a\", \"./../../b\") === \"../b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"../a\", \"../../../b\") === \"../../b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"../a\", \"../../../../b\") === \"../../../b\"",
+        "test/join.test.ts ::  > joinRelativeURL > joinRelativeURL(\"../a/\", \"../b\") === \"b\""
+      ],
+      "variants": {}
+    },
+    "ufo-without-host": {
+      "commit": "aa54b6ae8f8b320bc0e03b4ff3ffc0bb2aa2b964",
+      "subject": "feat: add `withoutHost` utility (#212)",
+      "testFiles": [
+        "test/utilities.test.ts"
+      ],
+      "acceptance": 5,
+      "acceptanceIds": [
+        "test/utilities.test.ts ::  > withoutHost > https://example.com",
+        "test/utilities.test.ts ::  > withoutHost > ?foo=123#hash",
+        "test/utilities.test.ts ::  > withoutHost > ?",
+        "test/utilities.test.ts ::  > withoutHost > https://example.com/test?foo=123#hash",
+        "test/utilities.test.ts ::  > withoutHost > http://localhost:8000/media/search/movie?query=drive"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 2,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 3,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 4,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 5,
+              "passed": 5,
+              "of": 5
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 2,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 3,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 4,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 5,
+              "passed": 5,
+              "of": 5
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 2,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 3,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 4,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 5,
+              "passed": 5,
+              "of": 5
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 0,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 3,
+              "of": 5
+            },
+            {
+              "run": 2,
+              "passed": 3,
+              "of": 5
+            },
+            {
+              "run": 3,
+              "passed": 3,
+              "of": 5
+            },
+            {
+              "run": 4,
+              "passed": 3,
+              "of": 5
+            },
+            {
+              "run": 5,
+              "passed": 3,
+              "of": 5
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 2,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 3,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 4,
+              "passed": 5,
+              "of": 5
+            },
+            {
+              "run": 5,
+              "passed": 5,
+              "of": 5
+            }
+          ]
+        }
+      }
+    },
+    "ufo-base-prefix": {
+      "commit": "eb29945470c8629309764f026a36e7f477a9a1ff",
+      "subject": "fix(withBase, withoutBase): prevent false prefix matches (#313)",
+      "testFiles": [
+        "test/base.test.ts"
+      ],
+      "acceptance": 4,
+      "acceptanceIds": [
+        "test/base.test.ts :: withBase > \"/admin/\" + \"/admin-dashboard\"",
+        "test/base.test.ts :: withBase > \"/admin\" + \"/admin-dashboard\"",
+        "test/base.test.ts :: withoutBase > \"/admin-dashboard\"-\"/admin/\"",
+        "test/base.test.ts :: withoutBase > \"/admin-dashboard\"-\"/admin\""
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 2,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 3,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 4,
+              "passed": 4,
+              "of": 4
+            },
+            {
+              "run": 5,
+              "passed": 4,
+              "of": 4
+            }
+          ]
+        }
+      }
+    },
+    "ufo-drive-letters": {
+      "commit": "229e83e6b6c9c6edec4baa3a699bd6207ab031e1",
+      "subject": "fix(parseURL): only normalize windows drive letters with `file://` protocol (#246)",
+      "testFiles": [
+        "test/parse.test.ts"
+      ],
+      "acceptance": 1,
+      "acceptanceIds": [
+        "test/parse.test.ts ::  > parseURL > https://test.com/t:est"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        }
+      }
+    },
+    "ufo-query-null-proto": {
+      "commit": "4d024df0134e2484b1e22ba17a08fea31e90de92",
+      "subject": "fix(parseQuery): use object with null prototype (#286)",
+      "testFiles": [
+        "test/query.test.ts"
+      ],
+      "acceptance": 1,
+      "acceptanceIds": [
+        "test/query.test.ts :: getQuery > http://foo.com/?toString=foo"
+      ],
+      "variants": {
+        "codex-cli": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "haiku-no-public": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "ticket-haiku": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        },
+        "ticket-sonnet": {
+          "runs": 5,
+          "allPass": 5,
+          "rows": [
+            {
+              "run": 1,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 2,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 3,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 4,
+              "passed": 1,
+              "of": 1
+            },
+            {
+              "run": 5,
+              "passed": 1,
+              "of": 1
+            }
+          ]
+        }
+      }
+    }
+  }
+}

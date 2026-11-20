@@ -1,0 +1,15 @@
+{
+  "repo": "reduxjs/redux-toolkit",
+  "package": "packages/toolkit",
+  "language": "typescript",
+  "commit": "45eb0379c719ddfaeee6a39f43222cee01515caa",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 1149 MB",
+    "seconds": 3
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 22,
+  "costUsd": 0.0747072,
+  "items": [
+    {
+      "question": "What happens when the file has no Feature: line (empty or comment-only)?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError at line 1 saying a Feature: line is expected.",
+      "where": "src/index.ts:199-200",
+      "instead": "Return an empty feature, or report the error at the last line of the file."
+    },
+    {
+      "question": "Is non-step text under a Feature, Background or Scenario header an error?",
+      "ticket": "silent",
+      "chose": "Treats it as description and ignores it until the first step. After that, unrecognised lines throw.",
+      "where": "src/index.ts:195-196",
+      "instead": "Reject any unrecognised line as invalid, or allow description text anywhere."
+    },
+    {
+      "question": "Are Scenario Outline, Scenario Template and Rule supported?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError saying they are not supported, at the line where they appear.",
+      "where": "src/index.ts:160-163",
+      "instead": "Parse Scenario Outline like a Scenario, or skip those blocks."
+    },
+    {
+      "question": "How are Background steps returned, and what does an empty Background give?",
+      "ticket": "silent",
+      "chose": "Stores the steps in a separate `feature.background` array, which is `[]` when empty and null when there is no Background. They are not merged into scenarios.",
+      "where": "src/index.ts:135-137",
+      "instead": "Prepend the background steps to each scenario, or treat an empty Background as null."
+    },
+    {
+      "question": "Can a Background be repeated, carry tags, or come after a Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError for a second Background, for tags on a Background (reported at the first tag line), and for a Background after a Scenario.",
+      "where": "src/index.ts:129-134",
+      "instead": "Allow tags and ignore them, or merge repeated Backgrounds."
+    },
+    {
+      "question": "What happens to tags, and where are they attached?",
+      "ticket": "silent",
+      "chose": "Tags attach to the next Scenario only. Tags before Feature: are dropped. Dangling tags, or tags followed by a step, throw at the first tag line. A tag line holding non-tag words throws.",
+      "where": "src/index.ts:79-87",
+      "instead": "Store feature tags on the feature, or ignore dangling tags silently."
+    },
+    {
+      "question": "Are tables and doc strings parsed, and how?",
+      "ticket": "silent",
+      "chose": "Parses tables into trimmed cells with \\|, \\\\ and \\n escapes. Parses doc strings delimited by \"\"\" or ``` with the opening indent stripped. Both attach to the preceding step.",
+      "where": "src/index.ts:103-125",
+      "instead": "Ignore tables and doc strings, or keep raw cell and line text without trimming or unescaping."
+    },
+    {
+      "question": "What if a step has both a table and a doc string, or either one has no preceding step?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the offending line.",
+      "where": "src/index.ts:109-112",
+      "instead": "Allow both on one step, or ignore the orphan."
+    },
+    {
+      "question": "Where is an unclosed doc string reported?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the error at the line where the doc string opens, not at the end of the file.",
+      "where": "src/index.ts:120-121",
+      "instead": "Report the last line of the file."
+    },
+    {
+      "question": "What happens to a step keyword with no text?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError, \"a step needs text after its keyword\".",
+      "where": "src/index.ts:171-172",
+      "instead": "Accept it with empty text."
+    },
+    {
+      "question": "What happens with a second Feature: line?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the second Feature: line.",
+      "where": "src/index.ts:89-90",
+      "instead": "Start a new feature, or ignore the extra line."
+    },
+    {
+      "question": "How are keywords, step text and line endings handled?",
+      "ticket": "silent",
+      "chose": "Keeps the keyword as written (And, But and * are not resolved to the previous Given/When/Then). Trims step text. Strips a trailing \\r from CRLF lines. Skips # comment lines and blank lines.",
+      "where": "src/index.ts:57-59",
+      "instead": "Resolve And/But/* to the preceding keyword, or keep trailing whitespace and treat \\r as content."
+    }
+  ]
+}

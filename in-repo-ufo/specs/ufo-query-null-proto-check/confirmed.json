@@ -1,0 +1,25 @@
+{
+  "sha256": "dc9a1a6300211bad6d5ee7eac8ff818977079d0228a7d973de07386301c20f04",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:01:57.858Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "The result is built with `new EmptyObject()`, a private constructor whose prototype is `Object.create(null)`, so its prototype is a shared empty object whose own prototype is null. It is not `Object.create(null)` directly.",
+    "The result does not pass `instanceof Object`. It has no `hasOwnProperty`, `toString`, `valueOf` or `constructor`, and calling them or using `String(result)` throws a TypeError.",
+    "A key that decodes to `__proto__` (literal or percent-encoded) is still skipped: `parseQuery(\"__proto__=x\")` is `{}` with no own `__proto__`. The existing skip and its JSDoc `@note` are kept. `\"__proto__[polluted]=1\"` gives `{ \"__proto__[polluted]\": \"1\" }`.",
+    "Keys such as `toString`, `valueOf` and `hasOwnProperty` are plain own values. A repeat is merged into an array only if the query already set that key. The existing skip of `constructor` is kept: `parseQuery(\"constructor=a&x=1&constructor=b\")` is `{ x: \"1\" }`.",
+    "Only the object created inside `parseQuery` changes. No other function is edited, and `getQuery`/`$URL.query` just pass the result through.",
+    "The declared return type stays `ParsedQuery` (or the caller's `T`), with no type-level sign that Object.prototype is missing.",
+    "All results share one prototype object (`proto(r1) === proto(r2)`), and each call still returns a new result object.",
+    "Leading `?`, `&` splitting, decoding, key order and the array merging of repeated keys stay as they were.",
+    "Seam (the files the stub writes): src/query.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/query.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

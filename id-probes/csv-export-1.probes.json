@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-1",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0459884,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:\"a\",title:\"T\",status:\"open\",openings:2,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([{id:\"b\",status:\"open\",openings:1,filled:0,createdAt:new Date(1000)},{id:\"c\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"B\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"a\",status:\"open\",openings:1,filled:0,createdAt:new Date(1000)}])"
+    },
+    {
+      "item": 3,
+      "probe": "(()=>{const a=[{id:\"b\",status:\"open\",openings:1,filled:0,createdAt:new Date(1000)},{id:\"a\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)}];buildRequisitionsCsv(a);return a.map(r=>r.id)})()"
+    },
+    {
+      "item": 4,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"a\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 6,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 7,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"a\",title:null,status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"b\",status:\"open\",openings:1,filled:0,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 8,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"a\",title:\"x,\\\"y\\\"\\nz\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([{id:\"a\",status:\"open\",openings:1,filled:0,createdAt:new Date(Date.UTC(2024,0,2,3,4,5,6))}]).split(\"\\r\\n\")[1]"
+    },
+    {
+      "item": 10,
+      "probe": "buildRequisitionsCsv([{id:\"ok\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"bad1\",status:\"open\",openings:1,filled:5,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 11,
+      "probe": "buildRequisitionsCsv([{id:\"a\",status:\"on_hold\",openings:1,filled:0,createdAt:new Date(0)},{id:\"b\",status:\"Open\",openings:1,filled:0,createdAt:new Date(1)}])"
+    },
+    {
+      "item": 12,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:\"a\",title:\"first\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)},{id:\"a\",title:\"second\",status:\"open\",openings:1,filled:0,createdAt:new Date(0)}]))"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,T,open,2,1,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nB,,open,1,0,1970-01-01T00:00:00.000Z\\r\\nc,,open,1,0,1970-01-01T00:00:00.000Z\\r\\na,,open,1,0,1970-01-01T00:00:01.000Z\\r\\nb,,open,1,0,1970-01-01T00:00:01.000Z\\r\\n'"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'b', 'a' ]"
+    },
+    {
+      "item": 4,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 5,
+      "actual": "65279"
+    },
+    {
+      "item": 6,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 7,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\nb,,open,1,0,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 8,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,\\\\\"x,\\\\\"\\\\\"y\\\\\"\\\\\"\\\\nz\\\\\",open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 9,
+      "actual": "'a,,open,1,0,2024-01-02T03:04:05.006Z'"
+    },
+    {
+      "item": 10,
+      "actual": "throws Error: Requisition \"bad1\" has filled greater than openings"
+    },
+    {
+      "item": 11,
+      "actual": "throws Error: Requisition \"b\" has an unknown status \"Open\""
+    },
+    {
+      "item": 12,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,first,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\na,second,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    }
+  ]
+}

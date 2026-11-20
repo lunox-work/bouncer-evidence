@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0556405,
+  "items": [
+    {
+      "question": "Is a day unit (`d`) accepted, and how long is a day?",
+      "ticket": "like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts `d` as 86,400,000 ms (24h) alongside h, m, s and ms.",
+      "where": "src/lib.rs:21",
+      "instead": "Support only h, m, s and ms, or add weeks (`w`)."
+    },
+    {
+      "question": "Can units appear in any order or repeat within one string?",
+      "ticket": "silent",
+      "chose": "Rejects out-of-order or repeated units, so `30m1h` and `1m1m` are errors.",
+      "where": "src/lib.rs:105",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Are upper-case units, spaces, signs and decimals accepted?",
+      "ticket": "silent",
+      "chose": "Rejects all of them (`1H`, `1h 30m`, `-1s`, `+1s`, `1.5h`), and also leading or trailing whitespace.",
+      "where": "src/lib.rs:88",
+      "instead": "Trim whitespace, accept case-insensitive units, or allow decimals like `1.5h`."
+    },
+    {
+      "question": "Is a bare number with no unit (the old raw-millisecond format) accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a bare number such as `1` or `172800` as invalid, because a unit is required.",
+      "where": "src/lib.rs:94",
+      "instead": "Treat a unit-less number as milliseconds for backward compatibility."
+    },
+    {
+      "question": "What happens on empty input?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration for an empty string.",
+      "where": "src/lib.rs:70",
+      "instead": "Treat it as 0, or as no timeout."
+    },
+    {
+      "question": "Is a zero duration valid, and are leading zeros accepted?",
+      "ticket": "silent",
+      "chose": "Accepts `0s`, `0ms` and `01h`, and accepts zero-count segments such as `1h0m`.",
+      "where": "src/lib.rs:81",
+      "instead": "Reject zero durations, leading zeros or zero segments."
+    },
+    {
+      "question": "What is the maximum parsable duration?",
+      "ticket": "silent",
+      "chose": "Rejects any total above 2^53-1 ms (9007199254740991), including when it overflows part-way through.",
+      "where": "src/lib.rs:115",
+      "instead": "Allow the full u64 range, or use a smaller, more practical limit."
+    },
+    {
+      "question": "How is the ambiguity between `m` (minutes) and `ms` resolved?",
+      "ticket": "silent",
+      "chose": "Matches `ms` first, so `5ms` is milliseconds and minutes need `m` not followed by `s`.",
+      "where": "src/lib.rs:94",
+      "instead": "Parse `m` first and treat `ms` as an error, or require explicit delimiters."
+    },
+    {
+      "question": "How is a duration printed back for the admin UI?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Prints the greedy canonical form with the largest unit first and zero units omitted, e.g. 5400000 gives `1h30m` and 61000 gives `1m1s`.",
+      "where": "src/lib.rs:138",
+      "instead": "Use the largest whole unit only (`90m`), or round to the largest unit."
+    },
+    {
+      "question": "How is zero formatted?",
+      "ticket": "silent",
+      "chose": "Returns `0s`.",
+      "where": "src/lib.rs:132",
+      "instead": "Return `0ms`, or `0`."
+    },
+    {
+      "question": "Does a large number of hours roll up into days when formatted?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Rolls hours into days, so 172800000 ms gives `2d`.",
+      "where": "src/lib.rs:138",
+      "instead": "Cap formatting at hours and print `48h`."
+    },
+    {
+      "question": "What does format do with values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error for values above 2^53-1.",
+      "where": "src/lib.rs:129",
+      "instead": "Format any u64 value without a limit, or clamp it."
+    }
+  ]
+}

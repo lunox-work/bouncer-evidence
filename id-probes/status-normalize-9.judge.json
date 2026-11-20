@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10350329999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks how a stored value is cleaned before matching, meaning which case and whitespace variants count as the same status. Its pick trims and lowercases, and the run shows '  DRAFT ' read as 'draft'. So 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' read as draft, published, merged and claimed.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings map to statuses. The scenario expects a table of ten aliases, including 'under review', 'live' and 'done'. The pick maps only 'in review', and the run returned null for 'done'. So 'under_review' and 'LIVE' would read as null instead of review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what reading does with a value that matches no status or old spelling. The pick returns null rather than guessing the nearest status, and readStatus('banana') returned null. Item 6 also shows empty and whitespace-only values read as null, so the scenario holds in full.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether an exact valid status is written unchanged. Item 1 is about rejecting near-miss spellings on write, and none of its runs writes a valid value.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether writing accepts near-miss spellings, such as wrong case, padding or old spellings, or rejects them. The pick rejects anything that is not exactly one of the five values. The run threw for 'Draft', ' draft' and 'in-review', with messages that quote the value as given, so old spellings are refused on write.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how a batch read reports unreadable values: raw or cleaned, deduplicated or not, and in what order. The pick reports the raw stored strings, deduplicated by exact string and sorted. The run returned [' Zeta ','Alpha','alpha','zeta']: each distinct original value once, sorted, exactly as stored.",
+      "failing": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "encode/httpx",
+  "package": ".",
+  "language": "python",
+  "commit": "7cff5f79bc78649bbcd3fd9aa7a74c86e0f63016",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 44
+  }
+}

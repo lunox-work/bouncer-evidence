@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0641459,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when it doesn't divide the bounty evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%) to the contributor",
+      "chose": "Floors the hidden-test amount with BigInt division, and the UAT release gets the remainder.",
+      "where": "src/index.ts:17",
+      "instead": "Round to nearest, or round the share up so the contributor gets the extra unit."
+    },
+    {
+      "question": "What happens if UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Throws an Error ('the hidden tests have not passed') and records nothing.",
+      "where": "src/index.ts:70",
+      "instead": "Release the full bounty, or release the UAT share only, or ignore the event without error."
+    },
+    {
+      "question": "What happens when the hidden tests pass a second time after the release was already made?",
+      "ticket": "Release happens once per task",
+      "chose": "Does nothing, writes nothing to the store, and returns the current state without an error.",
+      "where": "src/index.ts:63",
+      "instead": "Throw an error on the duplicate, or record another release."
+    },
+    {
+      "question": "What happens when UAT approval is delivered a second time?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Silently ignores the repeat and returns the existing state.",
+      "where": "src/index.ts:73",
+      "instead": "Throw an error on the duplicate approval."
+    },
+    {
+      "question": "What do the hidden-tests-passed and uat-approved events do when the bounty is 0?",
+      "ticket": "silent",
+      "chose": "Records releases of amount 0 and reports the status 'pro bono'.",
+      "where": "src/index.ts:41",
+      "instead": "Record no release at all for a zero bounty, or reject the task."
+    },
+    {
+      "question": "What amount does the hidden-tests release use when the share is 0 bps or 100%, so the UAT remainder is 0?",
+      "ticket": "silent",
+      "chose": "Still records a release entry of amount 0 (hidden-tests at 0 bps, or UAT at 10000 bps).",
+      "where": "src/index.ts:64",
+      "instead": "Skip zero-amount releases, so no entry is recorded."
+    },
+    {
+      "question": "What counts as a valid bounty and hidden-test share?",
+      "ticket": "silent",
+      "chose": "Throws RangeError for a bounty that is negative, fractional or not a safe integer, and for a share that is not an integer from 0 to 10000 bps.",
+      "where": "src/index.ts:10",
+      "instead": "Clamp the values, allow fractional amounts, or leave validation to the caller."
+    },
+    {
+      "question": "When are invalid task settings reported?",
+      "ticket": "silent",
+      "chose": "Throws when the handler is created, because splitBounty is called in createEscrowHandler.",
+      "where": "src/index.ts:51",
+      "instead": "Throw when the first event is handled."
+    },
+    {
+      "question": "What happens when the hidden tests fail?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Treats the event as a no-op that writes nothing and returns the current state, so the task stays locked and a later pass can still release.",
+      "where": "src/index.ts:67",
+      "instead": "Record the failure, or permanently block releases after a failure."
+    },
+    {
+      "question": "How are concurrent or duplicate events for the same store handled?",
+      "ticket": "Release happens once per task",
+      "chose": "Runs events one at a time per store through a promise queue keyed by store object, so the read-check-write sequence cannot interleave.",
+      "where": "src/index.ts:27",
+      "instead": "Read and write without serializing, or rely on the store for atomicity or event-id deduplication."
+    },
+    {
+      "question": "What happens to unrecognized event kinds and to store failures?",
+      "ticket": "silent",
+      "chose": "Throws 'unknown event kind' for unknown events, and lets store get/set errors propagate with nothing recorded, so the event can be retried.",
+      "where": "src/index.ts:77",
+      "instead": "Ignore unknown events, or catch and wrap store errors."
+    },
+    {
+      "question": "How is the 'fully released' status determined, and what happens if existing stored releases already cover the bounty?",
+      "ticket": "Task shows the bounty as fully released",
+      "chose": "Sums the recorded release amounts and reports 'fully released' when the sum is at least the bounty, 'partially released' when it is below the bounty, and 'locked' when it is 0.",
+      "where": "src/index.ts:42",
+      "instead": "Set the status from which release kinds exist, for example fully released once the uat release is recorded."
+    }
+  ]
+}

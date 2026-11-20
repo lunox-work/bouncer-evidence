@@ -1,0 +1,15 @@
+{
+  "repo": "pallets/werkzeug",
+  "package": ".",
+  "language": "python",
+  "commit": "0f43c6ebd426039e4b99ec22535c2c8a2ec2f69f",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 11
+  }
+}

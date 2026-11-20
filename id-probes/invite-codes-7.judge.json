@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1318208,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "The open question in S1 is what happens when a newly drawn code repeats an existing one. Item 8 asks exactly this, and its pick draws again (up to 1000 tries). The run threw only because the stub returned the same code on every draw, so that doesn't contradict the scenario. The 14-day expiry and 'unused' state aren't the subject of any item; item 9's run happens to show expiresAt = createdAt + 14 days.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how a redemption records who used the code. Its run shows the used code listed with usedBy 'u' and usedAt set to the redemption time, which matches 'shows it was used by c1, and when'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how typed input is normalised. The pick uppercases and strips whitespace and hyphens, and the run redeemed ' aaaa-aaaa aaaa ' as the code AAAA-AAAA-AAAA. That covers lowercase, spaces and '-'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code can still be redeemed at exactly 14 days. The pick treats now >= expiresAt as expired, and the run returned reason 'expired' at exactly 14 days. A moment earlier, now < expiresAt, so the code still redeems.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "The open question in S5 is what happens when the contributor who used a code redeems that same code again (the scenario wants success with no change). No item asks this. Item 2 is about redeeming a different code for a task you already have access to, which is S7's question. Item 3 is about which reason wins when used, revoked and expired overlap.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "The part of S6 that is a real choice is whether a used code can be revoked, and item 4 asks exactly that. Its run threw 'invite code has been used and cannot be revoked', so the code is not revoked.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when a contributor redeems a second code for a task they already have access to. The run returned reason 'already has access' and the second code stayed 'unused'.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how concurrent operations are handled. Its run used a store with delayed calls and redeemed one code twice at once. One call succeeded and the other got reason 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12's pick is about what list shows for used codes. Its run lists code, createdAt, expiresAt and state, plus usedBy and usedAt on the used code, which is what S9 expects. Item 3 covers used beating expired, but only for redeem's failure reason, not the state list shows, so item 12 is the closer match.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0722033,
+  "items": [
+    {
+      "question": "Which check wins when a code is both used and expired or revoked?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Checks used first, then revoked, then expired, so a used code reports 'used' even after its 14 days are over.",
+      "where": "src/index.ts:44",
+      "instead": "Check expiry first, or keep the used state fixed only while the code is still within its lifetime."
+    },
+    {
+      "question": "Is a code still valid at exactly 14 days after creation?",
+      "ticket": "expire after 14 days",
+      "chose": "Treats a code as expired when now is greater than or equal to expiresAt, so it is already expired at exactly 14 days.",
+      "where": "src/index.ts:46",
+      "instead": "Allow redemption through the 14-day instant and expire only when now is strictly greater than expiresAt."
+    },
+    {
+      "question": "What happens when a contributor who already has the task redeems a second code for it?",
+      "ticket": "silent",
+      "chose": "Refuses with the reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:119",
+      "instead": "Spend the code and succeed without changing access, or return ok with the taskId and mark the code used."
+    },
+    {
+      "question": "What format do the codes have: length, alphabet, and display?",
+      "ticket": "silent",
+      "chose": "Draws 12 characters from a 32-character alphabet with look-alike characters left out, and shows them as three hyphenated groups of four.",
+      "where": "src/index.ts:14",
+      "instead": "Use a UUID or a shorter 8-character code with no grouping."
+    },
+    {
+      "question": "How is a typed code matched on redemption: case, spaces, hyphens?",
+      "ticket": "silent",
+      "chose": "Removes whitespace and hyphens and uppercases the input before lookup.",
+      "where": "src/index.ts:33",
+      "instead": "Require an exact match of the code as shown."
+    },
+    {
+      "question": "Can a code be revoked, and what does revoking do?",
+      "ticket": "silent",
+      "chose": "Adds a revoke operation that sets a revoked flag, throws for unknown or used codes, and does nothing when the code is already revoked.",
+      "where": "src/index.ts:133",
+      "instead": "Provide no revocation, or make revoking an unknown code a quiet no-op."
+    },
+    {
+      "question": "What does create do if it keeps drawing colliding codes?",
+      "ticket": "silent",
+      "chose": "Redraws up to 100 times, then throws an error.",
+      "where": "src/index.ts:83",
+      "instead": "Retry without a limit, or use a longer code on collision."
+    },
+    {
+      "question": "How are concurrent operations on the registry handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Runs every operation through one in-process promise queue, one at a time, so concurrent redemptions of one code succeed once.",
+      "where": "src/index.ts:176",
+      "instead": "Use an atomic or conditional write in the store, or accept the race."
+    },
+    {
+      "question": "What do redeem failures look like for the caller?",
+      "ticket": "silent",
+      "chose": "Returns { ok: false, reason } with 'unknown', 'used', 'revoked', 'expired' or 'already has access'. It does not throw.",
+      "where": "src/index.ts:114",
+      "instead": "Throw errors, or give a single generic 'invalid code' reason."
+    },
+    {
+      "question": "What do listings show for codes, and are they filtered?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Lists all of a task's codes, including expired and revoked ones, each with a state computed at the current time. Used codes carry usedBy and usedAt.",
+      "where": "src/index.ts:163",
+      "instead": "List only active codes, or show usedBy without the timestamp."
+    },
+    {
+      "question": "What does create do with an empty or unvalidated task id, or a task that doesn't exist?",
+      "ticket": "silent",
+      "chose": "Accepts any task id string without validating it.",
+      "where": "src/index.ts:80",
+      "instead": "Reject empty or unknown task ids."
+    },
+    {
+      "question": "Does a redemption record the contributor's access in the registry itself?",
+      "ticket": "Contributor accounts are unchanged.",
+      "chose": "Stores per-contributor access lists in the registry's own store under an 'invite-access/' key, and leaves accounts alone.",
+      "where": "src/index.ts:127",
+      "instead": "Write access onto the contributor or task record."
+    }
+  ]
+}

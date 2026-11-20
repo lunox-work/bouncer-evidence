@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0628892,
+  "items": [
+    {
+      "question": "What happens when a file has no Feature: line, such as an empty file?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError reported at line 1.",
+      "where": "src/index.ts:191",
+      "instead": "Return an empty feature, or report the error at the last line."
+    },
+    {
+      "question": "How are Scenario Outline, Scenario Template and Examples handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError saying the keyword is not supported, at that line.",
+      "where": "src/index.ts:136-137",
+      "instead": "Parse them as ordinary scenarios, or treat them as free text."
+    },
+    {
+      "question": "Which line is reported when tags are not followed by a Scenario?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line of the first pending tag, not the line of the offending following content.",
+      "where": "src/index.ts:140-141",
+      "instead": "Report the line of the non-Scenario line that follows the tags."
+    },
+    {
+      "question": "Is a Background allowed, where may it appear, and how is it returned?",
+      "ticket": "silent",
+      "chose": "Allows one Background before any Scenario and returns its steps separately in `background`, or null when absent. A second or late Background is an error.",
+      "where": "src/index.ts:143-151",
+      "instead": "Merge background steps into each scenario, or allow several Backgrounds."
+    },
+    {
+      "question": "How are free-text lines treated inside a Feature, Scenario or Background?",
+      "ticket": "silent",
+      "chose": "Accepts them as ignored description lines only before the first step of a block. After a step they are an error.",
+      "where": "src/index.ts:185-186",
+      "instead": "Ignore stray text anywhere, or reject any free text."
+    },
+    {
+      "question": "Are doc strings and data tables supported, and how are they attached?",
+      "ticket": "silent",
+      "chose": "Attaches a doc string or table to the preceding step. The doc string indentation is stripped, its lines are literal, and an unclosed one is an error at its opening line.",
+      "where": "src/index.ts:87-110",
+      "instead": "Ignore them, reject them, or keep the raw text without removing indentation."
+    },
+    {
+      "question": "How are table cells parsed, and what happens to a row missing its closing pipe?",
+      "ticket": "silent",
+      "chose": "Trims each cell, unescapes `\\|`, `\\\\` and `\\n`, and throws a ParseError if the row has text after the last pipe.",
+      "where": "src/index.ts:38-55",
+      "instead": "Accept unterminated rows leniently, or keep cell whitespace."
+    },
+    {
+      "question": "How are tags collected and validated?",
+      "ticket": "silent",
+      "chose": "Collects tags from consecutive tag lines onto the next Scenario, errors if a token is not an @tag, and discards tags placed before Feature:.",
+      "where": "src/index.ts:112-120",
+      "instead": "Keep Feature-level tags, or allow tags before Background and other lines."
+    },
+    {
+      "question": "Are a second Feature: line and a step before any Scenario or Background errors?",
+      "ticket": "silent",
+      "chose": "Both throw a ParseError at that line.",
+      "where": "src/index.ts:126",
+      "instead": "Allow multiple features, or attach early steps to an implicit scenario."
+    },
+    {
+      "question": "How are CRLF endings, a trailing newline, comments and blank lines handled?",
+      "ticket": "silent",
+      "chose": "Strips a trailing \\r, ignores a final empty line, and skips blank lines and lines starting with # while still counting them for line numbers.",
+      "where": "src/index.ts:24-28",
+      "instead": "Reject CRLF, or treat # lines inside doc strings as comments."
+    },
+    {
+      "question": "What is the Feature name when nothing follows `Feature:`, and how are step and scenario text trimmed?",
+      "ticket": "silent",
+      "chose": "Allows an empty Feature name and trims names. Step text is whatever follows the keyword and whitespace, so a bare keyword with no text is not a step.",
+      "where": "src/index.ts:127",
+      "instead": "Reject an empty name, or treat a keyword-only line as a step with empty text."
+    },
+    {
+      "question": "Is a Scenario with zero steps, or a Feature with zero scenarios, valid?",
+      "ticket": "silent",
+      "chose": "Accepts both and returns empty steps or scenarios arrays.",
+      "where": "src/index.ts:153-166",
+      "instead": "Throw an error for a scenario with no steps or a feature with no scenarios."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-1",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.055963399999999996,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(()=>{try{return parseFeature(\"# c\\n\\n\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\n\\nScenario Outline: o\\n Given x\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 3,
+      "probe": "parseFeature(\"Feature: F\\nExample: e1\\n Given x\")"
+    },
+    {
+      "item": 4,
+      "probe": "parseFeature(\"@a\\nFeature: F\\n@b\\nBackground:\\n Given y\\n@x @y\\n@z\\nScenario: s\\n Given x\\nScenario: t\\n Given x\")"
+    },
+    {
+      "item": 5,
+      "probe": "[parseFeature(\"Feature: F\\nBackground:\\nScenario: s\").background, parseFeature(\"Feature: F\\nScenario: s\").background]"
+    },
+    {
+      "item": 6,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\n Given x\\nScenario: s\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(()=>{let r=[parseFeature(\"Feature: F\\nsome description\\nScenario: s\\n Given x\").scenarios.length];try{parseFeature(\"Feature: F\\nScenario: s\\n Given x\\n garbage\")}catch(e){r.push(e.line,e.message)}return r})()"
+    },
+    {
+      "item": 8,
+      "probe": "parseFeature(\"Feature: F\\nScenario: s\\n Given x\\n   \\\"\\\"\\\"\\n   line1\\n     line2\\n   \\\"\\\"\\\"\\n When y\\n | a | b\\\\|c |\\n | d\\\\\\\\ | e\\\\nf |\\n Then z\\n ```\\n  code\\n ```\").scenarios[0].steps"
+    },
+    {
+      "item": 9,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\nScenario: s\\n Given x\\n \\\"\\\"\\\"\\n abc\\n def\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 10,
+      "probe": "(()=>{try{return parseFeature(\"Feature: F\\nScenario: s\\n Given x\\nFeature: G\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"\\uFEFFFeature: F\\r\\nScenario: s\\r\\n Given x\\r\\n When y\\r\\n\")"
+    },
+    {
+      "item": 12,
+      "probe": "(()=>{let r=[parseFeature(\"Feature: F\\nScenario: s\\nScenario: s\\n Given x\").scenarios];try{parseFeature(\"Feature: F\\nScenario: s\\n Andrew\")}catch(e){r.push(e.line,e.message)}return r})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ 'ParseError', 1, 'line 1: expected \"Feature:\" before any other content' ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'ParseError', 3, 'line 3: \"Scenario Outline:\" is not supported' ]"
+    },
+    {
+      "item": 3,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'e1', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'x', line: 3, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 4,
+      "actual": "{\n  name: 'F',\n  background: [ { keyword: 'Given', text: 'y', line: 5, docString: null, table: null } ],\n  scenarios: [\n    { name: 's', line: 8, tags: [ '@x', '@y', '@z' ], steps: [ { keyword: 'Given', text: 'x', line: 9, docString: null, table: null } ] },\n    { name: 't', line: 10, tags: [], step"
+    },
+    {
+      "item": 5,
+      "actual": "[ [], null ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'ParseError', 2, 'line 2: step before any \"Background:\" or \"Scenario:\"' ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ 1, 4, 'line 4: unrecognised line in scenario' ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ { keyword: 'Given', text: 'x', line: 3, docString: [ 'line1', '  line2' ], table: null }, { keyword: 'When', text: 'y', line: 8, docString: null, table: [ [ 'a', 'b|c' ], [ 'd\\\\', 'e\\nf' ] ] }, { keyword: 'Then', text: 'z', line: 11, docString: [ ' code' ], table: null } ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ 'ParseError', 4, 'line 4: doc string is never closed' ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ 'ParseError', 4, 'line 4: second \"Feature:\" line' ]"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 's', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'x', line: 3, docString: null, table: null }, { keyword: 'When', text: 'y', line: 4, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 12,
+      "actual": "[\n  [\n    { name: 's', line: 2, tags: [], steps: [] },\n    { name: 's', line: 3, tags: [], steps: [ { keyword: 'Given', text: 'x', line: 4, docString: null, table: null } ] }\n  ],\n  3,\n  'line 3: unrecognised line in scenario'\n]"
+    }
+  ]
+}

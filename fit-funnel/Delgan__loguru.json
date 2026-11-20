@@ -1,0 +1,15 @@
+{
+  "repo": "Delgan/loguru",
+  "package": ".",
+  "language": "python",
+  "commit": "28349be3cd740867bc947eef741c69370ca45735",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 50
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "218d57d0-2ab4-4a5a-8293-d3d8e54e66fd",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.3195672,
+        "turns": 9,
+        "durationMs": 34298,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.3195672,
+    "finalText": "I've created the contract file, `packages/jira/src/spec.ts`. The type check (`npx tsc -p tsconfig.test.json`) reports no errors, and the existing suite still passes (63 of 63).\n\n- **`JiraIssueSpec`** is the spec's interface word for word, with the six read-only properties. The shared package has no description or spec type, so there was nothing existing to reuse.\n- **`SPEC_FIELDS`** is a real exported constant, `[\"summary\", \"description\", \"issuetype\", \"updated\"]`, typed `readonly string[]` the same way as `ISSUE_FIELDS` in `mapping.ts`.\n- **`specHash(summary, descriptionText): Promise<string>`** and **`toIssueSpec(key, fields): Promise<JiraIssueSpec>`** have the fields parameter typed exactly as in the spec. Both bodies are just `throw new Error(\"not implemented\");`.\n- **Nothing throws by design.** The spec says these calls never fail, so neither doc comment mentions throwing, and I added no error types.\n- **No other parameters.** Neither function depends on the clock, a secret or randomness, so a test has nothing extra to control.\n\nI only wrote the contract file. The spec's other changes (the new `adf.ts`, `JiraClient.issueSpec` and the new re-exports in `index.ts`) are left for whoever writes the implementation.\n\nExported names added: `JiraIssueSpec`, `SPEC_FIELDS`, `specHash`, `toIssueSpec`",
+    "problem": null,
+    "sha256": "cb6d0f2dfba1b9bf984693eb605c1e434b41563c5cfd9cde4e11043b1d7df4c3"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "e57a469b-a248-49d4-a322-570788e0697b",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.8611642999999999,
+        "turns": 14,
+        "durationMs": 195219,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.8611642999999999,
+    "finalText": "I've written the test suite in three files under `packages/jira/test/`. It compiles with no errors under `npx tsc -p tsconfig.test.json`. As expected, almost all of it fails for now: of 94 tests, 90 fail, and every one of those fails with `Error: not implemented`. The other 4 pass already. They cover `SPEC_FIELDS` and `ISSUE_FIELDS` (`[happy-1]` and `[happy-2]`), and both lists already exist in the code.\n\n**Files:**\n- `jira-spec-check.hash.test.ts`: `SPEC_FIELDS` and `ISSUE_FIELDS`, the known digests, how text is normalised before hashing, Unicode, and both concurrency scenarios.\n- `jira-spec-check.fields.test.ts`: how `toIssueSpec` reads each field and its defaults, wrong-type input, the hash in the result, descriptions that are neither strings nor ADF, plain-string tidying, and the 20,000-character cap.\n- `jira-spec-check.adf.test.ts`: turning ADF into text (paragraphs, inline references, headings, lists, tasks, tables, code, quotes, rules, media), unknown and non-object nodes, and the depth limit.\n\n**Coverage:** each of the 47 scenarios has two tests, one for its happy path and one for a boundary case. Every test name starts with its scenario key, such as `[boundary-12]` or `[unhappy-7]`. Where a scenario has a table of examples, the typical rows go in the happy-path test and the edge rows in the boundary test. Where a scenario has no table, I added one case that follows directly from the spec. For example:\n- a `hardBreak` at the end of a block is trailing whitespace and gets removed;\n- a lowercase `\"done\"` task state stays unticked;\n- an emoji ending exactly at the 20,000 cap is kept whole;\n- an edit inside the cap does change the hash.\n\n**Import outside `spec.ts`:** `[happy-2]` imports `ISSUE_FIELDS` from `../src/mapping.js`, since that is the module the scenario is about. The fixed numbers in the spec (the digests and the depth and cap limits) are passed or checked as written. I only added the three test files and changed nothing else.\n\n94 tests, in 3 files.",
+    "problem": null,
+    "files": [
+      "packages/jira/test/jira-spec-check.adf.test.ts",
+      "packages/jira/test/jira-spec-check.fields.test.ts",
+      "packages/jira/test/jira-spec-check.hash.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "8b347404-791d-45cf-a2e0-c6d17ab01b43",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 2.0271114999999997,
+        "turns": 19,
+        "durationMs": 489550,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 2.0271114999999997,
+    "finalText": "The hidden suite is written: three files in `packages/jira/test/hidden-jira-spec-check/`.\n\n- **`hash.test.ts`** covers `SPEC_FIELDS`, `ISSUE_FIELDS`, `specHash` and its normalisation, and concurrency-1.\n- **`fields.test.ts`** covers the field defaults, the key, plain-string descriptions, the 20,000 cap and concurrency-2.\n- **`adf.test.ts`** covers every ADF block and inline rule, unknown nodes, non-object children and the depth limit.\n\n**Checks run:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Against the stubs, all 94 tests fail, each with `not implemented`.\n- I wrote a throwaway implementation from the spec in the scratchpad, outside the repo. The public suite and this one both pass against it, 188 tests in all. That's a check on my own expected values, not on any real implementation.\n- I tried nine shortcuts against that throwaway implementation. Five pass the public suite and fail this one:\n  - an emoji uses its `text` before its `shortName`;\n  - list numbering is a lookup that only knows `order: 3`;\n  - only the first six blocks are kept;\n  - and two that the public suite catches less often: the cap counts code points instead of UTF-16 units, and the depth limit is 60 instead of 49.\n- Only the new folder is untracked in `git status`. The `dist-test/` build output is gitignored.\n\n**Coverage:**\n- Every scenario key is covered: happy-1…20, boundary-1…15, unhappy-1…10 and concurrency-1…2. Each test names the public test it extends in a comment above it.\n- happy-1 and happy-2 check constants that already exist, so a direct check would pass against the stubs. Each test pairs that check with a `toIssueSpec` call: fields cut down to `SPEC_FIELDS` must give the full spec, and fields cut down to `ISSUE_FIELDS` must give no description.\n- Expected digests are computed with `node:crypto`.\n\n**Left out because the spec doesn't settle them:**\n- a media group of one item;\n- an ordered list whose `order` is `null`, `[]` or a numeric string;\n- an empty mention label;\n- continuation lines inside list items or quotes;\n- whitespace-only heading text;\n- a code block with no content.\n\n94 tests, in 3 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/jira/test/hidden-jira-spec-check/adf.test.ts",
+      "packages/jira/test/hidden-jira-spec-check/fields.test.ts",
+      "packages/jira/test/hidden-jira-spec-check/hash.test.ts"
+    ],
+    "open": []
+  }
+}

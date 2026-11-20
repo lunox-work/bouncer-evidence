@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0664927,
+  "items": [
+    {
+      "question": "What happens when a file has a `Scenario Outline:` or `Scenario Template:`?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError at that line saying Scenario Outline is not supported.",
+      "where": "src/index.ts:116-117",
+      "instead": "Parse it as a scenario, or parse it with an Examples table."
+    },
+    {
+      "question": "What does an empty file, or one with no Feature line, report as its error line?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "An empty file raises ParseError at line 1. A file with other content first raises the error at that first content line.",
+      "where": "src/index.ts:113-114, 187",
+      "instead": "Return an empty feature, or report the line after the last line."
+    },
+    {
+      "question": "Are tags kept, and where do they attach?",
+      "ticket": "silent",
+      "chose": "Collects tags from consecutive tag lines onto the next Scenario. Tags before the Feature line are dropped, and tags before anything but a Scenario are an error.",
+      "where": "src/index.ts:92-102, 108, 119-120, 188",
+      "instead": "Ignore tags entirely, keep feature-level tags, or allow tags before Background."
+    },
+    {
+      "question": "Are Background steps returned, and how are they separated from scenario steps?",
+      "ticket": "silent",
+      "chose": "Puts Background steps in a separate `background` list. It is null when absent and [] when empty, and a second Background throws.",
+      "where": "src/index.ts:142-148",
+      "instead": "Prepend Background steps to every scenario, or ignore the Background."
+    },
+    {
+      "question": "What happens to free text between the Feature line and the first Scenario or Background?",
+      "ticket": "silent",
+      "chose": "Skips it as a description and does not store it. After the first Scenario or Background, free text throws an unrecognised-line error.",
+      "where": "src/index.ts:180-183",
+      "instead": "Store the description in the model, or reject any free text."
+    },
+    {
+      "question": "What happens to a step that appears before any Background or Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the step's line.",
+      "where": "src/index.ts:167",
+      "instead": "Ignore the step, or attach it to an implicit scenario."
+    },
+    {
+      "question": "Are doc strings and data tables supported on steps, and how are they represented?",
+      "ticket": "Parse a .feature file to return scenarios with their steps and line numbers",
+      "chose": "Attaches doc strings as an array of lines, with the opening quotes' indentation stripped. Attaches tables as arrays of trimmed, unescaped cell arrays. A step cannot have both. An unclosed doc string throws at the line that opened it.",
+      "where": "src/index.ts:122-138, 186",
+      "instead": "Ignore them, store the raw text, or allow a table and a doc string on the same step."
+    },
+    {
+      "question": "How are table cells escaped, and what is checked in a table row?",
+      "ticket": "silent",
+      "chose": "Unescapes `\\|`, `\\\\` and `\\n`, trims cells, and throws if a row does not end with `|`. Rows may have different cell counts.",
+      "where": "src/index.ts:19-49",
+      "instead": "Keep cells raw, or require every row to have the same number of cells."
+    },
+    {
+      "question": "Which step keywords are accepted, and is the keyword case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts only the case-sensitive keywords Given, When, Then, And, But and `*`. The keyword must be followed by whitespace or end of line, and a bare keyword gets empty text.",
+      "where": "src/index.ts:17, 165-173",
+      "instead": "Match keywords case-insensitively, require non-empty step text, or support other languages."
+    },
+    {
+      "question": "How are comments, blank lines, CRLF and a byte order mark handled?",
+      "ticket": "silent",
+      "chose": "Skips lines starting with `#` and blank lines. Strips a leading BOM and a trailing `\\r` from each line. Line numbers still count the skipped lines.",
+      "where": "src/index.ts:59-62, 90",
+      "instead": "Treat a `# language:` header as meaningful, or reject a BOM or CRLF."
+    },
+    {
+      "question": "What does a second `Feature:` line do?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the second Feature line.",
+      "where": "src/index.ts:106",
+      "instead": "Start a new feature, or ignore the extra line."
+    },
+    {
+      "question": "How does the error expose the line number?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Sets a `line` property and prefixes the message with `line <n>: `. The error name is ParseError.",
+      "where": "src/index.ts:41-43",
+      "instead": "Put the line only in the message, or report line and column."
+    }
+  ]
+}

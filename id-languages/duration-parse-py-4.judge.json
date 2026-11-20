@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09918479999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "The rows that need a decision are '0s' → 0 and '1d0h0m0s0ms', which hinge on whether zero-valued components are accepted. Item 8 accepts them and parses '0s' to 0. The other rows are plain sums.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks whether surrounding whitespace is allowed. Its pick allows no whitespace at all, so '  45m\\n' would raise ValueError. The scenario expects the whitespace to be ignored and the result to be 2700000.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "No single item covers every row. Items 1 (empty), 3 ('90') and 4 ('3S', '1h 30m', '3 s') each cover some. Item 5 covers the most: '1.5h', '-3s', '+3s' and the full-width '３s'. Its pick accepts only ASCII digits and rejects decimals and signs, which matches. It doesn't say what the error message contains.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about non-normalised components like '90m'. Its pick accepts them, with '90m' → 5400000 and no cap on a component's size.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks about descending order with each unit used at most once. Its pick rejects '30m1h' and '1h1h', which also rules out '1s500ms2s' and '5ms1s'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 sets the maximum total. Its pick raises only above 9007199254740991, so exactly 2^53-1 parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6's pick raises ValueError for totals above 9007199254740991, which covers both rows. It doesn't say what the message contains.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "Item 10 decides which form format_duration outputs. Its shortest-string pick gives '90s' for 90000 and '90m' for 5400000, where the scenario expects '1m30s' and '1h30m'. Separately, item 9's pick returns '0s' for 0 instead of '0ms', which also disagrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": false,
+      "why": "Under item 10's shortest-string pick, '9007199254740991ms' (18 characters) beats '104249991d8h59m991ms' (20 characters). The scenario expects the natural d/h/m/s/ms breakdown.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting then parsing returns the original number. Any valid output form would round-trip.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11's pick raises ValueError for negatives, values over 9007199254740991, bools and non-ints such as 1.0. That matches all four rows. It doesn't say the message contains 'milliseconds'.",
+      "failing": false
+    }
+  ]
+}

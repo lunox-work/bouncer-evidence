@@ -1,0 +1,52 @@
+{
+  "what": "bouncer id (prompts/id.md, claude-sonnet-5-5) on the rejected runs of evidence/languages-ticket/runs/*/ticket-haiku, the stored ticket.md and diff.patch only; judged by claude-opus-5-5 given the list (questions and the agent's picks) and every scenario unlabelled, never the diff, the grades or which scenarios failed: blind to the outcome, not to the picks",
+  "date": "2026-11-20",
+  "runs": 45,
+  "listed": 45,
+  "judged": 45,
+  "runsWithAFailingScenarioInList": 44,
+  "failingScenarios": {
+    "total": 205,
+    "inList": 181
+  },
+  "passingScenarios": {
+    "total": 290,
+    "inList": 227
+  },
+  "pointing": {
+    "matchedWithAVerdict": 406,
+    "disagreesFailed": 103,
+    "disagreesPassed": 0,
+    "agreesFailed": 76,
+    "agreesPassed": 227,
+    "accuracy": 0.813,
+    "failedFlaggedAsDisagree": 0.575
+  },
+  "runsWithADisagreeingPickOnAFailingScenario": 35,
+  "itemsAtTheCap": 44,
+  "medianItems": 12,
+  "medianSeconds": 14,
+  "medianListCostUsd": 0.0558183,
+  "bySpec": {
+    "duration-parse-go": {
+      "runs": 15,
+      "inList": 14
+    },
+    "duration-parse-py": {
+      "runs": 15,
+      "inList": 15
+    },
+    "duration-parse-rs": {
+      "runs": 15,
+      "inList": 15
+    }
+  },
+  "misses": [
+    {
+      "run": "duration-parse-go/4",
+      "failing": [
+        "unhappy-1"
+      ]
+    }
+  ]
+}

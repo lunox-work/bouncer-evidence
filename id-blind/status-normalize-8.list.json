@@ -1,0 +1,78 @@
+{
+  "run": "status-normalize/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.046616000000000005,
+  "items": [
+    {
+      "question": "Which old spellings besides the ones named in the ticket's examples are mapped to a status?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Maps only the cleaned spelling \"in review\" to \"review\". Every other old value that isn't a cleaned canonical status reads as null.",
+      "where": "src/index.ts:18-20",
+      "instead": "Add more aliases, such as \"in progress\", \"wip\" or \"done\", or map each old value to its closest status."
+    },
+    {
+      "question": "How loosely is a stored value cleaned before it is matched when read?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Trims the value, lowercases it, and collapses each run of whitespace, \"-\" and \"_\" into one space. Stray separators at the ends are then trimmed, so \"draft-\" and \"_merged\" read as valid.",
+      "where": "src/index.ts:27-29",
+      "instead": "Only trim and lowercase, so \"in-review\" and other separator variants are not folded."
+    },
+    {
+      "question": "What does reading an unrecognised or empty stored value return?",
+      "ticket": "silent",
+      "chose": "Returns null and never throws. Empty and whitespace-only values also return null.",
+      "where": "src/index.ts:42",
+      "instead": "Throw an error, or fall back to a default such as \"draft\"."
+    },
+    {
+      "question": "Does writing a status accept non-canonical input such as different case, padding or old spellings, by normalising it first?",
+      "ticket": "Only enum values are written",
+      "chose": "Requires an exact canonical match. \"Draft\", \" draft\" and \"in-review\" all throw.",
+      "where": "src/index.ts:51-52",
+      "instead": "Run the value through the same cleaning and alias lookup as reading, then write the canonical status."
+    },
+    {
+      "question": "How does writing a non-status value fail?",
+      "ticket": "silent",
+      "chose": "Throws a generic Error with the message `not a sandbox status: \"<value>\"`.",
+      "where": "src/index.ts:52",
+      "instead": "Return null or a result object, or throw a custom or typed error."
+    },
+    {
+      "question": "What does writing an empty string do?",
+      "ticket": "silent",
+      "chose": "Throws, because the empty string is not in the status set.",
+      "where": "src/index.ts:51-52",
+      "instead": "Treat it as unset and return null or a default status."
+    },
+    {
+      "question": "What does a batch read do with a row whose status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row in its original position with status null and doesn't throw or drop it.",
+      "where": "src/index.ts:62-66",
+      "instead": "Drop the row from the result, or throw on the first bad row."
+    },
+    {
+      "question": "How are unreadable values reported from a batch read?",
+      "ticket": "silent",
+      "chose": "Reports the raw stored strings, unmodified, deduplicated and sorted with the default string sort.",
+      "where": "src/index.ts:61-67",
+      "instead": "Report the cleaned values, report ids instead, keep duplicates, or keep first-seen order."
+    },
+    {
+      "question": "What does a batch read return for empty input?",
+      "ticket": "silent",
+      "chose": "Returns empty rows and an empty unreadable list.",
+      "where": "src/index.ts:67",
+      "instead": "Throw, or return null."
+    },
+    {
+      "question": "Are duplicate row ids in a batch read merged or flagged?",
+      "ticket": "silent",
+      "chose": "Maps every row independently and keeps duplicate ids as separate rows.",
+      "where": "src/index.ts:62-66",
+      "instead": "Deduplicate by id, or reject duplicate ids."
+    }
+  ]
+}

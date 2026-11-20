@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-5",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0528859,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"Feature: x\\n\")"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{try{return parseFeature(\"\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 3,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\n\\nScenario Outline: o\\n Given a\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 4,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\n@a\\n@b\\nGiven foo\\nScenario: s\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 5,
+      "probe": "parseFeature(\"@top\\nFeature: x\\n@t\\nScenario: s\\n Given a\\n\")"
+    },
+    {
+      "item": 6,
+      "probe": "(()=>{let r=parseFeature(\"Feature: x\\n some description\\nScenario: s\\n Given a\\n\");try{parseFeature(\"Feature: x\\nScenario: s\\n free text\\n Given a\\n\")}catch(e){return [r,e.line,e.message]}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(()=>{const f=parseFeature(\"Feature: x\\nBackground:\\n Given bg\\nScenario: s\\n When w\\n\");let e2;try{parseFeature(\"Feature: x\\nScenario: s\\n Given a\\nBackground:\\n Given b\\n\")}catch(e){e2=[e.line,e.message]}let e3;try{parseFeature(\"Feature: x\\nBackground:\\n Given a\\nBackground:\\n Given b\\n\")}catch(e){e3=[e.line,e.message]}return [f,e2,e3]})()"
+    },
+    {
+      "item": 8,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\n Given a\\nScenario: s\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 9,
+      "probe": "(()=>{const f=parseFeature(\"Feature: x\\nScenario: s\\n Given a\\n   \\\"\\\"\\\"\\n     indented\\n  less\\n   \\\"\\\"\\\"\\n When b\\n ```\\n code\\n ```\\n\");let e;try{parseFeature(\"Feature: x\\nScenario: s\\n Given a\\n \\\"\\\"\\\"\\n open\\n\")}catch(x){e=[x.line,x.message]}return [f,e]})()"
+    },
+    {
+      "item": 10,
+      "probe": "(()=>{const f=parseFeature(\"Feature: x\\nScenario: s\\n Given a\\n | a\\\\|b | c\\\\\\\\d | e\\\\nf |\\n |  x  |  y |\\n\");let e;try{parseFeature(\"Feature: x\\nScenario: s\\n Given a\\n | a | b | trailing\\n\")}catch(x){e=[x.line,x.message]}return [f,e]})()"
+    },
+    {
+      "item": 11,
+      "probe": "(()=>{const f=parseFeature(\"Feature: x\\nScenario: s\\n Given\\n And \\n\");const r=[f];for(const s of [\"Givenfoo\",\"given a\",\"Dado a\"]){try{r.push(parseFeature(\"Feature: x\\nScenario: s\\n \"+s+\"\\n\"))}catch(e){r.push([e.line,e.message])}}return r})()"
+    },
+    {
+      "item": 12,
+      "probe": "parseFeature(\"\\uFEFFFeature: x\\r\\n# comment\\r\\n\\r\\nScenario: s\\r\\n # c\\r\\n Given a\\r\\n\")"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ name: 'x', background: null, scenarios: [] }"
+    },
+    {
+      "item": 2,
+      "actual": "[ 1, 'line 1: expected a Feature: line' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ 3, 'line 3: \"Scenario Outline\" is not supported' ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 2, 'line 2: tags must be followed by a Scenario: line' ]"
+    },
+    {
+      "item": 5,
+      "actual": "{\n  name: 'x',\n  background: null,\n  scenarios: [\n    { name: 's', line: 4, tags: [ '@t' ], steps: [ { keyword: 'Given', text: 'a', line: 5, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 6,
+      "actual": "[\n  {\n    name: 'x',\n    background: null,\n    scenarios: [ { name: 's', line: 3, tags: [], steps: [ [Object] ] } ]\n  },\n  3,\n  'line 3: unrecognised line inside a background or scenario'\n]"
+    },
+    {
+      "item": 7,
+      "actual": "[\n  {\n    name: 'x',\n    background: [ { keyword: 'Given', text: 'bg', line: 3, docString: null, table: null } ],\n    scenarios: [ { name: 's', line: 4, tags: [], steps: [ [Object] ] } ]\n  },\n  [ 4, 'line 4: Background: must come before any Scenario:' ],\n  [ 4, 'line 4: a second Background: line' ]\n"
+    },
+    {
+      "item": 8,
+      "actual": "[ 2, 'line 2: a step before any Background: or Scenario: line' ]"
+    },
+    {
+      "item": 9,
+      "actual": "[\n  {\n    name: 'x',\n    background: null,\n    scenarios: [ { name: 's', line: 2, tags: [], steps: [ [Object], [Object] ] } ]\n  },\n  [ 4, 'line 4: doc string is never closed' ]\n]"
+    },
+    {
+      "item": 10,
+      "actual": "[\n  {\n    name: 'x',\n    background: null,\n    scenarios: [ { name: 's', line: 2, tags: [], steps: [ [Object] ] } ]\n  },\n  [ 4, 'line 4: a table row must end with |' ]\n]"
+    },
+    {
+      "item": 11,
+      "actual": "[\n  {\n    name: 'x',\n    background: null,\n    scenarios: [ { name: 's', line: 2, tags: [], steps: [ [Object], [Object] ] } ]\n  },\n  [ 3, 'line 3: unrecognised line inside a background or scenario' ],\n  [ 3, 'line 3: unrecognised line inside a background or scenario' ],\n  [ 3, 'line 3: unrecognised "
+    },
+    {
+      "item": 12,
+      "actual": "{\n  name: 'x',\n  background: null,\n  scenarios: [\n    { name: 's', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 6, docString: null, table: null } ] }\n  ]\n}"
+    }
+  ]
+}

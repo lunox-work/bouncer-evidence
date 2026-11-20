@@ -1,0 +1,105 @@
+{
+  "run": "escrow-split-9",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.060702000000000006,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "splitBounty(101, 7500)"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{const h=createEscrowHandler({bounty:100},{get:async()=>undefined,set:async()=>{throw new Error('should not write')}});try{return await h.handle({id:'1',kind:'uat-approved'})}catch(e){return 'threw: '+e.message}})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{const s={v:undefined,n:0};const h=createEscrowHandler({bounty:100},{get:async()=>s.v,set:async x=>{s.v=x;s.n++}});const e={id:'a',kind:'hidden-tests-passed'};const r=await Promise.all([h.handle(e),h.handle(e)]);const r3=await h.handle({id:'b',kind:'hidden-tests-passed'});return {r,r3,writes:s.n}})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{let w=0;const h=createEscrowHandler({bounty:100},{get:async()=>undefined,set:async()=>{w++}});const r=await h.handle({id:'1',kind:'hidden-tests-failed'});return {r,w}})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const s={v:undefined};const h=createEscrowHandler({bounty:100},{get:async()=>s.v,set:async x=>{s.v=x}});await h.handle({id:'1',kind:'hidden-tests-passed'});return await h.handle({id:'2',kind:'hidden-tests-failed'})})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const h=createEscrowHandler({bounty:100},{get:async()=>undefined,set:async()=>{}});try{return await h.handle({id:'1',kind:'bogus'})}catch(e){return 'threw: '+e.message}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{const s={v:undefined};const h=createEscrowHandler({bounty:0},{get:async()=>s.v,set:async x=>{s.v=x}});const a=await h.handle({id:'1',kind:'hidden-tests-failed'});const b=await h.handle({id:'2',kind:'hidden-tests-passed'});return {a,b}})()"
+    },
+    {
+      "item": 8,
+      "probe": "(()=>{const out=[];for(const b of [-1,1.5,NaN,Number.MAX_SAFE_INTEGER+1,Number.MAX_SAFE_INTEGER,0]){try{createEscrowHandler({bounty:b},{get:async()=>undefined,set:async()=>{}});out.push([b,'ok'])}catch(e){out.push([b,e.message])}}return out})()"
+    },
+    {
+      "item": 9,
+      "probe": "(()=>{const out=[];for(const s of [0,10000,7500.5,-1,10001,0.75,NaN,'5000']){try{createEscrowHandler({bounty:100,hiddenTestShareBps:s},{get:async()=>undefined,set:async()=>{}});out.push([s,'ok'])}catch(e){out.push([s,e.message])}}return out})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const run=async bps=>{const s={v:undefined};const h=createEscrowHandler({bounty:100,hiddenTestShareBps:bps},{get:async()=>s.v,set:async x=>{s.v=x}});const a=await h.handle({id:'1',kind:'hidden-tests-passed'});const b=await h.handle({id:'2',kind:'uat-approved'});return {a,b}};return {zero:await run(0),full:await run(10000)}})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let g=0;const s={v:{status:'partially released',releases:[{kind:'hidden-tests',amount:75}]}};const h=createEscrowHandler({bounty:100},{get:async()=>{g++;return s.v},set:async x=>{s.v=x}});const a=await h.handle({id:'1',kind:'uat-approved'});await h.handle({id:'2',kind:'hidden-tests-failed'});return {a,gets:g}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{let fail=true;const s={v:undefined};const h=createEscrowHandler({bounty:100},{get:async()=>s.v,set:async x=>{if(fail){fail=false;throw new Error('write boom')}s.v=x}});let err;try{await h.handle({id:'1',kind:'hidden-tests-passed'})}catch(e){err=e.message}const r=await h.handle({id:'1',kind:'hidden-tests-passed'});return {err,r}})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ hiddenTests: 75, uat: 26 }"
+    },
+    {
+      "item": 2,
+      "actual": "'threw: Cannot release the UAT share: the hidden tests have not passed'"
+    },
+    {
+      "item": 3,
+      "actual": "{\n  r: [\n    { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] },\n    { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n  ],\n  r3: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] },\n  writes: 1\n}"
+    },
+    {
+      "item": 4,
+      "actual": "{ r: { status: 'locked', releases: [] }, w: 0 }"
+    },
+    {
+      "item": 5,
+      "actual": "{ status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }"
+    },
+    {
+      "item": 6,
+      "actual": "'threw: Unknown escrow event kind: bogus'"
+    },
+    {
+      "item": 7,
+      "actual": "{\n  a: { status: 'pro bono', releases: [] },\n  b: { status: 'pro bono', releases: [ { kind: 'hidden-tests', amount: 0 } ] }\n}"
+    },
+    {
+      "item": 8,
+      "actual": "[ [ -1, 'The bounty must be a whole, non-negative number of minor units' ], [ 1.5, 'The bounty must be a whole, non-negative number of minor units' ], [ NaN, 'The bounty must be a whole, non-negative number of minor units' ], [ 9007199254740992, 'The bounty must be a whole, non-negative number of mi"
+    },
+    {
+      "item": 9,
+      "actual": "[ [ 0, 'ok' ], [ 10000, 'ok' ], [ 7500.5, 'The hidden-test share must be a whole number of basis points from 0 to 10000' ], [ -1, 'The hidden-test share must be a whole number of basis points from 0 to 10000' ], [ 10001, 'The hidden-test share must be a whole number of basis points from 0 to 10000' "
+    },
+    {
+      "item": 10,
+      "actual": "{\n  zero: {\n    a: { status: 'locked', releases: [ { kind: 'hidden-tests', amount: 0 } ] },\n    b: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 0 }, { kind: 'uat', amount: 100 } ] }\n  },\n  full: {\n    a: { status: 'fully released', releases: [ { kind: 'hidden-tests', amoun"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  a: { status: 'fully released', releases: [ { kind: 'hidden-tests', amount: 75 }, { kind: 'uat', amount: 25 } ] },\n  gets: 2\n}"
+    },
+    {
+      "item": 12,
+      "actual": "{\n  err: 'write boom',\n  r: { status: 'partially released', releases: [ { kind: 'hidden-tests', amount: 75 } ] }\n}"
+    }
+  ]
+}

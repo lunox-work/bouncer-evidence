@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-14",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.057772300000000006,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:'a',title:'T',status:'open',openings:2,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([{id:'b',status:'open',openings:1,filled:0,createdAt:new Date(1000)},{id:'c',status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'a',status:'open',openings:1,filled:0,createdAt:new Date(1000)},{id:'B',status:'open',openings:1,filled:0,createdAt:new Date(1000)}])"
+    },
+    {
+      "item": 3,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 4,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 5,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 6,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',title:'He said \"hi\", ok\\nnext',status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'b',title:'=SUM(A1)',status:'open',openings:1,filled:0,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 7,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',title:null,status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'b',status:'open',openings:1,filled:0,createdAt:new Date(1)}]))"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:new Date(1700000000123)}])"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([{id:'ok',status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'bad1',status:'archived',openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 10,
+      "probe": "[0,-1,1.5,NaN,Infinity].map(o=>{try{return buildRequisitionsCsv([{id:'a',status:'open',openings:o,filled:0,createdAt:new Date(0)}])}catch(e){return 'ERR '+e.message}})"
+    },
+    {
+      "item": 11,
+      "probe": "[[2,1],[1,-1],[1,0.5],[1,NaN]].map(([o,f])=>{try{return buildRequisitionsCsv([{id:'a',status:'open',openings:o,filled:f,createdAt:new Date(0)}])}catch(e){return 'ERR '+e.message}})"
+    },
+    {
+      "item": 12,
+      "probe": "[new Date(NaN),'2024-01-01',null].map(d=>{try{return buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:d}])}catch(e){return 'ERR '+e.message}})"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,T,open,2,1,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nc,,open,1,0,1970-01-01T00:00:00.000Z\\r\\nB,,open,1,0,1970-01-01T00:00:01.000Z\\r\\na,,open,1,0,1970-01-01T00:00:01.000Z\\r\\nb,,open,1,0,1970-01-01T00:00:01.000Z\\r\\n'"
+    },
+    {
+      "item": 3,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 4,
+      "actual": "65279"
+    },
+    {
+      "item": 5,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 6,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,\\\\\"He said \\\\\"\\\\\"hi\\\\\"\\\\\", ok\\\\nnext\\\\\",open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\nb,=SUM(A1),open,1,0,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 7,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,,open,1,0,1970-01-01T00:00:00.000Z\\\\r\\\\nb,,open,1,0,1970-01-01T00:00:00.001Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 8,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,,open,1,0,2023-11-14T22:13:20.123Z\\r\\n'"
+    },
+    {
+      "item": 9,
+      "actual": "throws Error: Requisition bad1 has an unknown status: archived"
+    },
+    {
+      "item": 10,
+      "actual": "[ '﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,,open,0,0,1970-01-01T00:00:00.000Z\\r\\n', 'ERR Requisition a has invalid openings: -1', 'ERR Requisition a has invalid openings: 1.5', 'ERR Requisition a has invalid openings: NaN', 'ERR Requisition a has invalid openings: Infinity' ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ '﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,,open,2,1,1970-01-01T00:00:00.000Z\\r\\n', 'ERR Requisition a has invalid filled count: -1', 'ERR Requisition a has invalid filled count: 0.5', 'ERR Requisition a has invalid filled count: NaN' ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ 'ERR Requisition a has an invalid creation time', 'ERR Requisition a has an invalid creation time', 'ERR Requisition a has an invalid creation time' ]"
+    }
+  ]
+}

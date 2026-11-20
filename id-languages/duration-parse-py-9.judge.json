@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09978520000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 5,
+      "agrees": false,
+      "why": "What sets this scenario apart is the day unit: \"2d\" gives 172800000 and \"1d0h0m0s0ms\" gives 86400000. Item 5 asks whether days are supported. Its pick supports only h/m/s/ms and rejects \"1d\". Item 8 (zero components) also fits the \"0s\" rows, but the day rows are the main point.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks whether whitespace is allowed in a duration string. The scenario trims leading and trailing whitespace and accepts \"  45m\\n\". The pick allows no spaces at all, so it would reject this input.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Most of the rejected rows are about whitespace, signs, decimals or non-ASCII digits: \"1.5h\", \"-3s\", \"+3s\", \"1h 30m\", \"3 s\" and \"３s\" (full-width digit). Item 4 asks that exact question. Its pick rejects all of them, which matches. Items 1, 3, 5 and 7 each cover one row but fit less well.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks whether a component can exceed the next unit, such as \"100m\". The pick accepts any count and sums it, so \"90m\" gives 5400000 as expected.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks about unit order and repeats. The pick requires a fixed order with each unit at most once and rejects \"30m1h\" and \"1m1m\". That matches rejecting the out-of-order and repeated rows.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about the upper limit. The pick caps at 2^53-1 inclusive, so exactly 9007199254740991 is accepted. The input uses \"d\", which item 5's pick rejects, but that is a separate question.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what happens above the limit. The pick raises ValueError above 2^53-1, which is what the scenario expects for these rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "Most rows test greedy output with the largest units first: 5400000 gives \"1h30m\" and 86400000 gives \"1d\". Item 10's pick looks for the shortest string and prints \"90m\" for 5400000. Item 11 covers the 0 row, and its pick \"0s\" also disagrees with the expected \"0ms\".",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": false,
+      "why": "The expected output \"104249991d8h59m991ms\" is the greedy one and is 20 characters. A shortest-string search would print something else, such as \"2501999792h59m991ms\" at 19 characters. Item 5's pick also cannot print \"d\" at all.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting a value and parsing the result gives the same number back. That is a consistency property, not one of the open questions.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how the formatter handles negative, bool, float and above-maximum input. The pick raises ValueError for all of them, matching the rows -1, 2^53, True and 1.0.",
+      "failing": false
+    }
+  ]
+}

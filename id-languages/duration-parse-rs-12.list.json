@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0597784,
+  "items": [
+    {
+      "question": "Are bare numbers with no unit (like the old raw millisecond values) accepted as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects unitless input such as \"172800\" or \"0\" with InvalidDuration.",
+      "where": "src/lib.rs:98",
+      "instead": "Treat a bare number as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration for empty input.",
+      "where": "src/lib.rs:72",
+      "instead": "Treat it as 0 ms or as a missing value."
+    },
+    {
+      "question": "May multiple terms be combined in any order, or repeat a unit?",
+      "ticket": "accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Requires strictly descending units and at most one term per unit, so \"30m1h\", \"1h1h\" and \"1s1s\" are rejected.",
+      "where": "src/lib.rs:101",
+      "instead": "Accept terms in any order and sum repeated units."
+    },
+    {
+      "question": "Which units are supported?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Supports only h, m, s and ms, and rejects d, w and others. The two-day example must be written \"48h\".",
+      "where": "src/lib.rs:89",
+      "instead": "Also accept days (`d`) and possibly weeks."
+    },
+    {
+      "question": "Are unit suffixes case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts lowercase suffixes only, so \"1H\" and \"1S\" are rejected.",
+      "where": "src/lib.rs:89",
+      "instead": "Accept suffixes case-insensitively."
+    },
+    {
+      "question": "Is whitespace or a sign tolerated, or are fractional values allowed?",
+      "ticket": "silent",
+      "chose": "Rejects leading, trailing and inner spaces, signs and decimals like \"1.5h\". Only ASCII digits followed by a unit are accepted.",
+      "where": "src/lib.rs:82",
+      "instead": "Trim surrounding whitespace, and possibly allow fractions like `1.5h`."
+    },
+    {
+      "question": "What is the maximum parsable duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms, the largest integer an f64 holds exactly. Anything larger, including u64 overflow, returns InvalidDuration.",
+      "where": "src/lib.rs:112",
+      "instead": "Allow the full u64 range, or return a separate overflow error."
+    },
+    {
+      "question": "Is a zero duration like \"0s\" or \"0ms\" valid?",
+      "ticket": "silent",
+      "chose": "Accepts zero and returns 0.",
+      "where": "src/lib.rs:107",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "What does formatting 0 ms print?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Prints \"0ms\".",
+      "where": "src/lib.rs:132",
+      "instead": "Return an empty string, or \"0s\"."
+    },
+    {
+      "question": "Which form is printed when several spellings are equivalent, such as 5400000 ms?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string by character count, so 5400000 ms prints as \"90m\" rather than \"1h30m\". Ties go to the larger starting unit.",
+      "where": "src/lib.rs:137",
+      "instead": "Decompose canonically from hours down (\"1h30m\"), or use the largest unit that divides the value evenly."
+    },
+    {
+      "question": "What does formatting do with values above the supported maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error for values above 2^53-1.",
+      "where": "src/lib.rs:129",
+      "instead": "Format any u64, or saturate at the maximum."
+    },
+    {
+      "question": "What is the error type and message when parsing fails?",
+      "ticket": "silent",
+      "chose": "Uses one InvalidDuration variant for every parse failure, with a generic message that does not say which part was wrong.",
+      "where": "src/lib.rs:48",
+      "instead": "Use specific variants or messages (empty, bad unit, overflow, order) that include the position or offending text."
+    }
+  ]
+}

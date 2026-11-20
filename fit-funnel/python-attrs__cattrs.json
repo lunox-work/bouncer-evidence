@@ -1,0 +1,15 @@
+{
+  "repo": "python-attrs/cattrs",
+  "package": ".",
+  "language": "python",
+  "commit": "e9239b7082206f18e3cec873b11451aff35beb9c",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 73
+  }
+}

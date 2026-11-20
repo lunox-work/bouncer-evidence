@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10018250000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": false,
+      "why": "S1 settles that days ('d') are a valid unit: '2d' gives 172800000 and '1d0h0m0s0ms' gives 86400000. Item 4 asks exactly this, but its pick supports only h/m/s/ms and rejects '2d'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": false,
+      "why": "S2 settles that whitespace around the text is ignored ('  45m\\n' gives 2700000). Item 3 asks whether whitespace is accepted, and its pick rejects ' 1h'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Most rows in S3 are the cases item 3 asks about: decimals, signs, underscores, internal whitespace and uppercase. Its pick rejects all of them, as S3 expects. Items 1 ('90'), 2 (empty string) and 4 ('3w') cover other rows. The pick doesn't say what happens to '05s' or the fullwidth '３s', but everything it does name agrees.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether the parser accepts a count larger than the next unit up, as in '90m'. Item 5 is about the order and repetition of units. Item 10 is about the formatter.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks whether units must come in descending order with each used once. S5 expects '30m1h' and '1h1h' to be rejected, but the pick accepts and sums them.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks for the largest accepted duration. Its pick of 2^53-1 ms matches the 9007199254740991 that S6 expects. The S6 input also uses 'd', though, which item 4's pick rejects.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 also asks what happens above the maximum. Its pick raises ValueError when the total is over 2^53-1, as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "S8 expects the canonical largest-unit form (90000 gives '1m30s'). Item 10's pick searches for the shortest string and gives '90s'. Item 9 also misses the 0 row: it prints '0s' where S8 expects '0ms'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": false,
+      "why": "S9 expects the canonical form '104249991d8h59m991ms'. Searching for the shortest string would give the shorter '9007199254740991ms', and without days the pick can't output 'd' at all.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting a value and parsing the result gives the same number back.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how the formatter handles invalid input. Its pick raises ValueError mentioning 'milliseconds' for anything that isn't an int in [0, 2^53-1], and rejects bools. That covers -1, 2^53, True and 1.0, as S11 expects.",
+      "failing": false
+    }
+  ]
+}

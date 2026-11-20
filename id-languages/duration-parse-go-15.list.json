@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 24,
+  "costUsd": 0.069494,
+  "items": [
+    {
+      "question": "Does a bare number with no unit (like the old raw `172800`) still parse as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a count with no unit suffix and returns an error.",
+      "where": "src/task.go:67",
+      "instead": "Treat a bare number as raw milliseconds, so existing configs keep working."
+    },
+    {
+      "question": "Which units are accepted?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts d, h, m, s and ms, so days are supported as well as the three named units.",
+      "where": "src/task.go:23",
+      "instead": "Accept only h, m, s and ms, or also add w (weeks)."
+    },
+    {
+      "question": "Are units case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts lowercase units only, so `1H` is an error.",
+      "where": "src/task.go:87",
+      "instead": "Accept upper and mixed case, for example by lowercasing the input."
+    },
+    {
+      "question": "Must components be in order, and can a unit repeat?",
+      "ticket": "silent",
+      "chose": "Requires strictly descending units with each unit used at most once. `30m1h`, `1h1h` and `1s1m` are errors.",
+      "where": "src/task.go:69",
+      "instead": "Accept any order and repeated units and sum them, as Go's time.ParseDuration does."
+    },
+    {
+      "question": "Are fractional counts like `1.5h` allowed?",
+      "ticket": "silent",
+      "chose": "Rejects them, because only decimal digits are read and `.` is not a valid unit.",
+      "where": "src/task.go:51",
+      "instead": "Accept fractions and convert them to whole milliseconds, with some rounding rule."
+    },
+    {
+      "question": "Are signs, and so negative durations, accepted?",
+      "ticket": "silent",
+      "chose": "Rejects `-` and `+` because a component must start with a digit.",
+      "where": "src/task.go:51",
+      "instead": "Accept `+`, or accept negatives and let the caller decide."
+    },
+    {
+      "question": "How is whitespace handled?",
+      "ticket": "silent",
+      "chose": "Trims whitespace around the whole string but rejects whitespace between components, so `1h 30m` is an error.",
+      "where": "src/task.go:38",
+      "instead": "Reject all whitespace, or allow it between components."
+    },
+    {
+      "question": "What does an empty or all-whitespace string give?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an error.",
+      "where": "src/task.go:39",
+      "instead": "Return 0 with no error, meaning 'no timeout' or 'use the default'."
+    },
+    {
+      "question": "What is the upper bound on a parsed duration, and what happens beyond it?",
+      "ticket": "silent",
+      "chose": "Errors above 9007199254740991 ms (2^53-1), checked both while reading digits and when multiplying by the unit factor.",
+      "where": "src/task.go:60",
+      "instead": "Use the int64 limit, or no explicit cap beyond overflow detection."
+    },
+    {
+      "question": "Are leading zeros and zero components allowed?",
+      "ticket": "silent",
+      "chose": "Accepts `007s`, `0s`, `0ms` and `1h0m0s` as valid, giving 7000 for `007s` and 0 for the zero forms.",
+      "where": "src/task.go:48",
+      "instead": "Reject zero durations, or reject leading zeros and zero components."
+    },
+    {
+      "question": "How is a duration printed back, and what is shown for zero?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Prints a greedy largest-first breakdown into d/h/m/s/ms and skips zero components, so 5400000 gives `1h30m`, 172800000 gives `2d` and 0 gives `0ms`. It never uses weeks and never shows more than days.",
+      "where": "src/task.go:109",
+      "instead": "Print zero as `0s`, or cap the largest unit at hours so 2 days shows as `48h`."
+    },
+    {
+      "question": "What does formatting do with negative or too-large millisecond values?",
+      "ticket": "silent",
+      "chose": "Returns an empty string and an error for values below 0 or above 9007199254740991.",
+      "where": "src/task.go:106",
+      "instead": "Format negatives with a leading `-`, or clamp to the range."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "pallets/flask",
+  "package": ".",
+  "language": "python",
+  "commit": "49943b5a94413a530761350f04e896f76e8d620e",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 13
+  }
+}

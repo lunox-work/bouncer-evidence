@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1275972,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 covers the basic output: feature name, scenarios in file order, and each step's keyword, text and line. No item asks this. Item 3 asks whether `Example:` is accepted. Item 12 asks whether text that only starts like a keyword (e.g. 'Andrew') counts as a step. Neither settles the basic shape or the '*' keyword.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks how tags are handled and which scenario they attach to. That is the main rule S2 sets. The run shows '@x @y' and '@z' split on whitespace and attached to the next scenario, 's'. Scenario 't' gets no tags. This matches S2. Item 7 touches header description lines too, but it is mainly about unrecognised lines inside a scenario.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether a Background section is supported and how it is returned. The pick returns background steps in a separate `background` field, and the run shows the scenarios hold only their own steps. That is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how doc strings and tables are supported and returned. In the run, the doc string attaches to the step before it with the opening quotes' indentation removed (['line1', '  line2']). Table rows come back with trimmed cells. Both match S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S5 groups several error cases, and items 1, 2, 6, 7, 9 and 10 each cover one of them. Item 1 matches the first clause, a file with no Feature line before other content. It throws ParseError with a line property, and the message starts 'line 1: expected \"Feature:\" before any other content'. That fits S5's error form. The other error items also agree: 2 fails at line 3, 6 at line 2, 7 at line 4, 9 at the opening line 4, and 10 at line 4.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a file with only a Feature line, and no scenarios, is valid. Item 12 asks about a scenario with no steps. Item 5 asks about a missing Background. Item 1 asks about a missing Feature line. None of these settles S6.",
+      "failing": false
+    }
+  ]
+}

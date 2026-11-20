@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1004981,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how Monday is judged and in which time zone. The pick formats the instant as a weekday in the given zone. That makes 16:30Z, which is Monday 00:30 in Singapore, due, and 15:59:59Z, still Sunday there, not due.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "The DST case is the same question: which local day it is in the given zone. Formatting the instant with the zone's rules handles the March 8 clock change. Monday 00:30 New York time counts as Monday and Sunday 23:59:59 does not.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "This scenario covers several things (furthest gate, gate 0 with no submissions, merged tasks left out). The closest single item is how the furthest gate is computed. Taking the highest gate over all submissions gives 2 for submissions at gates 1 and 2. Items 7 (gate 0) and 1 (open only) also agree with their parts.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how age is computed and rounded. Whole elapsed days rounded down give 9 for 9 days 23 hours and 10 for exactly 10 days.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "The core rule is '14 days or more', which settles the boundary question in item 3. The >= comparison matches it. The scenario also settles item 4 (measure from posting when there are no submissions) and item 5 (measure from the latest submission), and both picks agree.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks about digest order. The pick puts stalled tasks first, then oldest postedAt, then id ascending, which is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": false,
+      "why": "Item 10 asks about the subject format and plurals. The scenario wants '1 open task' for a single task, but the pick always uses the plural.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what buildDigest returns when nothing is open. Returning null means no digest at all rather than an empty one, which the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "The scenario says an unknown zone fails, with no condition on whether tasks are open. That settles item 12's question: validate the zone in every case. The pick validates first and throws. The pick does not say whether the error names the zone.",
+      "failing": false
+    }
+  ]
+}

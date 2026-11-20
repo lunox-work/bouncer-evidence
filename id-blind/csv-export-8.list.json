@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.0499352,
+  "items": [
+    {
+      "question": "Which columns does the CSV have, and in what order and with what header names?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Emits the header 'Requisition ID,Title,Status,Openings,Filled,Created', with openings and filled as separate columns.",
+      "where": "src/index.ts:34",
+      "instead": "Use different header labels or a different column order, or include a single 'filled/openings' column or a remaining-openings column."
+    },
+    {
+      "question": "In what order are the rows written?",
+      "ticket": "silent",
+      "chose": "Sorts a copy of the input by creation time ascending, then by id as a string compare.",
+      "where": "src/index.ts:30",
+      "instead": "Keep the input order, or sort newest first."
+    },
+    {
+      "question": "What does the CSV contain when the list is empty?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header row only.",
+      "where": "src/index.ts:34",
+      "instead": "Return an empty string, or the header without a BOM."
+    },
+    {
+      "question": "Does the output start with a byte-order mark?",
+      "ticket": "silent",
+      "chose": "Prepends a UTF-8 BOM (U+FEFF) to the output.",
+      "where": "src/index.ts:47",
+      "instead": "Emit no BOM, so the output is plain CSV text."
+    },
+    {
+      "question": "Which line terminator is used, and does the last row end with one?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:47",
+      "instead": "Use LF as the separator, with no trailing newline after the last row."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Quotes the field per RFC 4180 and doubles any embedded quotes.",
+      "where": "src/index.ts:59",
+      "instead": "Leave fields unquoted, or also quote fields with leading or trailing whitespace."
+    },
+    {
+      "question": "How is a field starting with =, +, - or @ handled, given spreadsheet formula injection?",
+      "ticket": "silent",
+      "chose": "Writes the value as is, with no neutralising prefix.",
+      "where": "src/index.ts:59",
+      "instead": "Prefix such values with a single quote or similar so spreadsheets do not run them as formulas."
+    },
+    {
+      "question": "What is written for a null or missing title?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:39",
+      "instead": "Write a placeholder such as '(untitled)', or throw."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full UTC ISO 8601 string from toISOString().",
+      "where": "src/index.ts:43",
+      "instead": "Write a date-only value or a locale-formatted local time."
+    },
+    {
+      "question": "What happens when a row has bad data (unknown status, invalid or negative openings or filled count, filled greater than openings, invalid date)?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id, and writes no partial CSV.",
+      "where": "src/index.ts:11-28",
+      "instead": "Skip the bad row, or write it as is or with the values clamped."
+    },
+    {
+      "question": "Which statuses are valid?",
+      "ticket": "with status",
+      "chose": "Accepts only open, on_hold, filled and cancelled, and throws on any other value.",
+      "where": "src/index.ts:10",
+      "instead": "Pass any status string through unchanged."
+    },
+    {
+      "question": "Are zero openings and filled equal to openings valid?",
+      "ticket": "silent",
+      "chose": "Accepts openings of 0, filled of 0, and filled equal to openings.",
+      "where": "src/index.ts:50-52",
+      "instead": "Reject zero openings as invalid."
+    }
+  ]
+}

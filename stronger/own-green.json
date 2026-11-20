@@ -1,0 +1,1075 @@
+{
+  "at": "2026-11-20T06:58:06.415Z",
+  "byVariant": {
+    "ticket-haiku": {
+      "runs": 35,
+      "ownGreen": 35,
+      "ownGreenRejected": 26,
+      "noOwnTests": 0
+    },
+    "ticket-opus": {
+      "runs": 35,
+      "ownGreen": 35,
+      "ownGreenRejected": 20,
+      "noOwnTests": 0
+    },
+    "ticket-sonnet": {
+      "runs": 35,
+      "ownGreen": 35,
+      "ownGreenRejected": 19,
+      "noOwnTests": 0
+    }
+  },
+  "rows": [
+    {
+      "spec": "csv-export",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 20,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 15,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 15,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 14,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 15,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 14,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 23,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 20,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 25,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 20,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 5,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 18,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 7,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 17,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 18,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 19,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 2,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 2,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 2,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 2,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 2,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 14,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 23,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 15,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 14,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 17,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 18,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 7,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 5,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 7,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 8,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 6,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 9,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 8,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 9,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 8,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 8,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 24,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 11,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 15,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 14,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "overfit",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-haiku",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-haiku",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-haiku",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 7,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-haiku",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 14,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-haiku",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 11,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-opus",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 7,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-opus",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-opus",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-opus",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-opus",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 11,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-sonnet",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-sonnet",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-sonnet",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 4,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-sonnet",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-sonnet",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    }
+  ]
+}

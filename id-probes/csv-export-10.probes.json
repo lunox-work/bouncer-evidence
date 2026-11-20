@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-10",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0403941,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:'a',title:'t',status:'open',openings:2,filled:1,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 3,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'a',title:'t',status:'open',openings:2,filled:1,createdAt:new Date(0)}]))"
+    },
+    {
+      "item": 4,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([{id:'b',status:'open',openings:1,filled:0,createdAt:new Date(5)},{id:'a',status:'open',openings:1,filled:0,createdAt:new Date(5)},{id:'Z',status:'open',openings:1,filled:0,createdAt:new Date(1)},{id:'c',status:'open',openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 6,
+      "probe": "buildRequisitionsCsv([{id:'a',status:'open',openings:1,filled:0,createdAt:new Date(1234567890123)}])"
+    },
+    {
+      "item": 7,
+      "probe": "buildRequisitionsCsv([{id:'a',title:null,status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'b',status:'open',openings:1,filled:0,createdAt:new Date(1)}])"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([{id:'a',title:'x,\"y\"\\nz',status:'open',openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([{id:'=1+1',title:'@SUM(A1)',status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'-2',title:'+3',status:'open',openings:1,filled:0,createdAt:new Date(1)}])"
+    },
+    {
+      "item": 10,
+      "probe": "buildRequisitionsCsv([{id:'r1',status:'closed',openings:1,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 11,
+      "probe": "buildRequisitionsCsv([{id:'r1',status:'open',openings:1.5,filled:0,createdAt:new Date(0)}])"
+    },
+    {
+      "item": 12,
+      "probe": "buildRequisitionsCsv([{id:'ok',status:'open',openings:1,filled:0,createdAt:new Date(0)},{id:'bad',status:'open',openings:1,filled:2,createdAt:new Date(0)}])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,t,open,2,1,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "65279"
+    },
+    {
+      "item": 3,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\na,t,open,2,1,1970-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 4,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 5,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nc,,open,1,0,1970-01-01T00:00:00.000Z\\r\\nZ,,open,1,0,1970-01-01T00:00:00.001Z\\r\\na,,open,1,0,1970-01-01T00:00:00.005Z\\r\\nb,,open,1,0,1970-01-01T00:00:00.005Z\\r\\n'"
+    },
+    {
+      "item": 6,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,,open,1,0,2009-02-13T23:31:30.123Z\\r\\n'"
+    },
+    {
+      "item": 7,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,,open,1,0,1970-01-01T00:00:00.000Z\\r\\nb,,open,1,0,1970-01-01T00:00:00.001Z\\r\\n'"
+    },
+    {
+      "item": 8,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\na,\"x,\"\"y\"\"\\nz\",open,1,0,1970-01-01T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 9,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\n=1+1,@SUM(A1),open,1,0,1970-01-01T00:00:00.000Z\\r\\n-2,+3,open,1,0,1970-01-01T00:00:00.001Z\\r\\n'"
+    },
+    {
+      "item": 10,
+      "actual": "throws Error: Requisition r1: unknown status \"closed\""
+    },
+    {
+      "item": 11,
+      "actual": "throws Error: Requisition r1: openings must be a whole number of at least 0"
+    },
+    {
+      "item": 12,
+      "actual": "throws Error: Requisition bad: filled (2) is greater than openings (1)"
+    }
+  ]
+}

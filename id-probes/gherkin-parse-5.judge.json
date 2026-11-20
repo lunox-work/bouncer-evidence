@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11614590000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 covers the basic output: feature name, scenarios in order with their lines, and steps with keyword, text and line. No item asks this. Item 11 is only about edge cases (a bare keyword, a keyword with no space after it, case, language), and S1 settles none of them.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how comment and blank lines are handled. Its pick skips # lines and blank lines, and the run skipped both '# comment' and ' # c' as well as the empty lines. That matches S2. Item 6 (descriptions) is the next closest and also agrees, but it covers only the description part of S2.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks whether Background steps are kept apart from scenario steps. The run put 'Given bg' in background, and the scenario held only its own single step, so the steps were not copied in.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how doc strings are handled, including indentation. Its pick attaches the lines to the step before and removes the opening delimiter's indentation, which is what S4 expects. Tables are item 10, which also agrees (cells trimmed).",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": false,
+      "why": "Item 2 asks which line is reported when there is no Feature: line. S5 expects the first content line. The pick always reports line 1, so a file that opens with blank or comment lines and has no Feature: would get line 1, not the first content line. The run only tried an empty file, which doesn't test this. Items 3, 8 and 9 match other errors in S5, and those picks agree.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what a file with only a Feature line returns. The run gave { name: 'x', background: null, scenarios: [] }, which is valid with no scenarios and no background.",
+      "failing": false
+    }
+  ]
+}

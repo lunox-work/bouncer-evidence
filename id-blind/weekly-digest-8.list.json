@@ -1,0 +1,92 @@
+{
+  "run": "weekly-digest/8",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0602906,
+  "items": [
+    {
+      "question": "Which tasks count as open for the digest?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Includes only tasks whose status is exactly \"open\" and drops every other status (e.g. merged).",
+      "where": "src/index.ts:40",
+      "instead": "Treat any status that is not closed or merged as open, for example in-review."
+    },
+    {
+      "question": "How is a task's age measured and rounded?",
+      "ticket": "listing each open task with its age",
+      "chose": "Age is whole 24-hour periods since postedAt, rounded down.",
+      "where": "src/index.ts:73",
+      "instead": "Count calendar days in the organization's time zone, or round up."
+    },
+    {
+      "question": "What age does a task posted in the future get?",
+      "ticket": "silent",
+      "chose": "Clamps the age to 0 instead of returning a negative number.",
+      "where": "src/index.ts:73",
+      "instead": "Return the negative age, throw an error, or exclude the task."
+    },
+    {
+      "question": "Is a task stalled at exactly 14 days without a submission?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Flags the task when the gap is 14 days or more (>=).",
+      "where": "src/index.ts:76",
+      "instead": "Flag only when the gap is strictly more than 14 days."
+    },
+    {
+      "question": "From when is the 14-day stall measured for a task with no submissions?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Measures from postedAt when there are no submissions.",
+      "where": "src/index.ts:62",
+      "instead": "Never flag a task with no submissions, or flag it from the first digest."
+    },
+    {
+      "question": "For a task with several submissions, is the stall measured from the latest one?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Measures from the most recent submission time, so any submission in the last 14 days clears the flag.",
+      "where": "src/index.ts:62",
+      "instead": "Measure from the first submission, or from the posting time."
+    },
+    {
+      "question": "What is the furthest gate when a task has no submissions?",
+      "ticket": "silent",
+      "chose": "Reports furthestGate 0.",
+      "where": "src/index.ts:65",
+      "instead": "Use null or undefined, or a named \"none\" value."
+    },
+    {
+      "question": "How is the furthest gate computed across submissions?",
+      "ticket": "the furthest gate reached",
+      "chose": "Takes the highest gate value over all submissions, whatever their order.",
+      "where": "src/index.ts:65",
+      "instead": "Use the gate of the latest submission."
+    },
+    {
+      "question": "In what order are tasks listed in the digest?",
+      "ticket": "silent",
+      "chose": "Stalled tasks first, then oldest posted first, then by id ascending.",
+      "where": "src/index.ts:44",
+      "instead": "Keep the input order, or sort by age descending only."
+    },
+    {
+      "question": "What subject line does the digest have, and how does it handle singular counts?",
+      "ticket": "silent",
+      "chose": "Uses \"Weekly digest: N open tasks, M stalled\" and always writes \"tasks\", even for 1.",
+      "where": "src/index.ts:53",
+      "instead": "Use a different wording, or pluralize correctly (\"1 open task\")."
+    },
+    {
+      "question": "Does buildDigest check the time zone when nothing is open?",
+      "ticket": "silent",
+      "chose": "Validates the time zone first, so an unknown zone throws even when the digest would be null.",
+      "where": "src/index.ts:38",
+      "instead": "Return null for no open tasks without checking the zone."
+    },
+    {
+      "question": "Does buildDigest check that today is Monday?",
+      "ticket": "Send a Monday email listing each open task",
+      "chose": "buildDigest does not check the weekday and builds on any day; only isDigestDue checks for Monday.",
+      "where": "src/index.ts:34",
+      "instead": "Return null when the date is not a Monday in the zone."
+    }
+  ]
+}

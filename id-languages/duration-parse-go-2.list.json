@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.0591333,
+  "items": [
+    {
+      "question": "Is leading or trailing whitespace around a duration string accepted?",
+      "ticket": "silent",
+      "chose": "Trims surrounding whitespace with strings.TrimSpace before parsing, so \"  1h30m\\t\\n\" is valid.",
+      "where": "src/task.go:45",
+      "instead": "Reject any whitespace as an invalid duration."
+    },
+    {
+      "question": "What does an empty or whitespace-only string parse to?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an \"invalid duration ...: empty\" error.",
+      "where": "src/task.go:46-48",
+      "instead": "Treat empty as 0 with no error, or as 'unset' and fall back to a default."
+    },
+    {
+      "question": "Is a bare number with no unit, such as \"10\" or \"172800\", still accepted as raw milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a number with no unit with a \"missing or unknown unit\" error, so existing raw-number values are not accepted by this parser.",
+      "where": "src/task.go:81-82",
+      "instead": "Treat a unitless number as milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Are fractional values like \"1.5h\" accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them, because only digits are read as the count and the \".\" then fails as an unknown unit.",
+      "where": "src/task.go:57-63",
+      "instead": "Accept decimals and convert them to milliseconds, as Go's time.ParseDuration does."
+    },
+    {
+      "question": "Are negative or explicitly signed values accepted?",
+      "ticket": "silent",
+      "chose": "Rejects \"-\" and \"+\" because a number is expected at the start of each component.",
+      "where": "src/task.go:64-66",
+      "instead": "Allow a leading \"+\", or allow negatives such as -1s for 'no timeout'."
+    },
+    {
+      "question": "Can units appear out of order or more than once, as in \"30m1h\" or \"1h1h\"?",
+      "ticket": "silent",
+      "chose": "Rejects both: units must go strictly from largest to smallest, each at most once.",
+      "where": "src/task.go:86-88",
+      "instead": "Sum all components in any order and allow repeats, as Go's time.ParseDuration does."
+    },
+    {
+      "question": "Is a day unit \"d\" supported, and how long is a day?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Adds a \"d\" unit equal to 86,400,000 ms (24 hours), though the ticket's examples only show h, m, s and ms.",
+      "where": "src/task.go:27",
+      "instead": "Support only h, m, s and ms, or add larger units such as w."
+    },
+    {
+      "question": "Is there an upper limit on a parsed duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns 0 with an error, checking digit accumulation, the per-unit multiply, and the running sum.",
+      "where": "src/task.go:59-61, 91-97",
+      "instead": "Use no explicit cap beyond int64, or clamp to the maximum instead of erroring."
+    },
+    {
+      "question": "Are leading zeros and zero values such as \"007s\" or \"0s\" accepted?",
+      "ticket": "silent",
+      "chose": "Accepts them: \"007s\" parses as 7000 and \"0s\" as 0, with no error.",
+      "where": "src/task.go:57-63",
+      "instead": "Reject zero durations as an invalid timeout, or reject leading zeros."
+    },
+    {
+      "question": "How is zero printed back in the admin UI format?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "FormatDuration(0) returns \"0ms\".",
+      "where": "src/task.go:112-114",
+      "instead": "Return \"0s\" or an empty string."
+    },
+    {
+      "question": "How does FormatDuration split a value into units, and which units does it use?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Breaks the value into d, h, m, s and ms and omits zero parts, so 172800000 gives \"2d\" and 90000 gives \"1m30s\". It never emits a unit above days.",
+      "where": "src/task.go:118-126",
+      "instead": "Print only the largest exact unit, or print hours without a day unit (for example \"48h\")."
+    },
+    {
+      "question": "What does FormatDuration do with negative or oversized millisecond values?",
+      "ticket": "silent",
+      "chose": "Returns \"\" and an error for values below 0 or above 2^53-1.",
+      "where": "src/task.go:109-111",
+      "instead": "Format negative values with a \"-\" prefix, or clamp them."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-2",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0503309,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"Feature: x\\n\")"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{try{return parseFeature(\"\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 3,
+      "probe": "parseFeature(\"Feature: x\\n  some free text\\n  more: stuff\\nScenario: a\\n  Given b\\n\")"
+    },
+    {
+      "item": 4,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\n\\nScenario Outline: o\\n  Given <a>\\n  Examples:\\n    | a |\\n    | 1 |\\n\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 5,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\nBackground:\\n  Given a\\nBackground:\\n  Given b\\nScenario: s\\n  Given c\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 6,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\nScenario: s\\n  Given a\\n@orphan\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\nScenario: s\\n  Given a\\n    \\\"\\\"\\\"\\n    text\\n    more\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 8,
+      "probe": "parseFeature(\"Feature: x\\nScenario: s\\n  Given a\\n    \\\"\\\"\\\"\\n      indented\\n\\n  less\\n\\\\n raw\\n    \\\"\\\"\\\" trailing\\n\").scenarios[0].steps[0].docString"
+    },
+    {
+      "item": 9,
+      "probe": "parseFeature(\"Feature: x\\nScenario: s\\n  Given a\\n    | a | | c \\\\| d | e\\\\\\\\ | f\\\\ng |\\n    | x | y\\n    | |\\n\").scenarios[0].steps[0].table"
+    },
+    {
+      "item": 10,
+      "probe": "(()=>{try{return parseFeature(\"Feature: x\\nScenario: s\\n  Given a\\n    | a |\\n    \\\"\\\"\\\"\\n    t\\n    \\\"\\\"\\\"\\n\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"Feature: x\\nScenario: s\\n  Given a\\n\\n  # comment\\n    | a | b |\\n\").scenarios[0].steps[0].table"
+    },
+    {
+      "item": 12,
+      "probe": "(()=>{const r=[];for(const s of [\"Given  two spaces\",\"given lower\",\"Given\",\"Given \",\"*  star\",\"Dado algo\"]){try{r.push([s,parseFeature(\"Feature: x\\nScenario: s\\n  \"+s+\"\\n\").scenarios[0].steps[0]])}catch(e){r.push([s,e.line,e.message])}}return r})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ name: 'x', background: null, scenarios: [] }"
+    },
+    {
+      "item": 2,
+      "actual": "[ 1, 'line 1: no Feature: line' ]"
+    },
+    {
+      "item": 3,
+      "actual": "{\n  name: 'x',\n  background: null,\n  scenarios: [\n    { name: 'a', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'b', line: 5, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'ParseError', 3, 'line 3: Scenario Outline: is not supported' ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 4, 'line 4: only one Background: is allowed' ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 4, 'line 4: tags must be followed by a Scenario: line' ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ 4, 'line 4: a doc string is never closed' ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ '  indented', '', 'less', '\\\\n raw' ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ [ 'a', '', 'c | d', 'e\\\\', 'f\\ng' ], [ 'x', 'y' ], [ '' ] ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ 5, 'line 5: a doc string must follow a step' ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ [ 'a', 'b' ] ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ [ 'Given  two spaces', { keyword: 'Given', text: 'two spaces', line: 3, docString: null, table: null } ], [ 'given lower', 3, 'line 3: unrecognised line inside a scenario: given lower' ], [ 'Given', 3, 'line 3: unrecognised line inside a scenario: Given' ], [ 'Given ', 3, 'line 3: unrecognised lin"
+    }
+  ]
+}

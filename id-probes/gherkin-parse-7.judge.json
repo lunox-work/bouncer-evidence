@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1187317,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks which step keywords are accepted and what text a step keeps. Its pick accepts Given, When, Then, And, But and * as written. It strips exactly one whitespace character after the keyword, and the run kept leading extra spaces ('  two spaces'). That matches 'its text after the keyword and one space'. The pick also trims trailing whitespace, which the scenario doesn't address.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how comments and blank lines are handled, which are two of this scenario's four rules. It is closer than item 6 (tags) or item 8 (description text). Its pick skips # lines and blank lines, and the run confirms both were skipped. That is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how a Background is handled. Its pick collects the Background steps separately in `background`, not in the scenarios, and requires the Background to come before any scenario. That matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what happens to doc strings and tables after a step. Its pick attaches them to the step before them, splits table rows into trimmed cells and dedents doc string lines. Item 12's run also shows a '#' line inside a doc string kept as content. All of this matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks where a second Feature line, a step with no parent, or content before Feature is reported. Its pick throws a ParseError at the offending line, and the run threw 'line 2: a step must come after...' for a step with no parent. This matches the scenario's main rule about errors at the failing line. Items 1, 3 and 7 cover smaller parts of this scenario.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a Feature line with no scenarios is valid. The run returned { scenarios: [], background: null }, which is what the scenario expects.",
+      "failing": false
+    }
+  ]
+}

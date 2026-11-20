@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/10",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0637916,
+  "items": [
+    {
+      "question": "What happens when a file has no Feature: line, such as an empty file?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError at line 1 saying the Feature line is missing.",
+      "where": "src/index.ts:185",
+      "instead": "Return an empty feature, or report the error at the last line of the file."
+    },
+    {
+      "question": "Is a feature with no scenarios valid?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Returns the feature with an empty scenarios list and no error.",
+      "where": "src/index.ts:187",
+      "instead": "Throw an error because the feature has no scenarios."
+    },
+    {
+      "question": "How are Scenario Outline, Examples and Rule handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at that line saying the keyword is not supported.",
+      "where": "src/index.ts:114",
+      "instead": "Parse them as scenarios or outlines, or skip them silently."
+    },
+    {
+      "question": "What happens to a step that appears before any Background or Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the step's line.",
+      "where": "src/index.ts:149",
+      "instead": "Ignore the step, or attach it to the feature."
+    },
+    {
+      "question": "How is text that matches no known construct handled?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "In the feature header it is treated as a description and ignored. Inside a Background or Scenario it throws a ParseError at that line.",
+      "where": "src/index.ts:178-179",
+      "instead": "Always throw, or always ignore."
+    },
+    {
+      "question": "Which line is reported when tags are not followed by a Scenario?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line of the tag line, not the line of the offending content after it. At end of file it also reports the tag line.",
+      "where": "src/index.ts:118-119",
+      "instead": "Report the line of the unexpected line that follows the tags."
+    },
+    {
+      "question": "Are tags returned, and what form do they take?",
+      "ticket": "silent",
+      "chose": "Collects tags from preceding tag lines onto the scenario as strings that keep the '@'. Tags on the Feature line are discarded.",
+      "where": "src/index.ts:93-100",
+      "instead": "Strip the '@', or keep feature-level tags and apply them to scenarios."
+    },
+    {
+      "question": "Is the Background returned, and are its steps kept separate from scenario steps?",
+      "ticket": "silent",
+      "chose": "Returns the background steps separately (null if there is none), and a second Background or one after a Scenario is an error.",
+      "where": "src/index.ts:121-129",
+      "instead": "Prepend background steps to every scenario, or allow a late Background."
+    },
+    {
+      "question": "How are doc strings and data tables handled, and can they be combined on one step?",
+      "ticket": "silent",
+      "chose": "Attaches a doc string as an array of lines with the opening indent stripped. Attaches a table as rows of trimmed cells. A step can't have both, and an unclosed doc string is an error at the line that opened it.",
+      "where": "src/index.ts:162-176",
+      "instead": "Join the doc string into one string, ignore tables and doc strings, or allow both on one step."
+    },
+    {
+      "question": "Does a step keyword need whitespace after it, and what does a bare keyword mean?",
+      "ticket": "silent",
+      "chose": "Requires whitespace or end of line after the keyword. A bare keyword gives an empty step text, and 'Givenx' is an unrecognised line.",
+      "where": "src/index.ts:22",
+      "instead": "Reject a step with empty text, or accept a keyword with no space after it."
+    },
+    {
+      "question": "How are comments, blank lines, CRLF endings and a byte order mark treated?",
+      "ticket": "silent",
+      "chose": "Skips blank lines and lines starting with '#', strips '\\r' and a leading BOM, and keeps original line numbers. Inside doc strings, '#' lines are content.",
+      "where": "src/index.ts:59-65",
+      "instead": "Treat '#' lines as errors, or fail on a BOM."
+    },
+    {
+      "question": "Does a Scenario keep its original line number, and are 'Example:' and 'Scenario:' both accepted?",
+      "ticket": "silent",
+      "chose": "Records the 1-based line of the Scenario or Example keyword line. Both keywords are treated as scenarios.",
+      "where": "src/index.ts:20",
+      "instead": "Accept only 'Scenario:', or record the line of the first tag."
+    }
+  ]
+}

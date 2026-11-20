@@ -1,0 +1,1073 @@
+{
+ "totals": {
+  "double-blind-haiku": {
+   "passes": 386,
+   "bySpec": {
+    "access-rules": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "coalescing-cache": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "csv-export": {
+     "passes": 6,
+     "failSecond": 0
+    },
+    "env-names": {
+     "passes": 3,
+     "failSecond": 0
+    },
+    "escrow-ledger": {
+     "passes": 10,
+     "failSecond": 0
+    },
+    "escrow-split": {
+     "passes": 14,
+     "failSecond": 1
+    },
+    "frame-codec": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "gherkin-parse": {
+     "passes": 15,
+     "failSecond": 12
+    },
+    "gherkin-spec": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "invite-codes": {
+     "passes": 15,
+     "failSecond": 0
+    },
+    "keyed-queue": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "licence-scan": {
+     "passes": 19,
+     "failSecond": 5
+    },
+    "money-format": {
+     "passes": 3,
+     "failSecond": 0
+    },
+    "name-scan": {
+     "passes": 10,
+     "failSecond": 0
+    },
+    "patch-apply": {
+     "passes": 20,
+     "failSecond": 14
+    },
+    "project-names": {
+     "passes": 3,
+     "failSecond": 0
+    },
+    "promo-stack": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "question-limit": {
+     "passes": 3,
+     "failSecond": 0
+    },
+    "retention-sweep": {
+     "passes": 16,
+     "failSecond": 0
+    },
+    "reverse-diff": {
+     "passes": 2,
+     "failSecond": 1
+    },
+    "shift-compliance": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "statement-import": {
+     "passes": 20,
+     "failSecond": 0
+    },
+    "status-normalize": {
+     "passes": 15,
+     "failSecond": 0
+    },
+    "tool-versions": {
+     "passes": 42,
+     "failSecond": 23
+    },
+    "usage-counter": {
+     "passes": 15,
+     "failSecond": 0
+    },
+    "weekly-digest": {
+     "passes": 15,
+     "failSecond": 0
+    }
+   }
+  },
+  "double-blind-own-haiku": {
+   "passes": 100,
+   "bySpec": {
+    "csv-export": {
+     "passes": 11,
+     "failSecond": 0
+    },
+    "licence-scan": {
+     "passes": 20,
+     "failSecond": 1
+    },
+    "patch-apply": {
+     "passes": 19,
+     "failSecond": 13
+    },
+    "tool-versions": {
+     "passes": 50,
+     "failSecond": 15
+    }
+   }
+  }
+ },
+ "runs": [
+  {
+   "key": "escrow-split/double-blind-haiku/9",
+   "spec": "escrow-split",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:escrow-split:tests/public/escrow.test.ts :: [boundary-2] a pro bono task records no releases across both gates and redelivery",
+    "suite:escrow-split:tests/public/escrow.test.ts :: [boundary-2] pro bono status also holds at both share endpoints",
+    "suite:escrow-split:tests/private/escrow.test.ts :: [boundary-2] pro bono survives a long history of failures passes and approvals",
+    "suite:escrow-split:tests/private/escrow.test.ts :: [boundary-2] endpoint pro bono tasks remain empty under concurrent redelivery",
+    "suite:escrow-split:tests/private/escrow.test.ts :: [boundary-2] pro bono survives handler recreation with an interior share"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/1",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/parse-errors.test.ts :: [unhappy-1] rejects every step keyword before a background or scenario",
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/2",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/parse-errors.test.ts :: [unhappy-1] rejects every step keyword before a background or scenario",
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/3",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/6",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/parse-errors.test.ts :: [unhappy-1] rejects every step keyword before a background or scenario",
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/7",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/8",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/9",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/10",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/parse-errors.test.ts :: [unhappy-1] rejects every step keyword before a background or scenario",
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/11",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/12",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/13",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF",
+    "suite:gherkin-parse:tests/private/parse-errors.test.ts :: [unhappy-1] rejects step-like lines without the required space after the keyword"
+   ]
+  },
+  {
+   "key": "gherkin-parse/double-blind-haiku/15",
+   "spec": "gherkin-parse",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:gherkin-parse:tests/public/parse-errors.test.ts :: [unhappy-1] rejects every step keyword before a background or scenario",
+    "suite:gherkin-parse:tests/public/valid-features.test.ts :: [happy-1] handles CRLF, mixed leading whitespace and no final newline",
+    "suite:gherkin-parse:tests/private/feature-order.test.ts :: [happy-1] removes exactly one separator space for every keyword with CRLF"
+   ]
+  },
+  {
+   "key": "licence-scan/double-blind-haiku/4",
+   "spec": "licence-scan",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] singleton legacy arrays are not automatically treated as permissive"
+   ]
+  },
+  {
+   "key": "licence-scan/double-blind-haiku/8",
+   "spec": "licence-scan",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] a parser must consume trailing input even after a permitted OR branch"
+   ]
+  },
+  {
+   "key": "licence-scan/double-blind-haiku/13",
+   "spec": "licence-scan",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] a parser must consume trailing input even after a permitted OR branch"
+   ]
+  },
+  {
+   "key": "licence-scan/double-blind-haiku/17",
+   "spec": "licence-scan",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] a parser must consume trailing input even after a permitted OR branch"
+   ]
+  },
+  {
+   "key": "licence-scan/double-blind-haiku/18",
+   "spec": "licence-scan",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] a parser must consume trailing input even after a permitted OR branch"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/1",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/2",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/4",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] locates later hunks after earlier additions shift their stated lines",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] locates later hunks after earlier removals shift their stated lines",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] measures each offset from the old start adjusted only by preceding line-count changes",
+    "suite:patch-apply:tests/private/endings-and-malformed.test.ts :: [boundary-2] keeps CRLF through several hunks with blank additions",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-5] renames across directories with several hunks and relocated matches",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-1] parses omitted old and new counts independently away from line one",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] accumulates additions and removals across four hunks",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] permits three adjacent replacements whose lengths differ",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] does not carry a previous relocation into later hunk offsets",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] line-count adjustments and hunk numbers restart for each file"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/6",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/7",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/9",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/10",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/11",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/12",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/13",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] measures each offset from the old start adjusted only by preceding line-count changes",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-5] renames across directories with several hunks and relocated matches",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] does not carry a previous relocation into later hunk offsets"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/14",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/15",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/18",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-haiku/20",
+   "spec": "patch-apply",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "reverse-diff/double-blind-haiku/1",
+   "spec": "reverse-diff",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:reverse-diff:tests/private/unmapped.test.ts :: [unhappy-1] discovers paths from standalone old and new headers in their textual order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/1",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/4",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/5",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/8",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/10",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/12",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/15",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/public/sources.test.ts :: [boundary-1] multiple unusable sources are skipped for each tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order",
+    "suite:tool-versions:tests/private/sources.test.ts :: [happy-3] many nonexact toolchains fall back without extracting a numeric prefix",
+    "suite:tool-versions:tests/private/sources.test.ts :: [boundary-1] simultaneous fallback reaches different source depths for different tools"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/17",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/18",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/21",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions",
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/25",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/27",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/31",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/32",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/33",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/34",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/35",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/37",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/38",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions",
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/40",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/43",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions",
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/44",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-haiku/50",
+   "spec": "tool-versions",
+   "arm": "double-blind-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "licence-scan/double-blind-own-haiku/6",
+   "spec": "licence-scan",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:licence-scan:tests/private/licence-expressions.test.ts :: [unhappy-2] a parser must consume trailing input even after a permitted OR branch"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/2",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/3",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] locates later hunks after earlier additions shift their stated lines",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] locates later hunks after earlier removals shift their stated lines",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] measures each offset from the old start adjusted only by preceding line-count changes",
+    "suite:patch-apply:tests/private/endings-and-malformed.test.ts :: [boundary-2] keeps CRLF through several hunks with blank additions",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-5] renames across directories with several hunks and relocated matches",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-1] parses omitted old and new counts independently away from line one",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] accumulates additions and removals across four hunks",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] permits three adjacent replacements whose lengths differ",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] does not carry a previous relocation into later hunk offsets",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] line-count adjustments and hunk numbers restart for each file"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/4",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/5",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/6",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/7",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/8",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/9",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/11",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/14",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/15",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] locates later hunks after earlier additions shift their stated lines",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] locates later hunks after earlier removals shift their stated lines",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-2] measures each offset from the old start adjusted only by preceding line-count changes",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] creates an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] deletes an empty file without text headers or hunks",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/endings-and-malformed.test.ts :: [boundary-2] keeps CRLF through several hunks with blank additions",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] parses consecutive empty creations before a file with hunks",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] deletes consecutive empty files while retaining an untouched empty file",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-5] renames across directories with several hunks and relocated matches",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [unhappy-1] rolls back operations on both sides of failures including empty operations",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-1] parses omitted old and new counts independently away from line one",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] accumulates additions and removals across four hunks",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] permits three adjacent replacements whose lengths differ",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] does not carry a previous relocation into later hunk offsets",
+    "suite:patch-apply:tests/private/hunks.test.ts :: [happy-2] line-count adjustments and hunk numbers restart for each file"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/19",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "patch-apply/double-blind-own-haiku/20",
+   "spec": "patch-apply",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-3] rejects an empty-file creation without hunks at an existing path",
+    "suite:patch-apply:tests/public/apply-patch.test.ts :: [happy-4] rejects a deletion without hunks when the file is nonempty",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-3] an existing empty string still blocks a headerless empty creation",
+    "suite:patch-apply:tests/private/files-and-atomicity.test.ts :: [happy-4] a newline-only file is not empty for a headerless deletion"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/4",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/9",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/10",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/13",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/16",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/17",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/18",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/20",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/23",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/32",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/35",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/41",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/45",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/47",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/parsing.test.ts :: [unhappy-1] no exact version is extracted from aliases ranges or malformed versions",
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  },
+  {
+   "key": "tool-versions/double-blind-own-haiku/49",
+   "spec": "tool-versions",
+   "arm": "double-blind-own-haiku",
+   "ids": [
+    "suite:tool-versions:tests/public/reporting.test.ts :: [boundary-3] all differing later versions are grouped in one conflict per tool",
+    "suite:tool-versions:tests/private/reporting.test.ts :: [boundary-3] every exact loser is reported with all sources present in reverse priority order"
+   ]
+  }
+ ]
+}

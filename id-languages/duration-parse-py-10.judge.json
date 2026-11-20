@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09743020000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 3,
+      "agrees": false,
+      "why": "The one open question in S1 is whether days count as a unit. S1 expects `2d` and `1d0h0m0s0ms` to parse, but item 3's pick rejects `d`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks about whitespace. Its pick strips leading and trailing whitespace, so \"  45m\\n\" parses to 2700000 as S2 expects.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "S3 mixes several malformed inputs. Items 1, 4, 5 and 7 each settle one or two rows. Item 6 is closest because it covers the most rows (`1.5h`, `-3s`, `+3s`), and its pick rejects them. It does not say how leading zeros (`05s`) or non-ASCII digits are handled.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether one unit's count may exceed the next larger unit, as in `90m`. Item 2 is about order and repetition, not size.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2's pick allows units only in descending order, each at most once, and rejects anything else. That matches S5.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks for the maximum. Its pick only rejects totals that exceed 9007199254740991, so that exact value is accepted. Under item 3's pick this input would still fail, because it uses `d`.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8's pick raises ValueError when the total is above MAX_MS, as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "S8 expects strings broken down by unit, such as `1m30s`, `1h30m` and `1d`. Item 11's pick takes the shortest string, which gives `90m` for 5400000. Item 10's pick `0s` also conflicts with the expected `0ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "The question is how to format a value that spans several units. The shortest-string pick would give `9007199254740991ms`, not `104249991d8h59m991ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give the original number back.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12's pick raises ValueError for negatives, values above MAX_MS, bools and non-ints, which covers every row in S11.",
+      "failing": false
+    }
+  ]
+}

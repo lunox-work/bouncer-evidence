@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest-3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.12997329999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks which time zone and which day decide that it is Monday. The pick formats the weekday in the given zone. The run returned true for Asia/Singapore at 2025-01-12T23:30Z, which is Monday 07:30 local, and false for UTC at the same instant, which is still Sunday. So Monday 00:30 Singapore would be due and Sunday 23:59:59 Singapore would not.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Same question as S1: the local weekday in the given zone decides. The pick formats the weekday in the zone using its real offset, so daylight saving changes are handled. The run returned false for New York at 2025-01-13T02:00Z, which is Sunday 21:00 local, showing the local day is used rather than the UTC day. Monday 00:30 New York time would be due and Sunday 23:59:59 would not.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "The part of S3 an open question had to settle is the furthest gate for a task with no submissions. Item 8 asks exactly that and picks 0, otherwise the highest gate. The run returned [a,0] and [b,3]. Item 4, exactly \"open\" so merged is excluded, also agrees with S3's last line.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how age is computed and in what unit. The pick counts whole 24-hour periods, rounded down. The run gave age 1 for a task posted 25 hours earlier and 3 for exactly 3 days. So 9 days 23 hours gives 9 and exactly 10 days gives 10.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how long without activity makes a task stalled and whether the boundary is inclusive. The pick is 14 days or more. The run showed exactly 14 days as stalled and 14 days minus 1 second as not, so 13 days 23 hours is not stalled. Items 2 and 3 cover what the clock counts from (posting if no submissions, else latest submission) and also agree; item 3's run confirms that a recent submission stops a task stalling.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks the listing order. The pick is stalled first, then oldest posted, then id ascending. The run returned [s, old, f1, f2]: the stalled task first, then by posting date, with a tie broken by id.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks what the subject says and how it handles a count of one. The pick always uses \"tasks\", and the run returned 'Weekly digest: 1 open tasks, 0 stalled'. S7 expects '1 open task' in the singular.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what the digest returns when nothing is open. The run returned null both for an empty task list and for a list with only a merged task: no digest, rather than an empty one.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what happens with an unknown time zone. The pick throws an Error that names the zone. The run gave 'Unknown time zone: Mars/Base' from both isDigestDue and buildDigest, so 'Mars/Olympus' would fail with an error naming it.",
+      "failing": false
+    }
+  ]
+}

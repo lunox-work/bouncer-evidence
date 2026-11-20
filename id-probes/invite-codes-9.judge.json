@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.12308919999999998,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks when the 14-day lifetime starts. The run shows expiresAt is exactly 14×24h (1209600000 ms) after createdAt, which matches 09:00 on 03-01 becoming 09:00 on 03-15. Item 8 (redrawing on collision) covers only the last clause.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a successful redeem grants access to that one task and no other, or whether it records who used the code and when. Item 12 is about list order and which fields an unused code has, not about what redeem does.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how case, spaces and dashes are handled. It strips whitespace and '-' and uppercases the input, and ' aaaa - aaaa ' redeemed successfully.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code still works at exactly 14 days. It treats now >= expiresAt as expired, and the run at exactly 14 days returned reason 'expired'. Since expiry is >=, a redeem 1 ms earlier would still succeed.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when a different contributor redeems a used code, or when the original user redeems it again (idempotent success). Item 3 is about a code that is used and also expired, and item 4 is about a second, different code.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what redeeming an unrecognised code returns. It returned { ok: false, reason: 'unknown' }. Item 9 covers the 'used code cannot be revoked' clause, and its pick (throws 'code has been used') also agrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks about redeeming a second code for a task the contributor can already access. The run returned reason 'already has access' and the second code's state stayed 'unused'.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how concurrent redeems of one code are handled. With a slow async store, exactly one redeem succeeded and the others got reason 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what list returns and which fields each code has. Every entry has code, createdAt, expiresAt and state, and only used codes have usedBy and usedAt, as the scenario expects. The run doesn't test whether a used code past expiry still lists as 'used', but nothing in the pick contradicts it.",
+      "failing": true
+    }
+  ]
+}

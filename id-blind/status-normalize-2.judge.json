@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0733651,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "S1 is about how much a stored value gets cleaned up (case and padding) before it is matched. Item 3 trims the ends and lowercases, so 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' read as draft, published, merged and claimed.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which old spellings map to which statuses. Its pick maps only 'in review' to review, so 'under_review' and 'LIVE' would read as null. The scenario expects review and published, and also expects done, complete and the others to map.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unmatched stored value reads as, and its pick returns null without guessing the nearest status. That is what S3 expects for 'closed', 'drafts', 'revew' and the rest. Item 9 covers only the empty and all-space cases, and it also returns null.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a write normalises its input or accepts only exact values. Its pick accepts an exact enum value, so writing 'review' stores 'review'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether near-miss input is normalised or rejected on write. Its pick throws on anything but an exact value, including wrong case, padding and old spellings like 'in-review'. That matches S5. Item 11 covers the wording of the error, which is a smaller question, and its message does include the value.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "The main thing S6 checks is how unreadable values are reported. Item 7's pick reports the raw stored strings, removes duplicates and sorts them, which matches 'each distinct original value once, sorted, exactly as stored'. Item 6 covers the part where every row comes back, and its pick does that too.",
+      "failing": true
+    }
+  ]
+}

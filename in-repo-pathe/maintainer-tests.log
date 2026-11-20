@@ -1,0 +1,61 @@
+[07:57:20] pathe-unc-resolve 1 maintainer test file(s), 373 tests, 10 fail on base and pass on the commit
+[07:57:41] pathe-unc-resolve haiku 5 of 5 runs pass every acceptance test
+[07:57:58] pathe-unc-resolve haiku-no-public 4 of 5 runs pass every acceptance test
+[07:58:19] pathe-unc-resolve ticket-haiku 5 of 5 runs pass every acceptance test
+[07:58:39] pathe-unc-resolve ticket-sonnet 4 of 5 runs pass every acceptance test
+[07:58:49] pathe-extname-dot 1 maintainer test file(s), 337 tests, 4 fail on base and pass on the commit
+[07:59:10] pathe-extname-dot codex-cli 5 of 5 runs pass every acceptance test
+[07:59:31] pathe-extname-dot haiku 5 of 5 runs pass every acceptance test
+[07:59:53] pathe-extname-dot haiku-no-public 5 of 5 runs pass every acceptance test
+[08:00:14] pathe-extname-dot ticket-haiku 5 of 5 runs pass every acceptance test
+[08:00:36] pathe-extname-dot ticket-sonnet 5 of 5 runs pass every acceptance test
+[08:00:44] pathe-format-partial 1 maintainer test file(s), 333 tests, 8 fail on base and pass on the commit
+[08:00:52] pathe-format-partial codex-cli 2 of 2 runs pass every acceptance test
+[08:01:11] pathe-format-partial haiku 5 of 5 runs pass every acceptance test
+[08:01:30] pathe-format-partial haiku-no-public 5 of 5 runs pass every acceptance test
+[08:01:48] pathe-format-partial ticket-haiku 2 of 5 runs pass every acceptance test
+[08:02:07] pathe-format-partial ticket-sonnet 1 of 5 runs pass every acceptance test
+[08:02:14] pathe-reverse-alias 1 maintainer test file(s), 44 tests, 44 fail on base and pass on the commit
+[08:02:33] pathe-reverse-alias haiku 5 of 5 runs pass every acceptance test
+[08:02:52] pathe-reverse-alias haiku-no-public 5 of 5 runs pass every acceptance test
+[08:03:10] pathe-reverse-alias ticket-haiku 4 of 5 runs pass every acceptance test
+[08:03:29] pathe-reverse-alias ticket-sonnet 4 of 5 runs pass every acceptance test
+[08:03:37] pathe-filename-dot 1 maintainer test file(s), 32 tests, 2 fail on base and pass on the commit
+[08:03:56] pathe-filename-dot codex-cli 5 of 5 runs pass every acceptance test
+[08:04:14] pathe-filename-dot haiku 5 of 5 runs pass every acceptance test
+[08:04:32] pathe-filename-dot haiku-no-public 5 of 5 runs pass every acceptance test
+[08:04:51] pathe-filename-dot ticket-haiku 5 of 5 runs pass every acceptance test
+[08:05:09] pathe-filename-dot ticket-sonnet 5 of 5 runs pass every acceptance test
+[08:05:17] pathe-basename-trailing 1 maintainer test file(s), 304 tests, 16 fail on base and pass on the commit
+[08:05:36] pathe-basename-trailing codex-cli 5 of 5 runs pass every acceptance test
+[08:05:55] pathe-basename-trailing haiku 5 of 5 runs pass every acceptance test
+[08:06:13] pathe-basename-trailing haiku-no-public 5 of 5 runs pass every acceptance test
+[08:06:32] pathe-basename-trailing ticket-haiku 5 of 5 runs pass every acceptance test
+[08:06:50] pathe-basename-trailing ticket-sonnet 5 of 5 runs pass every acceptance test
+{
+  "haiku": {
+    "runs": 30,
+    "allPass": 30,
+    "cases": 6
+  },
+  "haiku-no-public": {
+    "runs": 30,
+    "allPass": 29,
+    "cases": 6
+  },
+  "ticket-haiku": {
+    "runs": 30,
+    "allPass": 26,
+    "cases": 6
+  },
+  "ticket-sonnet": {
+    "runs": 30,
+    "allPass": 24,
+    "cases": 6
+  },
+  "codex-cli": {
+    "runs": 17,
+    "allPass": 17,
+    "cases": 4
+  }
+}

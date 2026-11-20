@@ -1,0 +1,30 @@
+{
+  "sha256": "29652008deb160c857a641397773df42b4083b6604673d469dc1f049fcbce0a8",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T01:36:46.400Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "A falsy `base` given to `joinURL` (`\"\"`, `undefined`, `null`) is treated as `\"\"`. The first segment that is kept then becomes the URL as written (Rule 2).",
+    "`joinURL` drops each segment after the base that fails `isNonEmptyURL`: `\"\"`, `undefined`, `null` and exactly `\"/\"`. The base itself is never filtered (Rule 3).",
+    "`joinURL` strips one leading `\"./\"` or `\"/\"` from a segment and joins it with exactly one slash. Further leading slashes are kept (Rule 4).",
+    "`joinURL` does not resolve `..`. It appends such segments literally (Rule 6).",
+    "While the accumulated URL is still `\"\"`, `joinURL` uses the segment as written, without stripping a leading `\"./\"` or `\"/\"` (Rule 5).",
+    "The joining slash comes from `withTrailingSlash(url)` (without query/fragment respect) followed by concatenation. When the base has a query or hash, the slash lands after it (Rule 7a).",
+    "`joinURL` keeps the last segment's trailing slash as written and adds or removes none (Rule 7).",
+    "`joinRelativeURL` drops only falsy inputs before choosing the prefix and trailing slash. A bare `\"/\"` stays in the input list (Rule 9).",
+    "`joinRelativeURL()` with no arguments follows the old `joinURL` path and returns `\"\"` (Rule 10).",
+    "`joinRelativeURL` resolves `./` and `../` exactly as the old `joinURL` did, e.g. `joinRelativeURL(\"/a\", \"../b\", \"./c\")` → `\"/b/c\"` (Rule 8).",
+    "The new `joinURL` replaces the old behaviour under that name. The old resolving logic moves to `joinRelativeURL`, and `joinURL` becomes a simple join (Rules 1–7).",
+    "`withBase` keeps calling `joinURL`, so an `input` containing `..` is no longer resolved against the base (Rule 12).",
+    "`joinRelativeURL` has no protocol, query or hash awareness. A protocol's `//` collapses to `/` and `?`/`#` are ordinary characters, as in the old `joinURL` (Rule 11).",
+    "Seam (the files the stub writes): src/utils.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/utils.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

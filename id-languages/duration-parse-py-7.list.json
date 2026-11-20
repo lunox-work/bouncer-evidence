@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 12,
+  "costUsd": 0.048446,
+  "items": [
+    {
+      "question": "Which units can a duration string use?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts d, h, m, s and ms, so it adds days, which the ticket never lists.",
+      "where": "src/solution.py:15",
+      "instead": "Accept only h, m, s and ms."
+    },
+    {
+      "question": "Must units appear in descending order, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Each unit may appear at most once, and only in descending order. '30s1m' and '1h1h' are rejected.",
+      "where": "src/solution.py:25",
+      "instead": "Accept units in any order and sum repeats, or accept any order but reject repeats."
+    },
+    {
+      "question": "Are fractional values like '1.5h' accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them. Only unsigned integer digits are allowed.",
+      "where": "src/solution.py:25",
+      "instead": "Accept decimals and round to whole milliseconds."
+    },
+    {
+      "question": "Is a bare number such as '172800' (no unit) accepted?",
+      "ticket": "silent",
+      "chose": "Rejects it with a ValueError, because every number needs a unit.",
+      "where": "src/solution.py:43",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Are whitespace, uppercase units, signs and the empty string accepted?",
+      "ticket": "silent",
+      "chose": "Rejects all of them. The match is exact and case-sensitive, with no trimming.",
+      "where": "src/solution.py:40",
+      "instead": "Strip whitespace and accept case-insensitive units like '1H' or '1h 30m'."
+    },
+    {
+      "question": "What happens with a non-string input to parse_duration?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with an 'invalid duration' message.",
+      "where": "src/solution.py:40",
+      "instead": "Raise TypeError, or pass through ints as milliseconds."
+    },
+    {
+      "question": "Is a zero duration such as '0s' or '0ms' valid?",
+      "ticket": "silent",
+      "chose": "Accepts it and returns 0.",
+      "where": "src/solution.py:43",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "Is there an upper limit on a parsed duration?",
+      "ticket": "silent",
+      "chose": "Rejects totals above 9007199254740991 ms (2^53-1) with a ValueError.",
+      "where": "src/solution.py:49",
+      "instead": "Impose no limit, since Python ints are unbounded, or use a smaller practical cap."
+    },
+    {
+      "question": "How is a duration printed back, for example 90 minutes?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string by character count, so 5,400,000 ms becomes '90m' and not '1h30m'. Ties go to fewer parts.",
+      "where": "src/solution.py:85",
+      "instead": "Use the canonical greedy breakdown from the largest unit down, such as '1h30m'."
+    },
+    {
+      "question": "How is zero formatted?",
+      "ticket": "silent",
+      "chose": "Returns '0s'.",
+      "where": "src/solution.py:83",
+      "instead": "Return '0ms'."
+    },
+    {
+      "question": "Which inputs does format_duration reject?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for non-int types (including bool and float), negatives, and values above 2^53-1.",
+      "where": "src/solution.py:81",
+      "instead": "Coerce floats and bools, or clamp out-of-range values."
+    },
+    {
+      "question": "Can the formatter output days?",
+      "ticket": "silent",
+      "chose": "Yes. Days are among the candidate units, so 172,800,000 ms becomes '2d'.",
+      "where": "src/solution.py:15",
+      "instead": "Stop at hours and print '48h'."
+    }
+  ]
+}

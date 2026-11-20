@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10367610000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "S1 is mostly about adding components together, which no item asks. Its distinctive rows (`2d`, `1d0h0m0s0ms`) depend on whether `d` is a supported unit, which item 3 asks, and the pick accepts `d` as 86,400,000 ms. Item 8 (zero) also covers the `0s` row, but it is a narrower fit.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks whether whitespace is allowed. The pick rejects all whitespace and allows only `<digits><unit>` components, so `\"  45m\\n\"` would be rejected. The scenario expects surrounding whitespace to be ignored and `Ok(2700000)` returned.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Several items touch S3: item 1 (`90`), item 2 (empty) and item 4 (`3S`). Item 6 is closest because it covers the most rows (`1.5h`, `-3s`, `+3s`, `1h 30m`, `3 s`), and its pick rejects them as the scenario expects.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether one component's count may exceed the next larger unit, as in `90m`. Item 5 is about ordering and repeats, and item 10 is about the formatter.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks about descending order and repeated units. Its pick rejects out-of-order and repeated units like `30m1h` and `1h1h`, which matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks for the parser's upper limit. The pick caps it at 2^53-1 ms, so the maximum value 9007199254740991 parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what happens above the limit or on overflow. The pick returns InvalidDuration for totals above 2^53-1 and for any overflow, which matches the expected rejection.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "S8 settles how the formatter chooses between equivalent forms: it expects 5400000 to print as `1h30m` and 90000 as `1m30s`. Item 10's shortest-string pick would print `90m` and `90s`. Items 9 and 12 cover single rows only.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": false,
+      "why": "S9 expects the full greedy form `104249991d8h59m991ms`. Item 10's shortest-string rule would instead print `9007199254740991ms`, which is 18 characters against 20. Item 11 only covers values above the maximum, so it does not settle this one.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give back the original number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what the formatter does above the maximum. The pick returns a MillisecondsOutOfRange error for values above 2^53-1, which fits an Err about milliseconds for 2^53 and `u64::MAX`.",
+      "failing": false
+    }
+  ]
+}

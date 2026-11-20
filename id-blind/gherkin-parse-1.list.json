@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0669773,
+  "items": [
+    {
+      "question": "What happens when a file contains no Feature line (empty, or only comments and blank lines)?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError reported at line 1.",
+      "where": "src/index.ts:162-164",
+      "instead": "Return an empty feature, or report the error at the last line of the file."
+    },
+    {
+      "question": "Are Scenario Outline and Scenario Template accepted?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError saying 'Scenario Outline:' is not supported, at the outline line. Scenario Template is rejected with the same message.",
+      "where": "src/index.ts:86-88",
+      "instead": "Parse outlines as scenarios, with their Examples tables."
+    },
+    {
+      "question": "Is `Example:` accepted as a scenario keyword?",
+      "ticket": "silent",
+      "chose": "Treats `Example:` the same as `Scenario:`.",
+      "where": "src/index.ts:18",
+      "instead": "Accept only `Scenario:`, and error on `Example:`."
+    },
+    {
+      "question": "How are tags handled, and which ones attach to the scenario?",
+      "ticket": "silent",
+      "chose": "Collects every @ line into a pending list, splits it on whitespace, and attaches the list to the next Scenario. Tags before Feature or Background are discarded, and a tag line is never an error.",
+      "where": "src/index.ts:72-75",
+      "instead": "Ignore tags, or error on tags before Feature or Background."
+    },
+    {
+      "question": "Does the parser support a Background section, and what does a Background with no steps return?",
+      "ticket": "silent",
+      "chose": "Returns the background steps in a separate field, or an empty array for an empty Background. Returns null when there is no Background. A second Background, or one after a scenario, throws.",
+      "where": "src/index.ts:89-98",
+      "instead": "Prepend background steps to each scenario, or ignore Background."
+    },
+    {
+      "question": "What happens to a step that appears before any Background or Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the step's line.",
+      "where": "src/index.ts:115-117",
+      "instead": "Treat the line as description text and ignore it."
+    },
+    {
+      "question": "What happens to an unrecognised line inside a scenario or background?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Throws a ParseError at that line. In the header section (after Feature, before any Background or Scenario), unrecognised lines are silently accepted as description.",
+      "where": "src/index.ts:154-159",
+      "instead": "Ignore free text everywhere, or reject free text in the header too."
+    },
+    {
+      "question": "Are doc strings and data tables supported, and how are they returned?",
+      "ticket": "return scenarios with their steps and line numbers",
+      "chose": "Attaches a doc string (an array of lines with the opening indent stripped) or a table (an array of rows with trimmed cells and \\| \\\\ \\n escapes) to the preceding step. Both `\"\"\"` and ``` delimiters are accepted.",
+      "where": "src/index.ts:130-152",
+      "instead": "Ignore or reject doc strings and tables, or return doc strings as a single string joined with newlines."
+    },
+    {
+      "question": "At which line is an unclosed doc string reported?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line that opened the doc string.",
+      "where": "src/index.ts:140-142",
+      "instead": "Report the last line of the file, where the closing delimiter was expected."
+    },
+    {
+      "question": "What happens on a second Feature line?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the second Feature line.",
+      "where": "src/index.ts:81",
+      "instead": "Ignore it or treat it as a new feature."
+    },
+    {
+      "question": "How are CRLF line endings and a byte order mark handled?",
+      "ticket": "silent",
+      "chose": "Strips a leading BOM and splits lines on \\r?\\n.",
+      "where": "src/index.ts:53",
+      "instead": "Reject a BOM, or split only on \\n and leave a trailing \\r on each line."
+    },
+    {
+      "question": "How are keywords matched against text that merely starts like one, and what about a Scenario with no steps or a duplicate name?",
+      "ticket": "silent",
+      "chose": "A step needs a keyword followed by whitespace and text, so 'Andrew' is not a step. A scenario with no steps is allowed and returns an empty list. Duplicate scenario names are not checked.",
+      "where": "src/index.ts:17",
+      "instead": "Match keywords by prefix only, or reject empty and duplicate scenarios."
+    }
+  ]
+}

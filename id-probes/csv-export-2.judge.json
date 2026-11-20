@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1091502,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks about the header columns and their order. Its run outputs exactly \"Requisition ID,Title,Status,Openings,Filled,Created\" as the first row. Items 2, 3 and 4 also agree with the rest of S1: rows sorted by creation time then id, CRLF after every row including the last, and a leading BOM.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks how status values are written. The pick writes the raw string, and the run shows 'on_hold' in the output where S2 expects 'On hold'. Item 8 (date format) also disagrees: it writes the full ISO timestamp, not YYYY-MM-DD. Only item 7 (empty field for a missing title) matches S2.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what an empty list produces. Its run returns the BOM and the header row with CRLF, and no data rows.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how separator characters are escaped. The pick quotes a field only for a comma, quote, CR or LF. It does not quote titles that start or end with a space, which S4 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing titles that start like a formula (prefixing a single quote). Item 6 covers only RFC 4180 quoting.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how invalid rows stop the export. Its run throws 'Requisition bad has an invalid creation time', naming the id. Items 9, 10 and 11 also show throws that name the id for an unknown status, bad numbers and filled greater than openings, so the whole scenario holds.",
+      "failing": true
+    }
+  ]
+}

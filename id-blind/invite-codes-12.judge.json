@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09912770000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what happens when a generated code collides with one that already exists. S1 says a colliding code is drawn again, and the pick does that (it retries, up to 100 draws). S1 doesn't say what happens after many collisions, but it does rule out failing on the first one. No item asks about the 14-day lifetime itself.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks what a redeemed code records about who used it and when. The pick stores usedBy (the contributor ID) and usedAt (the redeem time), which matches 'shows it was used by c1, and when'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks how strictly a typed code is matched. The pick removes whitespace and hyphens and uppercases the input, so lowercase, spaced and hyphenated input all find the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code is still valid at exactly 14 days. The pick treats it as expired once now >= expiresAt, so it can be redeemed at 08:59:59.999 and fails with 'expired' at 09:00:00.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when the same contributor redeems their own used code again, or confirms that a used code is refused to someone else. Item 2 is about which reason wins when a code is used and also expired or revoked. Item 3 is about redeeming a different code for a task the contributor already has access to, which is S7's question.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks whether codes can be revoked and what revoking a used, unknown or already revoked code does. The pick throws for a used code, so a used code cannot be revoked, as S6 expects.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens when a contributor redeems a code for a task they already have access to. The pick refuses with 'already has access' and leaves the code unused, exactly as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how concurrent operations are ordered. The pick runs every call through a single promise queue so calls never interleave. That means only one of two simultaneous redemptions succeeds and the other sees 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what list() returns and whether it includes expired, used and revoked codes. The pick returns every code with its state and filters none out, which matches S9. Item 9 (usedBy/usedAt in list) and item 2 (used takes precedence) also back up the details, but item 11 asks the closest question.",
+      "failing": true
+    }
+  ]
+}

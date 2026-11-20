@@ -1,0 +1,15 @@
+{
+  "repo": "pydantic/pydantic",
+  "package": ".",
+  "language": "python",
+  "commit": "45e208ee48b62c47dd92507ec6a4bcd71cfdb0d8",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "the dependencies do not install on a clean copy (uv): error: Required uv version `>=0.13.0` does not match the running version `0.12.24`. Update `uv` by running `uv self update`.",
+    "seconds": 1
+  }
+}

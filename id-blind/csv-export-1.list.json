@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 19,
+  "costUsd": 0.060359,
+  "items": [
+    {
+      "question": "Which columns appear in the CSV, in what order, and with what header text?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Emits the header \"Requisition ID,Title,Status,Openings,Filled,Created\" with six columns: id, title, status, openings, filled, created.",
+      "where": "src/index.ts:31",
+      "instead": "Use snake_case or lowercase headers, or leave out the created date or the title."
+    },
+    {
+      "question": "What order are the rows in?",
+      "ticket": "silent",
+      "chose": "Sorts a copy of the input by creation time ascending, then by id compared by code unit.",
+      "where": "src/index.ts:12-14",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "Does the builder reorder the caller's array?",
+      "ticket": "silent",
+      "chose": "Sorts a shallow copy, so the input array is left unchanged.",
+      "where": "src/index.ts:12",
+      "instead": "Sort the input array in place."
+    },
+    {
+      "question": "Which line terminator ends each row, and does the last row have one?",
+      "ticket": "silent",
+      "chose": "Ends every row, including the header and the last row, with \\r\\n.",
+      "where": "src/index.ts:28",
+      "instead": "Use \\n, and leave off the trailing newline."
+    },
+    {
+      "question": "Does the output start with a UTF-8 BOM?",
+      "ticket": "silent",
+      "chose": "Prepends a BOM character (U+FEFF) to the output.",
+      "where": "src/index.ts:28",
+      "instead": "Emit no BOM, so the output is plain CSV text."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header row only.",
+      "where": "src/index.ts:28",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "How is a missing or null title written?",
+      "ticket": "silent",
+      "chose": "Writes an empty field for a null or undefined title.",
+      "where": "src/index.ts:18",
+      "instead": "Write a placeholder such as \"(untitled)\", or the text \"null\"."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Wraps the field in double quotes and doubles any inner quotes when it contains a comma, quote, CR or LF.",
+      "where": "src/index.ts:58-60",
+      "instead": "Quote every field, or also neutralise leading =, +, - or @ against spreadsheet formula injection."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the time as a UTC ISO 8601 string with milliseconds, using toISOString().",
+      "where": "src/index.ts:22",
+      "instead": "Write a date only (YYYY-MM-DD), or a locale or local-time format."
+    },
+    {
+      "question": "Are rows with bad data (unknown status, bad counts, invalid date) skipped, repaired or rejected?",
+      "ticket": "silent",
+      "chose": "Validates every row before building anything, and throws an Error naming the requisition id on the first bad row. Bad data means a status outside open/on_hold/filled/cancelled, openings or filled that is not a whole number of at least 0, filled greater than openings, or an invalid createdAt.",
+      "where": "src/index.ts:10, 36-46",
+      "instead": "Skip the bad rows, or write them as they are and flag them."
+    },
+    {
+      "question": "Which status values are allowed, and are they written raw or relabelled?",
+      "ticket": "silent",
+      "chose": "Accepts only open, on_hold, filled and cancelled, and writes the raw value without relabelling it.",
+      "where": "src/index.ts:33, 19",
+      "instead": "Pass any status string through, or write human-readable labels such as \"On hold\"."
+    },
+    {
+      "question": "Are duplicate requisition ids accepted?",
+      "ticket": "silent",
+      "chose": "Does not check for duplicates. Every duplicate row is written, in sorted order.",
+      "where": "src/index.ts:12-26",
+      "instead": "Reject duplicates with an error, or drop them."
+    }
+  ]
+}

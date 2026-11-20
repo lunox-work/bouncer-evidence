@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11835570000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how a step's keyword and text are recorded. In the run, And, But and * kept the keyword as written and the text came after the keyword, which is what S1 expects. One caveat: the run trims the text, so \"And  b  \" (two spaces, trailing spaces) gives 'b'. A strict reading of \"after the keyword and one space\" would keep the extra spaces. The scenario's point is the keyword as written, though, and the pick matches that.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what happens to description text under 'Feature:'. It is the one real open question S2 answers. The run shows the description lines dropped without error before the first Scenario, which matches S2's 'description ... skipped'. Items 11 (tags) and 12 (comments and blank lines) cover other parts of S2, and their picks also agree.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether background steps are returned separately or copied into each scenario. Item 6 is about where a Background is allowed to appear, which is a different behaviour.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how doc strings and tables attach to steps. The run shows doc string indentation removed up to the opening delimiter's indent, the doc string and the table attached to the step before them, and table cells trimmed. That is what S4 expects. Item 12's run also shows a '#' line kept inside a doc string, which supports S4's 'never read as comments'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "S5 is about which line an error reports, and item 4 asks exactly that for an unclosed doc string. The run gives ParseError at line 4, the line that opened the doc string, with message 'line 4: ...'. That matches S5. Items 2, 3, 6 and 8 cover other clauses of S5.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what happens with no scenarios. The run returns { background: null, scenarios: [] } and raises no error, which is what S6 expects.",
+      "failing": false
+    }
+  ]
+}

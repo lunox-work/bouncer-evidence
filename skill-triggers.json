@@ -1,0 +1,279 @@
+{
+  "about": "Trigger eval for skills/bouncer's description (PLAN.md 'The skill', gate: 90% or better each way for the new description). Each prompt was read against each description as a skill router would, with the skill's name visible. The first reading was self-judged; `routerRun` is skill-creator's description eval, run 2026-11-20. In each row, `old` and `new` say whether that description loads the skill for the prompt.",
+  "at": "2026-11-19",
+  "judgedBy": "model (Claude), not a router run",
+  "gate": {
+    "shouldLoad": 0.9,
+    "shouldNotLoad": 0.9
+  },
+  "descriptions": {
+    "old": {
+      "source": "HEAD:skills/bouncer/SKILL.md",
+      "text": "Turn a ticket or spec for one module (TypeScript, Python, Go or Rust), or for a change to one package of an existing TypeScript or Python repository, into a public test suite for the implementing agent and a calibrated hidden suite that judges its work, with the spec's decisions confirmed by a person before any test is written. Use when someone wants agent-written code accepted by tests the agent never saw, wants to grade an agent's submission against a spec, or wants to stop trusting an agent's own green test run.",
+      "characters": 520
+    },
+    "new": {
+      "source": "skills/bouncer/SKILL.md",
+      "text": "Use when an agent says it's done or that the tests pass and the person doubts it: \"check my agent's work\", \"is this really done\", \"bounce this\", \"I don't trust its green tests\", \"did it game the tests\". Also for grading a contractor's, candidate's or agent's submission against a spec or ticket, and for tests an agent can't see for a ticket. Bouncer turns the ticket into a spec the person confirms, a public suite for the implementing agent and a calibrated hidden suite he keeps, then judges the work: passed, overfit, incomplete, regressed or refused. One module (TypeScript, Python, Go, Rust), a command, an HTTP service or one package of a TypeScript or Python repository. Not for writing ordinary unit tests, raising coverage, fixing a failing test, or a code, style or security review by eye.",
+      "characters": 800
+    }
+  },
+  "scores": {
+    "old": {
+      "shouldLoad": {
+        "correct": 13,
+        "of": 20,
+        "rate": 0.65
+      },
+      "shouldNotLoad": {
+        "correct": 20,
+        "of": 20,
+        "rate": 1
+      }
+    },
+    "new": {
+      "shouldLoad": {
+        "correct": 20,
+        "of": 20,
+        "rate": 1
+      },
+      "shouldNotLoad": {
+        "correct": 20,
+        "of": 20,
+        "rate": 1
+      }
+    }
+  },
+  "passesGate": true,
+  "shouldLoad": [
+    {
+      "prompt": "Claude says the feature is done and all tests pass, but I don't buy it. Can you check?",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "check my agent's work on the rate limiter ticket",
+      "old": false,
+      "new": true,
+      "note": "old: nothing about checking work; a router would pick a review"
+    },
+    {
+      "prompt": "Is this really done? Codex says it implemented PROJ-142.",
+      "old": false,
+      "new": true
+    },
+    {
+      "prompt": "bounce this",
+      "old": false,
+      "new": true,
+      "note": "old: only the skill name hints at it"
+    },
+    {
+      "prompt": "bounce the PR my agent opened for the CSV export",
+      "old": false,
+      "new": true
+    },
+    {
+      "prompt": "My agent wrote its own tests and they're all green. I want tests it can't see.",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Grade this contractor's submission against the spec in ticket.md",
+      "old": true,
+      "new": true,
+      "note": "old says agent's submission; spec grading still matches"
+    },
+    {
+      "prompt": "I'm hiring: grade a candidate's take-home against the spec without them seeing the tests.",
+      "old": false,
+      "new": true,
+      "note": "old is about agent-written code only"
+    },
+    {
+      "prompt": "Make hidden tests for this ticket so the coding agent can't game them",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "The agent keeps telling me 'all 42 tests pass' but things break in prod. How do I verify what it built?",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Turn this GitHub issue into acceptance tests my agent never sees, then let it implement",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Judge Cursor's implementation of the duration parser against the spec",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Before I merge, verify the agent's change meets the Jira ticket, not just its own tests",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Set up a public test suite for the agent and a held-back suite to judge it",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Haiku says the slugify module is finished. Prove it.",
+      "old": false,
+      "new": true
+    },
+    {
+      "prompt": "Can you make sure my agent didn't just hard-code the test inputs?",
+      "old": false,
+      "new": true,
+      "note": "new: 'did it game the tests'"
+    },
+    {
+      "prompt": "Judge this submission: runs/escrow-split/opus/1/submission/src",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "I hand tickets to an AI agent; I need an independent check before I accept the work",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "Write tests from the spec that the implementing agent won't see, for a change to packages/billing",
+      "old": true,
+      "new": true
+    },
+    {
+      "prompt": "The agent claims it fixed the ticket. Run it past the bouncer.",
+      "old": true,
+      "new": true,
+      "note": "both: the skill name"
+    }
+  ],
+  "shouldNotLoad": [
+    {
+      "prompt": "Write unit tests for this function",
+      "old": false,
+      "new": false,
+      "note": "new excludes it by name"
+    },
+    {
+      "prompt": "Review this PR",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Fix the failing test in auth.spec.ts",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Increase test coverage for the utils folder to 80%",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Why is CI red on main?",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Set up Jest in this repo",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Write a spec for the new password reset feature",
+      "old": false,
+      "new": false,
+      "note": "borderline for both: both mention turning a ticket into a spec"
+    },
+    {
+      "prompt": "Generate property-based tests for the parser with fast-check",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Is this code thread-safe?",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Run the test suite and tell me what fails",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Refactor this module and keep the tests passing",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Write a GitHub Actions workflow that runs pytest on every PR",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Mock the Stripe API in these tests",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Explain what this test is checking",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Grade this essay against the rubric",
+      "old": false,
+      "new": false,
+      "note": "borderline for new: 'grading a submission' without code"
+    },
+    {
+      "prompt": "Add a Playwright e2e test for the login page",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Make this flaky test deterministic",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Convert these Jest tests to Vitest",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Implement the ticket in PROJ-200",
+      "old": false,
+      "new": false
+    },
+    {
+      "prompt": "Review my agent's code for security issues",
+      "old": false,
+      "new": false,
+      "note": "borderline for new: 'check my agent's work', held off by 'not ... a security review'"
+    }
+  ],
+  "routerRun": {
+    "at": "2026-11-20",
+    "how": "skill-creator scripts/run_eval.py: each prompt through claude -p (claude-opus-5-5) with the description installed as a project command, 2 runs per prompt, loaded when it triggered on at least 1 of 2 (threshold 0.5); prompts as printed by run_eval (it truncates them in its log)",
+    "description": "skills/bouncer/SKILL.md at a962176",
+    "shouldLoad": {
+      "correct": 19,
+      "of": 20
+    },
+    "shouldNotLoad": {
+      "correct": 20,
+      "of": 20
+    },
+    "misses": [
+      "The agent keeps telling me 'all 42 tests pass' but things break in pro"
+    ],
+    "passesGate": true
+  }
+}

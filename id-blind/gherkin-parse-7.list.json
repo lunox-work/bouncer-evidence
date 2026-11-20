@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0638589,
+  "items": [
+    {
+      "question": "What does a file with no Feature line, such as an empty file, do?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Throws a ParseError at line 1 saying a Feature line is expected.",
+      "where": "src/index.ts:206",
+      "instead": "Return an empty feature, or report the error at the last line."
+    },
+    {
+      "question": "Is a file with a Feature line and no scenarios valid?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Accepts it and returns an empty scenarios array.",
+      "where": "src/index.ts:210",
+      "instead": "Throw an error because no scenarios were found."
+    },
+    {
+      "question": "How are Scenario Outline and Scenario Template handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at that line saying Scenario Outline is not supported.",
+      "where": "src/index.ts:164",
+      "instead": "Parse them as ordinary scenarios, or parse them with Examples tables."
+    },
+    {
+      "question": "Are Rule: and Examples: lines accepted?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError for an unrecognised line.",
+      "where": "src/index.ts:199",
+      "instead": "Support Rule blocks, or skip these lines."
+    },
+    {
+      "question": "How is a Background handled, including steps, position and count?",
+      "ticket": "silent",
+      "chose": "Collects Background steps separately in `background`. A second Background, or one after a scenario, throws a ParseError.",
+      "where": "src/index.ts:154",
+      "instead": "Prepend the Background steps to each scenario, or ignore the Background."
+    },
+    {
+      "question": "What happens to tags, and what is done with tags on the Feature line?",
+      "ticket": "silent",
+      "chose": "Attaches tags to the next Scenario. Tags before Feature are discarded. Tags followed by anything other than a Scenario throw an error.",
+      "where": "src/index.ts:142",
+      "instead": "Keep feature-level tags and ignore or allow tags before other lines."
+    },
+    {
+      "question": "What happens to a step with a doc string or table attached?",
+      "ticket": "silent",
+      "chose": "Attaches table rows (split into trimmed cells) and doc strings (dedented lines) to the preceding step. A doc string after a table is an error, and an unclosed one is reported at its opening line.",
+      "where": "src/index.ts:113",
+      "instead": "Ignore tables and doc strings, or keep them as raw text."
+    },
+    {
+      "question": "How is free text after a Feature, Background or Scenario header treated?",
+      "ticket": "silent",
+      "chose": "Accepts and discards description lines only directly after a header and before the first step. Otherwise it throws an unrecognised-line error.",
+      "where": "src/index.ts:199",
+      "instead": "Reject all free text, or keep descriptions in the result."
+    },
+    {
+      "question": "What step keywords are accepted, and what text does a step keep?",
+      "ticket": "silent",
+      "chose": "Accepts Given, When, Then, And, But and * with no localisation. Step text strips only one whitespace character after the keyword and is otherwise trimmed on the right only.",
+      "where": "src/index.ts:33",
+      "instead": "Trim all leading whitespace from the text, or support other languages."
+    },
+    {
+      "question": "Where is a second Feature line, or a step with no Scenario or Background, reported?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Throws a ParseError at the offending line, for a second Feature line, a step with no parent or content before Feature. The parser stops at the first error.",
+      "where": "src/index.ts:139",
+      "instead": "Collect all errors, or treat a second Feature as the start of a new feature."
+    },
+    {
+      "question": "How is the line number reported for dangling tags at end of file?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line of the first dangling tag.",
+      "where": "src/index.ts:208",
+      "instead": "Report the last line of the file."
+    },
+    {
+      "question": "How are comments, blank lines, CRLF line endings and a byte order mark handled?",
+      "ticket": "silent",
+      "chose": "Skips blank and # lines. Strips a BOM and trailing CR. Comments inside doc strings are kept as content.",
+      "where": "src/index.ts:100",
+      "instead": "Treat a BOM as an error, or strip comments inside doc strings."
+    }
+  ]
+}

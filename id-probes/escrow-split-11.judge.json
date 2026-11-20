@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.12240400000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks which field and unit the share uses and what the default is. It picks a default of 7500 bps, which gives 7500 of 10000. The run that used the default share is still pending in the output, so this rests on the stated pick. Item 12 (status) also gives 'partially released' for 75 of 100.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 is about rounding when the bounty doesn't divide evenly. It picks BigInt integer division rounding down, with the leftover going to UAT. The run gave 75/26 for 101, so 999 would give 749/250, and BigInt keeps the result exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how the UAT amount is worked out. It releases the bounty minus what has already been released. The run released 90 after 10 and returned 'fully released'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 covers what a hidden-tests-failed event does. The run returned { status: 'locked', releases: [] } and made no store writes.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 covers UAT approved before the hidden tests pass. It throws 'cannot release on UAT approval: the hidden tests have not passed', and the store stays undefined.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 covers a zero bounty. The status is 'pro bono', but the run records zero-amount hidden-tests and uat releases. The scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 covers a repeated hidden-tests-passed event. The repeat is ignored with one save. Item 10 says repeats are caught by release kind, so a hidden-tests-passed event with a different id also records nothing.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks about concurrency and duplicate events. Events are queued so they run one at a time, and duplicates are caught by kind. In the run, two simultaneous identical events with a slow store each returned a single hidden-tests release. Checking by kind applies to uat-approved too.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 covers store errors. The run rejected with 'boom' and recorded nothing, then the retry of the same event succeeded with one release.",
+      "failing": false
+    }
+  ]
+}

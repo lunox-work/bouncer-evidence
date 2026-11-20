@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/11",
+  "model": "claude-sonnet-5-5",
+  "seconds": 12,
+  "costUsd": 0.048509300000000005,
+  "items": [
+    {
+      "question": "Which unit suffixes are accepted, and are they case-sensitive?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts only lowercase d, h, m, s and ms, so `1H` is rejected and `d` (days) is added beyond the ticket's examples.",
+      "where": "src/solution.py:25",
+      "instead": "Accept case-insensitive units, or only h, m, s and ms with no days."
+    },
+    {
+      "question": "Can units be repeated or written out of order, as in `30m1h` or `1s1s`?",
+      "ticket": "silent",
+      "chose": "Rejects any term whose unit is not strictly smaller than the previous one with a ValueError.",
+      "where": "src/solution.py:51",
+      "instead": "Sum all terms in any order, allowing repeats."
+    },
+    {
+      "question": "Is whitespace allowed in or around a duration, as in ` 1s` or `1h 30m`?",
+      "ticket": "silent",
+      "chose": "Rejects any whitespace because the regex must match each term contiguously from the start.",
+      "where": "src/solution.py:46",
+      "instead": "Strip surrounding whitespace, or allow spaces between terms."
+    },
+    {
+      "question": "Are fractional values like `1.5h` or signed values like `-1s` accepted?",
+      "ticket": "silent",
+      "chose": "Only digit runs are accepted, so decimals and signs raise ValueError.",
+      "where": "src/solution.py:25",
+      "instead": "Accept decimals and round to whole milliseconds."
+    },
+    {
+      "question": "Is a bare number with no unit, such as `10` or `172800`, accepted as raw milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a unitless number as an invalid duration.",
+      "where": "src/solution.py:47",
+      "instead": "Treat a bare number as milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Raises ValueError, because position stays 0.",
+      "where": "src/solution.py:57",
+      "instead": "Return 0."
+    },
+    {
+      "question": "What happens when parse_duration gets a non-string such as the int 90?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with 'invalid duration' instead of a TypeError or passing the number through.",
+      "where": "src/solution.py:39",
+      "instead": "Raise TypeError, or pass an int through as milliseconds."
+    },
+    {
+      "question": "Is there an upper limit on a parsed duration?",
+      "ticket": "silent",
+      "chose": "Rejects totals above 9007199254740991 ms (2^53-1) with ValueError.",
+      "where": "src/solution.py:59",
+      "instead": "Apply no limit, or use a smaller limit such as a sane maximum timeout."
+    },
+    {
+      "question": "Is a zero duration like `0s` valid when parsing?",
+      "ticket": "silent",
+      "chose": "Accepts it and returns 0.",
+      "where": "src/solution.py:54",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "How is 0 ms formatted for the admin UI?",
+      "ticket": "silent",
+      "chose": "Returns the string `0s`.",
+      "where": "src/solution.py:80",
+      "instead": "Return `0ms`, or `0`."
+    },
+    {
+      "question": "Which form does format_duration choose when several exact forms exist, such as 5400000 ms?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string among single-unit exact forms and the greedy mixed form, so 5400000 gives `90m` instead of `1h30m`. Ties go to the single-unit form and then the larger unit.",
+      "where": "src/solution.py:96",
+      "instead": "Always use the greedy largest-unit decomposition, giving `1h30m`."
+    },
+    {
+      "question": "What does format_duration do with negative values, bools, floats and other non-ints?",
+      "ticket": "silent",
+      "chose": "Raises ValueError mentioning 'milliseconds' for non-ints (bools included) and for values outside 0 to 2^53-1.",
+      "where": "src/solution.py:75",
+      "instead": "Coerce floats to int, or format negatives with a leading minus sign."
+    }
+  ]
+}

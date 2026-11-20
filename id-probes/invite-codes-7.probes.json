@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-7",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.07439479999999998,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{let m=new Map(),t=new Date(0),r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>0});let c=await r.create('T');t=new Date(14*864e5);return await r.redeem(c.code,'u')})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{let m=new Map(),n=0,r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});let a=await r.create('T'),c=await r.create('T');let x=await r.redeem(a.code,'u');let y=await r.redeem(c.code,'u');return [x,y,(await r.list('T')).map(i=>i.state)]})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{let m=new Map(),t=new Date(0),n=0,r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>n++%b});let a=await r.create('T'),c=await r.create('T');await r.redeem(a.code,'u');await r.revoke(c.code);t=new Date(15*864e5);return [await r.redeem(a.code,'v'),await r.redeem(c.code,'v')]})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{let m=new Map(),r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});let c=await r.create('T');await r.redeem(c.code,'u');try{await r.revoke(c.code);return 'ok'}catch(e){return 'threw: '+e.message}})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{let m=new Map(),w=0,r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{w++;m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});let c=await r.create('T');await r.revoke(c.code);let before=w;let res=await r.revoke(c.code);return {res,extraWrites:w-before}})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{let m=new Map(),r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});let c=await r.create('T');return [c.code,await r.redeem(' aaaa-aaaa aaaa ','u'),await r.redeem('4444-4444-4444','v')]})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{let m=new Map(),n=0,r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});let c=await r.create('T');return [c.code,c.code.length,c.state]})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{let m=new Map(),r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});await r.create('T');try{return await r.create('T')}catch(e){return 'threw: '+e.message}})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{let m=new Map(),r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});return [await r.create(''),await r.list('')]})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{let m=new Map(),r=new InviteRegistry({store:{get:async k=>{await new Promise(s=>setTimeout(s,5));return m.get(k)},set:async(k,v)=>{await new Promise(s=>setTimeout(s,5));m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});let c=await r.create('T');return await Promise.all([r.redeem(c.code,'u'),r.redeem(c.code,'v')])})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let m=new Map(),n=0,r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});let a=await r.create('T'),c=await r.create('T'),d=await r.create('T');m.delete('code:'+c.code.replace(/-/g,''));return (await r.list('T')).map(i=>i.code)})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{let m=new Map(),n=0,r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(1000),randomInt:b=>n++%b});let a=await r.create('T'),c=await r.create('T');await r.redeem(a.code,'u');return await r.list('T')})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ ok: false, reason: 'expired' }"
+    },
+    {
+      "item": 2,
+      "actual": "[ { ok: true, taskId: 'T' }, { ok: false, reason: 'already has access' }, [ 'used', 'unused' ] ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ { ok: false, reason: 'used' }, { ok: false, reason: 'revoked' } ]"
+    },
+    {
+      "item": 4,
+      "actual": "'threw: invite code has been used and cannot be revoked'"
+    },
+    {
+      "item": 5,
+      "actual": "{ res: undefined, extraWrites: 0 }"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'AAAA-AAAA-AAAA', { ok: true, taskId: 'T' }, { ok: false, reason: 'unknown' } ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ 'ABCD-EFGH-JKMN', 14, 'unused' ]"
+    },
+    {
+      "item": 8,
+      "actual": "'threw: could not draw an unused invite code'"
+    },
+    {
+      "item": 9,
+      "actual": "[ { code: 'AAAA-AAAA-AAAA', taskId: '', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }, [ { code: 'AAAA-AAAA-AAAA', taskId: '', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' } ] ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { ok: true, taskId: 'T' }, { ok: false, reason: 'used' } ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ 'ABCD-EFGH-JKMN', '3456-789A-BCDE' ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ { code: 'ABCD-EFGH-JKMN', taskId: 'T', createdAt: 1970-01-01T00:00:01.000Z, expiresAt: 1970-01-15T00:00:01.000Z, state: 'used', usedBy: 'u', usedAt: 1970-01-01T00:00:01.000Z }, { code: 'PQRS-TUVW-XYZ2', taskId: 'T', createdAt: 1970-01-01T00:00:01.000Z, expiresAt: 1970-01-15T00:00:01.000Z, state: '"
+    }
+  ]
+}

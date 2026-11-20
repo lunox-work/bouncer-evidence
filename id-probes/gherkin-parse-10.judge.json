@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11613490000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks whether each scenario keeps its original line number, which is the core of S1 (scenarios come back with name, line and steps in file order). Its run returned the scenarios in file order with lines 4 and 6, and each step had its keyword, text and line. That is what S1 expects.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how comments and blank lines are treated, which is two of the four things S2 settles (items 7 and 5 cover tags and descriptions). The pick skips '#' lines and blank lines everywhere, and the run shows a comment line and a blank line both skipped. That matches S2.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks whether the Background is returned and kept separate from scenario steps. The run returned background [Given b] on its own, and the scenario held only [When w], so background steps were not copied in. That is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how doc strings and tables attach to steps. The pick strips the opening quotes' indent from each doc string line and trims each table cell, as S4 requires. The run threw only because one step had both a table and a doc string, a case S4 does not cover. Item 11's run also shows a '#' line inside a doc string kept as content.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks what happens when there is no Feature: line, which is the first and most specific rule in S5. The pick always reports line 1, but S5 wants the error at the first line of content, which can come after leading blank or comment lines. Its run used an empty file, which has no content line, so it cannot show the pick agreeing. Items 3, 4, 5 and 9 cover other S5 errors and do report the offending line.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a feature with no scenarios is valid. The run parseFeature(\"Feature: F\\n\") returned scenarios: [] and background: null with no error, which is what S6 expects.",
+      "failing": false
+    }
+  ]
+}

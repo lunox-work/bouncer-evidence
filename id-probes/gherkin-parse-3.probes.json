@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-3",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.055926699999999996,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(()=>{try{return parseFeature(\"Feature: f\\nScenario Outline: x\\nGiven a\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 2,
+      "probe": "(()=>{const r=[];for(const t of [\"\",\"\\n\\nGiven a\\nFeature: f\"]){try{r.push(parseFeature(t))}catch(e){r.push([e.name,e.line,e.message])}}return r})()"
+    },
+    {
+      "item": 3,
+      "probe": "(()=>{try{return parseFeature(\"@top\\nFeature: f\\n@a @b\\n@c\\nScenario: s\\nGiven x\\n@d\\nScenario: t\")}catch(e){return [e.line,e.message]}})()"
+    },
+    {
+      "item": 4,
+      "probe": "(()=>{const r=[parseFeature(\"Feature: f\\nScenario: s\\nGiven a\"),parseFeature(\"Feature: f\\nBackground:\\nScenario: s\"),parseFeature(\"Feature: f\\nBackground:\\nGiven b\\nScenario: s\\nGiven a\")];try{parseFeature(\"Feature: f\\nBackground:\\nBackground:\")}catch(e){r.push([e.line,e.message])}return r})()"
+    },
+    {
+      "item": 5,
+      "probe": "(()=>{const r=[parseFeature(\"Feature: f\\nsome free text\\nmore text\\nScenario: s\")];try{parseFeature(\"Feature: f\\nScenario: s\\nfree text\")}catch(e){r.push([e.line,e.message])}return r})()"
+    },
+    {
+      "item": 6,
+      "probe": "(()=>{try{return parseFeature(\"Feature: f\\nGiven a\\nScenario: s\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(()=>{const f=parseFeature(\"Feature: f\\nScenario: s\\nGiven a\\n    \\\"\\\"\\\"\\n    line1\\n      line2\\n    \\\"\\\"\\\"\\nWhen b\\n| a | b |\\n| 1 | 2 |\");let e2;try{parseFeature(\"Feature: f\\nScenario: s\\nGiven a\\n\\\"\\\"\\\"\\nx\\n| a |\")}catch(e){e2=[e.line,e.message]}let e3;try{parseFeature(\"Feature: f\\nScenario: s\\nGiven a\\n\\\"\\\"\\\"\\nx\")}catch(e){e3=[e.line,e.message]}return [f.scenarios[0].steps,e2,e3]})()"
+    },
+    {
+      "item": 8,
+      "probe": "(()=>{const f=parseFeature(\"Feature: f\\nScenario: s\\nGiven a\\n| a\\\\|b | c\\\\\\\\d | e\\\\nf |\\n| x |\");let e2;try{parseFeature(\"Feature: f\\nScenario: s\\nGiven a\\n| a | b\")}catch(e){e2=[e.line,e.message]}return [f.scenarios[0].steps[0].table,e2]})()"
+    },
+    {
+      "item": 9,
+      "probe": "(()=>{const r=[];for(const k of [\"Given\",\"given\",\"GIVEN\",\"Givenx a\",\"* a\",\"Given a\",\"Given\",\"Gegeben a\"]){try{r.push(parseFeature(\"Feature: f\\nScenario: s\\n\"+k).scenarios[0].steps)}catch(e){r.push([k,e.line,e.message])}}return r})()"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"\\uFEFFFeature: f\\r\\n# c\\r\\n\\r\\nScenario: s\\r\\n\\r\\n# x\\r\\nGiven a\\r\\n\")"
+    },
+    {
+      "item": 11,
+      "probe": "(()=>{try{return parseFeature(\"Feature: a\\nScenario: s\\nFeature: b\")}catch(e){return [e.name,e.line,e.message]}})()"
+    },
+    {
+      "item": 12,
+      "probe": "(()=>{try{parseFeature(\"Feature: f\\nScenario: s\\nbogus\")}catch(e){return {name:e.name,line:e.line,message:e.message,isError:e instanceof Error,isParseError:e instanceof ParseError}}})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ 'ParseError', 2, 'line 2: \"Scenario Outline:\" is not supported' ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ [ 'ParseError', 1, 'line 1: no \"Feature:\" line' ], [ 'ParseError', 3, 'line 3: file must begin with a \"Feature:\" line before any other content' ] ]"
+    },
+    {
+      "item": 3,
+      "actual": "{\n  name: 'f',\n  background: null,\n  scenarios: [ { name: 's', line: 5, tags: [ '@a', '@b', '@c' ], steps: [ { keyword: 'Given', text: 'x', line: 6, docString: null, table: null } ] }, { name: 't', line: 8, tags: [ '@d' ], steps: [] } ]\n}"
+    },
+    {
+      "item": 4,
+      "actual": "[\n  {\n    name: 'f',\n    background: null,\n    scenarios: [ { name: 's', line: 2, tags: [], steps: [ [Object] ] } ]\n  },\n  { name: 'f', background: [], scenarios: [ { name: 's', line: 3, tags: [], steps: [] } ] },\n  {\n    name: 'f',\n    background: [ { keyword: 'Given', text: 'b', line: 3, docString"
+    },
+    {
+      "item": 5,
+      "actual": "[ { name: 'f', background: null, scenarios: [ { name: 's', line: 4, tags: [], steps: [] } ] }, [ 3, 'line 3: unrecognised line: free text' ] ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'ParseError', 2, 'line 2: a step must come after \"Background:\" or \"Scenario:\"' ]"
+    },
+    {
+      "item": 7,
+      "actual": "[\n  [\n    { keyword: 'Given', text: 'a', line: 3, docString: [ 'line1', '  line2' ], table: null },\n    { keyword: 'When', text: 'b', line: 8, docString: null, table: [ [ 'a', 'b' ], [ '1', '2' ] ] }\n  ],\n  [ 4, 'line 4: doc string is never closed' ],\n  [ 4, 'line 4: doc string is never closed' ]\n]"
+    },
+    {
+      "item": 8,
+      "actual": "[ [ [ 'a|b', 'c\\\\d', 'e\\nf' ], [ 'x' ] ], [ 4, 'line 4: table row must start and end with |' ] ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ [ { keyword: 'Given', text: '', line: 3, docString: null, table: null } ], [ 'given', 3, 'line 3: unrecognised line: given' ], [ 'GIVEN', 3, 'line 3: unrecognised line: GIVEN' ], [ 'Givenx a', 3, 'line 3: unrecognised line: Givenx a' ], [ { keyword: '*', text: 'a', line: 3, docString: null, table:"
+    },
+    {
+      "item": 10,
+      "actual": "{\n  name: 'f',\n  background: null,\n  scenarios: [\n    { name: 's', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 7, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 11,
+      "actual": "[ 'ParseError', 3, 'line 3: second \"Feature:\" line' ]"
+    },
+    {
+      "item": 12,
+      "actual": "{ name: 'ParseError', line: 3, message: 'line 3: unrecognised line: bogus', isError: true, isParseError: true }"
+    }
+  ]
+}

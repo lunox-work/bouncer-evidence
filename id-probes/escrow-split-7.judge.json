@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1148332,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what the default share is or how much the hidden-test release is in the basic case. Item 1 is about rounding, and items 3, 7 and 11 only show the 75% default in passing.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how the share is rounded. The pick rounds down using BigInt integer division, which stays exact for large bounties, and gives the leftover to UAT. The run returned splitBounty(10,3333) → {hiddenTests:3, uat:7}, so it floors and the two parts add up to the bounty.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what UAT approval releases or what status follows it. Item 4 only covers a repeated uat-approved event.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "The run returned {status:'locked', releases:[]} with zero writes, so nothing is recorded and the task stays locked.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "The run threw 'cannot approve UAT: the hidden tests have not passed' with zero writes, which is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": false,
+      "why": "The status is 'pro bono', but the pick records zero-amount releases for both hidden-tests and uat. The scenario says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what a repeat hidden-tests-passed does after the release. The run used a second event with a different id: it returned the current state, and the store was written only once. Repeats are deduplicated by kind, so the same id is also ignored. Item 5 (deduplicate by id or by kind) is related, but item 3 is closer.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 11,
+      "agrees": true,
+      "why": "The pick processes events one at a time for each store, whatever their ids, so concurrent duplicates release once. The run with a delayed store and two simultaneous events wrote once.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "The run rejected with 'boom', the store stayed undefined, and retrying the same event recorded the release.",
+      "failing": false
+    }
+  ]
+}

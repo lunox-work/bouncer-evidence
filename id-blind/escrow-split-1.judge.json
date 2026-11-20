@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0827242,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 is the basic case: the default share is released when the hidden tests pass. No item asks what the default share is or whether a pass releases it. Item 1 is about rounding, and 10000 divides evenly. Item 12 covers how the status is worked out in general, not this release.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how an uneven share is rounded. Its pick floors with BigInt division and gives the remainder to UAT. That matches 749 + 250, and the amount stays exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "S3 is the basic case: UAT approval releases the remaining balance and the task becomes fully released. No item leaves that open. Item 1's remainder rule and item 12's status rule touch parts of it, but neither asks whether UAT approval releases the rest.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks what happens when the hidden tests fail. Its pick does nothing and leaves the task locked, which is what S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens if UAT is approved before the hidden tests pass. Its pick throws 'the hidden tests have not passed' and records nothing, which matches S5.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks how the events behave when the bounty is 0. Its pick records releases of amount 0. S6 says no release is ever recorded, though both report 'pro bono'.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens when the hidden tests pass again after the release was made. Its pick does nothing and writes nothing. That covers both the repeated e1 and a different pass event after the release.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how simultaneous or duplicate events on the same store are handled. Its pick runs them one at a time per store, so the read-check-write steps cannot overlap. The second pass or UAT approval then sees the release already made and records nothing.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what happens when the store fails. Its pick passes get/set errors through with nothing recorded so the event can be retried, which matches S9.",
+      "failing": false
+    }
+  ]
+}

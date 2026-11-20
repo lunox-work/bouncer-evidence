@@ -1,0 +1,53 @@
+{
+  "sha256": "62ecde369e2a131d4a0bdf67959451d05ca381e92c95c2d4eea0848674fa837c",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T01:43:50.133Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "An empty pathname falls back to `\"/\"`, so `\"http://example.com\"` gives `\"/\"`.",
+    "Ticket: silent.",
+    "Instead: Return an empty string (or only the search and hash) when there is no path.",
+    "Protocol, auth, host and port are all dropped. Only pathname, search and hash are returned.",
+    "Ticket: silent.",
+    "Instead: Keep the protocol, or strip only the hostname and leave the port and auth.",
+    "Input with no host (for example `\"/foo?x=1\"`) is parsed as a path and returned unchanged. `\"/\"` is added only when the path is empty, and nothing is thrown.",
+    "Ticket: silent.",
+    "Instead: Return the input as is, or throw on input that is not an absolute URL.",
+    "An empty string input returns `\"/\"`.",
+    "Ticket: silent.",
+    "Instead: Return an empty string.",
+    "A protocol-relative URL goes through `parseURL` with no special handling. `parseURL` treats `//host` as having a host, so `\"//example.com/foo\"` gives `\"/foo\"`.",
+    "Ticket: silent.",
+    "Instead: Explicitly treat `\"//host\"` as having a host and strip it.",
+    "When the path is empty, the query and fragment are kept after the `\"/\"` fallback, so `\"http://a.com?x=1#h\"` gives `\"/?x=1#h\"`.",
+    "Ticket: silent.",
+    "Instead: Return `\"?x=1#h\"` with no leading slash.",
+    "`search` and `hash` are concatenated as parsed, with no re-encoding or normalisation.",
+    "Ticket: silent.",
+    "Instead: Re-stringify or normalise the query and fragment.",
+    "The return type is left inferred, and it comes out as `string`.",
+    "Ticket: \"export function withoutHost(input: string);\"",
+    "Instead: Declare an explicit `: string` return type, as the neighbouring functions do.",
+    "Repeated slashes and letter case in the path are kept, so `\"http://a.com//foo\"` gives `\"//foo\"`.",
+    "Ticket: silent.",
+    "Instead: Collapse repeated slashes (as `cleanDoubleSlashes` does) so that the result cannot read as a protocol-relative URL.",
+    "Script-protocol and other non-`//` protocol inputs follow `parseURL`: `\"javascript:alert(1)\"` gives `\"alert(1)\"` and `\"mailto:a@b.com\"` gives `\"/\"`.",
+    "Ticket: silent.",
+    "Instead: Return such inputs unchanged, or return `\"/\"` for every input that has a protocol but no host.",
+    "Leading whitespace and backslashes in an input with a protocol are handled as `parseURL` handles them (whitespace is skipped, and `\\` is read as `/`).",
+    "Ticket: silent.",
+    "Instead: Take the input literally, without trimming whitespace or reading backslashes as slashes.",
+    "A `withoutHost` call never throws for a string input. Input that cannot be parsed as a URL is not rejected.",
+    "Ticket: silent.",
+    "Instead: Throw a `TypeError` for input that is not an absolute URL, as the WHATWG `URL` constructor does.",
+    "Seam (the files the stub writes): src/utils.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/utils.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

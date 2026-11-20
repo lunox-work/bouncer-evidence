@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-11",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.05274809999999999,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"Feature: F\\n  Scenario Outline: x\\n    Given a\\n\")"
+    },
+    {
+      "item": 2,
+      "probe": "parseFeature(\"Feature: F\\n\")"
+    },
+    {
+      "item": 3,
+      "probe": "parseFeature(\"\")"
+    },
+    {
+      "item": 4,
+      "probe": "parseFeature(\"Feature: A\\nFeature: B\\n\")"
+    },
+    {
+      "item": 5,
+      "probe": "parseFeature(\"Feature: F\\n  As a user\\n  I want things\\n  Given indented text\\n  Scenario: s\\n    Given a\\n\")"
+    },
+    {
+      "item": 6,
+      "probe": "parseFeature(\"Feature: F\\n  Scenario: s\\n    Given a\\n    random text\\n    When b\\n\")"
+    },
+    {
+      "item": 7,
+      "probe": "parseFeature(\"Feature: F\\n  Given a\\n  Scenario: s\\n\")"
+    },
+    {
+      "item": 8,
+      "probe": "parseFeature(\"Feature: F\\n  @a\\n  @b\\n  Background:\\n    Given x\\n  Scenario: s\\n    Given a\\n\")"
+    },
+    {
+      "item": 9,
+      "probe": "parseFeature(\"Feature: F\\n  Background:\\n    Given x\\n  Scenario: s\\n    When a\\n  Background:\\n    Given y\\n\")"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"Feature: F\\n  Scenario: s\\n    Given a\\n      \\\"\\\"\\\"\\n      hi\\n      \\\"\\\"\\\"\\n      | a | b |\\n\")"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"Feature: F\\n  Scenario: s\\n    Given a\\n      | a\\\\|b | c\\\\\\\\d | e\\\\nf |\\n    When b\\n        ```\\n          indented\\n      less\\n        ```\\n\")"
+    },
+    {
+      "item": 12,
+      "probe": "parseFeature(\"\\uFEFF# language: fr\\r\\nFeature: F\\r\\n  # c\\r\\n  Example: s\\r\\n    * a thing\\r\\n    Soit b\\r\\n\")"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "throws ParseError: line 2: Scenario Outline is not supported"
+    },
+    {
+      "item": 2,
+      "actual": "{ name: 'F', background: null, scenarios: [] }"
+    },
+    {
+      "item": 3,
+      "actual": "throws ParseError: line 1: expected a Feature: line"
+    },
+    {
+      "item": 4,
+      "actual": "throws ParseError: line 2: a second Feature: line"
+    },
+    {
+      "item": 5,
+      "actual": "throws ParseError: line 4: step before any Background: or Scenario:"
+    },
+    {
+      "item": 6,
+      "actual": "throws ParseError: line 4: unrecognised line \"random text\""
+    },
+    {
+      "item": 7,
+      "actual": "throws ParseError: line 2: step before any Background: or Scenario:"
+    },
+    {
+      "item": 8,
+      "actual": "throws ParseError: line 2: tags must be followed by a Scenario:"
+    },
+    {
+      "item": 9,
+      "actual": "throws ParseError: line 6: a second Background: line"
+    },
+    {
+      "item": 10,
+      "actual": "throws ParseError: line 7: table row must follow a step"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 's', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 3, docString: null, table: [Array] }, { keyword: 'When', text: 'b', line: 5, docString: [Array], table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 12,
+      "actual": "throws ParseError: line 6: unrecognised line \"Soit b\""
+    }
+  ]
+}

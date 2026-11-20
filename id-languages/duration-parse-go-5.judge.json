@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1014641,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 includes zero-valued inputs ('0s' giving 0, '1d0h0m0s0ms' giving 86400000). Item 9 asks whether zero-valued components are accepted, and its pick accepts them and returns the sum. Item 7 (day unit) also fits the 'd' examples, but item 9 is closer to the zero-component cases.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether whitespace is tolerated. Its pick trims leading and trailing whitespace, so '  45m\\n' parses to 2700000, as S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "S3 mixes several kinds of bad input, so no single item covers all of it. Item 5 (decimals, signs, ASCII-only digits) covers the most rows: '1.5h', '-3s', '+3s' and the full-width '３s'. Its pick rejects all of these. Other rows map to other items: empty string to 2, '90' to 1, inner spaces to 3, '3S' to 4, '3w' to 7. The '05s' row conflicts with item 9's pick, which accepts leading zeros.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may be larger than the next unit up, such as 90m. Item 6 is about order and repeats, not count size.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about out-of-order and repeated components. Its pick requires units from largest to smallest, each at most once, and errors otherwise, so all four rows are rejected.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks for the largest accepted duration. Its pick caps it at 9007199254740991 ms, so that exact value parses without error.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 also asks what happens above the cap. Its pick returns 0 and an error, and it checks for overflow while parsing, which covers the 20-digit ms count.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how FormatDuration splits a value into units, including days. Its pick breaks the value into d/h/m/s/ms and skips zero parts, which gives '1m30s', '1h30m', '1d' and '1d1h1m1s1ms'. Item 10 covers only the zero row, and its pick of '0ms' also agrees.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11's pick uses days and never prints more than 23h, so the maximum value prints as '104249991d8h59m991ms'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing returns the original number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what FormatDuration does with negative or oversized values. Its pick returns \"\" and an error for values below 0 or above 9007199254740991, which covers all four rows. The pick does not say what the error message contains.",
+      "failing": false
+    }
+  ]
+}

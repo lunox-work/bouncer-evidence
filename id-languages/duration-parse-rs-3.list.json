@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0581934,
+  "items": [
+    {
+      "question": "Does a bare number with no unit (e.g. the old raw-millisecond value 172800) still parse as milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a bare number with no unit as an invalid duration.",
+      "where": "src/lib.rs:108",
+      "instead": "Accept a bare number as raw milliseconds, so existing configs keep working."
+    },
+    {
+      "question": "Is an empty string a valid duration?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration for empty input.",
+      "where": "src/lib.rs:73",
+      "instead": "Treat empty input as 0 ms or as a missing value."
+    },
+    {
+      "question": "Is a day unit (`d`) supported?",
+      "ticket": "accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Adds `d` as a unit, with 86,400,000 ms per day.",
+      "where": "src/lib.rs:26",
+      "instead": "Support only h, m, s and ms, as in the ticket's examples, and let hours express days."
+    },
+    {
+      "question": "Must components be written largest unit first, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Rejects out-of-order or repeated units such as `30m1h` and `1s1s`.",
+      "where": "src/lib.rs:113",
+      "instead": "Accept components in any order and sum repeats."
+    },
+    {
+      "question": "Is whitespace, a sign, a fraction, or different casing allowed in the input?",
+      "ticket": "silent",
+      "chose": "Rejects spaces, `+`/`-`, decimals such as `1.5h`, and uppercase units such as `1H`.",
+      "where": "src/lib.rs:86",
+      "instead": "Trim whitespace, accept fractions, and accept units in any case."
+    },
+    {
+      "question": "What is the maximum allowed duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 9007199254740991 ms (the JS safe integer) and returns InvalidDuration beyond it or on u64 overflow.",
+      "where": "src/lib.rs:123",
+      "instead": "Allow the full u64 range and report overflow only when u64 overflows."
+    },
+    {
+      "question": "Is a zero duration such as `0ms` valid?",
+      "ticket": "silent",
+      "chose": "Accepts `0ms` (and any zero-valued component) and returns 0.",
+      "where": "src/lib.rs:85",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "Which unit suffixes are accepted, such as `sec`, `min`, or `w`?",
+      "ticket": "silent",
+      "chose": "Accepts only d, h, m, s and ms, and rejects every other suffix.",
+      "where": "src/lib.rs:100",
+      "instead": "Also accept long names (`sec`, `min`, `hours`) or weeks."
+    },
+    {
+      "question": "What does formatting print for zero?",
+      "ticket": "silent",
+      "chose": "Prints `0s`.",
+      "where": "src/lib.rs:143",
+      "instead": "Print `0ms`."
+    },
+    {
+      "question": "Which decomposition does formatting pick when several are possible (e.g. 5400000 ms)?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string over the greedy decompositions starting at each unit, so 5400000 ms prints as `90m` rather than `1h30m`.",
+      "where": "src/lib.rs:147",
+      "instead": "Use a greedy decomposition from the largest unit, giving `1h30m`."
+    },
+    {
+      "question": "How are ties between equal-length formatted strings broken?",
+      "ticket": "silent",
+      "chose": "Keeps the earlier candidate, which starts at the larger unit, when lengths are equal.",
+      "where": "src/lib.rs:161",
+      "instead": "Prefer the candidate with fewer components, or the one that starts at the smallest unit."
+    },
+    {
+      "question": "What does formatting do for a millisecond value above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error for values above 9007199254740991.",
+      "where": "src/lib.rs:140",
+      "instead": "Format any u64 value without an error."
+    }
+  ]
+}

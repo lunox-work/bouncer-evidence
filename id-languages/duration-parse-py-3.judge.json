@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0981166,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": false,
+      "why": "S1 settles which units are allowed, and it expects `2d` to give 172800000 and `1d0h0m0s0ms` to parse. Item 1 accepts only h, m, s and ms and rejects days. Its `0s` row also fits item 8, but the days rows are what this scenario decides.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks whether whitespace is allowed. S2 expects whitespace around the value to be ignored (`  45m\\n` gives 2700000), but item 4 rejects all whitespace, including ` 1s`.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Most of the rejected rows are fractions, signs or spaces inside the value (`1.5h`, `-3s`, `+3s`, `1h 30m`, `3 s`), which is item 4's question, and item 4 rejects them. Other rows belong to other items: empty string (6), bare `90` (5), `3w` (1), `3S` (2), and `05s` (8). Item 8's pick accepts leading zeros, so it would get the `05s` row wrong.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks whether a count can exceed its natural range. It accepts this with no normalisation, so `90m` gives 5400000.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about unit order and repeats. It allows each unit at most once in descending order, so `30m1h`, `1h1h`, `1s500ms2s` and `5ms1s` are rejected.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 sets the upper limit. It raises only when the total exceeds 9007199254740991, so exactly that value is allowed. Note that the input uses `d`, which item 1's pick would reject.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 raises ValueError for totals above 9007199254740991 ms, which covers both rows here.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "S8 expects the readable form: `1h30m`, `1m30s`, `1d`. Item 11 picks the shortest string (`90m`, `90s`). S8 also expects `0ms` for 0, while item 12 returns `0s`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "The output style decides how the largest value is printed. S9 expects the readable form with days, `104249991d8h59m991ms`. The shortest form would be `9007199254740991ms`, and item 11's units have no days anyway.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give back the original number.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks which inputs format_duration rejects. It raises ValueError for negatives, values above the max, floats and bools, which matches every row.",
+      "failing": false
+    }
+  ]
+}

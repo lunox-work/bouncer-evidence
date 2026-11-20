@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0686209,
+  "items": [
+    {
+      "question": "Is a code that is expired, revoked or used still reported as used if it is more than one of these?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "State precedence is used, then revoked, then expired, then unused, so a used code stays 'used' after its expiry date.",
+      "where": "src/index.ts:42",
+      "instead": "Report expired first, or treat a used code that has since passed its expiry as expired."
+    },
+    {
+      "question": "At exactly 14 days after creation, is the code still valid?",
+      "ticket": "expire after 14 days",
+      "chose": "Treats the code as expired when now >= expiresAt, so it is expired at exactly 14 days.",
+      "where": "src/index.ts:44",
+      "instead": "Treat the code as valid through the 14-day instant and expire it only when now > expiresAt."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Refuses with reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:116",
+      "instead": "Consume the code and succeed idempotently, or return ok with no change."
+    },
+    {
+      "question": "Which check comes first when a code is both unusable and the contributor already has access?",
+      "ticket": "silent",
+      "chose": "Checks the code state (unknown, used, revoked, expired) before checking existing access.",
+      "where": "src/index.ts:112",
+      "instead": "Check for existing access first and report 'already has access' regardless of code state."
+    },
+    {
+      "question": "How is a typed code matched?",
+      "ticket": "silent",
+      "chose": "Strips whitespace and '-' and uppercases the input before looking it up.",
+      "where": "src/index.ts:33",
+      "instead": "Match the code exactly as stored, or only trim and uppercase it."
+    },
+    {
+      "question": "What format and length do generated codes have?",
+      "ticket": "silent",
+      "chose": "12 characters from a 31-character alphabet without look-alike characters, shown as XXXX-XXXX-XXXX.",
+      "where": "src/index.ts:10",
+      "instead": "Use a UUID or a shorter or longer random token, possibly with a different alphabet and no grouping."
+    },
+    {
+      "question": "What happens when a newly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times and then throws 'could not draw an unused invite code'.",
+      "where": "src/index.ts:188",
+      "instead": "Redraw without a cap, or fail on the first collision."
+    },
+    {
+      "question": "Can codes be revoked, and what happens when a used, unknown or already-revoked code is revoked?",
+      "ticket": "silent",
+      "chose": "Adds revocation. It throws for unknown and used codes, and revoking an already-revoked code does nothing.",
+      "where": "src/index.ts:136",
+      "instead": "Leave revocation out, or make unknown codes a silent no-op, or throw when a code is revoked twice."
+    },
+    {
+      "question": "Does create validate the task ID, such as an empty string or an unknown task?",
+      "ticket": "silent",
+      "chose": "Accepts any taskId string without validation and creates a code for it.",
+      "where": "src/index.ts:84",
+      "instead": "Reject empty or unknown task IDs with an error."
+    },
+    {
+      "question": "Does redeem validate the contributor ID, such as an empty string?",
+      "ticket": "silent",
+      "chose": "Accepts any contributorId and records it as usedBy and in the grants.",
+      "where": "src/index.ts:119",
+      "instead": "Reject an empty or invalid contributor ID."
+    },
+    {
+      "question": "How are overlapping operations on the same registry handled?",
+      "ticket": "silent",
+      "chose": "Runs every operation, reads included, through a single promise queue, so overlapping redeems of one code give one winner and the rest see 'used'.",
+      "where": "src/index.ts:176",
+      "instead": "Rely on the store for atomicity, or lock per code. Alternatively, run reads outside the queue."
+    },
+    {
+      "question": "What order are the codes in a task's list and in a contributor's task list?",
+      "ticket": "silent",
+      "chose": "Returns them in creation order for list and in grant order for tasksFor, with no sorting or paging.",
+      "where": "src/index.ts:94",
+      "instead": "Sort newest first, or sort by state."
+    }
+  ]
+}

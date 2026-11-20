@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1055288,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Most rows are plain addition that nothing on the list asks about. The open question here is whether zero values are allowed (`0s` → 0, `1d0h0m0s0ms`), which is item 9. Its pick accepts `0s` and parses it to 0, which matches.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks whether whitespace around a duration is allowed. The scenario trims it and returns 2700000. The pick rejects all whitespace and trims nothing.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Several items touch these rows (3 for whitespace, 4 for case, 6 for empty input, 9 for `05s`). Item 5 is closest because most rows are bare, fractional or signed forms (`90`, `1.5h`, `-3s`, `+3s`) and the grammar is 'digits then unit'. Its pick rejects all of these. Note that item 9's pick accepts leading zeros, so it would conflict with the `05s` row.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count can exceed what the next unit up holds (`90m` on input). Item 2 is about the order of units, and item 11 is about formatting.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": false,
+      "why": "Three of the four rows (`30m1h`, `5ms1s`, `1s500ms2s`) are out of descending order, which is item 2's question. Item 1 covers only the repeated-unit rows. Item 2's pick accepts any order, but the scenario rejects these inputs.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about the maximum and whether it is inclusive. Its pick allows exactly 9007199254740991 ms, which is what the scenario expects.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 covers the maximum. Its pick rejects totals above 9007199254740991 and rejects counts longer than 16 digits early, so both rows are rejected.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks what formatting style to use. The scenario wants the largest-unit-first compound form (`1m30s`, `1h30m`). The pick chooses the shortest string, giving `90s` and `90m`. Item 10's pick, `0s` for 0, also conflicts with the expected `0ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "This is another formatting-style case. Under the shortest-string rule, `9007199254740991ms` and `150119987579m991ms` are both 18 characters, shorter than the expected 20-character `104249991d8h59m991ms`. The tie goes to the single component, so the pick outputs `9007199254740991ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give the number back. That depends on how items 2 and 11 are answered together, but neither one asks it.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how format_duration treats negative, over-limit, bool and float input. Its pick raises ValueError mentioning 'milliseconds' for all of them, including True and 1.0.",
+      "failing": false
+    }
+  ]
+}

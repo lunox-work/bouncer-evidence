@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0783771,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 settles the BOM, the header, the row order and the line endings, so items 1, 2, 4 and 5 all fit part of it. Item 1 (columns and header text) is the closest match to the scenario's main point. Its pick emits exactly \"Requisition ID,Title,Status,Openings,Filled,Created\". The other parts agree too: item 5 adds the BOM, item 2 sorts by creation time then id, and item 4 ends every row with \\r\\n, the last one included.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": false,
+      "why": "S2 is about writing values for people to read. Its main check is relabelling the status as \"Open\", \"On hold\" and so on, which is the question item 11 asks. Item 11's pick writes the raw value with no relabelling. The date check would fail too: item 9 writes a full ISO string with milliseconds instead of YYYY-MM-DD. Only the missing-title part agrees (item 7).",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what an empty list produces. Its pick returns the BOM and the header row only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": false,
+      "why": "Item 8 asks how fields are quoted and escaped. Its pick quotes on a comma, quote, CR or LF and doubles inner quotes. It does not quote a field that starts or ends with a space, which S4 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing titles that start like a formula (\"=\", \"+\", \"-\", \"@\", a tab or a CR). Item 8 covers quoting only, not adding a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how rows with bad data are handled. Its pick throws an Error naming the requisition id, for the same set of bad data S6 lists: unknown status, counts that are not whole numbers of at least 0, filled greater than openings, and an invalid date.",
+      "failing": true
+    }
+  ]
+}

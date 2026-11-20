@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1347449,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks where the 14-day expiry is counted from. The run shows a code created at t=5s with expiresAt exactly 14 days later, and that is what S1 expects. Item 9, about redrawing on a collision, only touches S1's second clause.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks the basic question of what a successful redeem grants: access to that task only, and the code recording who used it and when. Item 7 is about a write failing partway through, and item 12 is about what list returns.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how typed variants are handled. The pick ignores case, whitespace and '-', and the run redeemed the code in lowercase with spaces and surrounding whitespace successfully.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code expires at the 14-day mark or after it. The run shows the code 'unused' 1ms before 14 days and 'expired' at exactly 14 days, where redeem returns reason 'expired'. S4 expects the same.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when a used code is redeemed again, whether by another contributor or by the one who used it. Item 3 is about redeeming a different unused code while already having access, which is S7. Item 5 only covers which reason wins when a code is in more than one state.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether codes can be revoked and what happens when you revoke a used code. The run shows revoking a used code throws 'invite code has been used', so a used code cannot be revoked. Item 5's run also shows a revoked code is refused with reason 'revoked', and item 4 shows unknown codes give 'unknown'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks the same question. The run returns {ok:false, reason:'already has access'} and the second code stays 'unused', as S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how concurrent redeems of one code are handled. With a store whose calls are delayed, the run shows exactly one of three simultaneous redeems succeeds and the others fail with reason 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what list returns. Each entry shows its code, createdAt, expiresAt and state, and used codes also show usedBy and usedAt. In the run, listing at day 15, after the expiry time, still showed the used code as 'used'.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "run": "status-normalize-8",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.043575699999999995,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "[\"in-review\",\"In Review\",\"in_review\",\"inreview\",\"Published\",\"wip\",\"done\",\"open\"].map(s=>[s,readStatus(s)])"
+    },
+    {
+      "item": 2,
+      "probe": "[\"  DRAFT \",\"draft-\",\"_merged\",\"Draft\\t\",\"in--review\",\"in_ review\"].map(s=>[s,readStatus(s)])"
+    },
+    {
+      "item": 3,
+      "probe": "[readStatus(\"bogus\"),readStatus(\"\"),readStatus(\"   \"),readStatus(\"-_-\")]"
+    },
+    {
+      "item": 4,
+      "probe": "[\"Draft\",\" draft\",\"in-review\"].map(s=>{try{return writeStatus(s)}catch(e){return e.message}})"
+    },
+    {
+      "item": 5,
+      "probe": "(()=>{try{writeStatus(\"bogus\")}catch(e){return [e.constructor.name,e.name,e.message]}})()"
+    },
+    {
+      "item": 6,
+      "probe": "(()=>{try{return writeStatus(\"\")}catch(e){return e.message}})()"
+    },
+    {
+      "item": 7,
+      "probe": "readStatuses([{id:\"a\",status:\"draft\"},{id:\"b\",status:\"bogus\"},{id:\"c\",status:\"in review\"}])"
+    },
+    {
+      "item": 8,
+      "probe": "readStatuses([{id:\"1\",status:\"b\"},{id:\"2\",status:\" Z \"},{id:\"3\",status:\"b\"},{id:\"4\",status:\"B\"},{id:\"5\",status:\"\"},{id:\"6\",status:\"a\"}]).unreadable"
+    },
+    {
+      "item": 9,
+      "probe": "readStatuses([])"
+    },
+    {
+      "item": 10,
+      "probe": "readStatuses([{id:\"x\",status:\"draft\"},{id:\"x\",status:\"merged\"},{id:\"x\",status:\"zzz\"}])"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ [ 'in-review', 'review' ], [ 'In Review', 'review' ], [ 'in_review', 'review' ], [ 'inreview', null ], [ 'Published', 'published' ], [ 'wip', null ], [ 'done', null ], [ 'open', null ] ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ [ '  DRAFT ', 'draft' ], [ 'draft-', 'draft' ], [ '_merged', 'merged' ], [ 'Draft\\t', 'draft' ], [ 'in--review', 'review' ], [ 'in_ review', 'review' ] ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ null, null, null, null ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'not a sandbox status: \"Draft\"', 'not a sandbox status: \" draft\"', 'not a sandbox status: \"in-review\"' ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'Error', 'Error', 'not a sandbox status: \"bogus\"' ]"
+    },
+    {
+      "item": 6,
+      "actual": "'not a sandbox status: \"\"'"
+    },
+    {
+      "item": 7,
+      "actual": "{ rows: [ { id: 'a', status: 'draft' }, { id: 'b', status: null }, { id: 'c', status: 'review' } ], unreadable: [ 'bogus' ] }"
+    },
+    {
+      "item": 8,
+      "actual": "[ '', ' Z ', 'B', 'a', 'b' ]"
+    },
+    {
+      "item": 9,
+      "actual": "{ rows: [], unreadable: [] }"
+    },
+    {
+      "item": 10,
+      "actual": "{ rows: [ { id: 'x', status: 'draft' }, { id: 'x', status: 'merged' }, { id: 'x', status: null } ], unreadable: [ 'zzz' ] }"
+    }
+  ]
+}

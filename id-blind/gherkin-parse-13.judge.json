@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0948289,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 11,
+      "agrees": null,
+      "why": "Item 11 asks how step and scenario text are trimmed, which is what S1 pins down with 'its text after the keyword and one space'. The pick says text is 'whatever follows the keyword and whitespace'. That does not say whether exactly one space or all leading whitespace is removed, so it is unclear whether extra spaces are kept as S1 requires.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how comments and blank lines are handled, which covers most of S2. The pick skips lines starting with # and blank lines, as S2 expects. Tags (item 8) and descriptions (item 5) are covered by other items, which also fit but less closely.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether a Background is allowed, where it may go and how it is returned. The pick allows one before any Scenario and returns its steps separately in `background`, which matches S3's 'returned as the background, and not copied into the scenarios'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether doc strings and tables are supported and how they attach. The pick attaches them to the step before, strips the doc string indentation and keeps its lines literal, as S4 expects. Trimming table cells (item 7) also matches.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks what happens when there is no Feature: line, which is S5's first rule. S5 puts the error at the first content line. The pick always reports line 1, which is wrong when comments or blank lines come before that content. Items 2, 9 and 6 cover other parts of S5 and agree with it. Item 5 would also disagree, because it accepts free text in a scenario before the first step.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks whether a Feature with no scenarios is valid. The pick accepts it and returns an empty scenarios array, as S6 expects. Background is null when absent, per item 4.",
+      "failing": false
+    }
+  ]
+}

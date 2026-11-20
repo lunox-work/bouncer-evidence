@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/15",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0818473,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how a stored value with different case or surrounding whitespace is read. Its pick trims and lowercases, so \"Draft\", \" PUBLISHED \" and \"Merged\" read as draft, published and merged, as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 2,
+      "agrees": false,
+      "why": "Item 2 asks which old spellings map to a status. Its pick maps only 'in review', so 'under review', 'live' and the other aliases in the table would read as null. The scenario expects \"under_review\" to read as review and \"LIVE\" as published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unmatched value returns. Its pick returns null and never guesses the nearest status, which is what the scenario requires. Item 7 also covers empty and whitespace-only values (also null), but item 3 is the closer match to the scenario's main point.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item fixes this outcome. Item 5 (does writing normalise or accept only exact values) is about writing, but an exact value like \"review\" is stored as \"review\" whichever way item 5 is answered.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether writing normalises its input or accepts only exact enum values. Its pick accepts only exact lowercase values and throws on 'Draft', ' draft' and 'in-review', so it refuses the scenario's examples and never accepts old spellings on write. Item 6 covers only the error message.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how the batch read reports unreadable values. Its pick keeps every row (status null if unreadable) and lists each distinct raw value once, sorted. Item 9 confirms values are reported as stored, so the scenario's 'exactly as it was stored' holds too.",
+      "failing": true
+    }
+  ]
+}

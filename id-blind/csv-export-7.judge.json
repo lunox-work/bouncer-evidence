@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07386419999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "S1 covers several list items: the BOM (1), CRLF on every row including the last (2), the header (3) and row order (5). Item 3 is the closest because the scenario is mainly about the header row. Its pick writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created'. The other three picks also match the scenario.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "S2 sets how values are shown to people. No list item asks how status is labelled. Item 6 asks how the creation time is formatted, which is the closest fit. The scenario wants the UTC date as YYYY-MM-DD, but the pick writes a full ISO timestamp with milliseconds. Item 8 (missing title gives an empty field) also fits part of S2 and agrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an empty list produces. Its pick is the BOM and header line only, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": false,
+      "why": "Item 7 asks how fields that need quoting are written. Its pick quotes only for a comma, quote, CR or LF. S4 also quotes a field that starts or ends with a space, which the pick would leave unquoted.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No list item asks about titles that start like a formula ('=', '+', '-', '@', tab, CR) or about adding a leading single quote. Item 7 is only about quoting.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 9, 10 and 11 each cover one way a requisition can be invalid, and none covers an invalid creation time. Item 12 is the closest because it asks the scenario's overall question: does the export fail or skip the bad row? Its pick makes the whole build throw, which matches 'building fails'. Items 9 to 11 add that the error names the requisition id, also matching S6.",
+      "failing": true
+    }
+  ]
+}

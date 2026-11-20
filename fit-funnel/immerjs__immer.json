@@ -1,0 +1,10 @@
+{
+  "repo": "immerjs/immer",
+  "package": ".",
+  "language": "typescript",
+  "commit": "784c86bb234e805566481c9425fcb2a3897e8bcc",
+  "static": {
+    "supported": false,
+    "reason": "no test folder: no include glob's folder, test/, tests/, __tests__/ or src/ holds *.test or *.spec files"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/4",
+  "model": "claude-sonnet-5-5",
+  "seconds": 12,
+  "costUsd": 0.054582599999999995,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. the legacy raw-millisecond `172800`) accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects any input without a unit suffix as InvalidDuration.",
+      "where": "src/lib.rs:94",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Is an empty string accepted?",
+      "ticket": "silent",
+      "chose": "Rejects the empty string as InvalidDuration.",
+      "where": "src/lib.rs:65",
+      "instead": "Treat it as 0, or as an unset timeout."
+    },
+    {
+      "question": "Which units are supported besides h, m, s and ms?",
+      "ticket": "like `1h30m`, `90s` or `250ms`",
+      "chose": "Also accepts `d` (days), so the largest unit is 86,400,000 ms.",
+      "where": "src/lib.rs:14",
+      "instead": "Support only h, m, s and ms, or add w (weeks) as well."
+    },
+    {
+      "question": "Are unit suffixes case-insensitive?",
+      "ticket": "silent",
+      "chose": "Accepts lowercase suffixes only, so `1H` is rejected.",
+      "where": "src/lib.rs:91",
+      "instead": "Accept upper- and mixed-case suffixes."
+    },
+    {
+      "question": "Must components appear in descending unit order, and may a unit repeat?",
+      "ticket": "`1h30m`",
+      "chose": "Rejects out-of-order or repeated units such as `30m1h` and `1h1h`.",
+      "where": "src/lib.rs:95",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Are whitespace, signs and decimals allowed (e.g. `1h 30m`, `+1h`, `1.5h`)?",
+      "ticket": "silent",
+      "chose": "Rejects all of them, since only `<digits><unit>` components are allowed.",
+      "where": "src/lib.rs:81",
+      "instead": "Allow whitespace between components, or allow fractional values like `1.5h`."
+    },
+    {
+      "question": "Is there an upper limit on the parsed value, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns InvalidDuration for anything larger or any overflow.",
+      "where": "src/lib.rs:107",
+      "instead": "Allow up to u64::MAX, or use a separate overflow error."
+    },
+    {
+      "question": "Is zero a valid duration?",
+      "ticket": "silent",
+      "chose": "Accepts `0ms` and any zero-valued form (e.g. `0s`) as 0.",
+      "where": "src/lib.rs:113",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "What does the formatter output for 0 ms?",
+      "ticket": "silent",
+      "chose": "Returns `0ms`.",
+      "where": "src/lib.rs:127",
+      "instead": "Return `0s`, or an empty string."
+    },
+    {
+      "question": "How does the formatter pick among equivalent representations, such as `1h30m` and `90m` for 5,400,000 ms?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Builds a candidate from each starting unit and returns the shortest string, so 5,400,000 ms prints as `90m`. A tie goes to the larger starting unit.",
+      "where": "src/lib.rs:132",
+      "instead": "Use a greedy decomposition from the largest unit, giving `1h30m`."
+    },
+    {
+      "question": "What does the formatter do with values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error for values above 2^53-1.",
+      "where": "src/lib.rs:124",
+      "instead": "Format any u64 without a limit."
+    },
+    {
+      "question": "Does the formatter use days, so that 2 days prints as `2d`?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "Uses `d` as the largest unit, so 172,800,000 ms prints as `2d`.",
+      "where": "src/lib.rs:132",
+      "instead": "Stop at hours and print `48h`."
+    }
+  ]
+}

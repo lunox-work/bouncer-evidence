@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0781897,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks about the line terminator and the file prefix. That covers the BOM and the CRLF on every row, the last included, which are two of S1's four checks. Items 8 (column names) and 1 (row order) each settle only one check. All three picks match S1: the BOM, CRLF on every row, the same header, and sorting by creation time then id.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": false,
+      "why": "S2 is about how values are written for people to read. Item 10 asks how the creation time is formatted, and that is S2's main point that the other items don't cover. Item 4 is about which statuses are valid, not how a status is written. Item 10's pick writes the full ISO 8601 UTC timestamp with milliseconds, but S2 expects only the UTC date, YYYY-MM-DD.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what an empty requisition list produces. Its pick, the BOM and header row only, is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 12,
+      "agrees": null,
+      "why": "Item 12 asks how fields with commas, quotes or line breaks are escaped. Its pick quotes per RFC 4180 and doubles inner quotes, which matches that part of S4. But S4 also requires quoting a field that starts or ends with a space. RFC 4180 does not require that, and the pick does not say whether it does it.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 also asks whether formula prefixes (=, +, -, @) are neutralized. Its pick says it does nothing about formula-leading characters, but S5 expects a single quote to be added before them.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens with bad data: an unknown status, bad counts, filled over openings, or an invalid date. Its pick throws an Error that names the requisition id, which is what S6 expects.",
+      "failing": true
+    }
+  ]
+}

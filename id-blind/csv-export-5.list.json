@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.050831999999999995,
+  "items": [
+    {
+      "question": "What columns does the CSV have, and in what order and with what header names?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Emits the header \"Requisition ID,Title,Status,Openings,Filled,Created\" with those six columns in that order.",
+      "where": "src/index.ts:11",
+      "instead": "Use other header names or column order, such as snake_case field names, or omit Title or Created."
+    },
+    {
+      "question": "In what order are the rows emitted?",
+      "ticket": "silent",
+      "chose": "Sorts a copy of the input by createdAt ascending, then by id ascending as a tie-break.",
+      "where": "src/index.ts:26",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "What happens when a requisition has an unknown status value?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id, and only the four statuses open, on_hold, filled and cancelled are accepted.",
+      "where": "src/index.ts:15",
+      "instead": "Write the status through unchanged, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional, NaN or infinite?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id. Both counts must be integers of at least 0.",
+      "where": "src/index.ts:18",
+      "instead": "Write the number as-is, or clamp it to a valid value."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:18",
+      "instead": "Export the row as-is, or cap filled at openings."
+    },
+    {
+      "question": "Is zero openings valid?",
+      "ticket": "silent",
+      "chose": "Accepts openings of 0 (with filled 0) and writes the row normally.",
+      "where": "src/index.ts:18",
+      "instead": "Reject openings of 0 as invalid."
+    },
+    {
+      "question": "What happens when createdAt is an invalid Date or not a Date?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id.",
+      "where": "src/index.ts:21",
+      "instead": "Write an empty Created field, or skip the row."
+    },
+    {
+      "question": "Does one bad row fail the whole export or only that row?",
+      "ticket": "silent",
+      "chose": "Validates every row first and throws on the first bad one, so no partial output is returned.",
+      "where": "src/index.ts:13",
+      "instead": "Skip bad rows and export the rest, or collect all errors and report them together."
+    },
+    {
+      "question": "How is a missing or null title written?",
+      "ticket": "silent",
+      "chose": "Writes an empty field for an undefined or null title.",
+      "where": "src/index.ts:35",
+      "instead": "Write the literal text \"null\" or \"undefined\", or throw."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks written?",
+      "ticket": "silent",
+      "chose": "Wraps the field in double quotes and doubles any inner quotes, following RFC 4180.",
+      "where": "src/index.ts:54",
+      "instead": "Quote every field, or leave fields unescaped."
+    },
+    {
+      "question": "Are spreadsheet formula characters (=, +, -, @) at the start of a field neutralised?",
+      "ticket": "silent",
+      "chose": "Does nothing special. Titles starting with = or + are written as-is, apart from normal CSV quoting.",
+      "where": "src/index.ts:54",
+      "instead": "Prefix such values with a single quote, or a tab, to prevent CSV formula injection."
+    },
+    {
+      "question": "What line endings, byte-order mark and trailing newline does the file use?",
+      "ticket": "silent",
+      "chose": "Starts with a UTF-8 BOM, ends every line including the last with CRLF, and returns only the header and BOM for an empty list.",
+      "where": "src/index.ts:45",
+      "instead": "Use LF endings, no BOM, and no trailing newline after the last row."
+    }
+  ]
+}

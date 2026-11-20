@@ -1,0 +1,255 @@
+{
+  "slug": "ufo-base-prefix-check",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "test/ufo-base-prefix-check.test.ts :: [happy-1] withBase leaves an input already under the base unchanged",
+    "test/ufo-base-prefix-check.test.ts :: [happy-1] withBase treats a bare trailing / or ? right after the base as a boundary",
+    "test/ufo-base-prefix-check.test.ts :: [happy-2] withoutBase strips a base followed by / or ?",
+    "test/ufo-base-prefix-check.test.ts :: [happy-2] withoutBase strips a base followed only by a bare / or ?",
+    "test/ufo-base-prefix-check.test.ts :: [happy-3] withBase keeps its existing joining and protocol results",
+    "test/ufo-base-prefix-check.test.ts :: [happy-3] withBase keeps its existing results for empty bases and empty or root inputs",
+    "test/ufo-base-prefix-check.test.ts :: [happy-4] withoutBase keeps its existing non-matching and protocol results",
+    "test/ufo-base-prefix-check.test.ts :: [happy-4] withoutBase keeps its existing results for empty bases and empty or root inputs",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-1] withBase returns an input equal to the base unchanged",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-1] withBase returns an input equal to the base with its trailing slash removed unchanged",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-2] withoutBase turns an input equal to the base into /",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-2] withoutBase turns an input equal to the base with its trailing slash removed into /",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-3] withoutBase does not collapse a doubled slash in the remainder",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-3] withoutBase does not collapse a doubled slash in the remainder when the base has a trailing slash",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-4] a base ending in // matches an input that keeps one / of it",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-4] a base ending in // does not match an input with a single / after the name",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-5] a base without a leading slash matches when followed by /",
+    "test/ufo-base-prefix-check.test.ts :: [boundary-5] a base without a leading slash does not match when followed by a non-boundary character",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-1] withBase joins the base onto an input that only shares a string prefix",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-1] withBase joins the base onto an input extended by a single letter",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-2] withBase does not treat # right after the base as a boundary",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-2] withBase does not treat # right after a base with a trailing slash as a boundary",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-3] withBase does not treat . ; : & after the base as boundaries",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-3] withBase does not treat a backslash or an encoded slash after the base as boundaries",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-4] withBase compares the base case-sensitively",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-4] withBase compares case-sensitively even when the input equals the base apart from case",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-5] withoutBase leaves an input that only shares a string prefix unchanged",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-5] withoutBase leaves an input extended by a single letter unchanged",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-6] withoutBase does not treat # right after the base as a boundary",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-6] withoutBase does not treat # right after a base with a trailing slash as a boundary",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-7] withoutBase does not treat . ; : & after the base as boundaries",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-7] withoutBase does not treat a backslash or an encoded slash after the base as boundaries",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-8] withoutBase compares the base case-sensitively",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-8] withoutBase compares case-sensitively when the input equals the base apart from case",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-9] neither function throws for inputs made of a single non-path character",
+    "test/ufo-base-prefix-check.test.ts :: [unhappy-9] withoutBase does not throw when the input is exactly the base",
+    "test/ufo-base-prefix-check.test.ts :: [concurrency-1] interleaved calls with different bases give the isolated results",
+    "test/ufo-base-prefix-check.test.ts :: [concurrency-1] repeating and reversing the interleaved calls does not change any result"
+  ],
+  "publicOnSkeleton": {
+    "passed": 22,
+    "total": 38
+  },
+  "publicFailingOnReference": [],
+  "referenceRegressions": [],
+  "hiddenWritten": 64,
+  "kept": [
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-4] a base ending in /// keeps two / in the prefix it must match",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-4] a base ending in // does not match its name without the kept /",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-4] a deeper base ending in // keeps one / in the prefix it must match",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-5] a base without a leading slash does not match before other non-boundary characters",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [unhappy-9] neither function throws for unusual bases and gives the boundary-rule results",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [concurrency-1] a longer interleaving with several bases gives the isolated results",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [concurrency-1] a fixed permutation of the longer interleaving gives the isolated results",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [concurrency-1] calls with alternating bases on the same input give the isolated results",
+    "test/hidden-ufo-base-prefix-check/shared.test.ts :: [concurrency-1] overlapping asynchronous callers get the isolated results",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase is idempotent once a non-boundary input has been joined",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-1] withBase joins the base onto inputs whose prefix is followed by letters, digits or underscore",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-1] withBase joins a deep base onto an input that extends its last segment",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-1] withBase joins a long base onto an input that extends its last segment",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-1] withBase joins a base that contains a query onto an input that extends that query",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-1] withBase treats non-ASCII, whitespace and control characters after the base as non-boundaries",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-2] withBase joins the base onto inputs with # right after the base followed by more text",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-2] withBase does not treat # after a base ending in // as a boundary",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-3] withBase joins the base when any other punctuation follows it",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-3] withBase does not decode encoded slashes, question marks, backslashes or hashes after the base",
+    "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-3] withBase does not treat dot segments after the base as boundaries",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-5] withoutBase leaves inputs whose prefix is followed by letters, digits or underscore unchanged",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-5] withoutBase leaves an input that extends the last segment of a deep base unchanged",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-5] withoutBase leaves an input that extends the query of a base unchanged",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-5] withoutBase leaves a URL whose host only shares a string prefix with the base unchanged",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-5] withoutBase leaves inputs with non-ASCII, whitespace or control characters after the base unchanged",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-6] withoutBase leaves inputs with # right after the base followed by more text unchanged",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-6] withoutBase does not treat # after a base ending in // as a boundary",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-7] withoutBase leaves the input unchanged when any other punctuation follows the base",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-7] withoutBase does not decode encoded slashes, question marks, backslashes or hashes after the base",
+    "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-7] withoutBase does not treat dot segments after the base as boundaries"
+  ],
+  "dropped": [
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [happy-3] withBase still joins the base onto other unrelated inputs",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [happy-3] withBase still returns protocol inputs unchanged even when they share a prefix with the base",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [happy-3] withBase still returns the input unchanged for an empty base, even before a non-boundary",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [happy-4] withoutBase still leaves other unrelated inputs unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [happy-4] withoutBase still returns the input unchanged for an empty base, even before a non-boundary",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-4] a base ending in // matches when ? or end of string follows the kept /",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-5] a base without a leading slash matches when followed by ? or end of string",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [boundary-5] a base without a leading slash does not match an input with a leading slash or other case",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [unhappy-9] neither function throws for the remaining single-character examples",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/shared.test.ts :: [unhappy-9] neither function throws for any pair from a grid of unusual strings",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase leaves inputs under deeper bases and with longer tails unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase leaves an input equal to the raw base with its trailing slash unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase ignores non-boundary characters that come after the boundary",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase matches bases containing regex metacharacters literally",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase treats / or ? after a base that itself contains a query as a boundary",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase leaves inputs under a long base unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [happy-1] withBase matches a percent-encoded base only against the same raw encoding",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [boundary-1] withBase returns inputs equal to other normalized bases unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [boundary-1] withBase returns an input equal to a base that contains a query unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [boundary-1] withBase returns an input equal to a long base unchanged",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/with-base.test.ts :: [unhappy-4] withBase compares other case variants case-sensitively",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips deeper bases and keeps longer tails as they are",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips an input equal to the raw base with its trailing slash down to /",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase keeps non-boundary characters that come after the boundary",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips bases containing regex metacharacters literally",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips a base that itself contains a query when / or ? follows it",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips a base that carries a protocol when / or ? follows it",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips a long base",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [happy-2] withoutBase strips a percent-encoded base only when the raw encoding matches",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [boundary-2] withoutBase turns inputs equal to other normalized bases into /",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [boundary-2] withoutBase turns an input equal to a base that contains a query or protocol into /",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [boundary-2] withoutBase turns an input equal to a long base into /",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [boundary-3] withoutBase returns other remainders without normalizing them",
+      "reason": "Passes on the skeleton."
+    },
+    {
+      "id": "test/hidden-ufo-base-prefix-check/without-base.test.ts :: [unhappy-8] withoutBase compares other case variants case-sensitively",
+      "reason": "Passes on the skeleton."
+    }
+  ],
+  "reference": {
+    "public": {
+      "passed": 38,
+      "total": 38
+    },
+    "hidden": {
+      "passed": 30,
+      "total": 30
+    },
+    "touchedOutsideSrc": [],
+    "removed": [],
+    "existing": {
+      "passed": 477,
+      "total": 477
+    },
+    "notes": "`withBase` and `withoutBase` now only count the base as present when the character right after it is a boundary: end of string, `/` or `?`. The full suite passes: 17 files and 579 tests, including both new suites and all the existing tests.\n\n`src/utils.ts` had no bodies throwing `not implemented`, so I changed the two existing functions. In both, the `input.startsWith(_base)` check now calls a new private helper, `_hasBase(input, _base)`. It returns true only if `input` starts with the base and the next character is missing, `/` or `?`. It isn't exported, so the public interface is unchanged, and nothing else in either function changed. The edit is only in `src/utils.ts`.\n\nAs a result, `withBase(\"/admin-dashboard\", \"/admin\")` now gives `/admin/admin-dashboard`, and `withoutBase(\"/admin-dashboard\", \"/admin\")` returns the input unchanged instead of `/-dashboard`.\n\nTests left failing: none",
+    "sessions": [
+      {
+        "sessionId": "2afc7478-b16d-4bdf-a20e-6f2e3a30800a",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.1953028,
+        "turns": 4,
+        "durationMs": 24223,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.1953028
+  }
+}

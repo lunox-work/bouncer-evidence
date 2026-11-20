@@ -1,0 +1,15 @@
+{
+  "repo": "unjs/ofetch",
+  "package": ".",
+  "language": "typescript",
+  "commit": "1dbc37fd1ceab832fc7c90cad81b1091c95ba563",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 6
+  }
+}

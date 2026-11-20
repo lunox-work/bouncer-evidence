@@ -1,0 +1,73 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "58103b40-5756-4057-87d5-7a037e49071f",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.21434999999999998,
+        "turns": 5,
+        "durationMs": 28445,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.21434999999999998,
+    "finalText": "I created `packages/core/src/handle.ts` with exactly the exports the spec lists, in the same style as `src/index.ts`. Every function body is `throw new Error(\"not implemented\");`. Both constants are real exports with their values (3 and 30), not declarations. `tsc -p tsconfig.test.json` reports no errors and the existing suite still passes (13 of 13). I deleted the `dist-test` build output afterwards, since it wasn't there when I started.\n\nThree things to know:\n- **No `throws` notes in the doc comments.** The spec says no export throws for any string input, so no function documents one.\n- **No new error classes.** Bad input comes back as an `invalid` result, as the spec describes.\n- **`index.ts` is unchanged.** The spec says `packages/core/src/index.ts` gains `export * from \"./handle.js\";`, but you asked for the seam file only. That line is left for the implementer to add. Until they do, the scenario that imports the handle names from the package entry will fail.\n\nAdded: HANDLE_MIN_LENGTH, HANDLE_MAX_LENGTH, HandleProblem, HandleRejected, HandleCheck, toHandleCase, checkHandle, NormalizedHandle, normalizeHandle, isValidHandle, toHandleStem, handleStemFromEmail",
+    "problem": null,
+    "sha256": "b63c8668151e99556fa2489c27c5258594505ffd2901a881daabcd47452b8e90"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "e35e059f-6dea-4a3a-9f02-11042e1a056b",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.7190753,
+        "turns": 9,
+        "durationMs": 163876,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.7190753,
+    "finalText": "I wrote the test suite in `packages/core/test/handles-check.test.ts`. It covers all 33 scenarios in the spec (10 `@happy`, 15 `@boundary`, 8 `@unhappy`), with two tests each. The first test checks the scenario's own example table. The second checks an edge case that follows directly from the same rule, for example:\n\n- characters just outside the allowed ranges (`` ` ``, `{`, `/`, `:`)\n- an emoji that pushes a handle to 31 code units\n- hyphens being trimmed before the cut to 30, not after\n- a Kelvin-sign-only handle\n- lone surrogates that must not cause a throw\n\n`npx tsc -p tsconfig.test.json` reports no errors. Running the tests gives 2 passes and 64 failures, as expected while the function bodies still throw. The 2 that pass check the two length constants, which are already set in `handle.ts`.\n\nChoices the implementer should know about:\n\n- **Package entry tests:** the `[happy-10]` tests import `../src/index.js` as a namespace and look the handle names up at runtime. That keeps the file compiling before `index.ts` gets its `export * from \"./handle.js\"` line. Those tests fail until that line is added.\n- **\"No other exports\":** this rule isn't in any scenario, so I keyed it to `[happy-10]`. It checks that `handle.ts` exports exactly the eight runtime names.\n- **Special characters:** the spec's non-ASCII values (no-break space, Kelvin sign, dotted capital I, emoji) are written as `\\u` escapes in the tests, taken from the actual characters in `spec.md`.\n\nI changed nothing outside the test file.\n\n66 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "packages/core/test/handles-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "93cda8e5-5af3-4a2c-9e52-687d83f7caa3",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.5404953000000001,
+        "turns": 20,
+        "durationMs": 372018,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.5404953000000001,
+    "finalText": "I wrote 59 hidden tests in 4 files under `packages/core/test/hidden-handles-check/`. The type-check (`npx tsc -p tsconfig.test.json`) reports no errors. Run against the current stubs, all 59 fail with `not implemented`.\n\nTo make sure the tests expect the right values, I ran them against a reference implementation I wrote in the scratchpad, not in the repo. It passed all 138 tests, public and hidden. I also tried four shortcut implementations that pass the public suite. Each was caught, and two were caught only by the hidden tests:\n- **Cutting off the domain with `/@.*/`**: the dot doesn't match a newline, so `\"dana@example\\ntest\"` gives the wrong stem.\n- **Checking the length before lowercasing**: `\"İ\"` becomes two characters when lowercased, so `\"İ\".repeat(20)` or `\"x\".repeat(29) + \"İ\"` gets the wrong problem.\n\n**Files:**\n- **`check-handle.test.ts`**: the length constants and every length from 0 to 45, plus every disallowed ASCII character in every position. It also checks:\n  - newlines in the middle, which catches a pattern with the multiline flag;\n  - Unicode lookalikes, the Kelvin sign and the long s, which catch a case-insensitive Unicode pattern;\n  - padding that only fits once trimmed;\n  - `__proto__` and `constructor`, which catch a reserved-name lookup on a plain object;\n  - emoji-only handles and combining marks at both length bounds.\n- **`normalize-handle.test.ts`**:\n  - every whitespace character `trim` removes, and the zero-width space it keeps;\n  - no Unicode normalization, and plain `I` lowercased without the Turkish rule;\n  - `display` after Unicode padding;\n  - the Kelvin sign anywhere and at 30 characters;\n  - `isValidHandle` agreeing with `normalizeHandle`.\n- **`handle-stem.test.ts`**:\n  - runs of emoji and Unicode collapsed to one hyphen;\n  - `-_-` giving `_-user`, and `İ` giving `i-user` but `İİ` giving `i-i`;\n  - long hyphen runs before letters, which catch a slow trim;\n  - cuts that land on a hyphen or an underscore;\n  - a check that stems of about 7,400 short awkward strings all pass `checkHandle`;\n  - the email cases: first `@`, newlines after it, a blank local part.\n- **`module.test.ts`**:\n  - exact results for lone surrogates and control characters;\n  - several valid handles in a row, which catches a shared pattern with the `g` flag;\n  - the index functions called directly, and the existing title rules still working.\n\n59 tests in 4 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/core/test/hidden-handles-check/check-handle.test.ts",
+      "packages/core/test/hidden-handles-check/handle-stem.test.ts",
+      "packages/core/test/hidden-handles-check/module.test.ts",
+      "packages/core/test/hidden-handles-check/normalize-handle.test.ts"
+    ],
+    "open": []
+  }
+}

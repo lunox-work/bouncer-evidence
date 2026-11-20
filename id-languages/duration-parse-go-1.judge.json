@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11976440000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "This scenario covers basic component summing. The only open question it settles is the `d` unit (rows `2d` and `1d0h0m0s0ms`). Item 1's pick accepts `d` as 86,400,000 ms, so `2d` gives 172800000. The zero-component rows also fit item 10's pick, which accepts them.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether whitespace is allowed at the ends. Its pick trims leading and trailing whitespace, so `  45m\\n` parses to 2700000 with no error.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 10,
+      "agrees": false,
+      "why": "This is a mixed list of rejections. Several rows map to other items: empty (3), `90` (2), `1.5h` (5), `-3s` (6), `1h 30m` and `3 s` (4), `3S` (8), and all of those picks agree. Item 10 is the closest because it asks about leading zeros, which the `05s` row settles. Its pick accepts leading zeros (`01h`), but the scenario rejects `05s`.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count can be larger than the next unit up (for example `90m` instead of `1h30m`). Item 7 is about unit order and repeats, not the size of a count.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks about units that are out of order or repeated. Its pick rejects any unit that is repeated or not in strictly descending order, which matches `30m1h`, `1h1h`, `1s500ms2s` and `5ms1s`.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks about the maximum duration. Its pick sets the cap at 2^53-1 ms and only rejects totals above it, so exactly 9007199254740991 parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9's pick rejects totals above 2^53-1, including digit runs that would overflow int64, and returns an error with 0. Both rows are covered.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how milliseconds are printed and which units are used. Its pick splits into d/h/m/s/ms, leaves out zero parts and uses days, which matches `1m30s`, `1d` and `1d1h1m1s1ms`. The `0ms` row is item 12, whose pick also agrees.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 12,
+      "agrees": true,
+      "why": "This tests the upper edge of the formatting range. Item 12's pick only errors for values above 2^53-1, so the largest value still formats. Item 11's format produces `104249991d8h59m991ms`.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives back the original number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what formatting a negative or too-large value produces. Its pick returns an empty string with an error for negative values and for values above 2^53-1. That covers -1, 2^53, MinInt64 and MaxInt64.",
+      "failing": false
+    }
+  ]
+}

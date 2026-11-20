@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.06825039999999999,
+  "items": [
+    {
+      "question": "What does a file with no Scenario at all (only a Feature line) return?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Treats it as valid and returns the feature with an empty scenarios list.",
+      "where": "src/index.ts:194",
+      "instead": "Raise a ParseError because the feature has no scenarios."
+    },
+    {
+      "question": "Which line is reported when the file is empty or has no Feature: line?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports line 1 with the message 'expected a Feature: line'.",
+      "where": "src/index.ts:194",
+      "instead": "Report the last line of the file, or line 0."
+    },
+    {
+      "question": "How are Scenario Outline and Scenario Template handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at that line saying the construct is not supported.",
+      "where": "src/index.ts:101",
+      "instead": "Parse it as an ordinary scenario, or treat it as an unrecognised line."
+    },
+    {
+      "question": "Which line is reported for tags that are not followed by a Scenario?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line of the first tag line in the pending group, not the line of the offending content that follows.",
+      "where": "src/index.ts:103",
+      "instead": "Report the line of the non-Scenario line that follows the tags."
+    },
+    {
+      "question": "What happens to tags placed before the Feature: line?",
+      "ticket": "silent",
+      "chose": "Silently discards them, because Feature has no tags field.",
+      "where": "src/index.ts:94",
+      "instead": "Raise an error, or attach the tags to the feature."
+    },
+    {
+      "question": "How is free text (a description) handled?",
+      "ticket": "silent",
+      "chose": "Ignores it between the Feature: line and the first Background or Scenario, and raises an error for it anywhere inside a background or scenario.",
+      "where": "src/index.ts:187",
+      "instead": "Ignore description text everywhere, or reject it everywhere."
+    },
+    {
+      "question": "Are Background steps kept apart from scenario steps, and what if the Background is misplaced or repeated?",
+      "ticket": "silent",
+      "chose": "Stores Background steps in a separate list, and raises an error for a second Background or one that comes after a Scenario.",
+      "where": "src/index.ts:106",
+      "instead": "Copy the background steps into each scenario, or allow a Background anywhere."
+    },
+    {
+      "question": "What happens to a step that appears before any Background or Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the step's line.",
+      "where": "src/index.ts:137",
+      "instead": "Ignore it as description text."
+    },
+    {
+      "question": "How are doc strings (\"\"\" or ```) handled, including indentation and an unclosed one?",
+      "ticket": "silent",
+      "chose": "Attaches the lines to the preceding step, strips up to the opening delimiter's indentation, and reports an unclosed one at the opening line. Both delimiters are accepted. A doc string after a table or another doc string is an error.",
+      "where": "src/index.ts:152",
+      "instead": "Keep the raw lines without stripping indentation, report the error at the end of the file, or accept only \"\"\"."
+    },
+    {
+      "question": "How are table rows parsed, including escapes and malformed rows?",
+      "ticket": "silent",
+      "chose": "Trims each cell, handles the escapes \\|, \\\\ and \\n, and throws on text after the last pipe. A row must directly follow a step or another table row.",
+      "where": "src/index.ts:175",
+      "instead": "Do not trim cells, leave escapes untouched, and allow ragged or unterminated rows."
+    },
+    {
+      "question": "What does a step keyword with no text, or a keyword not followed by a space, produce?",
+      "ticket": "silent",
+      "chose": "Accepts a bare keyword and gives it empty text. Matching is case-sensitive and English only, and the keyword must be followed by a space or the end of the line.",
+      "where": "src/index.ts:15",
+      "instead": "Raise an error for a step with no text, or support other languages."
+    },
+    {
+      "question": "How are CRLF line endings, a byte-order mark and comment lines handled?",
+      "ticket": "silent",
+      "chose": "Strips a leading BOM and any trailing \\r, and skips blank and # lines, without changing line numbers.",
+      "where": "src/index.ts:61",
+      "instead": "Reject CRLF and BOM input, or treat # lines as description text."
+    }
+  ]
+}

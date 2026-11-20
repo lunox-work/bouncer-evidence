@@ -1,0 +1,15 @@
+{
+  "repo": "TanStack/query",
+  "package": "packages/query-core",
+  "language": "typescript",
+  "commit": "f6689e04be493e2e83f9c93d7e478f92c3e5d328",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 1131 MB",
+    "seconds": 9
+  }
+}

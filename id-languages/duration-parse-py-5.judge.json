@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1111115,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "The rows that test the question are '2d' and '1d0h0m0s0ms', which need the d (day) unit along with h, m, s and ms. The pick supports d, h, m, s and ms. Item 9 (zero durations) only touches the '0s' row.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks whether whitespace is allowed. The scenario expects leading and trailing whitespace to be ignored, so '  45m\\n' gives 2700000. The pick rejects any whitespace, including ' 1h'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Several items cover parts of this table: item 1 covers '90', item 5 covers '3S' and '3 s', item 7 covers the empty string. Item 6 is closest, covering '1.5h', '-3s' and '+3s'. Its pick rejects decimals and signs, which matches. The '05s' and '３s' rows are not addressed by any item.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may exceed the next unit up, like '90m'. Item 11 covers how format spells such values, not whether parse accepts them.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Most rows ('30m1h', '5ms1s', '1s500ms2s') test descending unit order, which is item 3. The scenario rejects out-of-order units, but the pick accepts any order. Item 2 (repeated units) covers only '1h1h', and its pick agrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about the upper limit. The pick rejects only totals above 9007199254740991, so exactly that value parses, as the scenario expects.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "The pick rejects totals above 9007199254740991 ms with a ValueError, which matches rejecting '...992ms' and the huge ms count.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "Most rows settle which spelling format picks. The scenario expects the largest-unit-first form (90000 gives '1m30s', 5400000 gives '1h30m'). The pick chooses the shortest string ('90s', '90m'). The 0 row is item 10, whose pick '0s' also disagrees with '0ms'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "The expected string depends on the spelling rule. The shortest-string pick would give '104249991d539m991ms' (19 characters) instead of '104249991d8h59m991ms' (20 characters). Item 12's limit only settles that the max value doesn't raise, and its pick allows it.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives the original number back.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what format does with bool, float, negative and too-large values. The pick raises ValueError for all of them, matching -1, 9007199254740992, True and 1.0. The pick doesn't say what the message says, so the 'milliseconds' wording isn't confirmed.",
+      "failing": false
+    }
+  ]
+}

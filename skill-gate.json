@@ -1,0 +1,33 @@
+{
+  "what": "a fresh claude -p session with only .claude/skills/bouncer, two turns: the request, then the person's answer to the decisions; lib.mjs audit over its transcript",
+  "date": "2026-11-20",
+  "model": "claude-sonnet-5-5",
+  "exit": 0,
+  "costUsd": 0.4093836,
+  "minutes": 1.7,
+  "turns": 2,
+  "skillLoaded": true,
+  "bouncerCommands": [
+    "--version",
+    "where",
+    "confirm",
+    "prepare",
+    "run",
+    "judge"
+  ],
+  "triedConfirmBy": true,
+  "confirmedBy": "skill gate",
+  "answered": {
+    "how": "session",
+    "transcript": "/Users/charlieangriawan/.claude/projects/-private-var-folders-9k-pldvsgmx3kz-k53f-53t5m900000gn-T-bouncer-skill-gate-cOSMhi-project/0d457a29-cf96-4824-85e8-b966e428cedd.jsonl",
+    "personTurns": 1,
+    "questionsAnswered": 0,
+    "questionsUnanswered": 0
+  },
+  "verdict": "passed",
+  "auditFindings": 0,
+  "findings": [],
+  "finalText": "**passed.** You're in.\n\n- **Public suite:** 22 of 22 tests passed.\n- **Hidden suite:** 39 of 39 tests passed. None were dropped in calibration. The suite's sha256 is `011e72943df09a8b6b55f073b426559193a17e82ed1fd338f9bc1c62b0a02f3a`.\n- **Confirmation:** recorded for \"skill gate\". All 9 decisions were kept as drafted.\n- **Run:** a blind Haiku session implemented the spec for about $0.01. Its submission is under `runs/duration-parse/haiku/1/submission/src/` in the bouncer home.\n\nThis means the Haiku code clears tests it never saw, written from the confirmed spec. Anything the spec doesn't say isn't covered.",
+  "started": "2026-11-20T06:02:18.793Z",
+  "holds": true
+}

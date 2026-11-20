@@ -1,0 +1,105 @@
+{
+  "run": "csv-export-4",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0544858,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildRequisitionsCsv([{id:'b',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')},{id:'a',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')},{id:'c',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'10',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')},{id:'9',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')}])"
+    },
+    {
+      "item": 2,
+      "probe": "buildRequisitionsCsv([{id:'r1',title:'x',status:'archived',openings:1,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 3,
+      "probe": "buildRequisitionsCsv([{id:'r1',title:'x',status:'open',openings:1.5,filled:0,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 4,
+      "probe": "buildRequisitionsCsv([{id:'r1',title:'x',status:'open',openings:1,filled:2,createdAt:new Date('2024-01-01')}])"
+    },
+    {
+      "item": 5,
+      "probe": "buildRequisitionsCsv([{id:'r1',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('nope')}])"
+    },
+    {
+      "item": 6,
+      "probe": "buildRequisitionsCsv([{id:'good',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'bad',title:'x',status:'open',openings:-1,filled:0,createdAt:new Date('2024-01-02')}])"
+    },
+    {
+      "item": 7,
+      "probe": "buildRequisitionsCsv([{id:'r1',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-03-05T06:07:08.009Z')}])"
+    },
+    {
+      "item": 8,
+      "probe": "buildRequisitionsCsv([]).split('\\r\\n')[0]"
+    },
+    {
+      "item": 9,
+      "probe": "buildRequisitionsCsv([]).charCodeAt(0)"
+    },
+    {
+      "item": 10,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'r1',title:'x',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')}]))"
+    },
+    {
+      "item": 11,
+      "probe": "JSON.stringify(buildRequisitionsCsv([]))"
+    },
+    {
+      "item": 12,
+      "probe": "JSON.stringify(buildRequisitionsCsv([{id:'r1',title:null,status:'open',openings:1,filled:0,createdAt:new Date('2024-01-01')},{id:'r2',title:'a,\"b\"\\nc',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-02')},{id:'r3',title:'=SUM(A1)',status:'open',openings:1,filled:0,createdAt:new Date('2024-01-03')}]))"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nc,x,open,1,0,2024-01-01T00:00:00.000Z\\r\\n10,x,open,1,0,2024-01-02T00:00:00.000Z\\r\\n9,x,open,1,0,2024-01-02T00:00:00.000Z\\r\\na,x,open,1,0,2024-01-02T00:00:00.000Z\\r\\nb,x,open,1,0,2024-01-02T00:00:00.000Z\\r\\n'"
+    },
+    {
+      "item": 2,
+      "actual": "throws Error: Requisition r1 has an unknown status: archived"
+    },
+    {
+      "item": 3,
+      "actual": "throws Error: Requisition r1 has openings that is not a whole number of at least 0"
+    },
+    {
+      "item": 4,
+      "actual": "throws Error: Requisition r1 has filled greater than openings"
+    },
+    {
+      "item": 5,
+      "actual": "throws Error: Requisition r1 has an invalid creation time"
+    },
+    {
+      "item": 6,
+      "actual": "throws Error: Requisition bad has openings that is not a whole number of at least 0"
+    },
+    {
+      "item": 7,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created\\r\\nr1,x,open,1,0,2024-03-05T06:07:08.009Z\\r\\n'"
+    },
+    {
+      "item": 8,
+      "actual": "'﻿Requisition ID,Title,Status,Openings,Filled,Created'"
+    },
+    {
+      "item": 9,
+      "actual": "65279"
+    },
+    {
+      "item": 10,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,x,open,1,0,2024-01-01T00:00:00.000Z\\\\r\\\\n\"'"
+    },
+    {
+      "item": 11,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\n\"'"
+    },
+    {
+      "item": 12,
+      "actual": "'\"﻿Requisition ID,Title,Status,Openings,Filled,Created\\\\r\\\\nr1,,open,1,0,2024-01-01T00:00:00.000Z\\\\r\\\\nr2,\\\\\"a,\\\\\"\\\\\"b\\\\\"\\\\\"\\\\nc\\\\\",open,1,0,2024-01-02T00:00:00.000Z\\\\r\\\\nr3,=SUM(A1),open,1,0,2024-01-03T00:00:00.000Z\\\\r\\\\n\"'"
+    }
+  ]
+}

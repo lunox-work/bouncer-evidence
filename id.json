@@ -1,0 +1,88 @@
+{
+  "what": "bouncer id (prompts/id.md, claude-sonnet-5-5) on rejected runs of experiments/ self-tested-haiku-ticket: the stored ticket and diff.patch only",
+  "judgedBy": "model (Claude Opus 5.5, the session that wrote bin/id.mjs, not blind to the failures), not a person",
+  "date": "2026-11-19",
+  "runs": [
+    {
+      "run": "escrow-split/1",
+      "items": 12,
+      "seconds": 17,
+      "failingScenarios": 1,
+      "inList": 1
+    },
+    {
+      "run": "csv-export/2",
+      "items": 12,
+      "seconds": 17,
+      "failingScenarios": 5,
+      "inList": 4,
+      "note": "unhappy-1 (formula characters): the diff never handles them, so it made no pick to list"
+    },
+    {
+      "run": "escrow-split/2",
+      "items": 12,
+      "seconds": 15,
+      "failingScenarios": 1,
+      "inList": 1
+    },
+    {
+      "run": "gherkin-parse/2",
+      "items": 12,
+      "seconds": 16,
+      "failingScenarios": 3,
+      "inList": 3
+    },
+    {
+      "run": "invite-codes/2",
+      "items": 12,
+      "seconds": 16,
+      "failingScenarios": 3,
+      "inList": 3
+    },
+    {
+      "run": "status-normalize/2",
+      "items": 10,
+      "seconds": 21,
+      "failingScenarios": 2,
+      "inList": 2
+    },
+    {
+      "run": "weekly-digest/3",
+      "items": 12,
+      "seconds": 17,
+      "failingScenarios": 1,
+      "inList": 1
+    },
+    {
+      "run": "csv-export/9",
+      "items": 12,
+      "seconds": 14,
+      "failingScenarios": 5,
+      "inList": 5
+    },
+    {
+      "run": "invite-codes/9",
+      "items": 12,
+      "seconds": 16,
+      "failingScenarios": 5,
+      "inList": 3,
+      "note": "happy-2 and happy-3 (listing fields, many contributors): no item"
+    },
+    {
+      "run": "status-normalize/9",
+      "items": 11,
+      "seconds": 16,
+      "failingScenarios": 2,
+      "inList": 2
+    }
+  ],
+  "totals": {
+    "runs": 10,
+    "runsWithAFailingDecisionListed": 10,
+    "scenarios": 28,
+    "scenariosListed": 25,
+    "medianItems": 12,
+    "medianSeconds": 16,
+    "costUsdOneRun": 0.0702
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "sha256": "29397f422d75317447da1b2c6bef0adf1584775932e841ed5739c759488a4e6d",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T02:13:44.525Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "An empty normalized remainder after a UNC base returns a bare `//` (e.g. `//`, `\\\\`, `//server/share` + `../..`).",
+    "UNC detection tests each segment against the existing `_UNC_REGEX` (`/^[/\\\\]{2}/`), the same check `normalize` uses.",
+    "Relative segments after a UNC base are resolved under it, and the `//` prefix stays.",
+    "A later absolute non-UNC segment becomes the base and drops the UNC prefix (`//server/share`, `/tmp/file` → `/tmp/file`).",
+    "UNC status comes from the base segment, not from the final joined string (`/`, `foo` → `/foo`).",
+    "The UNC check runs on the segment as given to the loop, so `\\\\`, `//` and mixed separators all count as UNC.",
+    "The UNC check applies to whichever segment ends the walk, including `process.cwd()` and relative `//.` segments; the segment need not be absolute.",
+    "The UNC result always uses forward slashes, starting with `//`.",
+    "A UNC result returns `//` + remainder straight away, skipping the `/` prefix branch and the `\".\"` fallback for an empty result.",
+    "`..` can climb above the share and the server (`//server/share`, `..` → `//server`); the UNC root is not clamped.",
+    "Three or more leading separators count as UNC and collapse to exactly `//` (`///a` → `//a`, where it used to be `/a`).",
+    "`resolve` does not keep the `//./` device prefix; the `.` is normalized away (`//c:/temp/path`), unlike `normalize`.",
+    "A trailing separator after a UNC path is dropped (`//server/share/` → `//server/share`), as `resolve` already does for other paths.",
+    "`format` and `relative` get the change through `resolve`: `format` with a UNC root now returns a `//` prefix.",
+    "Seam (the files the stub writes): src/_path.ts",
+    "Allowed paths (what the implementer may change): src/"
+  ],
+  "seam": [
+    "src/_path.ts"
+  ],
+  "allowedPaths": [
+    "src/"
+  ]
+}

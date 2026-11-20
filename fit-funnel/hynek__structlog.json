@@ -1,0 +1,15 @@
+{
+  "repo": "hynek/structlog",
+  "package": ".",
+  "language": "python",
+  "commit": "81779f0abe5942018c543e4a7cb047e92d2b5ad8",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 5
+  }
+}

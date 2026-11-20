@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1006187,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "The scenario adds up several components in descending order (1h30m, 1d0h0m0s0ms). Item 4 asks whether several components are allowed and in what order. Its pick allows them largest to smallest, which fits every example. The 'd' unit (item 3) and zero values (item 8) also come up, but item 4 is the closest question.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether whitespace around the input is accepted. Its pick trims it, so \"  45m\\n\" parses to 2700000.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "This scenario covers many kinds of bad input. Item 7 covers the largest share: a bare number (90), a sign (-3s, +3s) and spaces (1h 30m, 3 s). Its pick rejects all of these with errors. Other examples belong to items 2, 3 and 6. No item covers 05s or 1h,30m.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count can go past the next unit up, as in 90m instead of 1h30m. Item 4 is about the order of components, not how big a single count can be.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks about component order. Its pick requires largest to smallest and rejects 30m1h, so 30m1h, 5ms1s and 1s500ms2s fail. The repeated 1h1h is item 5's question, and its pick also rejects it.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 sets the maximum at 2^53-1 ms, so 9007199254740991 is the largest value that parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9's pick checks the cap during parsing and returns 0 plus an error above 2^53-1. That covers both the total that is one over and the huge single count.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11's pick splits the value into d/h/m/s/ms, largest first, and skips zero parts. That gives 1m30s, 1h30m, 1d and 1d1h1m1s1ms. Item 12 formats 0 as 0ms.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": true,
+      "why": "The expected string comes from item 11's d/h/m/s/ms breakdown. Item 12 caps at 2^53-1 inclusive, so this value is still in range.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": 11,
+      "agrees": true,
+      "why": "The round trip works only if the formatter writes something the parser accepts. Item 11's pick prints descending components with no zero parts, and the parser accepts those (items 3 and 4).",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12's pick returns \"\" and an error for negative values and values above 2^53-1, which covers -1, 2^53, MinInt64 and MaxInt64. The pick does not say what the error message says, so it doesn't settle whether it contains \"milliseconds\".",
+      "failing": false
+    }
+  ]
+}

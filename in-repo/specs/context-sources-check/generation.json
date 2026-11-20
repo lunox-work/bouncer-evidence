@@ -1,0 +1,79 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "14adfc90-578d-4b1b-94c6-23ff588bc735",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.41094079999999994,
+        "turns": 9,
+        "durationMs": 62077,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.41094079999999994,
+    "finalText": "I've created the contract at `packages/core/src/sources.ts`. `npx tsc -p tsconfig.test.json` reports no errors, and the existing suite still passes (228 of 228). It is the only file I changed.\n\n- **Contents:** every type, constant and function from the spec's interface block. The six constants have the spec's values, and each of the six functions has a doc comment and a body of just `throw new Error(\"not implemented\");`. None of them throws on purpose, because the spec says nothing in this module does.\n- **Reused types:** `StageDrift` is imported from `stages.ts`. For the file list that `contextDocuments` takes, I used the existing `StackFile` type from `repo/stack.ts`. It is exactly the `{ path, size }` shape the spec writes out, so callers are not affected.\n- **Parameter names:** they all start with `_`, like `_title` and `_files`. The project's compiler settings reject parameters that are never used, and the bodies can't use them. This doesn't change how anything is called.\n\nThe spec also asks for changes outside this file, which I left alone because you asked for the seam only:\n- `index.ts` doesn't re-export `sources.js` yet, so tests need to import from `src/sources.js` directly.\n- `repo/stack.ts` doesn't have `inSkippedDirectory` yet.\n- `BountyStages` in `stages.ts` doesn't have the optional `context` field yet.\n- `sandbox/approved-task.ts` doesn't have `ApprovedTaskContext` or the optional `context` on `ApprovedTaskSnapshot`. The last scenario (\"Context does not change readiness or the schema version\") needs these, so a test that builds a snapshot with `context` won't compile until the implementation adds them.\n\nAdded: CONTEXT_SOURCES, ContextSource, JiraIssueLinkContext, JiraContext, GithubContextDocument, GithubContext, ContextVersions, NO_CONTEXT, CONTEXT_DOCUMENTS_MAX, CONTEXT_DOCUMENT_BYTES_MAX, CONTEXT_DOCUMENT_CHARS, CONTEXT_TOTAL_CHARS, contextKeywords, contextDocuments, keptDocuments, jiraContextFields, renderSourceContext, contextDrift",
+    "problem": null,
+    "sha256": "7146cfb11892bfb06f1edeba6ab59c884e36cf93cbf704a14193064d07053133"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "b6f5549e-e75a-4b8c-88dc-d516ac3cc716",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.2391800000000002,
+        "turns": 19,
+        "durationMs": 274731,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.2391800000000002,
+    "finalText": "I've written the test suite in five files under `packages/core/test/`. `npx tsc -p tsconfig.test.json` reports no errors. Running the suite gives 82 tests: 78 fail and 4 pass.\n\n**Why 78 fail:** every failure is `Error: not implemented`, thrown by the stub bodies in `sources.ts`. None comes from a broken test.\n\n**Why 4 pass already:**\n- Two `[happy-1]` tests check the constants, which the interface already defines.\n- Two `[boundary-26]` tests check that `approvedTaskReadiness` gives the same answer with or without a `context`. That function already exists, so these act as regression guards. They import `../src/sandbox/approved-task.js` as well as `../src/sources.js`, because that scenario is about that file. The snapshot with `context` is built in a separate variable first. This keeps it compiling whether or not `ApprovedTaskSnapshot` has gained the optional `context` field yet.\n\n**What the files cover:**\n- `context-sources-check.keywords.test.ts`: `[happy-1]`, `[happy-2]`, `[boundary-1]`\n- `context-sources-check.documents.test.ts`: `contextDocuments`, which is `[happy-3]` to `[happy-5]`, `[unhappy-1]` to `[unhappy-3]` and `[boundary-2]` to `[boundary-12]`\n- `context-sources-check.kept.test.ts`: `keptDocuments`, which is `[happy-6]`, `[unhappy-4]` and `[boundary-13]` to `[boundary-18]`\n- `context-sources-check.jira.test.ts`: `jiraContextFields` and `renderSourceContext`, which is `[happy-7]` to `[happy-9]` and `[boundary-19]` to `[boundary-24]`\n- `context-sources-check.drift.test.ts`: `contextDrift` and approved-task snapshots, which is `[happy-10]`, `[happy-11]`, `[boundary-25]` and `[boundary-26]`\n\nEach of the 41 scenarios has two tests:\n1. **The scenario as written.** For scenario outlines this includes every row of the examples table.\n2. **One boundary case that follows from the spec's rules.** Examples: a path matching two keywords is boosted only once; a document that exactly fills the remaining room is not marked truncated; path order compares raw character codes rather than using locale order; links come back as new objects; inputs are not mutated.\n\nI wrote nothing outside the test folder. Compiling also produced `dist-test/` output, which the run command needs.\n\n82 tests, in 5 files.",
+    "problem": null,
+    "files": [
+      "packages/core/test/context-sources-check.documents.test.ts",
+      "packages/core/test/context-sources-check.drift.test.ts",
+      "packages/core/test/context-sources-check.jira.test.ts",
+      "packages/core/test/context-sources-check.kept.test.ts",
+      "packages/core/test/context-sources-check.keywords.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "59b32f52-e829-47e0-9d7c-784f12448a9e",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 2.5612277,
+        "turns": 27,
+        "durationMs": 594369,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 2.5612277,
+    "finalText": "I wrote the hidden suite in `packages/core/test/hidden-context-sources-check/`, split into six files: keywords, documents, kept, jira, render and drift.\n\n**Results:**\n- **Type check:** `npx tsc -p tsconfig.test.json` reports no errors.\n- **Against the current interface:** all 85 tests fail, and each fails with `Error: not implemented`.\n- **Against a correct implementation:** I wrote a throwaway one in the scratchpad, outside the repo. All 85 hidden tests and all 82 public tests pass on it, so the expected values hold up.\n- **Against shortcuts:** I ran 18 versions of that implementation, each with one shortcut a developer might take. 13 change behaviour without failing the public suite, and the hidden suite catches 11 of those, including:\n  - accepting `.md` dot-files;\n  - ignoring the empty keyword;\n  - trimming only ASCII whitespace;\n  - rounding hours with `toFixed`;\n  - charging the uncut length against the 48000-character total;\n  - treating `mydocs/` as a docs directory;\n  - stopping after the first cut document;\n  - trimming again after the cut;\n  - treating an empty `parentKey` as no parent;\n  - ignoring a version of 0;\n  - treating `README-dev.md` as the root README.\n\n**Not caught, on purpose:**\n- **Kelvin sign:** the spec says to lowercase before splitting, but also that non-ASCII letters are separators. `\"\\u212A\"` lowercases to an ASCII `k`, so the two rules disagree and I didn't test it.\n- **Negative `subtaskCount`:** the spec says \"when not 0\", which would show a negative count. I didn't assert it because negative counts may be outside the inputs the spec describes, so an implementation that checks `> 0` passes.\n\n**Keys:**\n- Every scenario has at least one test: `happy-1`…`11`, `boundary-1`…`26` and `unhappy-1`…`4`.\n- The constants are already defined in the interface, so a plain constant check would pass today. The `[happy-1]` tests therefore check the constants through the functions that use them.\n- The `[boundary-26]` test builds its snapshot context with `keptDocuments` for the same reason.\n\n85 tests, in 6 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/core/test/hidden-context-sources-check/documents.test.ts",
+      "packages/core/test/hidden-context-sources-check/drift.test.ts",
+      "packages/core/test/hidden-context-sources-check/jira.test.ts",
+      "packages/core/test/hidden-context-sources-check/kept.test.ts",
+      "packages/core/test/hidden-context-sources-check/keywords.test.ts",
+      "packages/core/test/hidden-context-sources-check/render.test.ts"
+    ],
+    "open": []
+  }
+}

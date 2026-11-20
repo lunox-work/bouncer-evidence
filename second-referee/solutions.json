@@ -1,0 +1,166 @@
+{
+ "totals": {
+  "right": 289,
+  "wrong": 889,
+  "rightRejectedFirst": 3,
+  "wrongAcceptedFirst": 43,
+  "rightRejectedBoth": 6,
+  "wrongAcceptedBoth": 32
+ },
+ "solutions": [
+  {
+   "key": "he-11#27",
+   "slug": "he-11",
+   "set": "starcoderbase-3b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-11:tests/public/test_string_xor.py :: TestStringXor.test_identical_mixed_strings",
+    "suite:he-11:tests/public/test_string_xor.py :: TestStringXor.test_mixed_bits_with_leading_zero_result",
+    "suite:he-11:tests/public/test_string_xor.py :: TestStringXor.test_zero_right_operand"
+   ]
+  },
+  {
+   "key": "he-124#4",
+   "slug": "he-124",
+   "set": "codegen-16b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_five_digit_year",
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_one_digit_day",
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_one_digit_month",
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_three_digit_day",
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_three_digit_month",
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_two_digit_year"
+   ]
+  },
+  {
+   "key": "he-124#14",
+   "slug": "he-124",
+   "set": "gpt-4-1106-preview_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-124:tests/private/test_valid_date.py :: TestValidDatePrivate.test_trailing_newline"
+   ]
+  },
+  {
+   "key": "he-13#3",
+   "slug": "he-13",
+   "set": "code-llama-7b_temp_0.0",
+   "right": true,
+   "ids": [
+    "suite:he-13:tests/public/test_greatest_common_divisor.py :: TestGreatestCommonDivisor.test_negative_first_input",
+    "suite:he-13:tests/private/test_greatest_common_divisor.py :: TestGreatestCommonDivisorHidden.test_first_input_is_negative_one",
+    "suite:he-13:tests/private/test_greatest_common_divisor.py :: TestGreatestCommonDivisorHidden.test_negative_first_has_larger_magnitude"
+   ]
+  },
+  {
+   "key": "he-43#15",
+   "slug": "he-43",
+   "set": "gpt-4_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-43:tests/private/test_pairs_sum_to_zero.py :: TestPairsSumToZeroHidden.test_many_zeros",
+    "suite:he-43:tests/private/test_pairs_sum_to_zero.py :: TestPairsSumToZeroHidden.test_separated_zero_occurrences",
+    "suite:he-43:tests/private/test_pairs_sum_to_zero.py :: TestPairsSumToZeroHidden.test_two_zero_occurrences"
+   ]
+  },
+  {
+   "key": "he-44#0",
+   "slug": "he-44",
+   "set": "chatgpt_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-44:tests/public/test_change_base.py :: TestChangeBase.test_zero",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_five",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_nine",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_three"
+   ]
+  },
+  {
+   "key": "he-44#2",
+   "slug": "he-44",
+   "set": "code-llama-34b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-44:tests/public/test_change_base.py :: TestChangeBase.test_zero",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_five",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_nine",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_three"
+   ]
+  },
+  {
+   "key": "he-44#19",
+   "slug": "he-44",
+   "set": "incoder-6b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-44:tests/public/test_change_base.py :: TestChangeBase.test_zero",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_five",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_nine",
+    "suite:he-44:tests/private/test_change_base.py :: TestChangeBaseHidden.test_zero_in_base_three"
+   ]
+  },
+  {
+   "key": "he-57#1",
+   "slug": "he-57",
+   "set": "code-llama-13b_temp_0.0",
+   "right": true,
+   "ids": [
+    "suite:he-57:tests/private/test_monotonic_hidden.py :: TestMonotonicHidden.test_strings_decreasing",
+    "suite:he-57:tests/private/test_monotonic_hidden.py :: TestMonotonicHidden.test_strings_increasing",
+    "suite:he-57:tests/private/test_monotonic_hidden.py :: TestMonotonicHidden.test_strings_interior_reversal"
+   ]
+  },
+  {
+   "key": "he-57#3",
+   "slug": "he-57",
+   "set": "code-llama-7b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_constant_list",
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_decreasing_with_equal_neighbors",
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_increasing_with_equal_neighbors"
+   ]
+  },
+  {
+   "key": "he-57#4",
+   "slug": "he-57",
+   "set": "codegen-16b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_increasing_with_equal_neighbors"
+   ]
+  },
+  {
+   "key": "he-57#15",
+   "slug": "he-57",
+   "set": "gpt-4_temp_0.0",
+   "right": true,
+   "ids": [
+    "suite:he-57:tests/private/test_monotonic_hidden.py :: TestMonotonicHidden.test_strings_decreasing",
+    "suite:he-57:tests/private/test_monotonic_hidden.py :: TestMonotonicHidden.test_strings_increasing",
+    "suite:he-57:tests/private/test_monotonic_hidden.py :: TestMonotonicHidden.test_strings_interior_reversal"
+   ]
+  },
+  {
+   "key": "he-57#20",
+   "slug": "he-57",
+   "set": "mistral-7b_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_constant_list",
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_decreasing_with_equal_neighbors",
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_increasing_with_equal_neighbors"
+   ]
+  },
+  {
+   "key": "he-57#21",
+   "slug": "he-57",
+   "set": "phind-code-llama-34b-v2_temp_0.0",
+   "right": false,
+   "ids": [
+    "suite:he-57:tests/public/test_monotonic.py :: TestMonotonic.test_increasing_with_equal_neighbors"
+   ]
+  }
+ ]
+}

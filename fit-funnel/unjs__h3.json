@@ -1,0 +1,15 @@
+{
+  "repo": "unjs/h3",
+  "package": ".",
+  "language": "typescript",
+  "commit": "2f29b875617e8daf39d25118f7474fd4c24fbfe1",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 18
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "at": "2026-11-20T09:52:40.347Z",
+  "registered": "evidence/second-referee.md, commit 6834bbd",
+  "totals": {
+    "right": 289,
+    "wrong": 889,
+    "rightRejectedFirst": 3,
+    "wrongAcceptedFirst": 43,
+    "rightRejectedBoth": 6,
+    "wrongAcceptedBoth": 32
+  },
+  "withReferee": {
+    "rightRejected": 6,
+    "wrongAccepted": 32,
+    "of": {
+      "right": 289,
+      "wrong": 889
+    }
+  },
+  "gate": {
+    "rightRejectedAtMost": 4,
+    "wrongAcceptedAtMost": 36,
+    "holds": false
+  },
+  "referee": {
+    "model": "claude-fable-5-1",
+    "refereed": 10,
+    "costUsd": 2.47
+  },
+  "solutions": [
+    {
+      "key": "he-11#27",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestStringXor.test_identical_mixed_strings",
+          "requires": "yes",
+          "reason": "The spec says to \"perform binary XOR on these inputs\" where inputs are \"strings ... consisting only of 1s and 0s\" and its example '010' treats a leading zero as a real bit position, so the result of XORing two 5-bit strings is a 5-bit string; the implementation's integer conversion drops the leading zeros and returns '0'."
+        }
+      ]
+    },
+    {
+      "key": "he-124#4",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestValidDatePrivate.test_five_digit_year",
+          "requires": "yes",
+          "reason": "Rule 4 says \"The date should be in the format: mm-dd-yyyy\"; the yyyy placeholder denotes a four-digit year, so a five-digit year field like 20230 does not match the required format and must be rejected."
+        }
+      ]
+    },
+    {
+      "key": "he-124#14",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestValidDatePrivate.test_trailing_newline",
+          "requires": "yes",
+          "reason": "Rule 4 says \"The date should be in the format: mm-dd-yyyy\"; a string with a trailing newline after the year is not in that format, so False is required, and the implementation's `$` anchor wrongly tolerates the newline."
+        }
+      ]
+    },
+    {
+      "key": "he-13#3",
+      "right": true,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestGreatestCommonDivisor.test_negative_first_input",
+          "requires": "yes",
+          "reason": "The spec accepts \"two integers a and b\" and asks for the \"greatest common divisor\"; both 6 and -6 divide -18 and 24, and 6 is greater, so returning -6 is not the greatest common divisor, consistent with the spec's positive-valued examples."
+        }
+      ]
+    },
+    {
+      "key": "he-43#15",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestPairsSumToZeroHidden.test_many_zeros",
+          "requires": "open",
+          "reason": "The spec requires True when \"there are two distinct elements in the list that sum to zero\"; \"distinct elements\" can reasonably mean different positions (two zeros qualify) or different values (they do not), and the only example with a zero, [1, 3, 5, 0] -> False, has a single zero and does not disambiguate."
+        },
+        {
+          "test": "TestPairsSumToZeroHidden.test_separated_zero_occurrences",
+          "requires": "yes",
+          "reason": "The spec requires True when 'there are two distinct elements in the list that sum to zero'; two zeros at different positions are two distinct elements summing to zero, and nothing in the spec restricts 'distinct' to distinct values."
+        }
+      ]
+    },
+    {
+      "key": "he-44#0",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestChangeBase.test_zero",
+          "requires": "yes",
+          "reason": "The spec requires the function to \"return string representation after the conversion\"; the only string representation of zero in base two is \"0\", and the empty string does not represent any number."
+        }
+      ]
+    },
+    {
+      "key": "he-44#2",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestChangeBase.test_zero",
+          "requires": "yes",
+          "reason": "The spec requires the function to \"return string representation after the conversion\"; the only string representation of zero in base two is \"0\", and the empty string does not represent any number."
+        }
+      ]
+    },
+    {
+      "key": "he-44#19",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestChangeBase.test_zero",
+          "requires": "yes",
+          "reason": "The spec requires the function to \"return string representation after the conversion\"; the only string representation of zero in base two is \"0\", and the empty string does not represent any number."
+        }
+      ]
+    },
+    {
+      "key": "he-57#1",
+      "right": true,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestMonotonicHidden.test_strings_decreasing",
+          "requires": "open",
+          "reason": "The spec constrains input only as `l: list` and asks whether elements are \"monotonically increasing or decreasing\"; all its examples are integers and it never says whether non-numeric comparable elements like strings are in scope, so neither returning True nor failing on strings is required."
+        },
+        {
+          "test": "TestMonotonicHidden.test_strings_increasing",
+          "requires": "yes",
+          "reason": "The signature is `monotonic(l: list)` with no element-type restriction and the spec asks only whether elements are \"monotonically increasing or decreasing\", an ordering property that strings satisfy; the implementation's use of subtraction is its own choice and causes a crash rather than the required True."
+        }
+      ]
+    },
+    {
+      "key": "he-57#3",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestMonotonic.test_increasing_with_equal_neighbors",
+          "requires": "yes",
+          "reason": "The spec asks for \"monotonically increasing or decreasing\" without saying \"strictly\"; the standard meaning of monotonically increasing is non-decreasing, so equal neighbors like -2, -2 and 3, 3 must not break monotonicity and the function must return True."
+        }
+      ]
+    },
+    {
+      "key": "he-57#4",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestMonotonic.test_increasing_with_equal_neighbors",
+          "requires": "yes",
+          "reason": "The spec asks for \"monotonically increasing or decreasing\" without saying \"strictly\"; the standard meaning of monotonically increasing is non-decreasing, so equal neighbors like -2, -2 and 3, 3 must not break monotonicity and the function must return True."
+        }
+      ]
+    },
+    {
+      "key": "he-57#15",
+      "right": true,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestMonotonicHidden.test_strings_decreasing",
+          "requires": "open",
+          "reason": "The spec constrains input only as `l: list` and asks whether elements are \"monotonically increasing or decreasing\"; all its examples are integers and it never says whether non-numeric comparable elements like strings are in scope, so neither returning True nor failing on strings is required."
+        },
+        {
+          "test": "TestMonotonicHidden.test_strings_increasing",
+          "requires": "yes",
+          "reason": "The signature is `monotonic(l: list)` with no element-type restriction and the spec asks only whether elements are \"monotonically increasing or decreasing\", an ordering property that strings satisfy; the implementation's use of subtraction is its own choice and causes a crash rather than the required True."
+        }
+      ]
+    },
+    {
+      "key": "he-57#20",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestMonotonic.test_increasing_with_equal_neighbors",
+          "requires": "yes",
+          "reason": "The spec asks for \"monotonically increasing or decreasing\" without saying \"strictly\"; the standard meaning of monotonically increasing is non-decreasing, so equal neighbors like -2, -2 and 3, 3 must not break monotonicity and the function must return True."
+        }
+      ]
+    },
+    {
+      "key": "he-57#21",
+      "right": false,
+      "rejected": true,
+      "rulings": [
+        {
+          "test": "TestMonotonic.test_increasing_with_equal_neighbors",
+          "requires": "yes",
+          "reason": "The spec asks for \"monotonically increasing or decreasing\" without saying \"strictly\"; the standard meaning of monotonically increasing is non-decreasing, so equal neighbors like -2, -2 and 3, 3 must not break monotonicity and the function must return True."
+        }
+      ]
+    }
+  ]
+}

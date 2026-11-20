@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest-1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1243048,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks which day counts as Monday and in which time zone that is judged. The run returns true for Asia/Singapore at 2026-11-22T20:00Z, which is Monday 04:00 in Singapore, and false for UTC at the same instant. So Monday is judged in the organisation's zone, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Daylight saving is a case of the same question: which local day it is in the given zone. The pick formats the instant as a weekday name in the zone itself, so the zone's rules, including DST shifts, decide the local day. That is what S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 7,
+      "agrees": true,
+      "why": "S3 makes a task with no submissions report furthest gate 0. Item 7 asks exactly that, and the run returns 0. Items 8 (max gate) and 1 (merged excluded) touch other parts of S3, but neither is settled as directly as item 7.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how age in days is computed and rounded. The run gives age 1 for a task posted 1 day 23 hours earlier, so it counts whole days rounded down. That matches 9 days 23 hours giving age 9.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether exactly 14 days counts as stalled. The pick uses >= on milliseconds, and the run returns true at exactly 14 days, matching '14 days or more'. Items 4 and 5 (clock from posting, clock from latest submission) also agree with S5, but the 14-day boundary is the main thing S5 settles.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "The run puts stalled task a first, then d (oldest of the rest), then b before c (same posting time, ordered by id). That is stalled first, then oldest, then id, as S6 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": false,
+      "why": "Item 10 asks how the subject handles plurals. The run returns '1 open tasks', but S7 expects '1 open task'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what comes back when nothing is open. The run returns null, meaning no digest at all rather than an empty one, which is what S8 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks whether the time zone is validated even when the result doesn't depend on it. S9 says Mars/Olympus fails with no conditions attached. The run throws 'Unknown time zone: Mars/Olympus' even with no tasks, and that error names the zone.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "repo": "https://github.com/unjs/pathe.git",
+  "commit": "91582889fc1fecefe023690bf8badabe5d38084f",
+  "base": "b91e344e39e9b1dfb366d8e8222bc2471a885440",
+  "run": "runs/pathe-reverse-alias-confirmed/ticket-haiku/2",
+  "maintainers": "43 of 44 acceptance tests pass: with no matching alias it returns [path], the maintainers return []",
+  "idPattern": "no match|empty|none|order|specific|longest"
+}

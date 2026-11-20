@@ -1,0 +1,105 @@
+{
+  "run": "weekly-digest-8",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0634101,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"merged\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]},{id:\"c\",title:\"C\",status:\"closed\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>t.id)"
+    },
+    {
+      "item": 2,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-21T00:00:01Z\"),submissions:[]}]}).tasks[0].ageDays"
+    },
+    {
+      "item": 3,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-12-23T00:00:00Z\"),submissions:[]}]}).tasks[0].ageDays"
+    },
+    {
+      "item": 4,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-01T00:00:00Z\"),submissions:[{at:new Date(\"2026-11-09T00:00:00Z\"),gate:1}]}]}).tasks[0].stalled"
+    },
+    {
+      "item": 5,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-09T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2026-11-09T00:00:01Z\"),submissions:[]}]}).tasks.map(t=>[t.id,t.stalled])"
+    },
+    {
+      "item": 6,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-09-01T00:00:00Z\"),submissions:[{at:new Date(\"2026-11-20T00:00:00Z\"),gate:1},{at:new Date(\"2026-09-02T00:00:00Z\"),gate:2}]}]}).tasks[0].stalled"
+    },
+    {
+      "item": 7,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]}]}).tasks[0].furthestGate"
+    },
+    {
+      "item": 8,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[{at:new Date(\"2026-11-22T10:00:00Z\"),gate:3},{at:new Date(\"2026-11-22T11:00:00Z\"),gate:1},{at:new Date(\"2026-11-22T09:00:00Z\"),gate:2}]}]}).tasks[0].furthestGate"
+    },
+    {
+      "item": 9,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"f\",title:\"F\",status:\"open\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2026-11-20T00:00:00Z\"),submissions:[]},{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-20T00:00:00Z\"),submissions:[]},{id:\"s\",title:\"S\",status:\"open\",postedAt:new Date(\"2026-10-20T00:00:00Z\"),submissions:[]},{id:\"o\",title:\"O\",status:\"open\",postedAt:new Date(\"2026-10-01T00:00:00Z\"),submissions:[{at:new Date(\"2026-11-22T00:00:00Z\"),gate:1}]}]}).tasks.map(t=>t.id)"
+    },
+    {
+      "item": 10,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]}]}).subject"
+    },
+    {
+      "item": 11,
+      "probe": "buildDigest({timeZone:\"Not/AZone\",now:new Date(\"2026-11-23T00:00:00Z\"),tasks:[]})"
+    },
+    {
+      "item": 12,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-11-25T12:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-11-22T00:00:00Z\"),submissions:[]}]}) !== null"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ 'a' ]"
+    },
+    {
+      "item": 2,
+      "actual": "1"
+    },
+    {
+      "item": 3,
+      "actual": "0"
+    },
+    {
+      "item": 4,
+      "actual": "true"
+    },
+    {
+      "item": 5,
+      "actual": "[ [ 'a', true ], [ 'b', false ] ]"
+    },
+    {
+      "item": 6,
+      "actual": "false"
+    },
+    {
+      "item": 7,
+      "actual": "0"
+    },
+    {
+      "item": 8,
+      "actual": "3"
+    },
+    {
+      "item": 9,
+      "actual": "[ 's', 'o', 'a', 'b', 'f' ]"
+    },
+    {
+      "item": 10,
+      "actual": "'Weekly digest: 1 open tasks, 0 stalled'"
+    },
+    {
+      "item": 11,
+      "actual": "throws Error: Unknown time zone: Not/AZone"
+    },
+    {
+      "item": 12,
+      "actual": "true"
+    }
+  ]
+}

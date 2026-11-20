@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1150062,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 asks about the BOM, the header, row order and line endings. Items 4, 2 and 5 cover the other parts, but item 1 (which columns, in what order, under what header names) is closest to 'the header and one row per requisition'. Its run writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created' after the BOM, each row ends with CRLF, and item 2 sorts by createdAt then id, all as S1 expects.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": false,
+      "why": "S2 is about how values are written for people to read. No item asks how status is displayed, and item 7 (missing title gives an empty field) only covers one minor clause. Item 8 asks how the creation time is formatted. Its run writes '2023-11-14T22:13:20.123Z', the full ISO timestamp, but S2 expects the UTC date only, 'YYYY-MM-DD'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an empty list produces. Its run returns the BOM plus the header row and CRLF, nothing more, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how fields with commas, quotes or line breaks are escaped. It quotes those cases RFC-style, but it only lists commas, quotes and line breaks and says it 'does nothing else'. So it does not quote titles that start or end with a space, which S4 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 explicitly takes up formula injection and says it does not neutralise a leading =, +, - or @. Its run writes '=SUM(A1)' unchanged, but S5 expects a single quote before it.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "S6 covers several validation cases. Items 10, 11 and 12 each handle one of them, and all throw errors naming the id. Item 9, unknown status, is the first case S6 lists. Its run throws 'Requisition bad1 has an unknown status: archived' and the whole export fails, as S6 expects. Items 10 to 12 also agree.",
+      "failing": true
+    }
+  ]
+}

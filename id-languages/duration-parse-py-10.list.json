@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/10",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0488172,
+  "items": [
+    {
+      "question": "Is a bare number without a unit (e.g. the legacy `172800`) accepted as raw milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a unit-less number with ValueError.",
+      "where": "src/solution.py:34",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Can units be combined in any order or repeated (e.g. `30m1h`, `1h1h`)?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Requires units in descending order h, m, s, ms, each at most once, and rejects anything else.",
+      "where": "src/solution.py:18",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Are units other than h, m, s and ms (e.g. days `d`) accepted?",
+      "ticket": "silent",
+      "chose": "Rejects `d` and any other unit.",
+      "where": "src/solution.py:15",
+      "instead": "Support `d` (and possibly `w`)."
+    },
+    {
+      "question": "Are unit letters case-sensitive (`1H`, `1S`)?",
+      "ticket": "silent",
+      "chose": "Only lowercase units are accepted; uppercase raises ValueError.",
+      "where": "src/solution.py:18",
+      "instead": "Match case-insensitively."
+    },
+    {
+      "question": "Is whitespace allowed around or inside a duration string?",
+      "ticket": "silent",
+      "chose": "Strips leading and trailing whitespace but rejects inner whitespace such as `1h 30m`.",
+      "where": "src/solution.py:32",
+      "instead": "Reject any whitespace, or also allow spaces between parts."
+    },
+    {
+      "question": "Are fractional values (`1.5h`) or signs (`-1s`, `+1s`) accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them. Only unsigned integer digits are allowed.",
+      "where": "src/solution.py:18",
+      "instead": "Allow decimal values such as `1.5h`, and still reject negatives."
+    },
+    {
+      "question": "Is an empty or whitespace-only string valid, and does it mean 0?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for empty or blank input.",
+      "where": "src/solution.py:33",
+      "instead": "Return 0 for empty input."
+    },
+    {
+      "question": "What is the maximum duration, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Raises ValueError when the total exceeds 9007199254740991 ms (MAX_MS).",
+      "where": "src/solution.py:40",
+      "instead": "Impose no limit, or use a different cap."
+    },
+    {
+      "question": "What does a non-string input to parse_duration do?",
+      "ticket": "silent",
+      "chose": "Raises ValueError, not TypeError.",
+      "where": "src/solution.py:30",
+      "instead": "Raise TypeError, or coerce an int as milliseconds."
+    },
+    {
+      "question": "How is 0 formatted back, and which unit does it use?",
+      "ticket": "silent",
+      "chose": "Returns `0s`.",
+      "where": "src/solution.py:55",
+      "instead": "Return `0ms`."
+    },
+    {
+      "question": "What does `format_duration` produce when the value spans several units (what does 'same style' mean)?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string and may skip larger units, so 5400000 becomes `90m` and 1500 becomes `1500ms`.",
+      "where": "src/solution.py:58",
+      "instead": "Use a canonical greedy breakdown such as `1h30m` and `1s500ms`."
+    },
+    {
+      "question": "How does `format_duration` handle negative, float, bool or out-of-range input?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for bools, non-ints, negatives and values above MAX_MS.",
+      "where": "src/solution.py:51",
+      "instead": "Accept whole-number floats, or treat a bool as an int."
+    }
+  ]
+}

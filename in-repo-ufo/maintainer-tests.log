@@ -1,0 +1,58 @@
+[07:46:35] ufo-filter-query 1 maintainer test file(s), 33 tests, 3 fail on base and pass on the commit
+[07:46:57] ufo-filter-query codex-cli 5 of 5 runs pass every acceptance test
+[07:47:19] ufo-filter-query haiku 5 of 5 runs pass every acceptance test
+[07:47:41] ufo-filter-query haiku-no-public 5 of 5 runs pass every acceptance test
+[07:48:03] ufo-filter-query ticket-haiku 5 of 5 runs pass every acceptance test
+[07:48:25] ufo-filter-query ticket-sonnet 5 of 5 runs pass every acceptance test
+[07:48:36] ufo-join-relative 2 maintainer test file(s), 64 tests, 27 fail on base and pass on the commit
+[07:48:48] ufo-without-host 1 maintainer test file(s), 94 tests, 5 fail on base and pass on the commit
+[07:49:14] ufo-without-host codex-cli 5 of 5 runs pass every acceptance test
+[07:49:40] ufo-without-host haiku 5 of 5 runs pass every acceptance test
+[07:50:05] ufo-without-host haiku-no-public 5 of 5 runs pass every acceptance test
+[07:50:31] ufo-without-host ticket-haiku 0 of 5 runs pass every acceptance test
+[07:50:57] ufo-without-host ticket-sonnet 5 of 5 runs pass every acceptance test
+[07:51:06] ufo-base-prefix 1 maintainer test file(s), 32 tests, 4 fail on base and pass on the commit
+[07:51:27] ufo-base-prefix codex-cli 5 of 5 runs pass every acceptance test
+[07:51:48] ufo-base-prefix haiku 5 of 5 runs pass every acceptance test
+[07:52:09] ufo-base-prefix haiku-no-public 5 of 5 runs pass every acceptance test
+[07:52:30] ufo-base-prefix ticket-haiku 5 of 5 runs pass every acceptance test
+[07:52:51] ufo-base-prefix ticket-sonnet 5 of 5 runs pass every acceptance test
+[07:53:02] ufo-drive-letters 1 maintainer test file(s), 55 tests, 1 fail on base and pass on the commit
+[07:53:28] ufo-drive-letters codex-cli 5 of 5 runs pass every acceptance test
+[07:53:54] ufo-drive-letters haiku 5 of 5 runs pass every acceptance test
+[07:54:20] ufo-drive-letters haiku-no-public 5 of 5 runs pass every acceptance test
+[07:54:46] ufo-drive-letters ticket-haiku 5 of 5 runs pass every acceptance test
+[07:55:12] ufo-drive-letters ticket-sonnet 5 of 5 runs pass every acceptance test
+[07:55:22] ufo-query-null-proto 1 maintainer test file(s), 30 tests, 1 fail on base and pass on the commit
+[07:55:43] ufo-query-null-proto codex-cli 5 of 5 runs pass every acceptance test
+[07:56:05] ufo-query-null-proto haiku 5 of 5 runs pass every acceptance test
+[07:56:27] ufo-query-null-proto haiku-no-public 5 of 5 runs pass every acceptance test
+[07:56:49] ufo-query-null-proto ticket-haiku 5 of 5 runs pass every acceptance test
+[07:57:11] ufo-query-null-proto ticket-sonnet 5 of 5 runs pass every acceptance test
+{
+  "codex-cli": {
+    "runs": 25,
+    "allPass": 25,
+    "cases": 5
+  },
+  "haiku": {
+    "runs": 25,
+    "allPass": 25,
+    "cases": 5
+  },
+  "haiku-no-public": {
+    "runs": 25,
+    "allPass": 25,
+    "cases": 5
+  },
+  "ticket-haiku": {
+    "runs": 25,
+    "allPass": 20,
+    "cases": 5
+  },
+  "ticket-sonnet": {
+    "runs": 25,
+    "allPass": 25,
+    "cases": 5
+  }
+}

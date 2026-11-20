@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11197470000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks how step text is trimmed, which settles S1's rule that step text is what follows the keyword and one space. The run gave 'Given   spaced text  ' → 'spaced text', so the whole text was trimmed. Taking off only one space would leave '  spaced text  '. Also, a bare 'Given' was dropped instead of becoming a step.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 covers comments and blank lines, two of S2's four rules. That makes it the closest match; items 8 and 5 cover only tags or descriptions. Its pick skips lines starting with # and blank lines, which is what S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks how a Background is returned. Its pick returns the Background steps separately in `background`, allowed once before any Scenario, so they aren't copied into scenarios. That matches S3.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how doc strings and tables attach to steps. Its pick attaches both to the step before them, strips the doc string's indentation and keeps its lines literal. The run shows both attached to the right steps. The doc string contents were hidden as [Array] in the output, so the run doesn't show exactly how much indentation was removed.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S5 mixes several error cases. Item 9 is closest because it asks about two of them directly: a second Feature: line and a step before any Background or Scenario. Its pick throws at that line, and the run shows 'line 2: a step must come after Background: or Scenario:', which matches.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks whether a Feature with zero scenarios is valid. The run gave parseFeature(\"Feature: f\") → {name:'f', background:null, scenarios:[]}, which matches S6.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/4",
+  "model": "claude-sonnet-5-5",
+  "seconds": 21,
+  "costUsd": 0.05709000000000001,
+  "items": [
+    {
+      "question": "How is the hidden-test share rounded when the bounty doesn't divide evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%)",
+      "chose": "Rounds the hidden-test amount down with BigInt integer division, and gives the remainder to the UAT part.",
+      "where": "src/index.ts:17",
+      "instead": "Round to the nearest unit, or round the hidden-test part up."
+    },
+    {
+      "question": "What happens when the bounty is negative, fractional or unsafe?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError unless the bounty is a safe integer of at least 0.",
+      "where": "src/index.ts:10",
+      "instead": "Accept fractional amounts, or clamp or coerce invalid values."
+    },
+    {
+      "question": "What happens when the configured share is outside 0–10000 bps or is not an integer?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError. The share must be an integer from 0 to 10000 bps.",
+      "where": "src/index.ts:13",
+      "instead": "Clamp the share to the valid range, or accept a fractional percentage."
+    },
+    {
+      "question": "When is an invalid bounty or share rejected: at handler creation or when an event arrives?",
+      "ticket": "silent",
+      "chose": "Computes the split when the handler is created, so a bad bounty or share makes createEscrowHandler throw synchronously.",
+      "where": "src/index.ts:24",
+      "instead": "Validate lazily when an event is handled, and reject that event's promise."
+    },
+    {
+      "question": "What does a zero bounty do?",
+      "ticket": "silent",
+      "chose": "Sets the status to 'pro bono' and still records a release of amount 0 on a pass.",
+      "where": "src/index.ts:32",
+      "instead": "Record no release for a zero bounty, or treat it as 'fully released'."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Rejects the event with an Error and records nothing.",
+      "where": "src/index.ts:53",
+      "instead": "Release the whole bounty on UAT approval, or ignore the event silently."
+    },
+    {
+      "question": "How is a repeated hidden-tests-passed or uat-approved event treated?",
+      "ticket": "Release happens once per task",
+      "chose": "Returns the current state unchanged, with no new save. It checks the stored release kinds and ignores the event id.",
+      "where": "src/index.ts:49",
+      "instead": "Deduplicate by event id, or throw on a repeat."
+    },
+    {
+      "question": "What is released on UAT approval, and how is it computed?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Releases the bounty minus the sum of the amounts already recorded, not the precomputed split.uat.",
+      "where": "src/index.ts:56",
+      "instead": "Release the precomputed UAT share from the split."
+    },
+    {
+      "question": "What does a failed hidden-test run record, and what status results?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state, or a fresh 'locked' state, without saving it. A failure does not block a later pass.",
+      "where": "src/index.ts:45",
+      "instead": "Record the failure in the store, or lock out later retries."
+    },
+    {
+      "question": "How are concurrent or overlapping events handled?",
+      "ticket": "silent",
+      "chose": "Serialises all events through a promise queue, so a failed event doesn't block later ones.",
+      "where": "src/index.ts:67",
+      "instead": "Process events in parallel and rely on the store for atomicity, or use a lock or compare-and-set in the store."
+    },
+    {
+      "question": "What happens when the store fails?",
+      "ticket": "silent",
+      "chose": "Rejects the event's promise with the store's error and records nothing, so the same event can be retried.",
+      "where": "src/index.ts:61",
+      "instead": "Swallow the error and return the old state, or retry internally."
+    },
+    {
+      "question": "What is the default hidden-test share when the task doesn't configure one?",
+      "ticket": "default 75%",
+      "chose": "Uses 7500 bps whenever hiddenTestShareBps is null or undefined, so an explicit 0 is kept as 0%.",
+      "where": "src/index.ts:24",
+      "instead": "Treat a falsy share, including 0, as unset and use 75%."
+    }
+  ]
+}

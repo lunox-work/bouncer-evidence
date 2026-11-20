@@ -1,0 +1,10 @@
+{
+  "repo": "sindresorhus/ky",
+  "package": ".",
+  "language": "typescript",
+  "commit": "3541888878c4d303a8bc2ad61815f4e048f55a5d",
+  "static": {
+    "supported": false,
+    "reason": "runner outside vitest, Jest and node:test over tsconfig.test.json: scripts.test is \"xo && npm run build && tsc --project tsconfig.test.json && ava\""
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0761288,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 depends on how a stored value is cleaned before matching: case is folded and surrounding whitespace is trimmed. Item 2's pick lowercases and trims, so \"Draft\", \" PUBLISHED \" and \"Merged\" read as draft, published and merged.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old free-text spellings count as known statuses. The scenario expects ten aliases, including under review, reviewing, live, public, assigned, taken, done and complete(d). The pick maps only \"in review\" and treats everything else as unreadable, so \"under_review\" and \"LIVE\" would fail to read.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unrecognised, empty or whitespace-only value reads as. Its pick returns null and never guesses the nearest status, which is exactly what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "S4 only checks that writing an exact enum value stores it unchanged. No item asks that. Item 4 is about whether near-misses get normalised on write, so its answer doesn't settle what an exact value does.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "The key question is whether a near-miss or old spelling (\"Review\", \"in-review\", \" draft\") is normalised on write or refused. That is item 4. Its pick accepts only exact lowercase enum values with no cleaning or aliasing, so those writes are refused. Item 5 also fits S5, but it covers a narrower point: the error message quoting the value as given.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 7,
+      "agrees": true,
+      "why": "The key requirement is to list each distinct original value once, exactly as stored. Item 7 asks whether raw or cleaned text is reported and whether duplicates are collapsed. Its pick keeps raw strings in a Set, so each one appears once, unaltered. Items 6 (keeping null rows) and 8 (sort order) cover other parts of S6.",
+      "failing": true
+    }
+  ]
+}

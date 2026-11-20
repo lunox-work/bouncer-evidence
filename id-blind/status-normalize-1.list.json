@@ -1,0 +1,92 @@
+{
+  "run": "status-normalize/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.0472964,
+  "items": [
+    {
+      "question": "What does reading a stored value that is not a known status or old spelling return?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null instead of throwing or guessing the nearest status.",
+      "where": "src/index.ts:32",
+      "instead": "Throw an error, or fall back to a default status such as draft."
+    },
+    {
+      "question": "How is a stored value cleaned before it is matched (case, whitespace, separators)?",
+      "ticket": "silent",
+      "chose": "Trims, lowercases, and collapses each run of whitespace, '-' and '_' into one space.",
+      "where": "src/index.ts:26",
+      "instead": "Only trim and lowercase, with no separator handling."
+    },
+    {
+      "question": "Which old spellings are mapped to a status?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only 'in review' (the cleaned form of in-review) to review. Every other old spelling, such as 'in progress' or 'done', reads as null.",
+      "where": "src/index.ts:12",
+      "instead": "Map more synonyms (for example 'in progress', 'done', 'pr') or accept prefix and fuzzy matches."
+    },
+    {
+      "question": "Does writing accept a value that is only a variant of a status, such as 'Draft', ' draft' or 'in-review'?",
+      "ticket": "Only enum values are written",
+      "chose": "Accepts only the exact lowercase enum strings and throws for everything else, including variants and old spellings.",
+      "where": "src/index.ts:41",
+      "instead": "Normalise the value with the read logic and write the canonical status."
+    },
+    {
+      "question": "What does writing an invalid value do?",
+      "ticket": "silent",
+      "chose": "Throws an Error whose message is 'not a sandbox status: \"<value>\"'.",
+      "where": "src/index.ts:42",
+      "instead": "Return null or undefined, return a result object, or fall back to a default."
+    },
+    {
+      "question": "What does writing an empty string do?",
+      "ticket": "silent",
+      "chose": "Throws, because the empty string is not in the status list.",
+      "where": "src/index.ts:41",
+      "instead": "Treat it as unset and write a default such as draft or null."
+    },
+    {
+      "question": "What does reading an empty or whitespace-only value return?",
+      "ticket": "silent",
+      "chose": "Returns null.",
+      "where": "src/index.ts:31",
+      "instead": "Default to draft."
+    },
+    {
+      "question": "When reading many rows, what happens to a row whose status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps the row in place with status null and does not drop it or throw.",
+      "where": "src/index.ts:53",
+      "instead": "Drop the row, or throw on the first unreadable row."
+    },
+    {
+      "question": "How are unreadable values reported by readStatuses (raw or cleaned, duplicates, order)?",
+      "ticket": "silent",
+      "chose": "Lists the raw stored strings (uncleaned), de-duplicated, sorted with the default string sort.",
+      "where": "src/index.ts:57",
+      "instead": "List the unreadable row ids, or list the values with duplicates in row order, or cleaned."
+    },
+    {
+      "question": "What is the order of the rows returned by readStatuses?",
+      "ticket": "silent",
+      "chose": "Preserves the input order and one output row per input row.",
+      "where": "src/index.ts:52",
+      "instead": "Group or sort rows by status or id."
+    },
+    {
+      "question": "Are inherited object keys like 'constructor' or '__proto__' treated as statuses?",
+      "ticket": "silent",
+      "chose": "No. Matching uses an array includes and a Map lookup, so these read as null.",
+      "where": "src/index.ts:15",
+      "instead": "Use a plain object lookup, which would risk matching prototype keys."
+    },
+    {
+      "question": "Where is the enum applied: only in the status module, or at the callers that set status?",
+      "ticket": "use it where the status is set",
+      "chose": "Only adds the read and write helpers in src/index.ts and changes no call sites.",
+      "where": "src/index.ts:39",
+      "instead": "Also change the code that sets the status to go through the enum helper."
+    }
+  ]
+}

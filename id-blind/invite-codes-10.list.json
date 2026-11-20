@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/10",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0666193,
+  "items": [
+    {
+      "question": "Is a code still redeemable at the exact instant 14 days have elapsed?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats the code as expired once now >= expiresAt, so the boundary instant is already expired.",
+      "where": "src/index.ts:48",
+      "instead": "Treat the code as valid through the boundary and expire only when now > expiresAt."
+    },
+    {
+      "question": "What does an expired code's state show if it was used before it expired?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "A used code stays 'used' after its expiry time, because the used check comes before the expiry check.",
+      "where": "src/index.ts:47",
+      "instead": "Show 'expired' once the time has passed, whether or not the code was used."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Returns a failure with reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:105",
+      "instead": "Consume the code and return ok, or return ok without consuming it (idempotent grant)."
+    },
+    {
+      "question": "Which failure reason is returned when a code is both revoked and used, or both used and expired?",
+      "ticket": "silent",
+      "chose": "Checks in the order unknown, revoked, used, expired, and returns the first that applies.",
+      "where": "src/index.ts:99",
+      "instead": "Check expiry before used or revoked, or return the most specific reason such as 'used'."
+    },
+    {
+      "question": "Can a code be revoked at all, and what happens when you revoke a used, unknown, or already-revoked code?",
+      "ticket": "silent",
+      "chose": "Adds revocation. It throws for unknown and used codes, and does nothing for an already-revoked code.",
+      "where": "src/index.ts:124",
+      "instead": "Have no revoke, or throw on a repeated revoke, or allow revoking used codes."
+    },
+    {
+      "question": "What format and alphabet do generated codes have, and how are they shown?",
+      "ticket": "silent",
+      "chose": "Uses 12 characters from a 32-symbol alphabet without I, O, 0, 1, shown as XXXX-XXXX-XXXX.",
+      "where": "src/index.ts:13",
+      "instead": "Use a different length or alphabet, such as a UUID or base62, shown without separators."
+    },
+    {
+      "question": "How is a typed code matched on redemption (case, spaces, dashes)?",
+      "ticket": "silent",
+      "chose": "Strips whitespace and '-' and uppercases the input before lookup.",
+      "where": "src/index.ts:36",
+      "instead": "Require an exact match against the displayed code."
+    },
+    {
+      "question": "What happens if a freshly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times, then throws an error.",
+      "where": "src/index.ts:171",
+      "instead": "Redraw without a limit, or fail on the first collision."
+    },
+    {
+      "question": "What happens if the random source returns an invalid index?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError when the index is non-integer or outside the alphabet range.",
+      "where": "src/index.ts:175",
+      "instead": "Use the value as given, or clamp or wrap it."
+    },
+    {
+      "question": "Can many codes exist for one task, and does creating one limit or replace earlier ones?",
+      "ticket": "Generate single-use invite codes per task",
+      "chose": "Appends each new code to the task's list with no limit and leaves earlier codes active.",
+      "where": "src/index.ts:84",
+      "instead": "Cap active codes per task, or invalidate earlier unused codes when a new one is made."
+    },
+    {
+      "question": "Is the taskId validated or checked for existence or invite-only status when creating a code?",
+      "ticket": "Company-borne tasks are invite only",
+      "chose": "Accepts any taskId string, including an empty one, with no check.",
+      "where": "src/index.ts:73",
+      "instead": "Reject empty or unknown tasks, or tasks that are not invite-only."
+    },
+    {
+      "question": "How are simultaneous operations on the registry handled?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Runs every operation one at a time through an in-process promise queue.",
+      "where": "src/index.ts:163",
+      "instead": "Rely on an atomic or compare-and-set store operation, or have no concurrency handling."
+    }
+  ]
+}

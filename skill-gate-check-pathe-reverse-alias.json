@@ -1,0 +1,34 @@
+{
+  "what": "a fresh claude -p session in unjs/pathe at b91e344 with the stored ticket-only change runs/pathe-reverse-alias-confirmed/ticket-haiku/2 (maintainers: 43 of 44 acceptance tests pass: with no matching alias it returns [path], the maintainers return []), only .claude/skills/bouncer, two turns: 'is it really done?', then the owner's answer",
+  "case": "pathe-reverse-alias",
+  "date": "2026-11-20",
+  "model": "claude-sonnet-5-5",
+  "exit": 0,
+  "costUsd": 1.2972163,
+  "minutes": 4.6,
+  "turns": 3,
+  "skillLoaded": true,
+  "bouncerCommands": [
+    "--version",
+    "door",
+    "check",
+    "confirm"
+  ],
+  "slug": "check-repo-agent-change-b91e344",
+  "idItems": 11,
+  "idListsTheGap": true,
+  "confirmedBy": "skill gate",
+  "answered": {
+    "how": "session",
+    "transcript": "/Users/charlieangriawan/.claude/projects/-private-var-folders-9k-pldvsgmx3kz-k53f-53t5m900000gn-T-bouncer-skill-gate-check-ZSy32m-repo/fc1ccd20-7991-41dc-8d34-2b86376cb7f6.jsonl",
+    "personTurns": 1,
+    "questionsAnswered": 0,
+    "questionsUnanswered": 0
+  },
+  "verdict": "incomplete",
+  "auditFindings": 0,
+  "findings": [],
+  "finalText": "lash and case mismatches, segment-boundary misses, exact-match and no-match cases.\n- **Ordering:** The agent keeps the `normalizeAliases` order. You wanted longest result first, so it fails `happy-5`, `happy-7` and `boundary-2`. It still matches your `~`/`~assets` example only when the caller happens to list the aliases in the right order.\n- **Trailing-slash targets and exact matches:** These are also failing. Some of those failures likely follow from the empty-array change, and I haven't looked at each one.\n\n**How the check went**\n- **Hidden suite:** It was calibrated before judging. All 47 hidden tests failed on the skeleton, and the reference implementation passed all 47 hidden and 50 public tests.\n- **Confirmation:** It is recorded as \"skill gate\". You changed 6 of the 17 listed decisions from the agent's picks.\n- **Audit:** It found no attempt to open the hidden suite from this session.\n- **Empty path:** I wrote the empty path as `[]`, since you chose an empty array for no match and an empty path matches nothing. The agent's `[\"\"]` was one of your \"keep what the agent picked\" items, so this one is my reading rather than your words.\n- **Agent session:** `bouncer door` found no agent session to read, so I can't say whether the agent ran tests after its last edit. Its own test file expects the exact-match case to return `[\"~win\"]`, which contradicts its implementation. I couldn't run it because `vitest` isn't installed here.\n\n**Retry:** Give the agent one retry with only these scenario keys: `boundary-2`, `boundary-4`, `boundary-5`, `boundary-6`, `boundary-10`, `boundary-11`, `happy-5`, `happy-7`, `happy-10`, `unhappy-1` to `unhappy-4`. The failing list in the judge's output also names `boundary-8`, `happy-3`, `happy-4` and `happy-6`, which I haven't mapped to scenarios. Don't pass the agent the hidden tests. The spec is at `/private/var/folders/9k/pldvsgmx3kz_k53f_53t5m900000gn/T/bouncer-skill-gate-check-ZSy32m/home/specs/check-repo-agent-change-b91e344/spec.md`.",
+  "started": "2026-11-20T13:54:35.481Z",
+  "holds": true
+}

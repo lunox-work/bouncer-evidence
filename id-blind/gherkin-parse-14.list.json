@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.0671928,
+  "items": [
+    {
+      "question": "What happens when the file has no scenarios?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Returns the feature with an empty scenarios list instead of raising an error.",
+      "where": "src/index.ts:185",
+      "instead": "Raise a ParseError because the file has no scenarios."
+    },
+    {
+      "question": "What happens on an empty file, or one with no Feature line?",
+      "ticket": "raise a clear error on invalid files",
+      "chose": "Raises a ParseError at line 1 saying 'expected \"Feature:\"'.",
+      "where": "src/index.ts:183",
+      "instead": "Return an empty feature, or report the line of the last line in the file."
+    },
+    {
+      "question": "Are Scenario Outline and Scenario Template accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them with a ParseError saying they are not supported.",
+      "where": "src/index.ts:125",
+      "instead": "Parse them as ordinary scenarios, or parse them along with their Examples tables."
+    },
+    {
+      "question": "Which line is reported for an error where the file is invalid because of an unclosed doc string?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line that opened the doc string, not the end of the file.",
+      "where": "src/index.ts:182",
+      "instead": "Report the last line of the file."
+    },
+    {
+      "question": "Which line is reported for tags that are not followed by a Scenario?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line of the first tag line, not the line of the offending keyword that follows. A trailing tag at the end of the file also reports the tag line.",
+      "where": "src/index.ts:131",
+      "instead": "Report the line of the line that follows the tags, or the line of the last tag line."
+    },
+    {
+      "question": "What happens to a Background that appears after a Scenario, or a second Background?",
+      "ticket": "silent",
+      "chose": "Raises a ParseError at that Background line.",
+      "where": "src/index.ts:144",
+      "instead": "Accept it, or let a later Background replace or merge into the first."
+    },
+    {
+      "question": "What is the feature description text under 'Feature:' used for?",
+      "ticket": "silent",
+      "chose": "Silently drops it, and any line that is not a step, table or doc string before the first Scenario or Background is ignored without error.",
+      "where": "src/index.ts:179",
+      "instead": "Keep it as a description field, or reject it as invalid."
+    },
+    {
+      "question": "Are the Example: keyword and the Background: line accepted as scenario or background headers, and what about Rule: or other keywords?",
+      "ticket": "silent",
+      "chose": "Accepts 'Example:' as a synonym for 'Scenario:'. Other Gherkin keywords such as 'Rule:' raise 'unrecognised line' once a scenario or background is open.",
+      "where": "src/index.ts:129",
+      "instead": "Accept only 'Scenario:'. Alternatively, support Rule: as well."
+    },
+    {
+      "question": "How are doc strings and tables attached to steps?",
+      "ticket": "silent",
+      "chose": "Supports triple-quote and backtick doc strings (with indentation stripped to the opening delimiter's indent) and pipe tables. Cells are trimmed, and \\|, \\\\ and \\n escapes are handled. A step cannot have both a doc string and a table, and a row without a closing pipe is an error.",
+      "where": "src/index.ts:160",
+      "instead": "Ignore doc strings and tables, keep their raw text, or allow both on one step."
+    },
+    {
+      "question": "How is step text and keyword recorded, including 'And', 'But' and '*'?",
+      "ticket": "silent",
+      "chose": "Keeps the keyword as written (And, But and * are not resolved to the previous keyword) and trims the text, which may be empty.",
+      "where": "src/index.ts:155",
+      "instead": "Resolve And/But to the preceding Given/When/Then, or reject a step with empty text."
+    },
+    {
+      "question": "How are tags parsed and where do they attach?",
+      "ticket": "silent",
+      "chose": "Splits tag lines on whitespace, stops at a '#' comment, and throws on a non-@ token or a bare '@'. Tags before 'Feature:' are discarded, and tags only attach to scenarios.",
+      "where": "src/index.ts:102",
+      "instead": "Keep tags on the feature, accept tags on a Background, or ignore malformed tokens."
+    },
+    {
+      "question": "How are line endings, a BOM and comments handled?",
+      "ticket": "silent",
+      "chose": "Strips a leading BOM, splits on \\n or \\r\\n, and skips blank and '#' lines while still counting them in line numbers. Inside a doc string, lines are kept verbatim including '#' lines.",
+      "where": "src/index.ts:74",
+      "instead": "Keep a BOM as part of the first line, or strip comment lines before counting."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/11",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.0491468,
+  "items": [
+    {
+      "question": "What columns does the CSV have, and in what order and with what header labels?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Writes six columns with the header 'Requisition ID,Title,Status,Openings,Filled,Created'.",
+      "where": "src/index.ts:18",
+      "instead": "Use snake_case or field-name headers (id,title,status,openings,filled,createdAt), or omit the created column."
+    },
+    {
+      "question": "What order are the rows in?",
+      "ticket": "silent",
+      "chose": "Sorts by createdAt ascending (oldest first), then by id using code-unit comparison.",
+      "where": "src/index.ts:11-13",
+      "instead": "Keep the input order, or sort newest first."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header row only.",
+      "where": "src/index.ts:14-15",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "Does the output start with a UTF-8 BOM?",
+      "ticket": "silent",
+      "chose": "Prefixes the output with a BOM character (U+FEFF).",
+      "where": "src/index.ts:15",
+      "instead": "Emit no BOM."
+    },
+    {
+      "question": "What line terminator is used, and is there a trailing newline?",
+      "ticket": "silent",
+      "chose": "Ends every row, including the last, with CRLF.",
+      "where": "src/index.ts:15",
+      "instead": "Join rows with LF (or CRLF) and leave no trailing newline."
+    },
+    {
+      "question": "When is a cell quoted or escaped?",
+      "ticket": "silent",
+      "chose": "Quotes a cell only if it contains a comma, double quote, CR or LF, and doubles any inner quotes.",
+      "where": "src/index.ts:56-57",
+      "instead": "Quote every field, or also neutralise cells that start with =, +, - or @ to prevent spreadsheet formula injection."
+    },
+    {
+      "question": "How is a null or missing title written?",
+      "ticket": "silent",
+      "chose": "Writes an empty cell.",
+      "where": "src/index.ts:47",
+      "instead": "Write a placeholder such as '-' or 'Untitled', or reject the requisition."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Uses the full ISO 8601 UTC string from toISOString(), including milliseconds.",
+      "where": "src/index.ts:51",
+      "instead": "Use a date-only format (YYYY-MM-DD) or a locale-formatted date."
+    },
+    {
+      "question": "How is the status written?",
+      "ticket": "silent",
+      "chose": "Writes the raw status value (e.g. 'on_hold') unchanged.",
+      "where": "src/index.ts:48",
+      "instead": "Write a human-readable label such as 'On hold'."
+    },
+    {
+      "question": "What happens when a requisition has an unknown status, invalid counts, filled > openings, or an invalid date?",
+      "ticket": "silent",
+      "chose": "Validates every requisition before building anything and throws an Error naming the requisition id, so the whole export fails.",
+      "where": "src/index.ts:10, 22-32",
+      "instead": "Skip the bad rows, or write them as-is."
+    },
+    {
+      "question": "Are zero openings, and filled equal to openings, accepted?",
+      "ticket": "silent",
+      "chose": "Accepts openings of 0 and filled equal to openings; rejects only negative, non-integer, NaN or Infinity counts and filled greater than openings.",
+      "where": "src/index.ts:27-29, 34-36",
+      "instead": "Require openings of at least 1."
+    },
+    {
+      "question": "Is the caller's input array modified?",
+      "ticket": "silent",
+      "chose": "Sorts a copy of the array and leaves the input order unchanged.",
+      "where": "src/index.ts:11",
+      "instead": "Sort the input array in place."
+    }
+  ]
+}

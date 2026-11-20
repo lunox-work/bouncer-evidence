@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/4",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.051577300000000006,
+  "items": [
+    {
+      "question": "What order are the rows in?",
+      "ticket": "silent",
+      "chose": "Sorts rows by creation time ascending (oldest first), then by id as a string comparison, on a copy of the input.",
+      "where": "src/index.ts:33",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "What happens when a requisition has an unknown status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id and the status, and the whole export fails.",
+      "where": "src/index.ts:16",
+      "instead": "Write the raw status through, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional, NaN, infinite or not a number?",
+      "ticket": "silent",
+      "chose": "Throws an Error for the first invalid requisition, and the whole export fails.",
+      "where": "src/index.ts:19",
+      "instead": "Skip the row, or coerce or clamp the value."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id.",
+      "where": "src/index.ts:25",
+      "instead": "Export the numbers as they are, or clamp filled to openings."
+    },
+    {
+      "question": "What happens when createdAt is not a valid Date?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id.",
+      "where": "src/index.ts:28",
+      "instead": "Write an empty date field, or skip the row."
+    },
+    {
+      "question": "Does one bad requisition fail the whole export or just that row?",
+      "ticket": "silent",
+      "chose": "Validates every requisition before building any output, so one bad record throws and no CSV is returned.",
+      "where": "src/index.ts:14",
+      "instead": "Skip the bad rows and export the rest, or collect all errors and report them together."
+    },
+    {
+      "question": "How are dates formatted in the Created column?",
+      "ticket": "silent",
+      "chose": "Writes the full ISO 8601 UTC timestamp with milliseconds.",
+      "where": "src/index.ts:48",
+      "instead": "Write a date only (YYYY-MM-DD), or use a locale or local-timezone format."
+    },
+    {
+      "question": "What are the column names and their order?",
+      "ticket": "silent",
+      "chose": "Uses the header 'Requisition ID,Title,Status,Openings,Filled,Created' with fixed English labels.",
+      "where": "src/index.ts:12",
+      "instead": "Use the field names (id,title,status,openings,filled,createdAt), or add other columns such as an open count."
+    },
+    {
+      "question": "Does the output start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prepends a BOM (U+FEFF) to the output.",
+      "where": "src/index.ts:11",
+      "instead": "Return plain CSV text with no BOM."
+    },
+    {
+      "question": "Which line terminator is used, and does the output end with one?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:54",
+      "instead": "Use LF only, or join lines with no trailing newline."
+    },
+    {
+      "question": "How is an empty requisition list exported?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and header line only, with no error.",
+      "where": "src/index.ts:54",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "How are missing or null titles, and fields containing commas, quotes or line breaks, handled?",
+      "ticket": "silent",
+      "chose": "Writes a null or undefined title as an empty field. Quotes fields containing a comma, quote, CR or LF per RFC 4180. Does not guard against spreadsheet formula injection.",
+      "where": "src/index.ts:44",
+      "instead": "Write the string 'null', or also prefix values starting with =, +, - or @ to neutralise formulas."
+    }
+  ]
+}

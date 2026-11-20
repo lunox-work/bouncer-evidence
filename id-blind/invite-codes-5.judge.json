@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0849576,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "S1 expects a code that repeats an existing one to be drawn again. Item 7 asks what happens on a collision, and its pick redraws. The 14-day expiry part is basic setup; item 2 is about the boundary instant, which is S4.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "S2 is the basic redeem path: access to that task only, and usedBy plus usedAt recorded. No item leaves this open. Item 10 is about checking the contributor ID, which S2 does not test.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how a typed code is matched. Its pick strips whitespace and '-' and uppercases, so lowercase, spaced and hyphenated input all give the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether the code is still valid at exactly 14 days. Its pick treats now >= expiresAt as expired, so it can be redeemed at 08:59:59.999 and fails with 'expired' at 09:00:00.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": false,
+      "why": "The open part of S5 is c1 redeeming their own used code again, a case where the code is used and the contributor already has access. Item 4 asks which check wins there. Its pick checks code state first, so c1 gets 'used', but S5 expects success with no change. (c2 getting 'used' is basic behaviour.)",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about revoking, including revoking a used code. Its pick adds revocation and throws for used codes, so a used code cannot be revoked. Unknown and revoked codes failing on redeem follows from its states.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens when a contributor redeems a code for a task they already have access to. Its pick refuses with 'already has access' and leaves the code unused, which is exactly what S7 expects.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how overlapping operations are handled. Its pick runs everything through a single promise queue, so one redeem wins and the other sees 'used', even when store calls resolve late.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 1,
+      "agrees": true,
+      "why": "The open part of S9 is that a used code stays 'used' after its expiry time. Item 1 asks how overlapping states are ranked, and its pick puts used first, so it stays 'used'. Item 12 (order) is about list order, which S9 does not test.",
+      "failing": false
+    }
+  ]
+}

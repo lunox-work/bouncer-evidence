@@ -1,0 +1,10 @@
+{
+  "repo": "date-fns/date-fns",
+  "package": "pkgs/core",
+  "language": "typescript",
+  "commit": "a9739fb3e5384a810e90d7376446f6d84ecc5029",
+  "static": {
+    "supported": false,
+    "reason": "no test folder: no include glob's folder, test/, tests/, __tests__/ or src/ holds *.test or *.spec files"
+  }
+}

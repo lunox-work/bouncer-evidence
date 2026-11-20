@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0840304,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 settles which step keywords are kept as written and what step text remains: the text after the keyword and one space. Item 9 asks exactly this. Its pick accepts Given/When/Then/And/But/* and strips one whitespace character after the keyword, which matches.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 6 (tags) and 8 (descriptions) each touch one clause of S2. Item 12 is closest because it covers two clauses, comment lines and blank lines. Its pick skips blank and # lines, as S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how a Background is handled. Its pick keeps Background steps separately in `background` rather than copying them into scenarios, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 7,
+      "agrees": null,
+      "why": "Item 7 asks what happens to doc strings and tables attached to a step. Trimmed table cells and attaching to the preceding step both match. But S4 says to remove the opening quotes' indentation, and the pick says only 'dedented lines', which could also mean removing the common minimum indent. So agreement can't be determined.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Items 1, 3 and 7 each cover one error in S5. Item 10 is closest: it asks where a second Feature line, a step with no parent and content before Feature are reported. Its pick throws a ParseError at the offending line, as S5 expects.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a file with a Feature line and no scenarios is valid. Its pick accepts it and returns an empty scenarios array, as S6 expects.",
+      "failing": false
+    }
+  ]
+}

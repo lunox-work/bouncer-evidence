@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0892525,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what counts as a step line: which keywords, the spacing after them, and the text that follows. S1 settles this: the keyword as written (Given/When/Then/And/But/*) and the text after the keyword and one space. The pick allows exactly those English keywords followed by a single space and the text.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens to free text between Feature: and the first Background or Scenario. S2 says those lines are the feature's description and are skipped. The pick ignores them as a description.",
+      "failing": true
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks where a Background may appear and how it is returned. S3 expects a Background before the first scenario to be returned on its own, not copied into scenarios. The pick allows one Background before the first Scenario and returns it separately.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how doc string contents are processed, including indentation. S4 expects the opening quotes' indentation to be removed from each line. The pick strips up to the opening delimiter's indentation from each line. Item 9 covers the table-trimming part, but item 8 is closest to the main doc string expectation.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "S5 bundles several error rules. Item 7 (unclosed doc string) and item 4 (Scenario Outline) each match one clause exactly. Item 7 asks which line an unclosed doc string is reported at. S5 says the line that opened it, and the pick reports the opening delimiter's line. Item 4's pick also agrees with its clause.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a file with a Feature: line but no scenarios is valid. S6 says it parses with no scenarios. The pick returns the feature with an empty scenarios array instead of raising an error.",
+      "failing": false
+    }
+  ]
+}

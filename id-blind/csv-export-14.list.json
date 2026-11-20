@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 19,
+  "costUsd": 0.0534494,
+  "items": [
+    {
+      "question": "Which columns does the CSV have, in what order, and under what header names?",
+      "ticket": "download their requisition list (with status and fill counts) as CSV",
+      "chose": "Writes the header 'Requisition ID,Title,Status,Openings,Filled,Created' with the columns in that order.",
+      "where": "src/index.ts:54",
+      "instead": "Use snake_case or field-name headers, or leave out the Created column or add other columns."
+    },
+    {
+      "question": "How are the rows ordered?",
+      "ticket": "silent",
+      "chose": "Sorts a copy of the input by createdAt ascending, then by id compared by code unit.",
+      "where": "src/index.ts:50",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "What does the CSV contain for an empty list?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header row only.",
+      "where": "src/index.ts:64",
+      "instead": "Return an empty string."
+    },
+    {
+      "question": "Does the output start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prepends U+FEFF to the output.",
+      "where": "src/index.ts:64",
+      "instead": "Emit plain text with no BOM."
+    },
+    {
+      "question": "Which line terminator does the CSV use, and is there a trailing newline?",
+      "ticket": "silent",
+      "chose": "Ends every row, including the last, with CRLF.",
+      "where": "src/index.ts:64",
+      "instead": "Separate rows with LF, or leave off the final newline."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Wraps the field in double quotes and doubles any inner quotes (RFC 4180). It does nothing else, including no neutralising of leading =, +, - or @ (formula injection).",
+      "where": "src/index.ts:78",
+      "instead": "Also prefix fields that start with =, +, - or @ to block spreadsheet formula injection, or always quote every field."
+    },
+    {
+      "question": "What is written for a missing or null title?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:56",
+      "instead": "Write a placeholder such as '(untitled)', or throw."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full ISO 8601 UTC timestamp from toISOString(), with milliseconds.",
+      "where": "src/index.ts:59",
+      "instead": "Write a date only (YYYY-MM-DD) or a locale-formatted date."
+    },
+    {
+      "question": "What happens when a requisition has a status outside open, on_hold, filled or cancelled?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id and the status, and the whole export fails.",
+      "where": "src/index.ts:36",
+      "instead": "Write the raw status string, or skip the row."
+    },
+    {
+      "question": "Are zero openings accepted, and what counts as a valid openings value?",
+      "ticket": "silent",
+      "chose": "Accepts 0 and any non-negative integer. It throws for negative, fractional, NaN or infinite values.",
+      "where": "src/index.ts:39",
+      "instead": "Require openings of at least 1, or pass the number through unchecked."
+    },
+    {
+      "question": "What happens when the filled count is invalid or greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id if filled is not a non-negative integer or is greater than openings.",
+      "where": "src/index.ts:42",
+      "instead": "Clamp filled to openings, or export the value as it is."
+    },
+    {
+      "question": "What happens when a requisition has an invalid creation time?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id if createdAt is not a Date or is an invalid Date. One bad row fails the whole export.",
+      "where": "src/index.ts:45",
+      "instead": "Write an empty Created field, or skip the bad row."
+    }
+  ]
+}

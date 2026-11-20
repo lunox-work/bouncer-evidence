@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.121625,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "The open part of S1 is what happens when a drawn code repeats an existing one, which is item 7's question. Item 7 redraws on collision, which is what S1 expects. The 14-day expiry is given by the feature, not left open by the ticket.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether redeeming grants access to just that task and records who used the code and when. Item 10 asks only about validating an empty contributor ID.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how typed input is matched. It strips whitespace and '-' and uppercases, and the call with a lowercase, spaced, dashed code succeeded.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks about the exact 14-day boundary. It treats now >= expiresAt as expired, and the call at exactly 14 days returned reason 'expired'. So the code is still redeemable 1 ms earlier, as S4 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which check comes first when the code is used and the contributor already has access, which is the case of c1 redeeming their own used code again. S5 expects that to succeed with nothing changed. The implementation checks code state first, and the call returned { ok: false, reason: 'used' }.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about revocation, including revoking a used code. Revoking a used code threw 'invite code has been used', and revoked codes are marked 'revoked', which matches S6.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about redeeming a code for a task the contributor already has access to. It refuses with 'already has access' and leaves the code unused, and the call confirmed this.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how overlapping operations are handled. A single queue serializes them, and the run with three concurrent redeems against a delayed store gave one success and the rest 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a used code stays 'used' once it is also past expiry. The call listed it as state 'used' with usedBy and usedAt after the expiry time, which matches S9.",
+      "failing": false
+    }
+  ]
+}

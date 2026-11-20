@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.08234810000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 settles the BOM, the header, the row order and the line endings. Items 5, 2, 1 and 4 each ask one of these questions, and all four picks match. Item 2, the header text and column order, is closest to the scenario's title: 'Requisition ID,Title,Status,Openings,Filled,Created'.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 asks how the date is formatted, which is the core of S2's 'written for people to read'. S2 wants the UTC date only, 'YYYY-MM-DD'. The pick writes a full ISO-8601 timestamp with milliseconds. Item 7, the missing title written as an empty field, matches one line of S2 and its pick agrees. No item asks how status labels such as 'On hold' are written.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an empty list produces. The pick returns the BOM and the header row ending in CRLF, with no data rows. That matches 'the byte order mark and the header row alone', since S1 says every row ends with CRLF.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks the escaping question. The pick quotes on a comma, quote, CR or LF and doubles inner quotes. It does not quote titles that start or end with a space, which S4 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing formula-like titles that start with '=', '+', '-', '@', a tab or CR by adding a single quote. Item 6 covers only separators and quoting.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 9,
+      "agrees": true,
+      "why": "S6 combines the refusal cases that items 8, 9, 10 and 11 each ask about, and every one of those picks throws an error naming the id. Item 9 is closest because it matches S6's 'whole number of at least 0' exactly: it rejects negative, fractional, NaN and infinite values and accepts 0.",
+      "failing": true
+    }
+  ]
+}

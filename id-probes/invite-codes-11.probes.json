@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-11",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0810968,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t'),c=await R.create('t');await R.redeem(a.code,'u');return [await R.redeem(c.code,'u'),(await R.list('t'))[1].state]})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{const m=new Map();let t=new Date(0);const R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t');t=new Date(14*864e5-1);const x=(await R.list('t'))[0].state;t=new Date(14*864e5);return [x,(await R.list('t'))[0].state,await R.redeem(a.code,'u')]})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});return (await R.create('t')).code})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t');const messy=a.code.toLowerCase().replace(/-/g,' - ');return [messy,await R.redeem(messy,'u')]})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const m=new Map();let t=new Date(0);const R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t'),c=await R.create('t');await R.redeem(a.code,'u');await R.revoke(c.code);t=new Date(15*864e5);return [await R.redeem(a.code,'v'),await R.redeem(c.code,'v')]})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t'),c=await R.create('t');await R.redeem(a.code,'u');const o=[];for(const f of [()=>R.revoke('ZZZZ'),()=>R.revoke(a.code),()=>R.revoke(c.code),()=>R.revoke(c.code)])try{o.push(await f())}catch(e){o.push('throws: '+e.message)}return [o,(await R.list('t')).map(x=>x.state)]})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>{await new Promise(r=>setTimeout(r,5));return m.get(k)},set:async(k,v)=>{await new Promise(r=>setTimeout(r,5));m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t');return Promise.all([R.redeem(a.code,'u1'),R.redeem(a.code,'u2'),R.redeem(a.code,'u3')])})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});await R.create('t');try{return await R.create('t')}catch(e){return 'throws: '+e.message}})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{const m=new Map();let t=new Date(0);const R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>t,randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t');t=new Date(1000);const c=await R.create('t');await R.create('other');await R.redeem(a.code,'u');return [(await R.list('t')).map(x=>[x.code===a.code,x.code===c.code,x.state,x.usedBy]),await R.list('nope')]})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});return [await R.create(''),await R.create('no such task / not invite-only')]})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const a=await R.create('t');return [await R.redeem('NOPE-NOPE','u'),await R.redeem(a.code,''),await R.tasksFor('')]})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{const m=new Map(),R=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>Math.floor(Math.random()*b)});const c1=await R.create('t1'),c2=await R.create('t2'),c3=await R.create('t3');for(const c of [c2,c1,c3])await R.redeem(c.code,'u');return R.tasksFor('u')})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ { ok: false, reason: 'already has access' }, 'unused' ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'unused', 'expired', { ok: false, reason: 'expired' } ]"
+    },
+    {
+      "item": 3,
+      "actual": "'FFA6-6Z3M-EE65-89NU'"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'zzhd - xh3r - 4g6v - kwc6', { ok: true, taskId: 't' } ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ { ok: false, reason: 'used' }, { ok: false, reason: 'revoked' } ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ [ 'throws: unknown invite code', 'throws: code has been used', undefined, undefined ], [ 'used', 'revoked' ] ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ { ok: true, taskId: 't' }, { ok: false, reason: 'used' }, { ok: false, reason: 'used' } ]"
+    },
+    {
+      "item": 8,
+      "actual": "'throws: could not draw an unused code'"
+    },
+    {
+      "item": 9,
+      "actual": "[ [ [ true, false, 'used', 'u' ], [ false, true, 'unused', undefined ] ], [] ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { code: 'HUWX-XNUB-E9C4-64SR', taskId: '', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }, { code: '6B4U-9KNS-P9P2-3AHG', taskId: 'no such task / not invite-only', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused'"
+    },
+    {
+      "item": 11,
+      "actual": "[ { ok: false, reason: 'unknown' }, { ok: true, taskId: 't' }, [ 't' ] ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ 't2', 't1', 't3' ]"
+    }
+  ]
+}

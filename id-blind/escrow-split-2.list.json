@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 21,
+  "costUsd": 0.0613175,
+  "items": [
+    {
+      "question": "How is the hidden-test amount rounded when the share of the bounty is not a whole number?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%) to the contributor.",
+      "chose": "Rounds the hidden-test amount down with integer division, and the UAT release gets the remainder.",
+      "where": "src/index.ts:13",
+      "instead": "Round to the nearest unit, or round up in the contributor's favour."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "When the maintainer approves UAT on the merge-back PR, release the remaining escrow balance.",
+      "chose": "Throws an Error and records nothing.",
+      "where": "src/index.ts:43",
+      "instead": "Release the whole bounty, or ignore the event without an error."
+    },
+    {
+      "question": "What happens when a hidden-tests-passed event arrives again after the first release?",
+      "ticket": "Release happens once per task",
+      "chose": "Ignores the duplicate. It writes nothing to the store and returns the current state.",
+      "where": "src/index.ts:36",
+      "instead": "Throw an error on the duplicate, or deduplicate by event id."
+    },
+    {
+      "question": "What happens when a hidden-tests-passed event arrives after UAT has been approved?",
+      "ticket": "silent",
+      "chose": "Does nothing, because a hidden-tests release is already recorded by then.",
+      "where": "src/index.ts:36",
+      "instead": "Reject the event as out of order."
+    },
+    {
+      "question": "How are repeated events handled: by event id, or by the kind of release already recorded?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Checks whether a release of that kind already exists and ignores the event id. A second event with a different id is also a no-op.",
+      "where": "src/index.ts:32",
+      "instead": "Track processed event ids and dedupe on them."
+    },
+    {
+      "question": "How are concurrent or duplicate events delivered at the same time handled?",
+      "ticket": "Release happens once per task",
+      "chose": "Serializes events for one handler through a promise queue. This does not protect against several handlers or processes sharing one store.",
+      "where": "src/index.ts:27",
+      "instead": "Use a store-level compare-and-set or lock, or leave concurrency to the caller."
+    },
+    {
+      "question": "What does a failed hidden-test run do to the state?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Does nothing and does not write to the store. A later passing run can still release.",
+      "where": "src/index.ts:40",
+      "instead": "Record the failure, or lock the task so it cannot be released after a failure."
+    },
+    {
+      "question": "What does a zero bounty do?",
+      "ticket": "silent",
+      "chose": "Accepts it, marks the status \"pro bono\", and records a release of amount 0 on pass. UAT with a zero bounty also records a 0 release.",
+      "where": "src/index.ts:87",
+      "instead": "Reject a zero bounty, or record no releases."
+    },
+    {
+      "question": "Which bounty values are valid?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError unless the bounty is a non-negative safe integer. Fractional, negative and oversized values are rejected.",
+      "where": "src/index.ts:75",
+      "instead": "Allow decimal amounts such as cents, or coerce the value."
+    },
+    {
+      "question": "Which share values are valid, and when are they checked?",
+      "ticket": "the configured hidden-test share (default 75%)",
+      "chose": "Takes the share in basis points (default 7500). It requires an integer from 0 to 10000 and throws a RangeError when the handler is created, not when an event arrives. 0 and 10000 are both allowed.",
+      "where": "src/index.ts:81",
+      "instead": "Take the share as a percentage or fraction, allow non-integer values, or clamp out-of-range values."
+    },
+    {
+      "question": "What is the UAT release amount, and when does the task count as fully released?",
+      "ticket": "release the remaining escrow balance.",
+      "chose": "Releases the bounty minus everything already released. Status becomes \"fully released\" once the total released reaches the bounty.",
+      "where": "src/index.ts:47",
+      "instead": "Release the precomputed split.uat amount."
+    },
+    {
+      "question": "What happens with an unknown event kind, or with a store read or write failure?",
+      "ticket": "silent",
+      "chose": "Throws on an unknown event kind. Store errors propagate to the caller, and nothing is recorded when a write fails.",
+      "where": "src/index.ts:51",
+      "instead": "Ignore unknown events, or catch store errors and retry or return the old state."
+    }
+  ]
+}

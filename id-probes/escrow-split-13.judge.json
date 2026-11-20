@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split-13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1152337,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how the share is expressed and what the default is. The default is 7500 bps, and splitBounty(10000, 7500) returned hiddenTests 7500, which is the 7500 release S1 expects. Item 9's run also shows a partial release reporting 'partially released'.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how the hidden-test amount is rounded. It rounds down with BigInt integer division and gives the remainder to UAT: splitBounty(101, 7500) returned 75/26. So 999 splits into 749/250, the parts always add up to the bounty, and BigInt keeps the result exact up to MAX_SAFE_INTEGER.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how much UAT pays compared with what was already released. It pays the bounty minus earlier releases, and the run returned a uat release of 90 after 10 had been released, with status 'fully released'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what a hidden-tests failure does. The run returned status 'locked' with no releases and made no write.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens when UAT is approved before the tests pass. It threw 'cannot approve UAT: the hidden tests have not passed' and stored nothing.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks what a zero bounty reports. The status is 'pro bono', but the run recorded releases (hidden-tests amount 0, then uat amount 0). S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks how a repeated hidden-tests-passed event is handled, with the same id and with a different id. Both repeats returned the state unchanged with the single 75 release.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what happens when two events arrive at the same time. Events run one at a time per handler, and two concurrent handles with a slow store made exactly one write. Running them in turn means the ignore-repeats rules (items 3 and 4) also cover different ids and uat-approved.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what happens when the store write fails. The store's error propagated, nothing was stored, and handling the same event again then succeeded with the 75 release.",
+      "failing": false
+    }
+  ]
+}

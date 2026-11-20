@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest-8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1218506,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 is about isDigestDue working out Monday in the organization's local time zone. Item 12 asks only whether buildDigest checks the weekday, and no item asks how 'Monday' is decided across time zones.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks how isDigestDue handles a daylight saving change when deciding the local day. Item 12 is about buildDigest skipping the weekday check, which is a different behaviour.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 is closest because it asks how the furthest gate is computed across submissions. It takes the highest gate, so gates 1 and 2 give 2. Items 7 (furthest gate 0 with no submissions) and 1 (merged tasks dropped) cover the other parts of S3, and they agree too.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 counts whole 24-hour periods, rounded down. The run gave 1 for 1 day 23:59:59, so 9 days 23 hours gives 9 and exactly 10 days gives 10.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether a task is stalled at exactly 14 days. The pick uses >= and the run returned stalled=true at exactly 14 days, which matches '14 days or more'. Items 5 and 6 cover the posting fallback and the latest-submission rule, and they agree too.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 lists stalled tasks first, then oldest posted first, then id ascending. The run returned s, o, a, b, f: stalled first, then by age, with ids breaking the tie.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": false,
+      "why": "Item 10 asks about the subject line and singular counts. The pick always writes 'tasks', and the run returned '1 open tasks' where S7 expects '1 open task'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether nothing open gives null or an empty digest. Item 11 mentions null only in passing; its question is about checking the time zone.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": null,
+      "agrees": null,
+      "why": "Item 11 asks whether the time zone is checked even when nothing is open, which is a narrower question about the order of checks. Answering it would not settle S9's general expectation of an error naming the zone.",
+      "failing": false
+    }
+  ]
+}

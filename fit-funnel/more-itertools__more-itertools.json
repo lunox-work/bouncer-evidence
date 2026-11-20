@@ -1,0 +1,10 @@
+{
+  "repo": "more-itertools/more-itertools",
+  "package": ".",
+  "language": "python",
+  "commit": "e3f79f4fde5f7c107f70a20730b17240a05ba99b",
+  "static": {
+    "supported": false,
+    "reason": "no pytest: no pytest configuration and pytest is not a declared dependency"
+  }
+}

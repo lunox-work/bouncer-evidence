@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0631826,
+  "items": [
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "When the maintainer approves UAT on the merge-back PR, release the remaining escrow balance.",
+      "chose": "Throws an Error and records nothing if no hidden-tests release exists.",
+      "where": "src/index.ts:73",
+      "instead": "Release the whole bounty (or the full remainder) on UAT approval, or ignore the event and return the current state."
+    },
+    {
+      "question": "How is the hidden-test amount rounded when the bounty doesn't divide evenly?",
+      "ticket": "silent",
+      "chose": "Rounds the hidden-test release down with BigInt integer division, and UAT gets the remainder.",
+      "where": "src/index.ts:34",
+      "instead": "Round to the nearest unit, round up, or use fractional amounts."
+    },
+    {
+      "question": "What happens when the same event is delivered a second time, including a repeat of the same kind with a new event id?",
+      "ticket": "Release happens once per task",
+      "chose": "Treats any later event of a kind already in releases as a no-op, regardless of event id, and returns the saved state without writing.",
+      "where": "src/index.ts:55",
+      "instead": "Deduplicate by event id, or throw an error on a repeat."
+    },
+    {
+      "question": "What is the status, and what release is recorded, for a zero bounty?",
+      "ticket": "silent",
+      "chose": "Uses the status \"pro bono\" and still records a release of amount 0 on hidden-test pass.",
+      "where": "src/index.ts:45",
+      "instead": "Record no release for a zero amount and keep the normal locked or fully-released statuses."
+    },
+    {
+      "question": "What status does the task show after the hidden-test release when the share is 100%, so nothing is left for UAT?",
+      "ticket": "Task shows the bounty as fully released",
+      "chose": "Marks the task \"fully released\" right after the hidden-test release, because the UAT part is 0.",
+      "where": "src/index.ts:49",
+      "instead": "Stay \"partially released\" until UAT is approved."
+    },
+    {
+      "question": "What happens when the configured share or bounty is invalid (negative, non-integer, share over 100%, unsafe integer)?",
+      "ticket": "silent",
+      "chose": "Throws a RangeError when the handler is created or when splitBounty is called.",
+      "where": "src/index.ts:12",
+      "instead": "Clamp the values, fall back to the default share, or reject only when an event is handled."
+    },
+    {
+      "question": "In what unit and format is the configured share given, and what applies when it is absent?",
+      "ticket": "the configured hidden-test share (default 75%)",
+      "chose": "Reads the share as integer basis points (0–10000) from task.hiddenTestShareBps, defaulting to 7500 when it is undefined.",
+      "where": "src/index.ts:42",
+      "instead": "Take a percentage or a fraction, and allow fractional shares."
+    },
+    {
+      "question": "What happens when a hidden-test run fails, and can a later pass release afterwards?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state without writing anything, and a later pass can still release.",
+      "where": "src/index.ts:70",
+      "instead": "Record the failure in state, or lock the task so a later pass cannot release."
+    },
+    {
+      "question": "What happens for an event with an unrecognised kind?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the unknown event kind.",
+      "where": "src/index.ts:77",
+      "instead": "Ignore the event and return the current state unchanged."
+    },
+    {
+      "question": "How are concurrent or duplicate events and store failures handled?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Serialises events through a per-handler promise queue, lets store errors reject without recording anything, and keeps the queue usable afterwards.",
+      "where": "src/index.ts:84",
+      "instead": "Rely on a store-level atomic or conditional write, or leave concurrency to the caller."
+    },
+    {
+      "question": "What state does a task with no saved state start in?",
+      "ticket": "Gate 2 marks the submission as passed but the escrow stays fully locked until merge.",
+      "chose": "Starts as {status: \"locked\", releases: []} when store.get returns nothing, or \"pro bono\" for a zero bounty.",
+      "where": "src/index.ts:66",
+      "instead": "Throw if there is no saved state, or require the caller to initialise it."
+    },
+    {
+      "question": "What is the UAT release amount?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Releases the precomputed bounty minus the hidden-test amount, not a balance read from the store.",
+      "where": "src/index.ts:76",
+      "instead": "Compute the remainder from the bounty minus the sum of recorded releases."
+    }
+  ]
+}

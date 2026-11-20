@@ -1,0 +1,15 @@
+{
+  "repo": "dateutil/dateutil",
+  "package": ".",
+  "language": "python",
+  "commit": "261e2913961865300032cf30df1d59f4f0ff6f1a",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 15
+  }
+}

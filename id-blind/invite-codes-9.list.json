@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0719418,
+  "items": [
+    {
+      "question": "Is a code still redeemable at the exact moment 14 days have elapsed?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired when now >= expiresAt, so it fails at exactly 14 days.",
+      "where": "src/index.ts:51",
+      "instead": "Treat the code as valid through exactly 14 days and expired only once now > expiresAt."
+    },
+    {
+      "question": "Is the 14-day lifetime counted from creation time or from some other point?",
+      "ticket": "expire after 14 days",
+      "chose": "Sets expiresAt to the clock time at create plus 14 × 24 hours in milliseconds.",
+      "where": "src/index.ts:103",
+      "instead": "Count 14 calendar days, or start the clock at first view or at an explicit issue time."
+    },
+    {
+      "question": "What does a redeem return for a code that has been both used and passed its expiry, or both revoked and expired?",
+      "ticket": "silent",
+      "chose": "Reports one state by precedence: used, then revoked, then expired.",
+      "where": "src/index.ts:48-53",
+      "instead": "Report expired first once past expiry, or report used only while the code is still within its lifetime."
+    },
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Refuses with reason 'already has access' and leaves the code unused.",
+      "where": "src/index.ts:128-129",
+      "instead": "Consume the code and return ok, or succeed idempotently without consuming it."
+    },
+    {
+      "question": "How is a typed code matched: case, spaces and dashes?",
+      "ticket": "silent",
+      "chose": "Strips all whitespace and '-' and uppercases the input before lookup.",
+      "where": "src/index.ts:27-29",
+      "instead": "Require an exact match of the displayed code, or ignore case only."
+    },
+    {
+      "question": "What does redeeming an empty or unrecognised code return?",
+      "ticket": "silent",
+      "chose": "Returns { ok: false, reason: 'unknown' } without throwing.",
+      "where": "src/index.ts:123",
+      "instead": "Throw an error, or reject invalid-format input with a separate reason."
+    },
+    {
+      "question": "What do the format, length and alphabet of a generated code look like?",
+      "ticket": "silent",
+      "chose": "Generates 8 symbols from a 32-character alphabet that leaves out I, O, 0 and 1, shown as XXXX-XXXX.",
+      "where": "src/index.ts:20-21",
+      "instead": "Use a longer code, a UUID, or the full alphanumeric alphabet with no grouping."
+    },
+    {
+      "question": "What happens when a newly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 100 times, then throws 'could not draw an unused code'.",
+      "where": "src/index.ts:96-98",
+      "instead": "Redraw without a limit, or return an error result instead of throwing."
+    },
+    {
+      "question": "What does revoking an unknown, already revoked or used code do?",
+      "ticket": "silent",
+      "chose": "Throws for an unknown or used code and does nothing for an already revoked code.",
+      "where": "src/index.ts:143-147",
+      "instead": "Throw on a repeat revoke too, or silently ignore an unknown code."
+    },
+    {
+      "question": "How are concurrent redeems of the same code handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Queues every registry operation on a single promise chain so only one runs at a time, and later redeemers get 'used'.",
+      "where": "src/index.ts:178-185",
+      "instead": "Use a store-level compare-and-set or per-code lock, or leave it unguarded."
+    },
+    {
+      "question": "Are codes validated against the task or checked for task existence at creation, and can a task have many live codes?",
+      "ticket": "Generate single-use invite codes per task",
+      "chose": "Accepts any taskId string with no validation and allows any number of live codes per task.",
+      "where": "src/index.ts:89-110",
+      "instead": "Reject an empty or unknown taskId, or cap or reuse the live codes for a task."
+    },
+    {
+      "question": "In what order does list return a task's codes, and which fields does an unused code carry?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Returns codes in creation order and sets usedBy and usedAt only on used codes.",
+      "where": "src/index.ts:63-66",
+      "instead": "Sort newest first or by state, and always include usedBy and usedAt as null."
+    }
+  ]
+}

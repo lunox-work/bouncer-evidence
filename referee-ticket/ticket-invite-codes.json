@@ -1,0 +1,257 @@
+{
+  "spec": "invite-codes",
+  "model": "claude-fable-5-1",
+  "costUsd": 1.449469,
+  "ruled": [
+    {
+      "id": "suite:invite-codes:tests/public/create.test.ts :: [happy-1] a new code is unused, made now and expires 14 days later",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/public/create.test.ts :: [happy-1] the code is chosen by the random source",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/public/create.test.ts :: [happy-1] a code that would repeat one already in the registry is drawn again",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/public/redeem.test.ts :: [unhappy-1] the same contributor redeeming again succeeds and nothing changes",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/create.test.ts :: [happy-1] a code made at another time, with milliseconds, expires exactly 14 days later",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/create.test.ts :: [happy-1] each character is chosen by the random source from the whole alphabet",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/create.test.ts :: [happy-1] distinct draws give distinct characters and reversed draws give the reversed code",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/create.test.ts :: [happy-1] a code is drawn again for as long as it would repeat any code already in the registry",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/create.test.ts :: [happy-1] a code is drawn again when it would repeat a used, revoked or expired code",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/create.test.ts :: [happy-1] two codes made at the same time over a slow store never repeat each other",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-1] the contributor who used a code redeems it again several ways and nothing changes",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-2] a used code cannot be revoked and still refuses others as used",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/public/list.test.ts :: [happy-3] a task's codes are listed with when they were made, when they expire, and their state",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [happy-3] codes made at the same time over a slow store are all listed for their task",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/list.test.ts :: [happy-3] many codes of every state are listed with all their details, and only the task's own",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [happy-2] many contributors each get access to the one task their code is for",
+      "ticket": "states",
+      "quote": "Generate single-use invite codes per task; redeeming one grants access to that task."
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [concurrency-1] of five simultaneous redemptions exactly one wins and the rest fail with used",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [concurrency-1] exactly one wins when each contributor types the code differently",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [concurrency-1] a race on one code leaves the task's other codes unused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [boundary-3] a contributor redeeming two codes for one task at once gets one, and the other fails with already has access and stays unused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [happy-2] simultaneous redemptions of different codes each grant access and each code shows who used it",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/concurrency.test.ts :: [happy-2] a contributor redeeming codes for several tasks at once gains access to all of them",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/list.test.ts :: [happy-3] a task with no codes lists none, even when other task ids contain its id",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/list.test.ts :: [happy-3] long after expiry used codes stay used with who and when, and the rest are expired",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/list.test.ts :: [happy-3] an unused code made at another time turns expired exactly 14 days later, even after a refused redemption",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/list.test.ts :: [happy-3] listing again after a redemption and a revocation shows the new states",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [happy-2] redeeming a code for one of several tasks grants access to that task alone",
+      "ticket": "states",
+      "quote": "redeeming one grants access to that task"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [happy-2] each code shows who used it and when, and codes not redeemed stay unused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [happy-2] access is kept apart for contributors and tasks whose ids prefix one another",
+      "ticket": "states",
+      "quote": "redeeming one grants access to that task"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [happy-2] a contributor who redeems codes for several tasks has access to exactly those tasks",
+      "ticket": "states",
+      "quote": "Company-borne tasks are invite only ... redeeming one grants access to that task"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [happy-2] a code made by one registry is redeemed by another registry over the same store",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-1] a code typed in mixed case is the same code",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-1] a code typed with a dash anywhere, many spaces, or lowercase with both is the same code",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-2] a code made at another time can be redeemed one millisecond before 14 days have passed",
+      "ticket": "states",
+      "quote": "Codes are single-use and expire after 14 days"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-2] a code made at another time fails with expired at exactly 14 days and after",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-2] each code expires 14 days after it was made, not after the first code",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-2] across a daylight-saving change a code expires exactly 14 × 24 hours after it was made",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-2] an expired code typed in lowercase with a dash fails with expired",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-1] a used code fails with used for every other contributor and its use is unchanged",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-1] a contributor refused a used code keeps the access they had and gains none",
+      "ticket": "states",
+      "quote": "Codes are single-use"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-1] a used code typed in lowercase with spaces fails with used for someone else",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-1] a used code still fails for someone else after its owner redeems it again",
+      "ticket": "states",
+      "quote": "Codes are single-use ... Redeemed codes show who used them"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-2] a code one character off, a character short or a character long fails with unknown",
+      "ticket": "states",
+      "quote": "Company-borne tasks are invite only"
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-2] a code made by a registry over another store is unknown here",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-2] a revoked code fails with revoked however it is typed while the task's other codes still work",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [unhappy-2] an unused code can be revoked",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-3] every further code for a task the contributor has fails with already has access and stays unused",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-3] a code refused for already having access records its later use by someone else",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-3] access to some tasks blocks a second code only for those tasks",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:invite-codes:tests/private/redeem.test.ts :: [boundary-3] another contributor's access to the task does not block a code",
+      "ticket": "states",
+      "quote": "redeeming one grants access to that task ... Redeemed codes show who used them"
+    }
+  ]
+}

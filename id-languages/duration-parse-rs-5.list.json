@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/5",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.058332600000000005,
+  "items": [
+    {
+      "question": "Is a bare number with no unit (e.g. the existing raw-millisecond config value `172800`) accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects bare numbers, including \"0\", as InvalidDuration.",
+      "where": "src/lib.rs:82",
+      "instead": "Accept a bare integer as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration.",
+      "where": "src/lib.rs:107",
+      "instead": "Treat it as 0, or as unset or default."
+    },
+    {
+      "question": "Must units appear in descending order and at most once each (e.g. `30m1h`, `1s1s`)?",
+      "ticket": "silent",
+      "chose": "Rejects repeated or out-of-order units by only searching units after the last one used.",
+      "where": "src/lib.rs:89",
+      "instead": "Accept any order and repeats and sum them (`30m1h` = 90 minutes)."
+    },
+    {
+      "question": "Is whitespace between components or around the string allowed (`1h 30m`, ` 1s`)?",
+      "ticket": "silent",
+      "chose": "Rejects any whitespace.",
+      "where": "src/lib.rs:82",
+      "instead": "Trim the input and/or allow spaces between components."
+    },
+    {
+      "question": "Are unit suffixes case-insensitive, and are other units (d, w, us) supported?",
+      "ticket": "`1h30m`, `90s` or `250ms`",
+      "chose": "Accepts only lowercase h, m, s and ms. `1H` and `1d` are rejected.",
+      "where": "src/lib.rs:26",
+      "instead": "Accept uppercase suffixes and add a day unit (`d`), since the ticket's example is a two-day timeout."
+    },
+    {
+      "question": "Are decimals, signs and exponents (`1.5h`, `-1s`, `+1s`, `1e3ms`) accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them, because only ASCII digits are parsed.",
+      "where": "src/lib.rs:74",
+      "instead": "Allow fractional values like `1.5h`, or a leading `+`."
+    },
+    {
+      "question": "What is the maximum value a parsed duration may have, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns the generic InvalidDuration for overflow or an over-cap total.",
+      "where": "src/lib.rs:100",
+      "instead": "Allow up to u64::MAX, or return a distinct overflow or out-of-range error."
+    },
+    {
+      "question": "What does a zero duration (`0s`, `0ms`) parse to?",
+      "ticket": "silent",
+      "chose": "Accepts it and returns Ok(0).",
+      "where": "src/lib.rs:96",
+      "instead": "Reject zero as an invalid timeout."
+    },
+    {
+      "question": "What does format_duration print for 0 ms?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/lib.rs:123",
+      "instead": "Return \"0ms\"."
+    },
+    {
+      "question": "Which style does format_duration use for values like 90 minutes or 1.5 s: canonical mixed units or the shortest string?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Picks the shortest string, so 5_400_000 prints as \"90m\", 1_500 as \"1500ms\" and 172_800_000 as \"48h\". Ties go to fewer components, then lexicographic order.",
+      "where": "src/lib.rs:127",
+      "instead": "Use a canonical greedy mixed form such as \"1h30m\" or \"1s500ms\", or roll hours up to days."
+    },
+    {
+      "question": "What does format_duration do for values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns the MillisecondsOutOfRange error for values above 2^53-1.",
+      "where": "src/lib.rs:120",
+      "instead": "Format any u64 value."
+    },
+    {
+      "question": "Is the change wired into the config loading or the admin UI?",
+      "ticket": "Let's accept human-readable durations ... Would also be nice to print them back ... in the admin UI",
+      "chose": "Adds only the standalone parse_duration and format_duration library functions. Neither config loading nor the UI calls them.",
+      "where": "src/lib.rs:62",
+      "instead": "Integrate the parser into the config deserialization and use the formatter in the admin UI."
+    }
+  ]
+}

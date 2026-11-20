@@ -1,0 +1,73 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "9a4315a7-421e-4c7d-b2d1-fe0f7fa44be6",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.2515416,
+        "turns": 7,
+        "durationMs": 42057,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.2515416,
+    "finalText": "I created the contract file, `packages/core/src/ticket.ts`. It has every export listed in the spec, with the exact signatures given there. `cd packages/core && npx tsc -p tsconfig.test.json` reports no errors, and the existing suite still passes (139 of 139). Nothing else in the repository was touched, and `index.ts` does not re-export the new module, as the spec says.\n\n- **Constants:** `TICKET_ORIGINS`, `TICKET_LIMITS`, `DEFAULT_ISSUE_TYPE` and `TICKET_SPEC_HASH_VERSION` are real exported values with the spec's numbers and strings, not `declare`s.\n- **Functions:** each body is only `throw new Error(\"not implemented\");`. `ticketSpecHash` is `async` as the spec shows, so its stub returns a rejected promise rather than throwing straight away.\n- **Parameter names:** the project's compiler settings reject unused parameters, which made the empty stubs fail to compile. I put an underscore in front of each parameter name (`_title`, `_value`, `_ticket`, …). That doesn't change how callers use the functions, but whoever writes the implementation will probably want to rename them back.\n- **Doc comments:** none of the functions are described as throwing, because the spec says none of them fail.\n\nAdded: TICKET_ORIGINS, TicketOrigin, TICKET_LIMITS, DEFAULT_ISSUE_TYPE, clampTicketTitle, TicketContent, TICKET_SPEC_HASH_VERSION, ticketSpecHash, normalizeSpecText, ticketKey",
+    "problem": null,
+    "sha256": "eac1f855bf822f5680b7309548b66f23b98eb7fbea6f7b4c85cb09b16960703e"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "a6284315-6249-4956-92d1-855381954912",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.516959,
+        "turns": 10,
+        "durationMs": 111190,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.516959,
+    "finalText": "I wrote the suite in `packages/core/test/ticket-content-check.test.ts`. It covers all 20 scenarios in the spec (`happy-1`–`9`, `boundary-1`–`10`, `concurrency-1`) with two tests each: one for the main case and one for an edge case.\n\n**Checks I ran:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Against the current stubs, 36 of the 40 tests fail with `not implemented`, as expected. The other 4 pass: the `[happy-1]` and `[happy-2]` tests only read the constants, and those already have their values in the interface file.\n- To check the tests themselves, I ran the compiled file against a short throwaway implementation of the spec, kept in the scratchpad and not in the repo. All 40 passed. Separately, I recomputed every hash the spec gives, and they all match the spec.\n\n**How it's written:**\n- It follows `handle.test.ts` and the other nearby tests: `node:test`'s `test`, `node:assert/strict`, an import from `../src/ticket.js`, and flat top-level tests named like `[boundary-3] …`.\n- It only hard-codes hashes that appear in the spec. Where the spec only says two hashes differ (case changes, text moved between fields, the `A\",\"B` collision), the tests check that they differ and nothing more.\n- The spec's \"Café\" example came through garbled. I read it as \"no Unicode normalization\" and test that both the precomposed `é` and `e` + combining accent come back unchanged.\n\nNo other files were changed: no implementation, seam, config or other tests.\n\n40 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "packages/core/test/ticket-content-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "2cd2be14-39aa-444e-a5cc-b0255694b700",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.2694637999999998,
+        "turns": 21,
+        "durationMs": 316561,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.2694637999999998,
+    "finalText": "I wrote the hidden suite in four files in `packages/core/test/hidden-ticket-content-check/`: `clamp.test.ts`, `normalize.test.ts`, `hash.test.ts` and `key.test.ts`.\n\n**Checks run:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Against the current stub, all 47 tests fail with `not implemented`.\n- Against a correct implementation I wrote in the scratchpad (outside the repo), all 47 pass, and so do the 40 public tests.\n- I then broke that implementation in specific ways and confirmed the hidden suite catches each one:\n  - a title cut by graphemes, which also passes the public suite;\n  - a title cut by code points;\n  - dropping any trailing surrogate, high or low;\n  - trimming the title after the cut;\n  - joining the fields with a separator instead of JSON;\n  - lowercasing the issue type;\n  - not normalizing the issue type;\n  - NFC normalization;\n  - collapsing inner whitespace;\n  - trimming the start of every line;\n  - converting line endings without trimming lines;\n  - a truthy check on `jiraKey`.\n\n**Coverage:**\n- Every scenario key has tests: `happy-1` to `happy-9`, `boundary-1` to `boundary-10` and `concurrency-1`. The spec has no `@unhappy` scenarios.\n- All 40 public tests are named in an `// extends:` comment above at least one hidden test.\n- Expected hashes come from `node:crypto` SHA-256 over `JSON.stringify` of fields I wrote out already normalized.\n- `TICKET_ORIGINS`, `TICKET_LIMITS` and the other constants are already set in the stub, so a test that only read them would pass. To make those tests fail against the stub, they also call a function that uses the constant: `ticketSpecHash` with `DEFAULT_ISSUE_TYPE`, and `clampTicketTitle`, whose cut length must equal `TICKET_LIMITS.title`.\n\n**Left untested, because the spec doesn't settle them:**\n- Trailing whitespace other than spaces and tabs, such as a non-breaking space. The spec says only \"trailing whitespace\". It does follow from \"byte-identical to `pricingSpecHash`\", which uses `trimEnd`, but I left it out to be safe.\n- A title ending in two lone high surrogates.\n- `ticketKey` with `-0`, or with a number so large `String` writes it as `1e+21`.\n\n**Cleanup:** the run command builds `packages/core/dist-test/`, which is gitignored and wasn't there before. I deleted it after each run, so nothing outside the hidden test folder changed.\n\n47 tests, in 4 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/core/test/hidden-ticket-content-check/clamp.test.ts",
+      "packages/core/test/hidden-ticket-content-check/hash.test.ts",
+      "packages/core/test/hidden-ticket-content-check/key.test.ts",
+      "packages/core/test/hidden-ticket-content-check/normalize.test.ts"
+    ],
+    "open": []
+  }
+}

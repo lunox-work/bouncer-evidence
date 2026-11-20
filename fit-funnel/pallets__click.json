@@ -1,0 +1,15 @@
+{
+  "repo": "pallets/click",
+  "package": ".",
+  "language": "python",
+  "commit": "08b803cf32ceb2ae6a772c62d5da42757a897d44",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 14
+  }
+}

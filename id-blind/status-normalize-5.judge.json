@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/5",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0742611,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether reading ignores letter case and surrounding whitespace. Its pick trims and lowercases the value, so \"Draft\" reads as draft and \" PUBLISHED \" as published, which is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which old spellings map to which statuses. Its pick maps only \"in review\" to review and has no other aliases. So \"under_review\" and \"LIVE\" would read as null instead of review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what reading an unknown value returns. Its pick returns null and never the nearest status, which matches the scenario. Item 7 covers the empty and all-space cases and also gives null, but item 1 is the closer question.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when an exact status is written. Item 5 asks only about values that are not exact enum values, so answering it would not settle this scenario.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what writing a value that is not an exact enum value does, including old spellings like \"in-review\". Its pick throws and does not normalise, so only exact lowercase values pass. That matches the scenario. Item 6 also says the message includes the quoted value, but item 5 is the closest question.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how a batch read reports unreadable values: form, de-duplication and order. Its pick lists each distinct raw string once, uncleaned and sorted, which matches the scenario. Item 8 covers keeping rows with a null status, but item 9 is the closest to the reporting this scenario is about.",
+      "failing": true
+    }
+  ]
+}

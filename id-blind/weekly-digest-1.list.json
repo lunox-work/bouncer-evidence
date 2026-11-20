@@ -1,0 +1,92 @@
+{
+  "run": "weekly-digest/1",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.059347399999999995,
+  "items": [
+    {
+      "question": "Which tasks count as open for the digest?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Includes only tasks whose status is exactly \"open\" and drops all others.",
+      "where": "src/index.ts:57",
+      "instead": "Treat other in-progress statuses (for example under review) as open too."
+    },
+    {
+      "question": "What does buildDigest return when nothing is open?",
+      "ticket": "Digest is skipped when nothing is open",
+      "chose": "Returns null.",
+      "where": "src/index.ts:58",
+      "instead": "Return a digest with an empty task list, or throw."
+    },
+    {
+      "question": "Is a task stalled when its last activity is exactly 14 days ago?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Flags it as stalled when the gap is 14 days or more, using a >= comparison on milliseconds.",
+      "where": "src/index.ts:37",
+      "instead": "Flag only when the gap is more than 14 days (strict >)."
+    },
+    {
+      "question": "How is the 14-day clock measured for a task that has never had a submission?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Measures from the posting time when there are no submissions.",
+      "where": "src/index.ts:30",
+      "instead": "Never flag a task without submissions, or count it as stalled right away."
+    },
+    {
+      "question": "Is the stall clock measured from the latest submission, or from any submission within the window?",
+      "ticket": "Tasks with no submissions for 14 days are flagged",
+      "chose": "Measures from the most recent submission time, whatever its gate.",
+      "where": "src/index.ts:27",
+      "instead": "Measure from the submission at the furthest gate, or from the first submission."
+    },
+    {
+      "question": "How is the age in days computed and rounded?",
+      "ticket": "listing each open task with its age",
+      "chose": "Takes whole elapsed days since posting, rounded down and clamped to at least 0.",
+      "where": "src/index.ts:34",
+      "instead": "Round to the nearest day or round up, and allow negative ages or throw for future-dated tasks."
+    },
+    {
+      "question": "What is the furthest gate for a task with no submissions?",
+      "ticket": "the furthest gate reached",
+      "chose": "Reports gate 0.",
+      "where": "src/index.ts:25",
+      "instead": "Report null or undefined, or a label such as \"none\"."
+    },
+    {
+      "question": "How is the furthest gate computed across submissions?",
+      "ticket": "the furthest gate reached",
+      "chose": "Takes the highest gate number over all submissions, whatever their order or recency.",
+      "where": "src/index.ts:28",
+      "instead": "Take the gate of the latest submission."
+    },
+    {
+      "question": "In what order are tasks listed in the digest?",
+      "ticket": "silent",
+      "chose": "Sorts stalled tasks first, then by oldest postedAt, then by id ascending.",
+      "where": "src/index.ts:61",
+      "instead": "Keep the input order, or sort by age or by id only."
+    },
+    {
+      "question": "What is the email subject line, and how does it handle pluralisation?",
+      "ticket": "silent",
+      "chose": "Builds \"Weekly digest: N open tasks, M stalled\" and always uses the plural, even for 1 task.",
+      "where": "src/index.ts:70",
+      "instead": "Use a fixed subject, or pluralise correctly (\"1 open task\")."
+    },
+    {
+      "question": "Which day counts as Monday, and in which time zone is it judged?",
+      "ticket": "Send a Monday email",
+      "chose": "Formats the instant as a long weekday name in the given time zone and compares it to \"Monday\" in en-US.",
+      "where": "src/index.ts:47",
+      "instead": "Use the UTC day, or the server's local day."
+    },
+    {
+      "question": "Does buildDigest validate the time zone even when the result does not depend on it?",
+      "ticket": "silent",
+      "chose": "Validates the time zone first, so an unknown zone throws even when no tasks are open.",
+      "where": "src/index.ts:56",
+      "instead": "Ignore the time zone in buildDigest, or validate it only after the empty check."
+    }
+  ]
+}

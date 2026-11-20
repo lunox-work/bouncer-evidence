@@ -1,0 +1,15 @@
+{
+  "repo": "axios/axios",
+  "package": ".",
+  "language": "typescript",
+  "commit": "9f0f4ddfe72b4c06afafe1a658e6ee53d35b5760",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "the existing suite does not build on a clean install: docs/blog/posts.data.ts(22,37): error TS2307: Cannot find module 'vitepress' or its corresponding type declarations.",
+    "seconds": 6
+  }
+}

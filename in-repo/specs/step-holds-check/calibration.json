@@ -1,0 +1,104 @@
+{
+  "slug": "step-holds-check",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "test/step-holds-check.test.ts :: [happy-1] the price is held by the scope until the scope's current version is approved",
+    "test/step-holds-check.test.ts :: [happy-1] an approved scope releases the price as null, never undefined, whatever the proposal says",
+    "test/step-holds-check.test.ts :: [boundary-1] the price step ignores the proposal while the scope is unapproved",
+    "test/step-holds-check.test.ts :: [boundary-1] an approved proposal does not release the price over a stale scope approval",
+    "test/step-holds-check.test.ts :: [boundary-2] a missing proposal never holds the price step",
+    "test/step-holds-check.test.ts :: [boundary-2] a missing proposal does not hold the price at scope version 0 approved at 0",
+    "test/step-holds-check.test.ts :: [unhappy-1] an approval of any other version leaves the scope unapproved",
+    "test/step-holds-check.test.ts :: [unhappy-1] a stale scope approval holds the sandbox by the scope even with an approved price",
+    "test/step-holds-check.test.ts :: [happy-2] the sandbox is held by the earliest step that is not approved",
+    "test/step-holds-check.test.ts :: [happy-2] with both scope and price unapproved the scope is reported, and a released sandbox is null",
+    "test/step-holds-check.test.ts :: [unhappy-2] only the exact status \"approved\" counts as an approved price",
+    "test/step-holds-check.test.ts :: [unhappy-2] trailing whitespace or upper case in the status leaves the price unapproved",
+    "test/step-holds-check.test.ts :: [boundary-3] the proposal is read only from the third argument",
+    "test/step-holds-check.test.ts :: [boundary-3] a proposal field on the bounty neither holds nor releases the sandbox",
+    "test/step-holds-check.test.ts :: [boundary-4] the result depends only on the earlier steps, never on the step's own state",
+    "test/step-holds-check.test.ts :: [boundary-4] a published sandbox on the bounty does not release the sandbox hold",
+    "test/step-holds-check.test.ts :: [boundary-5] calls keep no state between them and change no argument",
+    "test/step-holds-check.test.ts :: [boundary-5] frozen arguments are accepted and repeated interleaved calls give the same results",
+    "test/step-holds-check.test.ts :: [happy-3] the sentence for each hold",
+    "test/step-holds-check.test.ts :: [happy-3] the sentences have no surrounding whitespace and the sandbox's vary by holder",
+    "test/step-holds-check.test.ts :: [unhappy-3] the price step held by \"price\" still gives the scope sentence",
+    "test/step-holds-check.test.ts :: [unhappy-3] stepHeldReason(\"price\", \"price\") does not throw and matches the price step's scope sentence",
+    "test/step-holds-check.test.ts :: [happy-4] the two functions compose into the words shown to the user",
+    "test/step-holds-check.test.ts :: [happy-4] an unapproved scope composes into the scope sentence for each step",
+    "test/step-holds-check.test.ts :: [happy-5] scopeApproved and bountyStatus are unchanged",
+    "test/step-holds-check.test.ts :: [happy-5] a missing approval and a stale one still read as unapproved and new"
+  ],
+  "publicOnSkeleton": {
+    "passed": 2,
+    "total": 26
+  },
+  "publicFailingOnReference": [],
+  "referenceRegressions": [],
+  "hiddenWritten": 28,
+  "kept": [
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-1] the price is held by the scope at other versions and released at each version once approved",
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-1] the price is released only when the approval is at the scope's current version",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-1] the price step ignores every proposal at other unapproved versions",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-1] no proposal status makes the price step held by the price",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-2] a missing proposal never holds the price step at any approved version",
+    "test/hidden-step-holds-check/held-by.test.ts :: [unhappy-1] approvals one above, one below or far from the version leave the price held by the scope",
+    "test/hidden-step-holds-check/held-by.test.ts :: [unhappy-1] a stale scope approval holds the sandbox by the scope whatever the proposal",
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-2] the sandbox's holder follows the table at other versions",
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-2] with both unapproved the scope is reported, whatever makes the price unapproved",
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-2] an approved price releases the sandbox whatever else the proposal carries",
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-2] a missing proposal holds the sandbox by the price at each approved version",
+    "test/hidden-step-holds-check/held-by.test.ts :: [unhappy-2] statuses that merely contain \"approved\" leave the price unapproved",
+    "test/hidden-step-holds-check/held-by.test.ts :: [unhappy-2] the exact status \"approved\" releases the sandbox at other versions and near-misses do not",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-3] an approved proposal on the bounty never releases the sandbox from a null third argument",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-3] the third argument decides the sandbox whatever the bounty's own proposal field says",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-4] the price step's result ignores its own proposal state at other versions",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-4] the sandbox's own state neither releases nor adds a hold",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-5] the same objects changed between calls give the result for their state now",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-5] many interleaved calls in either order give the same results and leave deep-frozen arguments unchanged",
+    "test/hidden-step-holds-check/held-by.test.ts :: [boundary-5] a released call first does not release a later held one",
+    "test/hidden-step-holds-check/held-by.test.ts :: [happy-5] scopeApproved still decides the scope, and the price is held by the scope exactly when it is false",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [happy-3] each pair gives its exact sentence in any order and on every call",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [happy-3] the sandbox's sentence follows the holder and the price's sentence is not a sandbox one",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [happy-3] the sentences come only from stepHeldReason and stages.ts exports no constant for them",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [unhappy-3] stepHeldReason(\"price\", \"price\") stays the scope sentence after other calls and on repeat",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [happy-4] every hold over a grid of bounties and proposals composes into its sentence",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [happy-4] a stale scope approval and a missing proposal compose into the sandbox's scope sentence",
+    "test/hidden-step-holds-check/held-reason.test.ts :: [happy-5] bountyStatus and BOUNTY_STEPS are unchanged alongside the holds"
+  ],
+  "dropped": [],
+  "reference": {
+    "public": {
+      "passed": 26,
+      "total": 26
+    },
+    "hidden": {
+      "passed": 28,
+      "total": 28
+    },
+    "touchedOutsideSrc": [],
+    "removed": [],
+    "existing": {
+      "passed": 248,
+      "total": 248
+    },
+    "notes": "I implemented `stepHeldBy` and `stepHeldReason` in `packages/core/src/stages.ts`. The package's whole suite passes (302 of 302), and that includes `step-holds-check.test.ts` and both files in `hidden-step-holds-check/`.\n\n- **`stepHeldBy`**: if the existing `scopeApproved(bounty)` is false, it returns `\"scope\"`. Otherwise, for `\"sandbox\"`, it returns `\"price\"` unless `proposal?.status === \"approved\"` exactly. In every other case it returns `null`. The price step never looks at the proposal, and the function never reads `bounty.proposal`.\n- **`stepHeldReason`**: for `\"price\"` it returns the scope sentence whatever `heldBy` is, so `(\"price\", \"price\")` doesn't throw. For `\"sandbox\"` it returns the \"scope and the price\" sentence or the \"price\" sentence depending on `heldBy`. The sentences are written inline, with no exported constants and no other new exports.\n\nThe spec also records `REQUIRED_BUILDERS` and `snapshotBuilt` in `analysis.ts`, plus an onboarding flag in `sizing.ts`. I didn't add those: the spec puts them outside this change and no test uses them.\n\nTests left failing: none",
+    "sessions": [
+      {
+        "sessionId": "76ce3830-5979-4372-8a56-be5af3445587",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.16842630000000003,
+        "turns": 4,
+        "durationMs": 21773,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.16842630000000003
+  }
+}

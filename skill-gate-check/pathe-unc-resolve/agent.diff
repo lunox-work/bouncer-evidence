@@ -1,0 +1,73 @@
+diff --git a/src/_path.ts b/src/_path.ts
+index 3795073..325707d 100644
+--- a/src/_path.ts
++++ b/src/_path.ts
+@@ -12,6 +12,8 @@ import { matchGlob } from "./_glob";
+ import { normalizeWindowsPath } from "./_internal";
+ 
+ const _UNC_REGEX = /^[/\\]{2}/;
++// `//server/share` or `//./device` / `//?/device` (root without trailing slash)
++const _UNC_ROOT_RE = /^\/\/(?:[.?]\/[^/]+|[^./?/][^/]*\/[^/]+)(?=\/|$)/;
+ const _IS_ABSOLUTE_RE = /^[/\\](?![/\\])|^[/\\]{2}(?!\.)|^[A-Za-z]:[/\\]/;
+ const _DRIVE_LETTER_RE = /^[A-Za-z]:$/;
+ const _ROOT_FOLDER_RE = /^\/([A-Za-z]:)?$/;
+@@ -100,6 +102,7 @@ export const resolve: typeof path.resolve = function (...arguments_) {
+ 
+   let resolvedPath = "";
+   let resolvedAbsolute = false;
++  let uncRoot = "";
+ 
+   for (let index = arguments_.length - 1; index >= -1 && !resolvedAbsolute; index--) {
+     const path = index >= 0 ? arguments_[index] : cwd();
+@@ -109,10 +112,24 @@ export const resolve: typeof path.resolve = function (...arguments_) {
+       continue;
+     }
+ 
++    const unc = _UNC_ROOT_RE.exec(path);
++    if (unc) {
++      // UNC (`//server/share`) or device (`//./c:`) root: keep it aside
++      uncRoot = unc[0];
++      resolvedPath = `${path.slice(uncRoot.length)}/${resolvedPath}`;
++      resolvedAbsolute = true;
++      break;
++    }
++
+     resolvedPath = `${path}/${resolvedPath}`;
+     resolvedAbsolute = isAbsolute(path);
+   }
+ 
++  if (uncRoot) {
++    const rest = normalizeString(resolvedPath, false);
++    return rest ? `${uncRoot}/${rest}` : uncRoot + "/";
++  }
++
+   // At this point the path should be resolved to a full absolute path, but
+   // handle relative paths to be safe (might happen when process.cwd() fails)
+ 
+diff --git a/test/pathe-unc-resolve-confirmed-own.spec.ts b/test/pathe-unc-resolve-confirmed-own.spec.ts
+new file mode 100644
+index 0000000..b96a763
+--- /dev/null
++++ b/test/pathe-unc-resolve-confirmed-own.spec.ts
+@@ -0,0 +1,21 @@
++import { describe, expect, it } from "vitest";
++import { resolve } from "../src/index";
++
++describe("resolve UNC", () => {
++  const cases: [string[], string][] = [
++    [["//server/share/file", "../path"], "//server/share/path"],
++    [[String.raw`\\server\share\file`, String.raw`..\path`], "//server/share/path"],
++    [[String.raw`\\server\share`], "//server/share/"],
++    [["//server/share/", "a"], "//server/share/a"],
++    [["//server/share/..", "x"], "//server/share/x"],
++    [["//server/share/a", "/b"], "/b"],
++    [["/foo", "//server/share/x"], "//server/share/x"],
++    [["//./c:/temp/file", String.raw`..\path`], "//./c:/temp/path"],
++    [["//a/b", "c", "..", "d"], "//a/b/d"],
++  ];
++  for (const [args, expected] of cases) {
++    it(`resolve(${args.join(",")}) = ${expected}`, () => {
++      expect(resolve(...args)).toBe(expected);
++    });
++  }
++});

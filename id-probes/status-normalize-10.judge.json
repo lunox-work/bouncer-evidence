@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1061126,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how loosely a stored value is matched (case, whitespace). The pick lowercases and trims, and the run shows \"  DRAFT \"→draft and \"-Merged-\"→merged. So \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" read as themselves.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings are recognised. The pick maps only \"in review\" to review, and the run shows \"done\"→null. So \"under_review\" and \"LIVE\" would read as null, not review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether near misses like typos and plurals are matched, which is the 'never guessed as the nearest one' question. The pick takes only exact cleaned matches, and the run shows \"drafts\"→null. Items 3 and 4 also return null for unknown and empty values.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a valid enum value is stored unchanged. Item 6 is about normalising values that are not exact enum strings, so answering it would not settle this scenario. Its run does happen to show writeStatus(\"review\")→'review'.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether writing accepts or normalises values that are not exact, old spellings included. The pick throws on all of them, and the run shows \"in-review\" and \" review\" throwing. Item 7's run confirms the error message quotes the value as given.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how bulk reading reports unreadable values. The pick returns the raw stored strings, deduplicated by exact string and sorted, and the run shows ['', 'Bogus', 'bogus']. That matches 'each distinct original value once, sorted, exactly as stored'.",
+      "failing": true
+    }
+  ]
+}

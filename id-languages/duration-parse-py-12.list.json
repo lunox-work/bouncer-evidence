@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0538452,
+  "items": [
+    {
+      "question": "Is a duration string with the same unit twice (e.g. `1h1h`) accepted?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for a duplicate unit.",
+      "where": "src/solution.py:43",
+      "instead": "Sum the repeated components (1h1h = 2h)."
+    },
+    {
+      "question": "Must components appear in descending unit order (e.g. is `30m1h` valid)?",
+      "ticket": "silent",
+      "chose": "Accepts components in any order.",
+      "where": "src/solution.py:37",
+      "instead": "Require largest-to-smallest order and reject `30m1h`."
+    },
+    {
+      "question": "Is whitespace allowed inside or around a duration string (e.g. ` 1h`, `1h 30m`)?",
+      "ticket": "silent",
+      "chose": "Rejects any whitespace, with no trimming.",
+      "where": "src/solution.py:19",
+      "instead": "Strip surrounding whitespace, or allow spaces between components."
+    },
+    {
+      "question": "Are unit letters case-insensitive (e.g. `1H`)?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase units and rejects `1H`.",
+      "where": "src/solution.py:19",
+      "instead": "Lowercase the input first and accept `1H`."
+    },
+    {
+      "question": "Are fractional, signed, or bare-number inputs (`1.5h`, `-5s`, `+5s`, `10`) accepted?",
+      "ticket": "silent",
+      "chose": "Rejects all of them, because every component must be digits followed by a unit.",
+      "where": "src/solution.py:19",
+      "instead": "Accept decimals, or treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "What happens when the input is an empty string?",
+      "ticket": "silent",
+      "chose": "Raises ValueError (\"empty duration\").",
+      "where": "src/solution.py:31",
+      "instead": "Return 0."
+    },
+    {
+      "question": "What happens when the input is not a string (e.g. an int such as the old raw 172800 values, or None)?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Raises ValueError for any non-string input, so raw numeric values are not passed through.",
+      "where": "src/solution.py:29",
+      "instead": "Accept ints as raw milliseconds, or raise TypeError."
+    },
+    {
+      "question": "Is there a maximum total, and is the limit inclusive?",
+      "ticket": "silent",
+      "chose": "Rejects totals above 9007199254740991 ms and allows exactly that value. Counts of more than 16 digits are rejected early.",
+      "where": "src/solution.py:54",
+      "instead": "Impose no cap, or use a smaller cap such as 32-bit milliseconds."
+    },
+    {
+      "question": "Are zero values and leading zeros (`0s`, `007s`) accepted?",
+      "ticket": "silent",
+      "chose": "Accepts both. `0s` parses to 0, and leading zeros are stripped.",
+      "where": "src/solution.py:41",
+      "instead": "Reject zero durations or numbers with leading zeros."
+    },
+    {
+      "question": "What does format_duration print for 0 ms?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/solution.py:69",
+      "instead": "Return \"0ms\", or an empty string."
+    },
+    {
+      "question": "What does \"the same style\" look like when formatting: a single unit, or a compound string? Which one is chosen when several are possible?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Picks the shortest string by character count over all unit combinations. Ties go to fewer components, then to the lexically smaller string. For example 5400000 becomes \"90m\", 1500 becomes \"1500ms\" and 1000000 becomes \"1000s\".",
+      "where": "src/solution.py:72",
+      "instead": "Greedily decompose from the largest unit down (5400000 becomes \"1h30m\", 1500 becomes \"1s500ms\")."
+    },
+    {
+      "question": "What does format_duration do with negative, over-limit, bool, float, or non-int input?",
+      "ticket": "silent",
+      "chose": "Raises ValueError mentioning \"milliseconds\" for each of these, including bool and float values such as 1.0.",
+      "where": "src/solution.py:65",
+      "instead": "Accept whole-number floats or bools, clamp out-of-range values, or raise TypeError."
+    }
+  ]
+}

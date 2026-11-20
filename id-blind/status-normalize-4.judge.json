@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07882270000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how loosely stored values are matched to a status on read: case and surrounding whitespace. Its pick trims and lowercases before an exact match, so \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" read as draft, published, merged and claimed.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings map to which status. Its pick maps only 'in review', but the scenario also expects under review, reviewing, live, public, assigned, taken, done, complete and completed. So \"under_review\" and \"LIVE\" would read as null, not review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what reading a value that matches no status returns. Its pick returns null and never maps to the nearest status, which is what the scenario wants for closed, archived, drafts and revew. Item 5 covers the empty and blank cases and also returns null, but item 1 is the closer match because the scenario is about not guessing.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a canonical status is stored unchanged when written. Item 6 is about non-canonical input and item 11 is about which call sites use the enum. Neither one settles what is stored for \"review\".",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether writing accepts non-canonical input, such as case variants and old spellings, by normalising it. Its pick accepts only the exact lowercase enum strings and rejects 'Review', 'in-review' and the rest, matching 'an old spelling is never accepted on write'. Items 7 and 8 cover parts of this too, the error message and trimming, and their picks also agree.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how unreadable values are reported when reading many rows: duplicates, form and order. Its pick lists each distinct raw stored value, untrimmed, sorted, which matches 'each distinct original value once, sorted, exactly as it was stored'. Item 9, keeping the row with a null status, fits the scenario's other clause and also agrees.",
+      "failing": true
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0894971,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks which day the digest is due and in which time zone. Its pick checks for Monday in the given time zone at any hour, so Monday 00:30 in Singapore is due and Sunday 23:59:59 local is not.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "This is the same question about the due day and time zone, here across a daylight saving change. Item 9 checks the weekday in the given zone, so the local Monday after clocks go forward is due and the local Sunday before it is not.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "The part of this scenario that answers an open question is furthest gate 0 for a task with no submissions. Item 8's pick reports 0 when there are no submissions and otherwise the highest gate, which gives 2 for gates 1 and 2. Item 3 (which tasks count as open) touches the merged-task exclusion but is less central here.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how age is computed and rounded. Its pick counts whole 24-hour periods rounded down, which gives 9 for 9 days 23 hours and 10 for exactly 10 days.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 1,
+      "agrees": true,
+      "why": "The scenario fixes the latest submission, or the posting time if there are none, as the last activity. Its example of a task posted 30 days ago with a submission 2 days ago tests exactly item 1, and item 1's pick does the same. Item 2's 'greater than or equal to' also fits the '14 days or more' wording, but the scenario has no exact-14-day example.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks about listing order. Its pick puts stalled tasks first, then oldest posting first, then sorts by id, which matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks what the subject says. Its pick has no singular form, so it would print '1 open tasks' where the scenario expects '1 open task'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what buildDigest returns when nothing is open. Its pick returns null, meaning no digest at all rather than an empty one, as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what happens with an unknown time zone. Its pick throws 'Unknown time zone: <tz>', which is an error that names the time zone.",
+      "failing": false
+    }
+  ]
+}

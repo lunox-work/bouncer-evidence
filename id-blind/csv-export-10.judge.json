@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0857595,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 settles several questions: the header (item 1), the BOM (item 2), CRLF on every line (item 3) and row order (item 5). Item 1 is the closest because the scenario is about the header row. Its pick writes exactly 'Requisition ID,Title,Status,Openings,Filled,Created'. Items 2, 3 and 5 also agree with the scenario.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "S2 is about how values are written for people to read. The main thing it settles is the date format, which is item 6's question. The scenario wants the UTC date as 'YYYY-MM-DD', but the pick writes the full toISOString() value with time and milliseconds. Item 7 (missing title is an empty field) also fits and agrees. No item asks about status labels or how numbers are written.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what an empty list produces. Its pick returns the BOM and the header line only, which matches S3.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": null,
+      "why": "Item 8 asks how fields with commas, quotes or line breaks are escaped. Its pick quotes them and doubles embedded quotes, which matches S4 for those cases. S4 also requires quoting a field that starts or ends with a space. The pick names only commas, quotes and line breaks, and RFC 4180 does not require quoting spaces, so it is unclear whether those fields get quoted.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks whether values starting with =, +, - or @ are protected against formula injection. Its pick does nothing and writes them as they are. S5 requires a leading single quote.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "S6 covers every reason a row is refused. Items 10 (unknown status) and 11 (bad numbers) cover parts of it. Item 12 is the closest because it asks about filled greater than openings, invalid dates, and whether one bad row fails the whole export. Its pick throws and rejects the export, which is the failure S6 expects. Item 12's pick doesn't say the error names the id, but items 10 and 11 say they do.",
+      "failing": true
+    }
+  ]
+}

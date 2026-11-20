@@ -1,0 +1,85 @@
+{
+  "run": "status-normalize/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.0490965,
+  "items": [
+    {
+      "question": "What does reading a stored value that matches no status or known old spelling return?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Returns null instead of throwing or guessing the nearest status.",
+      "where": "src/index.ts:33",
+      "instead": "Throw an error, or fall back to a default such as draft."
+    },
+    {
+      "question": "Does writing a status normalise near-miss input (wrong case, padding, old spellings), or reject it?",
+      "ticket": "Only enum values are written",
+      "chose": "Accepts only an exact enum value and throws an Error for anything else, including 'Draft', ' draft' and 'in-review'.",
+      "where": "src/index.ts:36",
+      "instead": "Normalise the input with the read logic and write the canonical value, or return null instead of throwing."
+    },
+    {
+      "question": "How much cleanup is applied to a stored value before matching it (case, whitespace, separators)?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Trims the ends, lowercases, and collapses runs of space, '-' and '_' into one space, then trims again. Edge separators are stripped, so '-draft-' reads as draft.",
+      "where": "src/index.ts:19",
+      "instead": "Only trim and lowercase, or treat '-' and '_' as part of the value."
+    },
+    {
+      "question": "Which old spellings map to which statuses?",
+      "ticket": "Sandbox status is stored as free text (draft, Draft, in-review...)",
+      "chose": "Maps only the cleaned form 'in review' to review. Any other legacy value (e.g. 'in progress', 'done') reads as null.",
+      "where": "src/index.ts:12",
+      "instead": "Include more aliases such as 'pending' or 'open', or have no alias table and match only the case-insensitive enum."
+    },
+    {
+      "question": "Can internal separators join a status's letters, so that 'mer_ged' or 'dr aft' reads as a status?",
+      "ticket": "silent",
+      "chose": "No. Separators become a single space, so 'mer___ged' and 'dr aft' become 'mer ged' and 'dr aft' and read as null.",
+      "where": "src/index.ts:20",
+      "instead": "Strip separators entirely before matching, so 'mer_ged' reads as merged."
+    },
+    {
+      "question": "Does a bulk read of many rows stop at an unreadable row or keep going?",
+      "ticket": "silent",
+      "chose": "Keeps going. Every row is returned, an unreadable row gets status null, and its id is kept.",
+      "where": "src/index.ts:53",
+      "instead": "Throw on the first unreadable row, or drop unreadable rows from the result."
+    },
+    {
+      "question": "How are unreadable values reported by the bulk read: raw or cleaned, and are duplicates removed?",
+      "ticket": "silent",
+      "chose": "Reports the raw stored strings, so 'zebra' and 'zebra ' stay separate. They are de-duplicated with a Set and sorted.",
+      "where": "src/index.ts:55",
+      "instead": "Report cleaned values, or the ids of the bad rows, or keep duplicates in row order."
+    },
+    {
+      "question": "In what order are the unreadable values listed?",
+      "ticket": "silent",
+      "chose": "Default string sort, which is by UTF-16 code unit. Uppercase sorts before lowercase.",
+      "where": "src/index.ts:58",
+      "instead": "Keep first-seen order, or sort case-insensitively or by locale."
+    },
+    {
+      "question": "What does reading an empty or whitespace-only value return?",
+      "ticket": "silent",
+      "chose": "Returns null, because it cleans to an empty string that matches nothing.",
+      "where": "src/index.ts:31",
+      "instead": "Throw, or default to draft."
+    },
+    {
+      "question": "What does the bulk read return for an empty list of rows?",
+      "ticket": "silent",
+      "chose": "Returns an empty rows array and an empty unreadable array.",
+      "where": "src/index.ts:58",
+      "instead": "Throw, or return null or undefined."
+    },
+    {
+      "question": "What does the error message for a rejected write contain?",
+      "ticket": "silent",
+      "chose": "Throws a plain Error with the message 'not a sandbox status: ' followed by the JSON-quoted value.",
+      "where": "src/index.ts:43",
+      "instead": "Throw a custom error class (e.g. a TypeError or RangeError), or list the allowed values in the message."
+    }
+  ]
+}

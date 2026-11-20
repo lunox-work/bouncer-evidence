@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09758810000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "The rows that set this scenario apart are `2d` = 172800000 and `1d0h0m0s0ms` = 86400000. Both depend on whether a day unit exists. The pick adds `d` as 86400000 ms. The plain h/m/s/ms rows are not an open question, and the zero rows also fit item 10, whose pick agrees too.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks whether whitespace around a duration is allowed. The pick trims leading and trailing whitespace, so `  45m\\n` parses as 45m = 2700000.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "This is a mix of many separate questions: empty (7), bare number (1), fraction (4), sign (5), inner whitespace (8), case (9). No one item's answer settles what the scenario expects. Some rows, such as the leading zero `05s`, the full-width digit `３s` and the unit with no count `ms`, are not asked about by any item.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count can be larger than the next unit up (`90m` instead of `1h30m`). Item 3 is about unit order and repeated units, not count size. Item 11 is about the form formatting writes, not what parsing accepts.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether units must go from largest to smallest and whether a unit may repeat. The pick rejects both with an error, which is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about the upper limit on the parsed total. The pick errors only when the total is above 9007199254740991, so exactly 9007199254740991 parses without error.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Same question as S6. The pick errors when the total is above the limit and checks before adding, so even the huge `99999999999999999999ms` cannot overflow and is rejected.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how formatting writes values. The pick breaks a value into every non-zero unit from `d` down to `ms`, which gives `1m30s`, `1h30m`, `1d` and `1d1h1m1s1ms`. The `0ms` row also matches item 10's pick.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": true,
+      "why": "The same breakdown rule gives `104249991d8h59m991ms`. Item 12's limit rejects only values above 9007199254740991, so this exact value formats without error.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives the same number back. That follows from other choices taken together, not from any one item.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what formatting does with negative or too-large values. The pick returns an empty string and an error for anything below 0 or above 9007199254740991. That covers -1, 9007199254740992, MinInt64 and MaxInt64. The pick does not say what the error message reads.",
+      "failing": false
+    }
+  ]
+}

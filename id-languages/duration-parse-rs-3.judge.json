@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/3",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0977119,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Most of the rows ('0s', '1d0h0m0s0ms') depend on whether zero and zero-valued components are accepted. Item 7's pick accepts them and returns their sum. Item 3 (day unit) also fits the 'd' rows, and its pick agrees too.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks whether whitespace is allowed. The scenario trims spaces and newlines around the input, but the pick rejects spaces without exception, so '  45m\\n' would fail.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Most rows (decimal, signs, inner spaces, uppercase unit) fall under item 5's whitespace/sign/fraction/casing question. Its pick rejects all of them. Items 1, 2 and 8 cover the bare number, empty and '3w' rows, and their picks also reject.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may be larger than the next unit up (e.g. 90m). Item 4 is about unit order and repeats, not count size.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks about order and repeats. Its pick rejects out-of-order and repeated units, which is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks for the maximum. Its pick caps at 9007199254740991 inclusive, so the largest value parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 covers the maximum and overflow. Its pick returns InvalidDuration above the cap and on u64 overflow.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "The scenario expects the greedy largest-unit split (5400000 -> '1h30m'). Item 10's pick prints the shortest string, '90m'. Item 9's pick ('0s' for zero) also conflicts with the expected '0ms'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 decides which split is printed. For this value the split starting at days is also the shortest, so the pick gives '104249991d8h59m991ms'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give the original number back.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how formatting handles values above the maximum. Its pick returns a MillisecondsOutOfRange error for anything above 9007199254740991, u64::MAX included.",
+      "failing": false
+    }
+  ]
+}

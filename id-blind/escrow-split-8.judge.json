@@ -1,0 +1,70 @@
+{
+  "run": "escrow-split/8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.08124980000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 relies on the default share turning 10000 into 7500. Item 9 asks what the share's unit and default are, and its pick (7500 basis points by default) gives a 7500 release.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how a fractional split is rounded. Its pick rounds the hidden-test amount down with integer division and gives the leftover to UAT: 749 and 250, which add up to the bounty.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what the remaining UAT release equals. Its pick is the bounty minus all earlier releases, which is the remaining balance S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what a failed hidden-test run does. Its pick treats the failure as a no-op that changes nothing, so nothing is recorded and the task stays locked.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what happens if UAT is approved before the hidden tests pass. Its pick throws an Error and records nothing, as S5 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": false,
+      "why": "Item 7 asks how a zero bounty is treated. Its pick reports 'pro bono' but records zero-amount releases, while S6 says no release is ever recorded.",
+      "failing": true
+    },
+    {
+      "key": "concurrency-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens when hidden tests pass a second time, whether a duplicate or a re-run. Its pick silently ignores the repeat with no new release, whatever the event id, which covers both cases in S7.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how duplicate or concurrent events are handled. Its pick runs events one at a time through a promise queue on each handler and dedupes by release kind, so two simultaneous events on one handler give exactly one release, with the same id or different ids. S8 doesn't involve separate handler instances, the case the queue doesn't cover.",
+      "failing": false
+    },
+    {
+      "key": "recovery-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when the store rejects a save or whether the event can be retried. Item 12 is about when writes happen and the initial state, not about a failed write.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "drizzle-team/drizzle-orm",
+  "package": "drizzle-orm",
+  "language": "typescript",
+  "commit": "3bcb6a27ec1f4f1602aeeb0af2f5aec61010d72d",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 49
+  }
+}

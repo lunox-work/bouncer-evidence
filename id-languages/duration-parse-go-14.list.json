@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 21,
+  "costUsd": 0.0616985,
+  "items": [
+    {
+      "question": "Is a bare number with no unit, such as the old raw-millisecond config value \"172800\", accepted?",
+      "ticket": "people keep getting them wrong (someone set a two-day timeout as 172800)",
+      "chose": "Rejects a bare number with an error 'missing unit'.",
+      "where": "src/task.go:71",
+      "instead": "Treat a bare number as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Is leading or trailing whitespace around the duration string allowed?",
+      "ticket": "silent",
+      "chose": "Trims surrounding whitespace before parsing.",
+      "where": "src/task.go:38",
+      "instead": "Reject any whitespace as invalid."
+    },
+    {
+      "question": "What does an empty or whitespace-only string parse to?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an 'invalid duration: empty string' error.",
+      "where": "src/task.go:39",
+      "instead": "Return 0 with no error, meaning no timeout."
+    },
+    {
+      "question": "Are units case-sensitive, so that \"1H\" or \"90S\" are valid?",
+      "ticket": "silent",
+      "chose": "Matches suffixes case-sensitively, so uppercase units are errors.",
+      "where": "src/task.go:65",
+      "instead": "Accept units in any case."
+    },
+    {
+      "question": "May components appear in any order or repeat, as in \"30s1h\" or \"1h1h\"?",
+      "ticket": "silent",
+      "chose": "Requires units from largest to smallest, each at most once, and errors otherwise.",
+      "where": "src/task.go:78",
+      "instead": "Accept any order and repeats, and sum them."
+    },
+    {
+      "question": "Are fractional, signed, or space-separated values such as \"1.5h\", \"-1s\", \"+1s\" or \"1h 30m\" accepted?",
+      "ticket": "silent",
+      "chose": "Accepts only unsigned integer counts. Any other character fails with 'expected a number' or 'unknown unit'.",
+      "where": "src/task.go:58",
+      "instead": "Accept decimals, an optional sign, or spaces between components."
+    },
+    {
+      "question": "Is a zero count or a count with leading zeros accepted, as in \"0h\" or \"01h\"?",
+      "ticket": "silent",
+      "chose": "Accepts both. \"0h\" gives 0 and \"01h\" gives 3600000.",
+      "where": "src/task.go:55",
+      "instead": "Reject zero durations or leading zeros."
+    },
+    {
+      "question": "What is the maximum parseable duration, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns 0 with a 'duration too large' error beyond it, checked per digit and per component.",
+      "where": "src/task.go:52",
+      "instead": "Use the int64 maximum, or silently saturate or wrap."
+    },
+    {
+      "question": "Which units are supported, and is there a day unit?",
+      "ticket": "`1h30m`, `90s` or `250ms`",
+      "chose": "Supports d, h, m, s and ms, adding days, which the ticket never mentions. There is no unit for weeks or microseconds.",
+      "where": "src/task.go:25",
+      "instead": "Support only h, m, s and ms, or add w as well."
+    },
+    {
+      "question": "How does \"m\" get told apart from \"ms\" when the suffix is read?",
+      "ticket": "silent",
+      "chose": "Takes the longest matching suffix among the units still allowed, so \"250ms\" is read as milliseconds.",
+      "where": "src/task.go:64",
+      "instead": "Take the first match in unit order, or require a delimiter."
+    },
+    {
+      "question": "How is zero formatted, and are zero-valued components shown?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Formats 0 as \"0ms\" and leaves out any component that is zero, for example 86400001 gives \"1d1ms\".",
+      "where": "src/task.go:97",
+      "instead": "Format zero as \"0s\" or \"0\", or print every component."
+    },
+    {
+      "question": "What does FormatDuration do for negative values or values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns \"\" and an 'out of range' error.",
+      "where": "src/task.go:94",
+      "instead": "Clamp the value, or format negatives with a minus sign."
+    }
+  ]
+}

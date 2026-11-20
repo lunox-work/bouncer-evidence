@@ -1,0 +1,22 @@
+{
+  "spec": "weekly-digest",
+  "model": "claude-fable-5-1",
+  "costUsd": 0.24860925,
+  "ruled": [
+    {
+      "id": "suite:weekly-digest:tests/public/subject.test.ts :: [happy-4] the subject reads 1 open task and 0 stalled when one task is open and none is stalled",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:weekly-digest:tests/private/subject.test.ts :: [happy-4] the subject reads 1 open task and 1 stalled when the one open task is stalled",
+      "ticket": "open",
+      "quote": ""
+    },
+    {
+      "id": "suite:weekly-digest:tests/private/subject.test.ts :: [happy-4] the subject reads 1 open task when merged tasks are alongside it",
+      "ticket": "open",
+      "quote": ""
+    }
+  ]
+}

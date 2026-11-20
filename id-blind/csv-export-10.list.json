@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/10",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.049388299999999996,
+  "items": [
+    {
+      "question": "What column layout and header names does the CSV use?",
+      "ticket": "silent",
+      "chose": "Writes the header 'Requisition ID,Title,Status,Openings,Filled,Created' with the columns in that order.",
+      "where": "src/index.ts:12",
+      "instead": "Use raw field names such as id,title,status,openings,filled,createdAt, or a different column order."
+    },
+    {
+      "question": "Does the CSV start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prepends a BOM (U+FEFF) to the output.",
+      "where": "src/index.ts:34",
+      "instead": "Emit plain CSV with no BOM."
+    },
+    {
+      "question": "Which line terminator is used, and does the last row end with one?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:34",
+      "instead": "Join lines with LF, or with no trailing newline after the last row."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and the header line only.",
+      "where": "src/index.ts:34",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "In what order do the rows appear?",
+      "ticket": "silent",
+      "chose": "Sorts a copy by createdAt ascending, then by id in code-unit order.",
+      "where": "src/index.ts:19",
+      "instead": "Keep the caller's input order, or sort newest first."
+    },
+    {
+      "question": "How is the creation time formatted?",
+      "ticket": "silent",
+      "chose": "Writes the full ISO 8601 UTC string from toISOString(), including milliseconds.",
+      "where": "src/index.ts:30",
+      "instead": "Write a date-only value (YYYY-MM-DD) or a locale-formatted date."
+    },
+    {
+      "question": "How is a missing or null title written?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:26",
+      "instead": "Write the text 'null' or 'undefined', or throw."
+    },
+    {
+      "question": "How are fields that contain commas, quotes or line breaks escaped?",
+      "ticket": "silent",
+      "chose": "Quotes the field per RFC 4180 and doubles any embedded quotes. Embedded newlines stay inside the quotes.",
+      "where": "src/index.ts:67",
+      "instead": "Quote every field, or strip or replace the special characters."
+    },
+    {
+      "question": "Are values that start with =, +, - or @ neutralised against spreadsheet formula injection?",
+      "ticket": "silent",
+      "chose": "Does nothing. Titles and ids that start with those characters are written as they are.",
+      "where": "src/index.ts:67",
+      "instead": "Prefix such values with a single quote or a tab."
+    },
+    {
+      "question": "What happens when a requisition has an unknown status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id, for any status outside open, on_hold, filled and cancelled.",
+      "where": "src/index.ts:39",
+      "instead": "Write the status through unchanged, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional, NaN, infinite or not a number?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the id and the bad field. Zero is accepted.",
+      "where": "src/index.ts:42",
+      "instead": "Clamp or coerce the value, or skip the row."
+    },
+    {
+      "question": "What happens when filled is greater than openings, or the creation time is an invalid date? Does one bad row fail the whole export?",
+      "ticket": "silent",
+      "chose": "Validates every row before building anything, and throws on the first bad one, which rejects the whole export.",
+      "where": "src/index.ts:14",
+      "instead": "Skip the bad rows and export the rest, or write them with a flag column."
+    }
+  ]
+}

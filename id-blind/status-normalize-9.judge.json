@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/9",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0729418,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "S1 asks how case and padding are cleaned before matching, which is item 4's question. Item 4 trims and lowercases, so \"Draft\", \" PUBLISHED \" and \"Merged\" read as draft, published and merged.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings map to which status. Its pick maps only 'in review' and explicitly rejects 'done'. So 'under review' (from \"under_review\") and 'live' (from \"LIVE\") would read as null, not review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks what reading does with a value that matches no status or old spelling. Its pick returns null instead of guessing the nearest status, which is what S3 expects. Item 6 also returns null for empty or space-only values, so it agrees too.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a valid status is stored unchanged. Item 1 is about near-miss spellings, and either answer to it would still store \"review\" as \"review\".",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether writing normalises near-miss spellings or rejects them. Its pick throws for anything other than the exact lowercase values, including 'in-review' and ' draft', so old spellings are never accepted on write. Item 8's message also includes the value as given.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how unreadable values are reported in a batch read. Its pick reports the raw stored strings, deduplicated by exact string and sorted, which matches 'each distinct original value once, sorted, exactly as it was stored'.",
+      "failing": true
+    }
+  ]
+}

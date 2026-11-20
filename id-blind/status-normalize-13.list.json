@@ -1,0 +1,71 @@
+{
+  "run": "status-normalize/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.045736900000000004,
+  "items": [
+    {
+      "question": "Which old free-text spellings besides the enum names are accepted when reading?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Maps only the cleaned form \"in review\" to review, and every other non-enum value reads as null.",
+      "where": "src/index.ts:18-20",
+      "instead": "Accept a broader alias list (e.g. \"in_progress\", \"submitted\", \"done\"), or fuzzy-match to the nearest status."
+    },
+    {
+      "question": "How are case and separator variants of a stored value normalised?",
+      "ticket": "Existing values are normalised when read",
+      "chose": "Lowercases, collapses runs of whitespace, \"-\" and \"_\" into one space, and trims. Leading and trailing dashes or underscores also become spaces and are trimmed.",
+      "where": "src/index.ts:27-29",
+      "instead": "Only trim and lowercase, or strip separators entirely so \"in-review\" becomes \"inreview\"."
+    },
+    {
+      "question": "What does reading an unrecognised, empty or whitespace-only stored value return?",
+      "ticket": "silent",
+      "chose": "Returns null instead of throwing or defaulting to a status such as draft.",
+      "where": "src/index.ts:40-41",
+      "instead": "Throw an error, or fall back to a default status such as \"draft\"."
+    },
+    {
+      "question": "Does writing a status normalise the input, or accept only exact enum values?",
+      "ticket": "Only enum values are written",
+      "chose": "Accepts only exact lowercase enum strings. \"Draft\", \" review\" and the old spelling \"in-review\" all throw.",
+      "where": "src/index.ts:49-50",
+      "instead": "Normalise through readStatus first and write the canonical value, accepting \"Draft\" or \"in-review\"."
+    },
+    {
+      "question": "How does writing an invalid status fail?",
+      "ticket": "silent",
+      "chose": "Throws a generic Error whose message quotes the value as given.",
+      "where": "src/index.ts:51",
+      "instead": "Return null or a result object, or throw a custom or typed error."
+    },
+    {
+      "question": "How does the bulk read treat rows whose status cannot be read?",
+      "ticket": "silent",
+      "chose": "Keeps every row in the original order with status null and does not drop or throw.",
+      "where": "src/index.ts:61-65",
+      "instead": "Drop unreadable rows from the result, or throw on the first unreadable row."
+    },
+    {
+      "question": "How are unreadable values reported in the bulk read, in terms of duplicates, ordering and form?",
+      "ticket": "silent",
+      "chose": "Lists distinct raw stored values, as stored and not cleaned, once each, sorted by default string order.",
+      "where": "src/index.ts:60-66",
+      "instead": "List the cleaned values, keep duplicates, report row ids, or keep first-seen order."
+    },
+    {
+      "question": "What does the bulk read return for an empty list of rows?",
+      "ticket": "silent",
+      "chose": "Returns empty rows and an empty unreadable list.",
+      "where": "src/index.ts:60-66",
+      "instead": "Throw, or return null or undefined."
+    },
+    {
+      "question": "Are inherited object keys such as \"constructor\" or \"__proto__\" treated as statuses?",
+      "ticket": "silent",
+      "chose": "Looks values up in a Set and a Map, so such keys read as null.",
+      "where": "src/index.ts:9-24",
+      "instead": "Use a plain object lookup, which would wrongly match inherited keys."
+    }
+  ]
+}

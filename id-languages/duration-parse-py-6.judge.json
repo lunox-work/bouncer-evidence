@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/6",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0978793,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Most rows are ordinary parsing, which none of the questions covers. The rows that settle an open question are `0s` and `1d0h0m0s0ms`, which test zero-valued components. Item 8's pick reads zero-valued components as 0, so both give the expected totals.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks whether whitespace is allowed around the string. The scenario expects leading and trailing whitespace to be ignored, but the pick rejects all whitespace, including leading and trailing.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "This scenario mixes several cases. Bare `90` matches item 1, `1.5h` matches item 5, `3S` matches item 3, `3w` matches item 2, and the internal-space rows match item 4. Item 1 (a bare number with no unit) is the closest single fit. Its pick rejects strings with no unit, which agrees, and the other matching picks reject their rows too.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a parsed count may be larger than the next unit up, such as `90m`. Item 11 asks about this kind of value only for formatting, not parsing.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks whether components can come in any order. Most rows here (`30m1h`, `5ms1s`, `1s500ms2s`) are out of order, and the scenario rejects them. The pick accepts any order, so `30m1h` would parse. Item 7 (duplicate units) would agree for `1h1h`, but it fits this scenario less closely.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks about an upper limit. The pick raises an error only when the total goes above 9007199254740991, so exactly that value parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks about an upper limit. The pick raises ValueError when the total is above 9007199254740991 ms, which covers both rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks which form format_duration uses when a value can be written several ways. The scenario expects a full breakdown by unit: 5400000 gives `1h30m` and 90000 gives `1m30s`. The pick chooses the shortest string, which gives `90m` and `90s`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks which inputs format_duration accepts, including out-of-range ones, so it settles whether the maximum value can be formatted. The pick rejects only values above the max, so the max itself is accepted. The expected string is also the shortest way to write it, so item 11's pick does not change the output.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must return the original number.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what format_duration accepts. The pick raises ValueError for negatives, bools, floats and values above the max, which covers all four rows. The pick doesn't say whether the error message contains \"milliseconds\".",
+      "failing": false
+    }
+  ]
+}

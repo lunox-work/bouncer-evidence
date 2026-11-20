@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10371559999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 is about cleaning case and surrounding whitespace before matching, which is item 2's question. Its pick trims and lowercases, and the run shows \"  DRAFT \" reading as 'draft', so \" PUBLISHED \", \"Merged\" and \"claimed\" become their lowercase statuses.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings map to a status. Its pick maps only 'in review'; the run shows 'done' and 'in progress' reading as null. So \"under_review\" and \"LIVE\" would read as null, not 'review' and 'published'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unknown stored value reads as. Its pick returns null instead of guessing the nearest status (readStatus(\"banana\") → null), and item 7 shows empty and whitespace-only values also read as null. That matches 'no status at all, never the nearest one'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what writing a valid status does. Item 4 is about rejecting variants; its run happens to show writeStatus(\"draft\") → 'draft', but that is not the question it asks.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether writing accepts variants and old spellings. Its pick accepts only exact lowercase enum strings; the run shows \"Draft\", \" draft\" and \"in-review\" all throw. Item 5 shows the error message quotes the value as given (\"Bogus\").",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how readStatuses reports unreadable values. Its pick and run list the raw stored strings, de-duplicated and sorted, which matches 'each distinct original value once, sorted, exactly as stored'. Item 8 confirms each unreadable row comes back with status null.",
+      "failing": true
+    }
+  ]
+}

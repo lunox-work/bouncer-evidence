@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0579084,
+  "items": [
+    {
+      "question": "Which units are accepted besides h, m, s and ms?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Also accepts `d` (day) as a unit.",
+      "where": "src/lib.rs:21",
+      "instead": "Accept only h, m, s and ms, or add more units such as w."
+    },
+    {
+      "question": "Can components appear in any order, or repeat a unit?",
+      "ticket": "silent",
+      "chose": "Rejects out-of-order or repeated units, so `30m1h` and `1h1h` are errors.",
+      "where": "src/lib.rs:91",
+      "instead": "Accept any order and sum repeated units, or accept any order but reject repeats."
+    },
+    {
+      "question": "Is whitespace between or around components allowed?",
+      "ticket": "silent",
+      "chose": "Rejects any whitespace, so `1h 30m` and ` 1s` are errors.",
+      "where": "src/lib.rs:73",
+      "instead": "Trim the input and allow spaces between components."
+    },
+    {
+      "question": "Are upper-case units, signs and fractions such as `1H`, `-1s`, `+1s` and `1.5h` accepted?",
+      "ticket": "silent",
+      "chose": "Rejects all of them as invalid.",
+      "where": "src/lib.rs:70",
+      "instead": "Accept upper-case units, or accept fractions like `1.5h`, or accept a leading `+`."
+    },
+    {
+      "question": "What happens with an empty string or a bare number with no unit, such as `172800`?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects both as invalid, so a raw millisecond number is not accepted by the parser.",
+      "where": "src/lib.rs:62",
+      "instead": "Treat a bare number as milliseconds for backward compatibility, and reject only the empty string."
+    },
+    {
+      "question": "What is the maximum duration that can be parsed?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns an error above that or on arithmetic overflow.",
+      "where": "src/lib.rs:101",
+      "instead": "Allow the full u64 range, or use a smaller cap such as an i32 or i64 limit."
+    },
+    {
+      "question": "Is a zero duration such as `0ms`, or a zero component or leading zeros like `01h`, valid?",
+      "ticket": "silent",
+      "chose": "Accepts them: `0ms` gives 0 and `01h` gives 3600000.",
+      "where": "src/lib.rs:77",
+      "instead": "Reject a zero timeout, or reject leading zeros."
+    },
+    {
+      "question": "How are non-ASCII digits or unknown unit names handled?",
+      "ticket": "silent",
+      "chose": "Accepts only ASCII digits and alphabetic unit text that exactly matches a known unit. Everything else gives the single InvalidDuration error.",
+      "where": "src/lib.rs:82",
+      "instead": "Return separate error variants for a bad unit, bad order and overflow."
+    },
+    {
+      "question": "What does format_duration print for 0?",
+      "ticket": "silent",
+      "chose": "Prints `0s`.",
+      "where": "src/lib.rs:118",
+      "instead": "Print `0ms`."
+    },
+    {
+      "question": "How does format_duration choose between forms, such as `90s` versus `1m30s`?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Builds one candidate per starting unit and picks the shortest string. This makes 90000 print as `90s` and 5400000 as `90m`, not `1h30m`. Ties go to the larger starting unit.",
+      "where": "src/lib.rs:137",
+      "instead": "Decompose greedily into the largest units, giving `1h30m` and `1m30s`."
+    },
+    {
+      "question": "What does format_duration do for values above the maximum?",
+      "ticket": "silent",
+      "chose": "Returns a MillisecondsOutOfRange error for anything above 2^53-1.",
+      "where": "src/lib.rs:115",
+      "instead": "Format any u64 value without a limit."
+    },
+    {
+      "question": "Does the diff wire the parser or formatter into the config loading and the admin UI?",
+      "ticket": "Let's accept human-readable durations like `1h30m`, `90s` or `250ms` and convert them to milliseconds.",
+      "chose": "Adds only the library functions, with no config or UI integration in the diff.",
+      "where": "src/lib.rs:59",
+      "instead": "Hook parse_duration into config loading and format_duration into the admin UI display."
+    }
+  ]
+}

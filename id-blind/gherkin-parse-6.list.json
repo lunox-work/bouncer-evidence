@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.0726812,
+  "items": [
+    {
+      "question": "What happens to a file with no Feature: line, or with content before it?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Throws a ParseError at the first non-comment line for content before Feature:. For a file with no Feature: line at all, it throws at line 1.",
+      "where": "src/index.ts:96-97, 184",
+      "instead": "Return an empty feature, or report the last line of the file."
+    },
+    {
+      "question": "Is a feature with no scenarios valid?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Returns the feature with an empty scenarios list and no error.",
+      "where": "src/index.ts:188",
+      "instead": "Throw an error because the feature has no scenarios."
+    },
+    {
+      "question": "Are Scenario Outline and Rule supported?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the line saying the construct is not supported.",
+      "where": "src/index.ts:98-100",
+      "instead": "Parse Scenario Outline as a scenario or ignore it, and accept Rule: as a grouping."
+    },
+    {
+      "question": "Is \"Example:\" accepted as a scenario keyword, and what about a Scenario line with no colon or an empty name?",
+      "ticket": "silent",
+      "chose": "Accepts \"Scenario:\" and \"Example:\" with a trimmed name that may be empty.",
+      "where": "src/index.ts:18, 116-122",
+      "instead": "Accept only \"Scenario:\", and reject an empty name."
+    },
+    {
+      "question": "How are Background steps represented, and what does an empty Background give?",
+      "ticket": "silent",
+      "chose": "Sets background to null when there is none. An empty Background gives an empty list. A second Background, or one after a scenario, is an error.",
+      "where": "src/index.ts:106-114",
+      "instead": "Merge Background steps into every scenario, or treat an empty Background as an error."
+    },
+    {
+      "question": "What happens to free-text lines that are not steps?",
+      "ticket": "silent",
+      "chose": "Ignores them between Feature: and the first Background or Scenario. Elsewhere, an unrecognised line is a ParseError.",
+      "where": "src/index.ts:176-181",
+      "instead": "Ignore prose everywhere, such as scenario descriptions, or reject it everywhere."
+    },
+    {
+      "question": "Are steps allowed before any Scenario or Background?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the step's line.",
+      "where": "src/index.ts:133-134",
+      "instead": "Ignore the steps, or attach them to an implicit scenario."
+    },
+    {
+      "question": "How are tags handled when they are not followed by a Scenario?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the line of the first tag line of the pending group. Tags on the Feature: line are discarded.",
+      "where": "src/index.ts:91, 103-104, 185-186",
+      "instead": "Ignore dangling tags, or keep tags on the Feature."
+    },
+    {
+      "question": "What counts as a valid step keyword, and what happens when a step line has no text?",
+      "ticket": "silent",
+      "chose": "Accepts Given, When, Then, And, But and * only when followed by whitespace, so \"Andrew…\" is not a step. It does not require any step text.",
+      "where": "src/index.ts:17",
+      "instead": "Accept keywords case-insensitively or localised, and require non-empty step text."
+    },
+    {
+      "question": "How are doc strings delimited, indented and closed?",
+      "ticket": "silent",
+      "chose": "Accepts \"\"\" or ``` delimiters, closed only by the same delimiter. It strips up to the opening line's indentation from each line and keeps the body as an array of lines. A missing close is an error at the opening line. A step can have only one doc string, and not both a doc string and a table.",
+      "where": "src/index.ts:156-173",
+      "instead": "Accept only \"\"\", keep the content as one string, and leave the indentation untouched."
+    },
+    {
+      "question": "How are table rows parsed and attached to steps?",
+      "ticket": "silent",
+      "chose": "Splits cells on unescaped pipes and trims them. It handles the escapes \\|, \\\\ and \\n. Rows attach to the previous step, and a row with no preceding step is an error. Rows do not have to be the same width.",
+      "where": "src/index.ts:21-41, 147-153",
+      "instead": "Leave cells untrimmed, skip escape handling, or require equal column counts."
+    },
+    {
+      "question": "How are line endings, a BOM and comments handled?",
+      "ticket": "silent",
+      "chose": "Strips a leading BOM and a trailing \\r. Skips blank lines and lines starting with #, so line numbers stay physical.",
+      "where": "src/index.ts:58-59, 77",
+      "instead": "Reject CRLF or a BOM, or treat # lines as errors."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "honojs/hono",
+  "package": ".",
+  "language": "typescript",
+  "commit": "75ff8e3ea18485589816881c6278bc9783e56602",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 30
+  }
+}

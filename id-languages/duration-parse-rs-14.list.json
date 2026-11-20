@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-rs/14",
+  "model": "claude-sonnet-5-5",
+  "seconds": 14,
+  "costUsd": 0.0607435,
+  "items": [
+    {
+      "question": "Which units are accepted, and are they case-sensitive?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts only lowercase h, m, s and ms. Anything else, including `1H` and `1d`, is rejected.",
+      "where": "src/lib.rs:76-86",
+      "instead": "Accept days (`d`) or upper-case units, or ignore case."
+    },
+    {
+      "question": "What does an empty string parse to?",
+      "ticket": "silent",
+      "chose": "Returns InvalidDuration for an empty string.",
+      "where": "src/lib.rs:58-60",
+      "instead": "Treat it as 0 ms, or as 'no timeout'."
+    },
+    {
+      "question": "Is a bare number with no unit, such as the legacy `172800`, accepted as raw milliseconds?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a bare number because every component needs a unit suffix.",
+      "where": "src/lib.rs:76-86",
+      "instead": "Treat a unit-less number as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Can components repeat or appear in any order, as in `30m1h` or `1s1s`?",
+      "ticket": "silent",
+      "chose": "Requires strictly decreasing unit order and rejects repeated or out-of-order units.",
+      "where": "src/lib.rs:88-93",
+      "instead": "Accept any order and sum the components, as many duration parsers do."
+    },
+    {
+      "question": "Are whitespace, signs and decimals such as `1.5h`, `-5s` or `1h 30m` accepted?",
+      "ticket": "silent",
+      "chose": "Rejects them all because only ASCII digits followed by a unit are allowed.",
+      "where": "src/lib.rs:64-69",
+      "instead": "Trim surrounding whitespace, allow spaces between components, or allow fractional values."
+    },
+    {
+      "question": "What is the maximum parseable value, and what happens on overflow?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms and returns InvalidDuration above that or on u64 overflow.",
+      "where": "src/lib.rs:95-103",
+      "instead": "Allow the full u64 range, or return a separate overflow error."
+    },
+    {
+      "question": "Is a zero duration (`0s`, `0ms`) valid, and are leading zeros allowed?",
+      "ticket": "silent",
+      "chose": "Accepts zero and leading zeros, so `0s` gives 0 and `007s` gives 7000.",
+      "where": "src/lib.rs:71-73",
+      "instead": "Reject a zero timeout, or reject leading zeros."
+    },
+    {
+      "question": "What does formatting 0 ms print?",
+      "ticket": "silent",
+      "chose": "Prints `0s`.",
+      "where": "src/lib.rs:121-123",
+      "instead": "Print `0ms`, or an empty string."
+    },
+    {
+      "question": "How is a value formatted: as a mixed decomposition like `1h30m` or as a single unit?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Picks the shortest string over all unit subsets, so 90 minutes prints as `90m` and 48 hours as `48h`, not `1h30m`.",
+      "where": "src/lib.rs:127-155",
+      "instead": "Use the greedy largest-unit-first split, so 5,400,000 ms prints `1h30m` and 172,800,000 ms prints `48h`."
+    },
+    {
+      "question": "How are ties between equally short formats broken?",
+      "ticket": "silent",
+      "chose": "Prefers fewer components, then the larger leading unit.",
+      "where": "src/lib.rs:147-151",
+      "instead": "Prefer the greedy decomposition, or the first one found."
+    },
+    {
+      "question": "What does formatting a value above the maximum do?",
+      "ticket": "silent",
+      "chose": "Returns MillisecondsOutOfRange for any value above 2^53-1.",
+      "where": "src/lib.rs:118-120",
+      "instead": "Format any u64, including very large values."
+    },
+    {
+      "question": "Are days or larger units used when printing, for example the two-day timeout?",
+      "ticket": "someone set a two-day timeout as 172800",
+      "chose": "The largest unit is hours, so two days prints as `48h`.",
+      "where": "src/lib.rs:13",
+      "instead": "Add a `d` unit, so two days prints as `2d`."
+    }
+  ]
+}

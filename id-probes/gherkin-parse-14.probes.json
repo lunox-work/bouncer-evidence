@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-14",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0530942,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"Feature: x\\n\")"
+    },
+    {
+      "item": 2,
+      "probe": "(() => { try { return parseFeature(\"\"); } catch (e) { return [e.name, e.line, e.message]; } })()"
+    },
+    {
+      "item": 3,
+      "probe": "(() => { try { return parseFeature(\"Feature: x\\n  Scenario Outline: y\\n    Given a\\n\"); } catch (e) { return [e.name, e.line, e.message]; } })()"
+    },
+    {
+      "item": 4,
+      "probe": "(() => { try { return parseFeature(\"Feature: x\\n  Scenario: y\\n    Given a\\n      \\\"\\\"\\\"\\n      text\\n\\n\"); } catch (e) { return [e.name, e.line, e.message]; } })()"
+    },
+    {
+      "item": 5,
+      "probe": "(() => { try { return parseFeature(\"Feature: x\\n  @a\\n  @b\\n  Background:\\n    Given a\\n\"); } catch (e) { return [e.name, e.line, e.message]; } })()"
+    },
+    {
+      "item": 6,
+      "probe": "(() => { try { return parseFeature(\"Feature: x\\n  Scenario: y\\n    Given a\\n  Background:\\n    Given b\\n\"); } catch (e) { return [e.name, e.line, e.message]; } })()"
+    },
+    {
+      "item": 7,
+      "probe": "parseFeature(\"Feature: x\\n  some description\\n  more text\\n  Scenario: y\\n    Given a\\n\")"
+    },
+    {
+      "item": 8,
+      "probe": "(() => { try { return parseFeature(\"Feature: x\\n  Example: y\\n    Given a\\n  Rule: r\\n\"); } catch (e) { return [e.name, e.line, e.message]; } })()"
+    },
+    {
+      "item": 9,
+      "probe": "parseFeature(\"Feature: x\\n  Scenario: y\\n    Given a\\n      ```\\n        indented\\n      plain\\n      ```\\n    When b\\n      | a \\\\| b | c\\\\\\\\ | d\\\\ne |\\n      | 1 | 2 | 3 |\\n\").scenarios[0].steps"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"Feature: x\\n  Scenario: y\\n    Given a\\n    And  b  \\n    But c\\n    * d\\n    Then\\n\").scenarios[0].steps.map(s => [s.keyword, s.text])"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"@top\\nFeature: x\\n  @a @b # comment @c\\n  @d\\n  Scenario: y\\n    Given a\\n\").scenarios[0].tags"
+    },
+    {
+      "item": 12,
+      "probe": "parseFeature(\"\\uFEFFFeature: x\\r\\n# c\\r\\n\\r\\n  Scenario: y\\r\\n    Given a\\r\\n      \\\"\\\"\\\"\\r\\n      # kept\\r\\n      \\\"\\\"\\\"\\r\\n\").scenarios[0]"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ name: 'x', background: null, scenarios: [] }"
+    },
+    {
+      "item": 2,
+      "actual": "[ 'ParseError', 1, 'line 1: expected \"Feature:\"' ]"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'ParseError', 2, 'line 2: \"Scenario Outline:\" is not supported' ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'ParseError', 4, 'line 4: doc string is never closed' ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'ParseError', 2, 'line 2: tags must be followed by \"Scenario:\"' ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 'ParseError', 4, 'line 4: \"Background:\" must come before any \"Scenario:\"' ]"
+    },
+    {
+      "item": 7,
+      "actual": "{\n  name: 'x',\n  background: null,\n  scenarios: [\n    { name: 'y', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 5, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 8,
+      "actual": "[ 'ParseError', 4, 'line 4: unrecognised line \"Rule: r\"' ]"
+    },
+    {
+      "item": 9,
+      "actual": "[\n  { keyword: 'Given', text: 'a', line: 3, docString: [ '  indented', 'plain' ], table: null },\n  { keyword: 'When', text: 'b', line: 8, docString: null, table: [ [ 'a | b', 'c\\\\', 'd\\ne' ], [ '1', '2', '3' ] ] }\n]"
+    },
+    {
+      "item": 10,
+      "actual": "[ [ 'Given', 'a' ], [ 'And', 'b' ], [ 'But', 'c' ], [ '*', 'd' ], [ 'Then', '' ] ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ '@a', '@b', '@d' ]"
+    },
+    {
+      "item": 12,
+      "actual": "{\n  name: 'y',\n  line: 4,\n  tags: [],\n  steps: [ { keyword: 'Given', text: 'a', line: 5, docString: [ '# kept' ], table: null } ]\n}"
+    }
+  ]
+}

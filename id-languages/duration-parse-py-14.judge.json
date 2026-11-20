@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/14",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09497390000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": false,
+      "why": "S1 is mostly ordinary summing. The part that is still open is whether days ('2d', '1d0h0m0s0ms') are supported, and item 4 asks which units exist beyond the examples. Its pick supports only h, m, s and ms with no days, so '2d' would be rejected.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks about whitespace. Its pick allows no spaces, so '  45m\\n' would be rejected, but the scenario expects surrounding whitespace to be ignored.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Most of the rejected inputs are covered by item 4's question about decimals, signs, underscores, uppercase, spaces, unsupported units like 'w' and non-ASCII digits, and its pick rejects all of those. Items 1 and 2 cover the '90' and empty-string rows but only those, so item 4 is the closest single match.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks about a component larger than its natural range, using '90m' as its example. Its pick accepts and sums it, giving 5400000.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether units must appear in descending order and at most once. Its pick rejects '30m1h' and repeated units, as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about the upper limit and whether it is inclusive. Its pick allows exactly 9007199254740991, which is what S6 expects (the 'd' unit in the input is a separate question, item 4).",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6's pick rejects totals above 9007199254740991 ms, which matches S7.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "Item 10 asks what style formatting uses, with 5400000 as its example. Its pick chooses the shortest string ('90m', and '90s' for 90000), but S8 expects a breakdown from the largest unit down ('1h30m', '1m30s'). Item 9 also conflicts on the 0 row: its pick gives '0s' where S8 expects '0ms'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 10,
+      "agrees": false,
+      "why": "The output style is settled by item 10. Its shortest-string rule would give '9007199254740991ms' (18 characters) instead of '104249991d8h59m991ms' (20 characters).",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must return the original number.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how format_duration handles negatives, bools, floats and other non-int input. Its pick raises ValueError mentioning 'milliseconds' for negatives, values above the maximum, bools and floats, which matches S11.",
+      "failing": false
+    }
+  ]
+}

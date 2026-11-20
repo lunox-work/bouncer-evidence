@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.099084,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how a stored value is cleaned before matching, and that decides whether \"Draft\" or \" PUBLISHED \" reads as its status. The pick lowercases and trims, and the run shows \"  Draft \" read as 'draft'.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings are read as a status. The pick maps only \"in review\" to review. So \"under_review\" and \"LIVE\" would not read as review and published, which is what the scenario expects. The run confirms that only in-review variants map and other non-enum values return null.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what an unrecognised stored value reads as. The pick returns null, not a guessed nearest status, and the run shows \"archived\" giving null. Item 4 covers the empty and whitespace-only cases and also returns null, but item 3 is the closer match.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what is stored when a valid status is written. Item 5 is about whether near-miss input gets normalised, and its run only shows near-miss values throwing. It never shows writing \"review\" and getting \"review\" back.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether writing normalises near-miss input such as a different case, padding or an old spelling. The pick accepts only exact enum strings and throws for the rest, and the run shows \"Draft\", \" draft\" and \"in-review\" all throwing. Item 6 (the error message holds the quoted value) also agrees with the scenario's 'names the value' part.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how unreadable values are reported in a batch read. The pick lists each original raw string once, de-duplicated by exact value and sorted, and the run shows this. That matches 'each distinct original value once, sorted, exactly as it was stored'.",
+      "failing": true
+    }
+  ]
+}

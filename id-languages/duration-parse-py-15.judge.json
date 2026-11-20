@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/15",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09413590000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks which units are accepted. Its pick accepts d, h, m, s and ms, so `2d` and `1d0h0m0s0ms` parse as the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether whitespace is allowed. Its pick strips leading and trailing whitespace, so \"  45m\\n\" parses to 2700000.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "This scenario mixes several questions. Item 6 covers the most rows (`1.5h`, `-3s`, `+3s`, the full-width digit `３s`, and `1_0s`), and its ASCII-digit-only pick rejects all of them. Other rows belong to items 7 (empty), 5 (`90`), 4 (spaces), 2 (`3S`) and 10 (`05s`). Item 10's pick, which accepts leading zeros, would conflict with the `05s` row.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may be larger than the next unit up (e.g. `90m`). Item 3 is about order and repetition, not a count's size.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about unit order and repetition. Its pick rejects out-of-order and repeated units, matching every row.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks about the upper limit. Its pick rejects only totals above 9007199254740991, so that exact value parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8's pick rejects totals above 9007199254740991 ms and rejects very long digit strings early, which covers both rows.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks how milliseconds are formatted. Its pick chooses the shortest string, giving `90s` for 90000 and `90m` for 5400000, but the scenario expects `1m30s` and `1h30m` (largest units first). Item 9's pick also formats 0 as `0s` where the scenario expects `0ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "Under item 11's shortest-string rule, `9007199254740991ms` (18 characters) beats `104249991d8h59m991ms` (20 characters), so the pick would not give the expected output.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting then parsing returns the original number. Any format that parses correctly passes, so no single item's answer settles it.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what format_duration does with invalid input. Its pick raises a ValueError mentioning 'milliseconds' for negatives, values above the maximum, floats and bools, matching every row.",
+      "failing": false
+    }
+  ]
+}

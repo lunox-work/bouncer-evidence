@@ -1,0 +1,15 @@
+{
+  "repo": "fastapi/typer",
+  "package": ".",
+  "language": "python",
+  "commit": "2517edde5a1292a712e2f16e600754c52c6f00d9",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 146
+  }
+}

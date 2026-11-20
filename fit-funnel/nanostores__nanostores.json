@@ -1,0 +1,10 @@
+{
+  "repo": "nanostores/nanostores",
+  "package": ".",
+  "language": "typescript",
+  "commit": "7b86b32bcff00bf5d08895854765a9076740478a",
+  "static": {
+    "supported": false,
+    "reason": "runner outside vitest, Jest and node:test over tsconfig.test.json: scripts.test is \"pnpm run /^test:/\""
+  }
+}

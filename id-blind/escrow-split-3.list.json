@@ -1,0 +1,92 @@
+{
+  "run": "escrow-split/3",
+  "model": "claude-sonnet-5-5",
+  "seconds": 17,
+  "costUsd": 0.06476989999999999,
+  "items": [
+    {
+      "question": "How is a fractional share of the bounty rounded when the hidden-test share doesn't divide it evenly?",
+      "ticket": "record a partial release of the configured hidden-test share (default 75%)",
+      "chose": "Rounds the hidden-test part down with BigInt integer division, so the remainder goes to the UAT release.",
+      "where": "src/index.ts:13",
+      "instead": "Round to nearest, or round the hidden-test part up."
+    },
+    {
+      "question": "What unit and type is the bounty in, and what happens when it is negative, fractional or too large?",
+      "ticket": "silent",
+      "chose": "Requires a safe integer of at least 0 (minor units) and throws RangeError otherwise.",
+      "where": "src/index.ts:42",
+      "instead": "Accept decimal amounts, or accept any non-negative number without a safe-integer limit."
+    },
+    {
+      "question": "What happens when the configured hidden-test share is out of range or not a whole number of basis points?",
+      "ticket": "silent",
+      "chose": "Throws RangeError unless the share is an integer from 0 to 10000 bps.",
+      "where": "src/index.ts:47",
+      "instead": "Clamp the share to the range, or fall back to the 75% default."
+    },
+    {
+      "question": "When does an invalid task (bad bounty or share) get rejected?",
+      "ticket": "silent",
+      "chose": "Throws immediately when the handler is created, not when an event is handled.",
+      "where": "src/index.ts:20",
+      "instead": "Validate lazily and reject the handle() call."
+    },
+    {
+      "question": "What does a bounty of 0 do?",
+      "ticket": "silent",
+      "chose": "Reports status \"pro bono\" and records releases of amount 0. The status never becomes \"fully released\".",
+      "where": "src/index.ts:82",
+      "instead": "Skip releases for a zero bounty and report \"fully released\" or \"locked\"."
+    },
+    {
+      "question": "What happens when UAT is approved before the hidden tests have passed?",
+      "ticket": "silent",
+      "chose": "Rejects with an Error and stores nothing.",
+      "where": "src/index.ts:101",
+      "instead": "Release the whole bounty on UAT approval, or ignore the event."
+    },
+    {
+      "question": "What happens when the hidden tests pass again after the first release (a duplicate or new event)?",
+      "ticket": "Release happens once per task",
+      "chose": "Ignores any later pass event once a hidden-tests release exists, whatever its id. It returns the current state and writes nothing.",
+      "where": "src/index.ts:96",
+      "instead": "Return an error, or dedupe only by event id."
+    },
+    {
+      "question": "What happens when UAT is approved a second time?",
+      "ticket": "Remaining balance is released exactly once",
+      "chose": "Silently returns the current state with no new release.",
+      "where": "src/index.ts:103",
+      "instead": "Reject with an error on the repeat approval."
+    },
+    {
+      "question": "How is the UAT release amount computed?",
+      "ticket": "release the remaining escrow balance",
+      "chose": "Releases the bounty minus the sum of earlier releases, rather than the stored split's uat value.",
+      "where": "src/index.ts:104",
+      "instead": "Release the precomputed split.uat amount."
+    },
+    {
+      "question": "What happens when a hidden-test run fails?",
+      "ticket": "A failed run releases nothing",
+      "chose": "Returns the current state without writing to the store. If a later run passes, it can still release.",
+      "where": "src/index.ts:98",
+      "instead": "Record the failure in state or lock the task after a failure."
+    },
+    {
+      "question": "How are concurrent events, including events through different handlers on the same store, handled?",
+      "ticket": "silent",
+      "chose": "Runs events one at a time through a per-store promise queue, and the queue keeps going after a failure.",
+      "where": "src/index.ts:56",
+      "instead": "No serialization, or a lock or compare-and-set in the store."
+    },
+    {
+      "question": "What happens on an unknown event kind, or a store write failure?",
+      "ticket": "silent",
+      "chose": "Throws for an unknown kind. A store error rejects the call and nothing is recorded, so the event can be retried.",
+      "where": "src/index.ts:106",
+      "instead": "Ignore unknown events, or swallow store errors and retry internally."
+    }
+  ]
+}

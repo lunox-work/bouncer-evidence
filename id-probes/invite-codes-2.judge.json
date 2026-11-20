@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1423603,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks what happens when a newly drawn code repeats an existing one. S1 says it is drawn again, and the pick redraws (up to 100 tries before throwing). No item asks about the 14-day expiry or the 'unused' starting state as such, though item 6's run shows both.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether redeeming grants access to that task and no other. Item 11 covers usedBy/usedAt, but it is about list output and fits S9 better.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks how case, whitespace and hyphens are handled. The pick normalises all three, and the run redeemed a lowercase code with spaces and hyphens successfully.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code is still valid at exactly 14 days. The pick treats now >= createdAt + 14 days as expired, and the run at exactly 14 days returned reason 'expired'. That fits S4, where redeeming works 1 ms before and fails at the exact moment.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when the same contributor redeems their own used code again, which is what S5 settles (it succeeds and nothing changes). Item 2 is about which reason wins when a code is both used and expired or revoked. Item 3 is about a different, unused code for a task the contributor can already access.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what redeeming a code that doesn't exist does. The run returned { ok: false, reason: 'unknown' }, as S6 expects. Item 8 covers the 'used code cannot be revoked' clause, but S6 is mainly about redemption being refused.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks exactly this question. The run shows a second code failing with 'already has access' and that code staying 'unused'.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how overlapping calls are handled. The run used a store with delayed calls and concurrent redeems: exactly one succeeded and the others failed with 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what list returns. The pick and the run show code, createdAt, expiresAt and state (unused/used/revoked/expired), with usedBy/usedAt on used codes. Item 2's run also shows a used code still listed as 'used' after its expiry time.",
+      "failing": false
+    }
+  ]
+}

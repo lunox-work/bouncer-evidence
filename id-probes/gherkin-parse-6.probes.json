@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-6",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0637867,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(() => { const r = []; for (const t of [\"Given x\\nFeature: F\", \"\"]) { try { r.push(parseFeature(t)); } catch (e) { r.push([e.name, e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 2,
+      "probe": "parseFeature(\"Feature: F\\n\")"
+    },
+    {
+      "item": 3,
+      "probe": "(() => { const r = []; for (const t of [\"Feature: F\\nScenario Outline: o\\n Given x\", \"Feature: F\\nRule: r\"]) { try { r.push(parseFeature(t)); } catch (e) { r.push([e.name, e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 4,
+      "probe": "(() => { const r = [parseFeature(\"Feature: F\\nExample:  Foo  \\nScenario:\\n\").scenarios]; try { r.push(parseFeature(\"Feature: F\\nScenario\\n Given x\")); } catch (e) { r.push([e.line, e.message]); } return r; })()"
+    },
+    {
+      "item": 5,
+      "probe": "(() => { const r = [parseFeature(\"Feature: F\\nScenario: s\\n Given x\").background, parseFeature(\"Feature: F\\nBackground:\\nScenario: s\").background]; for (const t of [\"Feature: F\\nBackground:\\nBackground:\", \"Feature: F\\nScenario: s\\nBackground:\\n Given x\"]) { try { parseFeature(t); r.push(\"ok\"); } catch (e) { r.push([e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 6,
+      "probe": "(() => { const r = [parseFeature(\"Feature: F\\n  free text\\n  more\\nScenario: s\\n Given x\").scenarios.length]; try { parseFeature(\"Feature: F\\nScenario: s\\n Given x\\n free text\"); r.push(\"ok\"); } catch (e) { r.push([e.line, e.message]); } return r; })()"
+    },
+    {
+      "item": 7,
+      "probe": "(() => { const r = []; for (const t of [\"Feature: F\\n Given x\\nScenario: s\"]) { try { r.push(parseFeature(t)); } catch (e) { r.push([e.name, e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 8,
+      "probe": "(() => { const r = []; for (const t of [\"Feature: F\\n@a\\n@b @c\\n\\nGiven x\", \"Feature: F\\n@a\\n\", \"@top\\nFeature: F\\n@s\\nScenario: s\"]) { try { r.push(parseFeature(t)); } catch (e) { r.push([e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 9,
+      "probe": "(() => { const r = [parseFeature(\"Feature: F\\nScenario: s\\n Given x\\n * y\\n But z\\n And\\u00a0q\").scenarios[0].steps]; for (const t of [\"Feature: F\\nScenario: s\\n Andrew x\", \"Feature: F\\nScenario: s\\n Given \", \"Feature: F\\nScenario: s\\n Given\"]) { try { r.push(parseFeature(t).scenarios[0].steps); } catch (e) { r.push([e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 10,
+      "probe": "(() => { const r = [parseFeature(\"Feature: F\\nScenario: s\\n  Given x\\n    \\\"\\\"\\\"\\n    a\\n      b\\n  c\\n    ```\\n    \\\"\\\"\\\"\\n\").scenarios[0].steps[0].docString]; for (const t of [\"Feature: F\\nScenario: s\\n Given x\\n \\\"\\\"\\\"\\n a\", \"Feature: F\\nScenario: s\\n Given x\\n \\\"\\\"\\\"\\n a\\n \\\"\\\"\\\"\\n | a |\", \"Feature: F\\nScenario: s\\n Given x\\n | a |\\n \\\"\\\"\\\"\\n a\\n \\\"\\\"\\\"\"]) { try { r.push(parseFeature(t)); } catch (e) { r.push([e.line, e.message]); } } return r; })()"
+    },
+    {
+      "item": 11,
+      "probe": "(() => { const r = [parseFeature(\"Feature: F\\nScenario: s\\n Given x\\n | a \\\\| b | c\\\\\\\\ | d\\\\ne |\\n | 1 |\\n\").scenarios[0].steps[0].table]; try { parseFeature(\"Feature: F\\nScenario: s\\n | a |\"); r.push(\"ok\"); } catch (e) { r.push([e.line, e.message]); } return r; })()"
+    },
+    {
+      "item": 12,
+      "probe": "(() => { const f = parseFeature(\"\\ufeffFeature: F\\r\\n# c\\r\\n\\r\\nScenario: s\\r\\n Given x\\r\\n\"); return [f.name, f.scenarios[0].name, f.scenarios[0].line, f.scenarios[0].steps[0].text, f.scenarios[0].steps[0].line]; })()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ [ 'ParseError', 1, 'expected a Feature: line before any other content at line 1' ], [ 'ParseError', 1, 'no Feature: line at line 1' ] ]"
+    },
+    {
+      "item": 2,
+      "actual": "{ name: 'F', background: null, scenarios: [] }"
+    },
+    {
+      "item": 3,
+      "actual": "[ [ 'ParseError', 2, 'Scenario Outline is not supported at line 2' ], [ 'ParseError', 2, 'Rule: is not supported at line 2' ] ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ [ { name: 'Foo', line: 2, tags: [], steps: [] }, { name: '', line: 3, tags: [], steps: [] } ], [ 3, 'step before Background: or Scenario: at line 3' ] ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ null, [], [ 3, 'Background: must come once, before any scenario at line 3' ], [ 3, 'Background: must come once, before any scenario at line 3' ] ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 1, [ 4, 'unrecognised line inside a scenario at line 4' ] ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ [ 'ParseError', 2, 'step before Background: or Scenario: at line 2' ] ]"
+    },
+    {
+      "item": 8,
+      "actual": "[\n  [ 2, 'tags must be followed by a Scenario: at line 2' ],\n  [ 2, 'tags must be followed by a Scenario: at line 2' ],\n  {\n    name: 'F',\n    background: null,\n    scenarios: [ { name: 's', line: 4, tags: [ '@s' ], steps: [] } ]\n  }\n]"
+    },
+    {
+      "item": 9,
+      "actual": "[ [ { keyword: 'Given', text: 'x', line: 3, docString: null, table: null }, { keyword: '*', text: 'y', line: 4, docString: null, table: null }, { keyword: 'But', text: 'z', line: 5, docString: null, table: null }, { keyword: 'And', text: 'q', line: 6, docString: null, table: null } ], [ 3, 'unrecogn"
+    },
+    {
+      "item": 10,
+      "actual": "[ [ 'a', '  b', 'c', '```' ], [ 4, 'doc string is never closed at line 4' ], [ 7, \"table row after the step's doc string at line 7\" ], [ 5, 'a step takes either a doc string or a table, once at line 5' ] ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ [ [ 'a | b', 'c\\\\', 'd\\ne' ], [ '1' ] ], [ 3, 'table row without a step at line 3' ] ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ 'F', 's', 4, 'x', 5 ]"
+    }
+  ]
+}

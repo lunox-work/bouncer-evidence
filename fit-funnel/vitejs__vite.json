@@ -1,0 +1,15 @@
+{
+  "repo": "vitejs/vite",
+  "package": "packages/vite",
+  "language": "typescript",
+  "commit": "c7326770e1121733435e0527af972f387d64d344",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "the existing suite does not build on a clean install: scripts/benchCircularImport.ts(14,56): error TS2307: Cannot find module 'vite' or its corresponding type declarations.",
+    "seconds": 40
+  }
+}

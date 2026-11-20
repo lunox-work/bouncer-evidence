@@ -1,0 +1,70 @@
+diff --git a/src/utils.ts b/src/utils.ts
+index 0bbe92d..4b40578 100644
+--- a/src/utils.ts
++++ b/src/utils.ts
+@@ -576,3 +576,32 @@ export function withFragment(input: string, hash: string): string {
+ export function withoutFragment(input: string): string {
+   return stringifyParsedURL({ ...parseURL(input), hash: "" });
+ }
++
++const HOST_PREFIX_RE = /^[\s\0]*(?:[a-z][\w+.-]*:)?[/\\]{2}[^/\\?#]*/i;
++
++/**
++ * Removes the protocol (if any), the host and port, and the userinfo from the input,
++ * keeping the pathname, query and fragment.
++ *
++ * Inputs without a host (e.g. `/foo`) are returned unchanged. If nothing remains
++ * after the host (e.g. `https://example.com`), `/` is returned.
++ *
++ * @example
++ * ```js
++ * withoutHost("https://example.com/foo?bar=1#baz"); // "/foo?bar=1#baz"
++ *
++ * withoutHost("//example.com/foo"); // "/foo"
++ *
++ * withoutHost("https://example.com"); // "/"
++ * ```
++ *
++ * @group utils
++ */
++export function withoutHost(input: string) {
++  const match = input.match(HOST_PREFIX_RE);
++  if (!match) {
++    return input;
++  }
++  const rest = input.slice(match[0].length);
++  return rest[0] === "?" || rest[0] === "#" || !rest ? "/" + rest : rest;
++}
+diff --git a/test/ufo-without-host-confirmed-own.test.ts b/test/ufo-without-host-confirmed-own.test.ts
+new file mode 100644
+index 0000000..e2a5143
+--- /dev/null
++++ b/test/ufo-without-host-confirmed-own.test.ts
+@@ -0,0 +1,27 @@
++import { describe, expect, test } from "vitest";
++import { withoutHost } from "../src/utils";
++
++describe("withoutHost", () => {
++  const cases: [string, string][] = [
++    ["https://example.com/foo?bar=1#baz", "/foo?bar=1#baz"],
++    ["http://example.com/foo", "/foo"],
++    ["HTTPS://Example.com/foo", "/foo"],
++    ["http://user:pass@example.com:8080/foo", "/foo"],
++    ["//example.com/foo", "/foo"],
++    ["https://example.com", "/"],
++    ["https://example.com?x=1", "/?x=1"],
++    ["https://example.com#top", "/#top"],
++    ["https:///foo", "/foo"],
++    ["https://example.com/a?b=http://c.d/e", "/a?b=http://c.d/e"],
++    ["/foo/bar", "/foo/bar"],
++    ["/foo//bar", "/foo//bar"],
++    ["foo/bar", "foo/bar"],
++    ["", ""],
++  ];
++
++  for (const [input, expected] of cases) {
++    test(JSON.stringify(input), () => {
++      expect(withoutHost(input)).toBe(expected);
++    });
++  }
++});

@@ -1,0 +1,49 @@
+{
+  "run": "csv-export-1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1000771,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks which header columns appear and in what order. Its run gives exactly 'Requisition ID,Title,Status,Openings,Filled,Created'. Items 5 (BOM), 2 (row order by createdAt then id) and 4 (CRLF after every row, the last included) also fit parts of S1, and their runs agree too.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks whether status is written raw or relabelled. The pick writes the raw value ('on_hold'), not 'On hold'. Item 9 (date format) also fits S2 and disagrees as well: its run gives a full ISO timestamp '2024-01-02T03:04:05.006Z' instead of 'YYYY-MM-DD'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks what an empty list produces. Its run returns the BOM plus the header row and CRLF, nothing more.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 8,
+      "agrees": false,
+      "why": "Item 8 asks how fields with separators are escaped. The pick quotes only for a comma, quote, CR or LF, and says nothing about quoting a title that starts or ends with a space, which S4 requires.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about defusing formula-like titles that start with =, +, -, @, a tab or CR. Item 8 covers separator quoting only.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how bad rows are handled. The pick validates the same conditions S6 lists and throws an Error naming the id. Its run threw 'Requisition \"bad1\" has filled greater than openings'.",
+      "failing": true
+    }
+  ]
+}

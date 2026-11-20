@@ -1,0 +1,15 @@
+{
+  "repo": "pmndrs/jotai",
+  "package": ".",
+  "language": "typescript",
+  "commit": "5fe0e825f9674b16162e6952c0a1afea01c1485f",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": false,
+    "reason": "killed: memory, one process at 1162 MB",
+    "seconds": 12
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/11",
+  "model": "claude-sonnet-5-5",
+  "seconds": 20,
+  "costUsd": 0.0668174,
+  "items": [
+    {
+      "question": "What happens when a contributor redeems a code for a task they already have access to?",
+      "ticket": "silent",
+      "chose": "Returns failure reason \"already has access\" and leaves the code unused so someone else can redeem it.",
+      "where": "src/index.ts:129",
+      "instead": "Consume the code and report success (idempotent), or reject without a special reason."
+    },
+    {
+      "question": "Exactly when does a code expire relative to the 14-day mark?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "A code is expired once now >= createdAt + 14 days, so it is already expired at exactly 14 days.",
+      "where": "src/index.ts:55",
+      "instead": "Treat the code as valid through exactly 14 days and expire it only after that (now > expiresAt)."
+    },
+    {
+      "question": "What format and alphabet do generated codes use?",
+      "ticket": "silent",
+      "chose": "Four dash-separated groups of 4 characters from a 31-character alphabet without 0, O, 1, I or L.",
+      "where": "src/index.ts:12",
+      "instead": "A single unformatted random string, a UUID, or a full alphanumeric alphabet."
+    },
+    {
+      "question": "Is a code matched exactly as typed, or leniently?",
+      "ticket": "silent",
+      "chose": "Redeem, revoke and lookup uppercase the code and strip all whitespace and dashes before matching.",
+      "where": "src/index.ts:36-38",
+      "instead": "Match the code exactly, case-sensitive and with dashes."
+    },
+    {
+      "question": "Which failure reason is returned when a code is both used and expired or revoked?",
+      "ticket": "silent",
+      "chose": "Precedence is used, then revoked, then expired.",
+      "where": "src/index.ts:53-56",
+      "instead": "Report expired (or revoked) before used."
+    },
+    {
+      "question": "Can codes be revoked, and what happens when you revoke a used, unknown or already revoked code?",
+      "ticket": "silent",
+      "chose": "Adds a revoke operation. It throws for unknown and used codes, and does nothing for an already revoked one.",
+      "where": "src/index.ts:143-150",
+      "instead": "No revoke at all, or revoke silently ignores unknown and used codes."
+    },
+    {
+      "question": "How are simultaneous redemptions of the same code handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Serializes all registry operations on a store through a shared promise queue, so only one redeem wins.",
+      "where": "src/index.ts:180-184",
+      "instead": "Rely on a store-level atomic or conditional write, or no locking."
+    },
+    {
+      "question": "What happens if a freshly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times, then throws \"could not draw an unused code\".",
+      "where": "src/index.ts:96-98",
+      "instead": "Redraw without a limit, or accept the collision."
+    },
+    {
+      "question": "What does list return and in what order, including for a task with no codes?",
+      "ticket": "silent",
+      "chose": "Returns the task's codes in creation order with their state at the current clock time, and an empty array for an unknown task.",
+      "where": "src/index.ts:168-176",
+      "instead": "Sort newest first, or throw for an unknown task."
+    },
+    {
+      "question": "Does create check that the task exists or is invite-only, or validate the task ID?",
+      "ticket": "silent",
+      "chose": "Creates a code for any taskId string with no validation.",
+      "where": "src/index.ts:93-111",
+      "instead": "Reject unknown, empty or non-invite-only tasks."
+    },
+    {
+      "question": "What do redeem failures look like for an unknown code, and does redeem validate the contributor ID?",
+      "ticket": "silent",
+      "chose": "Returns { ok: false, reason: \"unknown\" } for an unknown code, and accepts any contributorId string without validation.",
+      "where": "src/index.ts:124",
+      "instead": "Throw an error, or reject empty contributor IDs."
+    },
+    {
+      "question": "How is access order and duplication handled in a contributor's task list?",
+      "ticket": "silent",
+      "chose": "Appends each newly granted task to the contributor's list, in redemption order.",
+      "where": "src/index.ts:135",
+      "instead": "Return a sorted list or a set."
+    }
+  ]
+}

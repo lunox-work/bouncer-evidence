@@ -1,0 +1,15 @@
+{
+  "repo": "python-attrs/attrs",
+  "package": ".",
+  "language": "python",
+  "commit": "2a1fb86d44816afcc60e86d57956ce3604820326",
+  "static": {
+    "supported": true,
+    "reason": null
+  },
+  "run": {
+    "supported": true,
+    "reason": null,
+    "seconds": 10
+  }
+}

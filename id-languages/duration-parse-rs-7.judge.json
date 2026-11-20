@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10580830000000002,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": false,
+      "why": "The examples rest on a day unit: 2d = 172800000 and 1d0h0m0s0ms = 86400000. Item 12 asks whether there is a unit above hours. Its pick supports only h/m/s/ms and writes two days as 48h, so it would reject 2d. The zero cases (0s, zero segments) fit items 6 and 7, which do agree, but the day unit is what this scenario turns on.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks whether whitespace is accepted. The scenario expects leading and trailing whitespace to be trimmed, so \"  45m\\n\" gives Ok(2700000). The pick rejects all whitespace.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 covers most of the rows: whitespace inside the text, uppercase units, signs, decimals, unknown units like 3w, and non-ASCII digits. Its pick rejects all of them, as expected. The empty-string row matches item 3 and the bare-number row matches item 1, and both of those also reject. The 05s row (a leading zero) is not addressed by any item.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may exceed the next unit up, as in 90m. Item 2 is about the order and repetition of units, not the size of a count.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether units may repeat or appear out of order. Its pick allows each unit at most once, in strictly descending order, and rejects anything else, which matches 30m1h, 1h1h, 1s500ms2s and 5ms1s being errors.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks for the maximum duration. Its pick caps totals at 2^53-1 inclusive, so exactly 9007199254740991 is accepted. One caveat: the scenario's input uses d, which item 12's pick would reject, but on the maximum itself the pick agrees.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 also asks what happens above the maximum. Its pick returns InvalidDuration for totals above 2^53-1 and for u64 overflow, matching both rows being rejected.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks what style format_duration uses. The scenario expects canonical descending components: 90000 becomes 1m30s. The pick chooses the shortest string and would give 90s. The 0 → 0ms row matches item 8, which agrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 9,
+      "agrees": false,
+      "why": "The expected string 104249991d8h59m991ms is fixed by the formatting style (and the d unit). Item 9's shortest-string pick, with no day unit, would not produce it. Item 10 covers only values above the maximum, so it does not fix this output.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives the original number back.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what format_duration does above the maximum. Its pick returns a MillisecondsOutOfRange error for values above 2^53-1, matching both rows being errors that mention milliseconds.",
+      "failing": false
+    }
+  ]
+}

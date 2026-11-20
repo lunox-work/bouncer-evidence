@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1212403,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks which step keywords are accepted and how spacing works. That is the part of S1 that is actually open: each step keeps its keyword as written and its text after the keyword and one space. The run accepts 'Given x' with keyword 'Given' and text 'x'. 'Given  x' gives text ' x', so exactly one space is removed, as S1 says.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks what happens to free text between the Feature: line and the first block. S2 settles this: those lines are the feature's description and are skipped. The pick ignores them, and the run shows 'some free text' after Feature: does not cause an error. Item 5 also touches tags, but it is about how they are captured, not about which lines are skipped.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether Background steps are returned and where they go. The run returns them in a separate background array, and the scenario's steps hold only its own 'When b'. They are not copied into the scenarios, which matches S3.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how doc strings are delimited and indented. S4 settles that the opening delimiter's indentation is removed and that lines inside are never read as comments or keywords. The run removes the 3-space indent ('    a' becomes ' a') and keeps '# c' as text rather than skipping it as a comment.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how a file with no Feature: line is reported, which is S5's first rule. The pick throws a ParseError at the line of the first other content, or at line 1 for an empty file. The run gives ParseError, line 1, and a message containing 'line 1', which fits S5's error shape.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what happens when a file has no scenarios. The run of parseFeature(\"Feature: F\\n\") returns scenarios: [] and background: null. The file is valid with no scenarios and no background, as S6 expects.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "what": "bouncer id (prompts/id.md, claude-sonnet-5-5) on the rejected runs of experiments/runs/*/self-tested-haiku-ticket, the stored ticket.md and diff.patch only; judged by claude-opus-5-5 given the list (questions and the agent's picks) and every scenario unlabelled, never the diff, the grades or which scenarios failed: blind to the outcome, not to the picks",
+  "date": "2026-11-20",
+  "runs": 75,
+  "listed": 75,
+  "judged": 75,
+  "runsWithAFailingScenarioInList": 74,
+  "failingScenarios": {
+    "total": 199,
+    "inList": 172
+  },
+  "passingScenarios": {
+    "total": 350,
+    "inList": 309
+  },
+  "pointing": {
+    "matchedWithAVerdict": 470,
+    "disagreesFailed": 70,
+    "disagreesPassed": 0,
+    "agreesFailed": 94,
+    "agreesPassed": 306,
+    "accuracy": 0.8,
+    "failedFlaggedAsDisagree": 0.427
+  },
+  "runsWithADisagreeingPickOnAFailingScenario": 57,
+  "itemsAtTheCap": 61,
+  "medianItems": 12,
+  "medianSeconds": 17,
+  "medianListCostUsd": 0.0605344,
+  "bySpec": {
+    "csv-export": {
+      "runs": 15,
+      "inList": 15
+    },
+    "escrow-split": {
+      "runs": 14,
+      "inList": 14
+    },
+    "gherkin-parse": {
+      "runs": 12,
+      "inList": 11
+    },
+    "invite-codes": {
+      "runs": 15,
+      "inList": 15
+    },
+    "status-normalize": {
+      "runs": 15,
+      "inList": 15
+    },
+    "weekly-digest": {
+      "runs": 4,
+      "inList": 4
+    }
+  },
+  "misses": [
+    {
+      "run": "gherkin-parse/1",
+      "failing": [
+        "happy-1"
+      ]
+    }
+  ]
+}

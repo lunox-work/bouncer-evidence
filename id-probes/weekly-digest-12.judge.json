@@ -1,0 +1,70 @@
+{
+  "run": "weekly-digest-12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.12083290000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks which day the digest is due and in which time zone. The pick uses the weekday in the given zone. The ran call isDigestDue(\"Asia/Singapore\", 2026-01-04T17:00Z) returned true; that moment is Monday 01:00 in Singapore and Sunday in UTC. So it is due on Singapore's Monday, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 9,
+      "agrees": true,
+      "why": "This is the same question: the due day is judged by the weekday in the given zone. The ran call for America/New_York at 2026-01-06T04:00Z (Monday 23:00 local) returned true, so the code uses the local weekday through the zone. A zone-aware weekday follows the daylight-saving shift, which is what S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how the furthest gate is defined, including for a task with no submissions. It gives 0 with no submissions and otherwise the highest gate; the ran call returned b→0 and a→3. That matches 'furthest gate 2' for gates 1 and 2, and 0 for a task with none. The open/merged part is closer to item 3, but item 8 is the nearest match for the scenario's main point.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how age is computed and rounded. The pick counts whole 24-hour periods, rounded down; the ran call for 3 days 23 hours returned ageDays 3. The same rule gives age 9 for 9 days 23 hours and 10 for exactly 10 days.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what counts as last activity when a task has submissions. The pick uses the latest submission and falls back to the posting time only when there are none. The ran call (posted 30 days ago, submission 6 days ago) returned stalled false, which fits S5's 'posted 30 days ago with a submission 2 days ago is not stalled'. Item 2's ≥14-day threshold also agrees with S5.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks the listing order. The ran call returned [d, c, a, b]: stalled d first, then the older c, then a before b by id. That is stalled first, then oldest first, then id, as S6 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks what the subject says. The pick has no singular form, and the ran call returned 'Weekly digest: 1 open tasks, 0 stalled'. S7 expects '1 open task' when there is one open task.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks what buildDigest returns when nothing is open. The ran calls returned null for an empty list and for a list with only a merged task. That is no digest at all, not an empty one, as S8 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks what happens with an unknown time zone. The ran call with 'Mars/Olympus' threw Error: Unknown time zone: Mars/Olympus, so it fails with an error naming the zone.",
+      "failing": false
+    }
+  ]
+}

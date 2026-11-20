@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1076355,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 12,
+      "agrees": false,
+      "why": "Item 12 asks what counts as a step line, including how keyword spacing affects the step text. S1 settles this: the text is whatever follows the keyword and one space. When run, 'Given  two spaces' returned text 'two spaces'. The second space was trimmed away, so the result is not simply what follows the keyword and one space.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what happens to free text between Feature: and the first Background or Scenario. S2 says those lines are the feature's description and are skipped. The run ignored them and parsed the scenario normally.",
+      "failing": true
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks where a Background may appear and how it is returned. The pick allows one Background before the first scenario and returns it separately from the scenarios, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how doc string contents are processed, including indentation. The run removed up to the opening quotes' indentation from each line ('      indented' became '  indented', '  less' became 'less') and kept the lines as literal text. That matches S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "S5 covers several error cases. Items 4 and 7 both match parts of it, and item 7 is the closest because, like S5, it asks which line an error reports. S5 says an unclosed doc string fails at the line that opened it. The run threw at line 4, the opening delimiter, with the message 'line 4: ...'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a Feature: line with no scenarios is valid. The run returned { name, background: null, scenarios: [] }, which is the valid result with no scenarios and no background that S6 expects.",
+      "failing": false
+    }
+  ]
+}

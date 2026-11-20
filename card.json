@@ -1,0 +1,50 @@
+{
+  "what": "Phase 4's gate: no hidden test title in a card built from any stored CI verdict, nor in its log or check (22 records, 22 logs, 22 checks); judge --json and judge into a pipe print what 0.7.0 printed",
+  "date": "2026-11-20",
+  "stored": {
+    "records": 22,
+    "logs": 22,
+    "checks": 22,
+    "hiddenTitlesChecked": 1278
+  },
+  "leaks": [],
+  "machine": [
+    {
+      "submission": "reference",
+      "flags": "--json",
+      "exit": [
+        0,
+        0
+      ],
+      "same": true
+    },
+    {
+      "submission": "reference",
+      "flags": "(pipe)",
+      "exit": [
+        0,
+        0
+      ],
+      "same": true
+    },
+    {
+      "submission": "skeleton",
+      "flags": "--json",
+      "exit": [
+        1,
+        1
+      ],
+      "same": true
+    },
+    {
+      "submission": "skeleton",
+      "flags": "(pipe)",
+      "exit": [
+        1,
+        1
+      ],
+      "same": true
+    }
+  ],
+  "holds": true
+}

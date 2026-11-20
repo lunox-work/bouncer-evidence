@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/7",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0978918,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "S1 checks that components add up across many units. No single item asks that. Item 8 covers only the 'd' rows, not the general sum.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether surrounding whitespace is accepted. It trims with strings.TrimSpace, so \"  45m\\n\" parses to 2700000, as S2 expects.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 10,
+      "agrees": false,
+      "why": "S3 lists many malformed inputs. Most rows match picks that agree: empty (3), \"90\" (4), \"1.5h\"/\"-3s\"/\"+3s\" (7), \"1h 30m\" (2) and \"3S\" (5). The \"05s\" row settles item 10's question about leading zeros, and there S3 expects rejection while the pick accepts \"007s\". That is the one point where the implementation differs, so item 10 is the closest match that matters.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count can exceed the next unit up, such as \"90m\" instead of \"1h30m\". Item 6 is about unit order and repetition, not the size of a count.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks about order and repeated units. It requires units from largest to smallest, each at most once, so \"30m1h\", \"1h1h\", \"1s500ms2s\" and \"5ms1s\" are all rejected.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks for the maximum duration. It caps at 2^53-1 = 9007199254740991, so a string that adds up to exactly that value parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 also asks what happens above the cap. It returns 0 and an error on overflow, checking before each addition, so both S7 inputs are rejected.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how formatting picks units. It splits greedily into d/h/m/s/ms and leaves out zero parts, which gives \"1m30s\", \"1d\" and \"1d1h1m1s1ms\". The \"0ms\" row is item 11, which also agrees.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 never rolls days up into a bigger unit and allows values up to the cap, so the largest value formats as \"104249991d8h59m991ms\".",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives the original number back.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks about out-of-range input to formatting. It returns \"\" and an error for negative values and values above the cap, which covers all four S11 values.",
+      "failing": false
+    }
+  ]
+}

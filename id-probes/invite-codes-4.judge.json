@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes-4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1354547,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 7,
+      "agrees": true,
+      "why": "The part of S1 that settles an open question is that a code repeating an existing one gets drawn again. Item 7 asks what happens on a collision. Its pick redraws, and only after 100 failed draws does it throw. That fits 'drawn again'. The run threw only because the random source always returned 0, so every redraw collided. The 14-day expiry in S1 is the basic setup, not the open question.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether redeeming grants access to that task only, or whether the code records who used it and when, right after redemption. Item 4 covers usedBy/usedAt only after expiry, and item 9 covers input validation. Neither is the same question.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks how typed input is matched. Its pick removes whitespace and '-' and uppercases the input. The run redeemed ' aaaa  aaaa ' against code AAAA-AAAA and got ok:true.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks whether a code is dead exactly at the 14-day mark. Its pick treats now >= createdAt+14d as expired, and the run shows the code still redeemable 1 ms before. At exactly 14 days the run returned 'used', not 'expired', but that is because the run had already redeemed the code and 'used' wins over 'expired'. The boundary itself matches S4.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when a second contributor redeems a used code, or when the original user redeems their own used code again and should succeed with no change. Item 3 asks which reason wins when a code is used and also expired or revoked, which is a different question. Item 2 is about a different code for a task the contributor can already access.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks whether a used code can be revoked, which is S6's last clause. Its pick throws 'cannot revoke a used invite code', so a used code cannot be revoked, as S6 requires. No item covers the redeem reasons 'unknown' or 'revoked'.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks exactly this: what happens when someone who already has access redeems another code for the task. Its pick returns 'already has access' and leaves the code unused, and the run's output shows the same reason.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how simultaneous redemptions are handled. The run used a delayed store and three redeemers: exactly one got ok:true and the other two got 'used'.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "The part of S9 that settles an open question is that a used code keeps who used it and when, and stays 'used' after its expiry time. Item 4 asks exactly that, and its run lists the code as state 'used' with usedBy and usedAt 20 days later. Item 12 is about the order of the list and which codes it includes, which is less close.",
+      "failing": true
+    }
+  ]
+}

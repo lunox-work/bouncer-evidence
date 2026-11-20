@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/12",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0741748,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how much case and whitespace cleaning happens before matching. Its pick trims the ends and lowercases, so \"Draft\", \" PUBLISHED \" and \"Merged\" read as draft, published and merged, as S1 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 4,
+      "agrees": false,
+      "why": "Item 4 asks which old spellings count as known legacy values. Its pick maps only \"in review\" and does not expand the list. So \"under_review\" (cleaned to \"under review\") and \"LIVE\" would read as null, but S2 expects review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what a value matching no status or legacy spelling returns. Its pick returns null rather than the nearest status, which is what S3 asks for \"closed\", \"drafts\" and \"revew\". Item 10 covers only the empty and whitespace cases, and its pick of null also agrees.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a canonical status is stored unchanged on write. Item 5 is about non-canonical values, so its answer does not settle S4, even though its pick implies \"review\" would be accepted.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether writing accepts non-canonical but readable values. Its pick accepts only exact enum strings and throws on cased, untrimmed and old-spelling values, which matches S5. Item 6 covers the error message, and its pick, which quotes the value as given, also agrees.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how the batch read reports unreadable values. Its pick returns a separate list of distinct raw values, exactly as stored and sorted, which is what S6 expects. Item 7 covers keeping the row with status null, and its pick agrees with that part too.",
+      "failing": true
+    }
+  ]
+}

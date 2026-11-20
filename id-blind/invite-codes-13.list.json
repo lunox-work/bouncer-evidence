@@ -1,0 +1,92 @@
+{
+  "run": "invite-codes/13",
+  "model": "claude-sonnet-5-5",
+  "seconds": 18,
+  "costUsd": 0.0686604,
+  "items": [
+    {
+      "question": "Exactly when does a code expire: at the 14-day mark or after it?",
+      "ticket": "Codes are single-use and expire after 14 days",
+      "chose": "Treats a code as expired at exactly createdAt + 14 days, because the check is `>=`.",
+      "where": "src/index.ts:58",
+      "instead": "Expire only strictly after 14 days, so the code is still valid at the exact boundary."
+    },
+    {
+      "question": "Does the 14-day expiry count from creation or from some other point, such as first use or a configured start?",
+      "ticket": "expire after 14 days",
+      "chose": "Counts 14 days from the clock time at create.",
+      "where": "src/index.ts:108",
+      "instead": "Count from some other start, or make the lifetime configurable."
+    },
+    {
+      "question": "What does redeeming a code do when the contributor already has access to that task?",
+      "ticket": "redeeming one grants access to that task",
+      "chose": "Fails with reason \"already has access\" and leaves the code unused.",
+      "where": "src/index.ts:132",
+      "instead": "Succeed idempotently and mark the code used, or fail and burn the code."
+    },
+    {
+      "question": "What does redeeming an unknown or empty code return?",
+      "ticket": "silent",
+      "chose": "Returns {ok:false, reason:\"unknown\"} and does not throw.",
+      "where": "src/index.ts:128",
+      "instead": "Throw an error, or return a generic invalid result."
+    },
+    {
+      "question": "Which failure reason is given when a code is both used and expired or revoked, or both revoked and expired?",
+      "ticket": "silent",
+      "chose": "Uses the precedence used, then revoked, then expired, then unused.",
+      "where": "src/index.ts:56",
+      "instead": "Report expired first, or use a different precedence."
+    },
+    {
+      "question": "Can codes be revoked, and what happens when you revoke a used, unknown or already revoked code?",
+      "ticket": "silent",
+      "chose": "Adds a revoke operation. It throws for used or unknown codes and does nothing on a repeat revoke.",
+      "where": "src/index.ts:153",
+      "instead": "Not offer revocation at all, or make revoking an unknown or used code a silent no-op."
+    },
+    {
+      "question": "How is a redeem recorded if the second write fails partway through?",
+      "ticket": "Codes are single-use",
+      "chose": "Marks the code used before granting access, so a failed write spends the code and the contributor gets no access.",
+      "where": "src/index.ts:137",
+      "instead": "Grant access first, or write both atomically, so a failure leaves the code reusable or fully applied."
+    },
+    {
+      "question": "What do the code's format and alphabet look like, and how are typed variants handled?",
+      "ticket": "silent",
+      "chose": "Issues 12 characters from a 32-character alphabet that drops I, O, 0 and 1, grouped in fours with \"-\". Redeem ignores case, whitespace and \"-\".",
+      "where": "src/index.ts:10",
+      "instead": "Use a different length or alphabet, such as a UUID or base62 with no grouping, and match exactly."
+    },
+    {
+      "question": "What happens when a newly drawn code collides with an existing one?",
+      "ticket": "silent",
+      "chose": "Redraws up to 1000 times, then throws an error.",
+      "where": "src/index.ts:201",
+      "instead": "Retry without a limit, or fail on the first collision."
+    },
+    {
+      "question": "How are concurrent redeems of one code handled?",
+      "ticket": "Codes are single-use",
+      "chose": "Runs every registry operation one at a time through an in-process promise queue.",
+      "where": "src/index.ts:193",
+      "instead": "Use an atomic compare-and-set in the store, or no locking."
+    },
+    {
+      "question": "Does create check that the task ID is valid or exists, or that the task is invite-only?",
+      "ticket": "Generate single-use invite codes per task",
+      "chose": "Accepts any task ID string without validation, including an empty one.",
+      "where": "src/index.ts:101",
+      "instead": "Reject empty or unknown task IDs."
+    },
+    {
+      "question": "What does list return for codes, and in what order?",
+      "ticket": "Redeemed codes show who used them",
+      "chose": "Returns all of the task's codes in creation order, including used, expired and revoked ones. Each shows its state, plus usedBy and usedAt when used.",
+      "where": "src/index.ts:181",
+      "instead": "Return only active codes, or sort newest first."
+    }
+  ]
+}

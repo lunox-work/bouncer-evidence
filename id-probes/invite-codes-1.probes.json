@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-1",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0729747,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{const m=new Map();let t=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:()=>0});const c=await r.create('T');t=14*864e5;return await r.redeem(c.code,'u')})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const b=await r.create('T');const x=await r.redeem(a.code,'u');const y=await r.redeem(b.code,'u');return [x,y,await r.list('T')]})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{const m=new Map();let t=0,n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>n++%b});const a=await r.create('T');const b=await r.create('T');await r.redeem(a.code,'u');await r.revoke(b.code);t=20*864e5;return (await r.list('T')).map(i=>i.state)})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>5%b});const c=await r.create('T');const typed=' '+c.code.toLowerCase().replace(/-/g,' - ')+' ';return [c.code,typed,await r.redeem(typed,'u')]})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>(n++*7)%b});return await r.create('T')})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});await r.create('T');try{return await r.create('T')}catch(e){return 'threw: '+e.message}})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const b=await r.create('T');await r.redeem(a.code,'u');await r.revoke(b.code);const out={};for(const [k,c] of [['unknown','ZZZZ'],['used',a.code],['revokedAgain',b.code]]){try{out[k]=await r.revoke(c)}catch(e){out[k]='threw: '+e.message}}return out})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:()=>3});return await r.create('')})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});return [await r.redeem('','u'),await r.redeem('nope-nope','u')]})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const m=new Map();const d=()=>new Promise(r=>setTimeout(r,5));const r=new InviteRegistry({store:{get:async k=>{await d();return m.get(k)},set:async(k,v)=>{await d();m.set(k,v)}},now:()=>new Date(0),randomInt:()=>0});const c=await r.create('T');return await Promise.all([r.redeem(c.code,'u1'),r.redeem(c.code,'u2')])})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{const m=new Map();let n=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');await r.create('T');const c=await r.create('T');await r.redeem(c.code,'alice');return await r.list('T')})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{const m=new Map();let t=0;const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:()=>0});const c=await r.create('T');await r.redeem(c.code,'alice');t=30*864e5;return [await r.list('T'),await r.hasAccess('alice','T')]})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ ok: false, reason: 'expired' }"
+    },
+    {
+      "item": 2,
+      "actual": "[ { ok: true, taskId: 'T' }, { ok: false, reason: 'already has access' }, [ { code: 'ABCD-EFGH-JKMN', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'used', usedBy: 'u', usedAt: 1970-01-01T00:00:00.000Z }, { code: 'PQRS-TUVW-XYZ2', taskId: 'T', createdA"
+    },
+    {
+      "item": 3,
+      "actual": "[ 'used', 'revoked' ]"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'FFFF-FFFF-FFFF', ' ffff - ffff - ffff ', { ok: true, taskId: 'T' } ]"
+    },
+    {
+      "item": 5,
+      "actual": "{ code: 'AHRY-7ENV-4BJS', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }"
+    },
+    {
+      "item": 6,
+      "actual": "'threw: could not draw a code that is not already in use'"
+    },
+    {
+      "item": 7,
+      "actual": "{ unknown: 'threw: unknown code', used: 'threw: code has been used', revokedAgain: undefined }"
+    },
+    {
+      "item": 8,
+      "actual": "{ code: 'DDDD-DDDD-DDDD', taskId: '', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }"
+    },
+    {
+      "item": 9,
+      "actual": "[ { ok: false, reason: 'unknown' }, { ok: false, reason: 'unknown' } ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { ok: true, taskId: 'T' }, { ok: false, reason: 'used' } ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ { code: 'ABCD-EFGH-JKMN', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }, { code: 'PQRS-TUVW-XYZ2', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'unused' }, { code: '3456-789A-BCDE', taskId: "
+    },
+    {
+      "item": 12,
+      "actual": "[ [ { code: 'AAAA-AAAA-AAAA', taskId: 'T', createdAt: 1970-01-01T00:00:00.000Z, expiresAt: 1970-01-15T00:00:00.000Z, state: 'used', usedBy: 'alice', usedAt: 1970-01-01T00:00:00.000Z } ], true ]"
+    }
+  ]
+}

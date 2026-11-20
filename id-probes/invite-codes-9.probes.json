@@ -1,0 +1,105 @@
+{
+  "run": "invite-codes-9",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0737651,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "(async()=>{let t=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>0});const c=await r.create('T');t=14*864e5;return r.redeem(c.code,'u')})()"
+    },
+    {
+      "item": 2,
+      "probe": "(async()=>{let t=1000;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>0});const c=await r.create('T');return [c.createdAt.getTime(),c.expiresAt.getTime()-c.createdAt.getTime()]})()"
+    },
+    {
+      "item": 3,
+      "probe": "(async()=>{let t=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(t),randomInt:b=>0});const c=await r.create('T');await r.redeem(c.code,'u');t=15*864e5;const a=await r.redeem(c.code,'v');return a})()"
+    },
+    {
+      "item": 4,
+      "probe": "(async()=>{let n=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const c=await r.create('T');await r.redeem(a.code,'u');const x=await r.redeem(c.code,'u');return [x,(await r.list('T'))[1].state]})()"
+    },
+    {
+      "item": 5,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});await r.create('T');return r.redeem(' aaaa - aaaa ','u')})()"
+    },
+    {
+      "item": 6,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});return [await r.redeem('','u'),await r.redeem('ZZZZ-ZZZZ','u')]})()"
+    },
+    {
+      "item": 7,
+      "probe": "(async()=>{let n=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const c=await r.create('T');return [c.code,n]})()"
+    },
+    {
+      "item": 8,
+      "probe": "(async()=>{let n=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>{n++;return 0}});await r.create('T');n=0;try{await r.create('T')}catch(e){return [e.message,n]}})()"
+    },
+    {
+      "item": 9,
+      "probe": "(async()=>{let n=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const c=await r.create('T');await r.redeem(c.code,'u');const o=[];for(const f of [()=>r.revoke('ZZZZ-ZZZZ'),()=>r.revoke(a.code),()=>r.revoke(a.code),()=>r.revoke(c.code)]){try{await f();o.push('ok')}catch(e){o.push(e.message)}}return o})()"
+    },
+    {
+      "item": 10,
+      "probe": "(async()=>{const m=new Map();const r=new InviteRegistry({store:{get:async k=>{await new Promise(s=>setTimeout(s,5));return m.get(k)},set:async(k,v)=>{await new Promise(s=>setTimeout(s,5));m.set(k,v)}},now:()=>new Date(0),randomInt:b=>0});const c=await r.create('T');return Promise.all([r.redeem(c.code,'u'),r.redeem(c.code,'v'),r.redeem(c.code,'w')])})()"
+    },
+    {
+      "item": 11,
+      "probe": "(async()=>{let n=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});await r.create('');await r.create('');await r.create('');return (await r.list('')).map(c=>[c.taskId,c.state])})()"
+    },
+    {
+      "item": 12,
+      "probe": "(async()=>{let n=0;const m=new Map();const r=new InviteRegistry({store:{get:async k=>m.get(k),set:async(k,v)=>{m.set(k,v)}},now:()=>new Date(0),randomInt:b=>n++%b});const a=await r.create('T');const c=await r.create('T');await r.redeem(a.code,'u');const l=await r.list('T');return [l.map(x=>x.code),l.map(x=>Object.keys(x))]})()"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "{ ok: false, reason: 'expired' }"
+    },
+    {
+      "item": 2,
+      "actual": "[ 1000, 1209600000 ]"
+    },
+    {
+      "item": 3,
+      "actual": "{ ok: false, reason: 'used' }"
+    },
+    {
+      "item": 4,
+      "actual": "[ { ok: false, reason: 'already has access' }, 'unused' ]"
+    },
+    {
+      "item": 5,
+      "actual": "{ ok: true, taskId: 'T' }"
+    },
+    {
+      "item": 6,
+      "actual": "[ { ok: false, reason: 'unknown' }, { ok: false, reason: 'unknown' } ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ 'ABCD-EFGH', 8 ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ 'could not draw an unused code', 800 ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ 'unknown code', 'ok', 'ok', 'code has been used' ]"
+    },
+    {
+      "item": 10,
+      "actual": "[ { ok: true, taskId: 'T' }, { ok: false, reason: 'used' }, { ok: false, reason: 'used' } ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ [ '', 'unused' ], [ '', 'unused' ], [ '', 'unused' ] ]"
+    },
+    {
+      "item": 12,
+      "actual": "[ [ 'ABCD-EFGH', 'JKLM-NPQR' ], [ [ 'code', 'taskId', 'createdAt', 'expiresAt', 'state', 'usedBy', 'usedAt' ], [ 'code', 'taskId', 'createdAt', 'expiresAt', 'state' ] ] ]"
+    }
+  ]
+}

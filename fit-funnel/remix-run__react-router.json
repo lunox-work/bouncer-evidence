@@ -1,0 +1,10 @@
+{
+  "repo": "remix-run/react-router",
+  "package": "packages/react-router",
+  "language": "typescript",
+  "commit": "be1629037a63f84040f485594ee0c7aa769de100",
+  "static": {
+    "supported": false,
+    "reason": "no test files under test/, tests/, __tests__/ or src/"
+  }
+}

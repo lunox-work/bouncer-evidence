@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-15",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1021639,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks how stored values with different case or extra whitespace are read. Its pick trims and lowercases, and the run shows readStatus(\"  DRAFT \") → 'draft'. So \"Draft\", \" PUBLISHED \", \"Merged\" and \"claimed\" would come back as draft, published, merged and claimed.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 2,
+      "agrees": false,
+      "why": "Item 2 asks which old spellings map to a status. Its pick maps only 'in review' to 'review' and nothing else. 'In-Review' would read as review, but 'under_review' and 'LIVE' would read as null, not review and published as the scenario expects.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks what a value that matches no status returns. Its pick is null and never the nearest status, and the run shows readStatus(\"drafts\") → null. No alias covers closed, archived or revew. Empty and space-only values also read as null (item 7).",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether writing normalises input or accepts only exact enum values. Its pick accepts exact lowercase enum strings and returns them unchanged: the run shows writeStatus(\"draft\") → 'draft'. So writing \"review\" stores \"review\".",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 is about refusing anything but exact enum values on write. The run shows 'Draft', ' draft' and 'in-review' all throw, so old spellings are refused on write. Item 6 confirms the error message names the value as given, JSON-quoted (e.g. 'not a sandbox status: \" Draft\"').",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 8,
+      "agrees": true,
+      "why": "Item 8 asks how a batch read reports unreadable values. Its pick keeps every row, sets unreadable ones to null, and lists each distinct raw value once, sorted. The runs for items 8 and 9 show raw values kept as stored, e.g. ' Bogus ' and 'BOGUS'.",
+      "failing": true
+    }
+  ]
+}

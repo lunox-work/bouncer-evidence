@@ -1,0 +1,93 @@
+{
+  "slug": "gherkin-parse-second",
+  "status": "ok",
+  "reason": null,
+  "publicIds": [
+    "tests/public/doc-strings-and-tables.test.ts :: [boundary-1] a doc string and a table belong to the step before them",
+    "tests/public/doc-strings-and-tables.test.ts :: [boundary-1] lines inside a doc string are never read as keywords, comments or tags",
+    "tests/public/empty-feature.test.ts :: [boundary-2] a file with only Feature: Empty parses with no scenarios and no background",
+    "tests/public/empty-feature.test.ts :: [boundary-2] an empty feature with no final newline, a description, comments and CRLF blank lines is valid",
+    "tests/public/errors.test.ts :: [unhappy-1] a second Feature: line fails at that line",
+    "tests/public/errors.test.ts :: [unhappy-1] error lines count from 1 across CRLF line endings and blank lines",
+    "tests/public/errors.test.ts :: [unhappy-1] content before any Feature: line fails at the first such line",
+    "tests/public/errors.test.ts :: [unhappy-1] a step before any Background: or Scenario: fails at that line",
+    "tests/public/errors.test.ts :: [unhappy-1] a line inside a scenario that is none of the recognised forms fails at that line",
+    "tests/public/errors.test.ts :: [unhappy-1] a doc string that is never closed fails at the line that opened it",
+    "tests/public/errors.test.ts :: [unhappy-1] Scenario Outline: fails at its line, saying it is not supported",
+    "tests/public/valid-files.test.ts :: [happy-1] returns the feature name and its scenarios with their steps and lines in file order",
+    "tests/public/valid-files.test.ts :: [happy-1] reads CRLF line endings and tab indentation without leaking \\r into names or texts",
+    "tests/public/valid-files.test.ts :: [happy-1] a step's text is what follows the keyword and exactly one space",
+    "tests/public/valid-files.test.ts :: [happy-2] skips comments, descriptions and blank lines, and gives tags to the next scenario",
+    "tests/public/valid-files.test.ts :: [happy-2] comments that look like keywords are skipped and tags from several tag lines all go to the next scenario",
+    "tests/public/valid-files.test.ts :: [happy-3] returns the background's steps on their own, not copied into the scenarios",
+    "tests/public/valid-files.test.ts :: [happy-3] a background with no steps is an empty list, not null"
+  ],
+  "publicFailingOnReference": [],
+  "hiddenWritten": 43,
+  "kept": [
+    "tests/private/attachments.test.ts :: [boundary-1] separate doc strings remove their own indentation and preserve deeper whitespace",
+    "tests/private/attachments.test.ts :: [boundary-1] an empty doc string is an empty array and does not attach to later steps",
+    "tests/private/attachments.test.ts :: [boundary-1] opening quotes at column one remove no content indentation",
+    "tests/private/attachments.test.ts :: [boundary-1] tab-indented quotes remove that prefix while preserving deeper tabs and spaces",
+    "tests/private/attachments.test.ts :: [boundary-1] multiple documents keep all keyword forms literal and resume normal parsing after closing",
+    "tests/private/attachments.test.ts :: [boundary-1] a long doc string with many apparent headers stays one attachment",
+    "tests/private/attachments.test.ts :: [boundary-1] tables preserve empty cells and internal text while trimming each cell",
+    "tests/private/attachments.test.ts :: [boundary-1] many table rows and columns retain their order across separate steps",
+    "tests/private/attachments.test.ts :: [boundary-1] background attachments and scenario attachments have separate owners",
+    "tests/private/attachments.test.ts :: [boundary-1] a table at the end of a scenario does not get reused by the next scenario",
+    "tests/private/empty-features.test.ts :: [boundary-2] a single indented feature with a different Unicode name is empty",
+    "tests/private/empty-features.test.ts :: [boundary-2] a longer empty feature skips descriptions comments and tab-only blank lines",
+    "tests/private/empty-features.test.ts :: [boundary-2] several empty features parsed independently retain their own names",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] a duplicate feature in the description region is not swallowed as prose",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] a duplicate feature after a background attachment fails outside the doc string",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] long CRLF input counts whitespace and comment lines before a duplicate feature",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] arbitrary content before a late feature fails at its first physical line",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] background and every step keyword are rejected as first content",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] an orphan step immediately after the feature cannot be treated as description",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] multiple tags and comments do not supply an owner for an orphan step",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] unrecognized text before a scenario's first step is not a description",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] step keyword prefixes are not recognized as whole keywords",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] a closed doc string does not make later unknown lines literal",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] an invalid line after a long table is rejected rather than consumed as a row",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] an unclosed CRLF doc string reports its opener despite later apparent errors",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] an opening delimiter on the final terminated line is still an unclosed document",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] an unclosed background document reports the background opener",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] a first scenario outline is unsupported even before any regular scenario",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] tags and a long background do not hide an indented scenario outline",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] the first invalid line wins over later duplicate features and outlines",
+    "tests/private/invalid-files.test.ts :: [unhappy-1] a failed parse does not corrupt a later valid parse or renumber its lines",
+    "tests/private/ordered-files.test.ts :: [happy-1] many scenarios with repeated names and noncanonical keyword order remain ordered",
+    "tests/private/ordered-files.test.ts :: [happy-1] CRLF and mixed space-tab indentation apply to feature and every keyword",
+    "tests/private/ordered-files.test.ts :: [happy-1] every keyword preserves extra leading internal and trailing payload whitespace",
+    "tests/private/ordered-files.test.ts :: [happy-1] long feature names scenario names and step payloads are not truncated",
+    "tests/private/ordered-files.test.ts :: [happy-1] separate parse calls do not retain names tags steps or background state",
+    "tests/private/ordered-files.test.ts :: [happy-2] several tag batches target successive scenarios and never leak to untagged ones",
+    "tests/private/ordered-files.test.ts :: [happy-2] several spaces between tags do not create empty tag entries",
+    "tests/private/ordered-files.test.ts :: [happy-2] indented comment lookalikes and blank lines do not change the current step owner",
+    "tests/private/ordered-files.test.ts :: [happy-2] feature description ends at a background and whitespace-only lines are skipped everywhere",
+    "tests/private/ordered-files.test.ts :: [happy-3] all six keywords in a long background remain separate from three scenarios",
+    "tests/private/ordered-files.test.ts :: [happy-3] a comment-only background stays empty when tagged and untagged scenarios follow"
+  ],
+  "dropped": [
+    {
+      "id": "tests/private/invalid-files.test.ts :: [unhappy-1] ParseError instances constructed directly carry their own line and line message",
+      "reason": "The reference cannot satisfy it: The input did not match the regular expression /line 1(?!\\d)/. Input:"
+    }
+  ],
+  "reference": {
+    "source": "the first suite's reference, no session (bin/second.mjs)",
+    "public": {
+      "passed": 18,
+      "total": 18
+    },
+    "hidden": {
+      "passed": 42,
+      "total": 42
+    }
+  },
+  "writer": {
+    "backend": "codex-cli",
+    "model": "gpt-6.1-sol"
+  },
+  "of": "gherkin-parse"
+}

@@ -1,0 +1,92 @@
+{
+  "run": "gherkin-parse/2",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.06643969999999999,
+  "items": [
+    {
+      "question": "Is a file with a Feature: line but no scenarios valid?",
+      "ticket": "Valid files return scenarios in order",
+      "chose": "Returns the feature with an empty scenarios array instead of raising an error.",
+      "where": "src/index.ts:154",
+      "instead": "Raise a ParseError saying the feature has no scenarios."
+    },
+    {
+      "question": "Which line is reported when the file has no Feature: line at all (empty file)?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports line 1 when the whole file contains no Feature: line.",
+      "where": "src/index.ts:151",
+      "instead": "Report the last line of the file, or the first line with content."
+    },
+    {
+      "question": "What happens to free text between the Feature: line and the first Background or Scenario?",
+      "ticket": "silent",
+      "chose": "Silently ignores it as a description, and also accepts any non-keyword text in the header.",
+      "where": "src/index.ts:141",
+      "instead": "Raise a ParseError for unrecognised lines, or store the description on the feature."
+    },
+    {
+      "question": "How are Scenario Outline: and Examples: handled?",
+      "ticket": "silent",
+      "chose": "Throws a ParseError at the Scenario Outline: line saying it is unsupported.",
+      "where": "src/index.ts:105",
+      "instead": "Parse it as an ordinary scenario, or expand it with its Examples."
+    },
+    {
+      "question": "Are Background: and a second Background: allowed, and where may a Background appear?",
+      "ticket": "silent",
+      "chose": "Allows one Background, only before the first Scenario, and returns it separately from scenarios. A second one or a late one raises an error.",
+      "where": "src/index.ts:116",
+      "instead": "Prepend the background steps to each scenario, or allow it anywhere."
+    },
+    {
+      "question": "What happens to tags that are not followed by a Scenario:, or that come before Feature:?",
+      "ticket": "silent",
+      "chose": "Raises a ParseError at the offending line, or at the tag line at end of file. Tags on the Feature: line itself are discarded, and tags before Background: raise an error.",
+      "where": "src/index.ts:107",
+      "instead": "Ignore dangling tags, or attach tags to the feature or to Background."
+    },
+    {
+      "question": "How is an unclosed doc string reported?",
+      "ticket": "Invalid files report the line of the error",
+      "chose": "Reports the line of the opening delimiter, not the end of the file.",
+      "where": "src/index.ts:149",
+      "instead": "Report the last line of the file."
+    },
+    {
+      "question": "How are doc string contents processed (indentation, closing delimiter, blank lines)?",
+      "ticket": "silent",
+      "chose": "Strips up to the opening delimiter's indentation from each line, keeps blank lines, and closes on any line that starts with \"\"\" after trimming. No escape handling.",
+      "where": "src/index.ts:70",
+      "instead": "Keep raw lines unstripped, or require the closing delimiter to match the opening indent and exactly \"\"\"."
+    },
+    {
+      "question": "How are table cells split and what do empty cells and escapes produce?",
+      "ticket": "silent",
+      "chose": "Trims each cell, unescapes \\|, \\\\ and \\n, keeps empty cells in the middle, and drops a trailing empty segment after the last bar. A row without a closing bar still keeps its last non-empty cell.",
+      "where": "src/index.ts:24",
+      "instead": "Keep cells verbatim without unescaping, or reject rows that do not end with a bar."
+    },
+    {
+      "question": "Can a step carry both a table and a doc string, and what if one appears without a step?",
+      "ticket": "silent",
+      "chose": "A step may have only one of the two. A table row or doc string with no preceding step, or one that follows the other kind, raises a ParseError.",
+      "where": "src/index.ts:82",
+      "instead": "Allow both on one step, or ignore the stray block."
+    },
+    {
+      "question": "Do comments and blank lines between a step and its table or doc string end the attachment?",
+      "ticket": "silent",
+      "chose": "Skips blank and comment lines without clearing the open step, so a table can follow a step after blank or comment lines.",
+      "where": "src/index.ts:79",
+      "instead": "Treat blank or comment lines as ending the step's attachment, so a later table raises an error."
+    },
+    {
+      "question": "What counts as a step line (keyword spacing, case, localisation, empty text)?",
+      "ticket": "silent",
+      "chose": "Accepts only English keywords Given/When/Then/And/But/* followed by a single space and any text, case-sensitive. A bare keyword with no text is an unrecognised line.",
+      "where": "src/index.ts:17",
+      "instead": "Allow a bare keyword or other whitespace after it, accept other languages, or be case-insensitive."
+    }
+  ]
+}

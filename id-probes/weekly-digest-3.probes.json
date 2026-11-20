@@ -1,0 +1,105 @@
+{
+  "run": "weekly-digest-3",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0650013,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-15T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:01Z\"),submissions:[]}]}).tasks.map(t=>[t.id,t.stalled])"
+    },
+    {
+      "item": 2,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-20T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2025-01-18T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>[t.id,t.stalled])"
+    },
+    {
+      "item": 3,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-20T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[{at:new Date(\"2025-01-02T00:00:00Z\"),gate:1},{at:new Date(\"2025-01-18T00:00:00Z\"),gate:1}]}]}).tasks[0].stalled"
+    },
+    {
+      "item": 4,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-20T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"merged\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]},{id:\"c\",title:\"C\",status:\"Open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]},{id:\"d\",title:\"D\",status:\"closed\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>t.id)"
+    },
+    {
+      "item": 5,
+      "probe": "[buildDigest({timeZone:\"UTC\",now:new Date(),tasks:[]}),buildDigest({timeZone:\"UTC\",now:new Date(),tasks:[{id:\"a\",title:\"A\",status:\"merged\",postedAt:new Date(),submissions:[]}]})]"
+    },
+    {
+      "item": 6,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-03-01T00:00:00Z\"),tasks:[{id:\"f2\",title:\"F\",status:\"open\",postedAt:new Date(\"2025-02-27T00:00:00Z\"),submissions:[]},{id:\"f1\",title:\"F\",status:\"open\",postedAt:new Date(\"2025-02-27T00:00:00Z\"),submissions:[]},{id:\"old\",title:\"O\",status:\"open\",postedAt:new Date(\"2025-02-20T00:00:00Z\"),submissions:[]},{id:\"s\",title:\"S\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>t.id)"
+    },
+    {
+      "item": 7,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-10T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-08T23:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2025-01-12T00:00:00Z\"),submissions:[]},{id:\"c\",title:\"C\",status:\"open\",postedAt:new Date(\"2025-01-07T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>[t.id,t.ageDays])"
+    },
+    {
+      "item": 8,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-10T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2025-01-01T00:00:00Z\"),submissions:[{at:new Date(\"2025-01-02T00:00:00Z\"),gate:3},{at:new Date(\"2025-01-03T00:00:00Z\"),gate:1}]}]}).tasks.map(t=>[t.id,t.furthestGate])"
+    },
+    {
+      "item": 9,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-10T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-09T00:00:00Z\"),submissions:[]}]}).subject"
+    },
+    {
+      "item": 10,
+      "probe": "[isDigestDue(\"UTC\",new Date(\"2025-01-12T23:30:00Z\")),isDigestDue(\"Asia/Singapore\",new Date(\"2025-01-12T23:30:00Z\")),isDigestDue(\"America/New_York\",new Date(\"2025-01-13T02:00:00Z\"))]"
+    },
+    {
+      "item": 11,
+      "probe": "(()=>{const r=[];for(const f of [()=>isDigestDue(\"Mars/Base\",new Date()),()=>buildDigest({timeZone:\"Mars/Base\",now:new Date(),tasks:[]})]){try{r.push(f())}catch(e){r.push(e.message)}}return r})()"
+    },
+    {
+      "item": 12,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2025-01-15T12:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2025-01-14T00:00:00Z\"),submissions:[]}]})"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "[ [ 'a', true ], [ 'b', false ] ]"
+    },
+    {
+      "item": 2,
+      "actual": "[ [ 'a', true ], [ 'b', false ] ]"
+    },
+    {
+      "item": 3,
+      "actual": "false"
+    },
+    {
+      "item": 4,
+      "actual": "[ 'a' ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ null, null ]"
+    },
+    {
+      "item": 6,
+      "actual": "[ 's', 'old', 'f1', 'f2' ]"
+    },
+    {
+      "item": 7,
+      "actual": "[ [ 'c', 3 ], [ 'a', 1 ], [ 'b', 0 ] ]"
+    },
+    {
+      "item": 8,
+      "actual": "[ [ 'a', 0 ], [ 'b', 3 ] ]"
+    },
+    {
+      "item": 9,
+      "actual": "'Weekly digest: 1 open tasks, 0 stalled'"
+    },
+    {
+      "item": 10,
+      "actual": "[ false, true, false ]"
+    },
+    {
+      "item": 11,
+      "actual": "[ 'Unknown time zone: Mars/Base', 'Unknown time zone: Mars/Base' ]"
+    },
+    {
+      "item": 12,
+      "actual": "{ subject: 'Weekly digest: 1 open tasks, 0 stalled', tasks: [ { id: 'a', title: 'A', ageDays: 1, submissions: 0, furthestGate: 0, stalled: false } ] }"
+    }
+  ]
+}

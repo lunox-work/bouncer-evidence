@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-go/13",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.09423870000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "The examples check which units parse and that their values add up, including the day unit (\"2d\" = 172800000). Item 2 asks which units exist and whether there is a day unit. Its pick (d, h, m, s, ms, with \"2d\" for two days) matches. The zero cases (\"0s\", \"1d0h0m0s0ms\") also fit item 9, which accepts zero values.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks whether whitespace around the string is tolerated. Its pick trims leading and trailing whitespace, so \"  45m\\n\" parses to 2700000 as expected.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "This scenario mixes several questions: empty input (item 4), a bare number (item 1), inner whitespace (item 6), upper case (item 7) and leading zeros (item 9). The most rows (1.5h, -3s, +3s, and the full-width digit) come under item 8, whose pick allows only ASCII digits and rejects decimals and signs. That agrees. Note that the \"05s\" row conflicts with item 9's pick, which accepts leading zeros.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a count may be larger than the next unit up (90m instead of 1h30m). Item 3 is about the order of units and repeats, not about how large a count can be.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether units may come in any order or repeat. Its pick requires largest to smallest with each unit at most once, so 30m1h, 1h1h, 1s500ms2s and 5ms1s are all rejected.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks for the upper limit on a parsed duration. Its pick caps the total at 2^53-1 ms (9007199254740991), so that exact value parses.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-3",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 also covers overflow. Its pick returns 0 with an error when the count or the running total goes past 2^53-1, which covers both a total one over the limit and a huge single count.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks which units formatting uses and how zero is shown. Its pick uses d/h/m/s/ms, leaves out zero parts, uses no spaces and shows zero as \"0ms\", which matches every example.",
+      "failing": false
+    },
+    {
+      "key": "boundary-3",
+      "item": 12,
+      "agrees": true,
+      "why": "The scenario fixes where formatting's valid range ends. Item 12's pick errors only above 2^53-1, so 9007199254740991 is in range and gets formatted. Item 11's unit rules give the expected string.",
+      "failing": false
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give back the original number. That only follows from items 2 and 11 together.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks what formatting does with negative or out-of-range milliseconds. Its pick returns an empty string and an error below 0 or above 2^53-1, which covers -1, 2^53, MinInt64 and MaxInt64.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/6",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.049359700000000006,
+  "items": [
+    {
+      "question": "Is a bare number without a unit (e.g. the old raw-millisecond `172800`) accepted as a duration?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects any string without a unit suffix with ValueError, so existing raw numbers are not accepted.",
+      "where": "src/solution.py:29",
+      "instead": "Treat a bare number as milliseconds for backward compatibility."
+    },
+    {
+      "question": "Which units are supported?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Supports d, h, m, s and ms, and adds days, which the ticket's examples don't show.",
+      "where": "src/solution.py:14",
+      "instead": "Support only h, m, s and ms (perhaps also w or d)."
+    },
+    {
+      "question": "Are unit letters case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase units, so `1H` is rejected.",
+      "where": "src/solution.py:18",
+      "instead": "Accept units case-insensitively."
+    },
+    {
+      "question": "Is whitespace allowed, either around the string or between components?",
+      "ticket": "silent",
+      "chose": "Rejects any whitespace, including leading, trailing and internal.",
+      "where": "src/solution.py:29",
+      "instead": "Strip surrounding whitespace and/or allow spaces between components such as `1h 30m`."
+    },
+    {
+      "question": "Are fractional values like `1.5h` accepted?",
+      "ticket": "silent",
+      "chose": "Rejects decimals because only digits are matched.",
+      "where": "src/solution.py:18",
+      "instead": "Accept decimals and round or truncate to whole milliseconds."
+    },
+    {
+      "question": "Can components appear in any order, not just largest to smallest?",
+      "ticket": "silent",
+      "chose": "Accepts components in any order, so `30m1h` equals `1h30m`.",
+      "where": "src/solution.py:18",
+      "instead": "Require descending unit order and reject others."
+    },
+    {
+      "question": "What happens when the same unit appears twice, e.g. `1h2h`?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for a duplicate unit.",
+      "where": "src/solution.py:35",
+      "instead": "Sum the repeated units (3h)."
+    },
+    {
+      "question": "How is a zero duration handled, in parsing and in formatting?",
+      "ticket": "silent",
+      "chose": "Parses `0ms` (and zero-valued components) as 0, and formats 0 as `0ms`.",
+      "where": "src/solution.py:63",
+      "instead": "Reject zero as an invalid timeout, or format 0 as `0s`."
+    },
+    {
+      "question": "Is there an upper limit on a parsed duration?",
+      "ticket": "silent",
+      "chose": "Raises ValueError if the total exceeds 9007199254740991 ms.",
+      "where": "src/solution.py:39",
+      "instead": "Impose no cap, or use a smaller, more realistic cap."
+    },
+    {
+      "question": "How are non-string inputs to parse_duration handled?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for non-strings such as None or numbers.",
+      "where": "src/solution.py:29",
+      "instead": "Raise TypeError, or pass an int through as milliseconds."
+    },
+    {
+      "question": "What does format_duration print for a value that could be written several ways, such as 90 minutes?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Picks the shortest string, with ties going to the larger unit, so 5,400,000 ms prints as `90m` rather than `1h30m`.",
+      "where": "src/solution.py:66",
+      "instead": "Always decompose greedily into mixed units, giving `1h30m`."
+    },
+    {
+      "question": "What does format_duration accept as input (negative, bool, float, or out-of-range values)?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for negatives, bools, floats and values above the max.",
+      "where": "src/solution.py:61",
+      "instead": "Coerce floats or bools, or clamp out-of-range values."
+    }
+  ]
+}

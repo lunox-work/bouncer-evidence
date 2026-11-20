@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.07802980000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S1 asks how loosely a stored value matches a status (case and padding), which is item 2. That pick lowercases and trims, so \"Draft\", \" PUBLISHED \" and \"Merged\" read as draft, published and merged.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 1,
+      "agrees": false,
+      "why": "Item 1 asks which old spellings are recognised. S2 expects ten aliases, including \"under review\" and \"live\". The pick maps only \"in review\", so \"under_review\" and \"LIVE\" would read as null, not review and published.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "S3 is about not guessing the nearest status. Item 5 asks exactly that, about near misses like \"drafts\" and \"revew\". The scenario also touches items 3 and 4 (unknown values and empty values). Item 5's pick allows only exact matches after cleaning and returns null otherwise, which is what S3 expects.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether an exact enum value is written unchanged. Item 6 only asks whether values that are not exact enum values get normalised on write.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether writing normalises values that are not exact enum values, including old spellings and values with different case or padding. Its pick throws on anything except the exact lowercase enum strings, so \"Review\", \"in-review\", \" draft\" and \"closed\" are all refused. Item 7's message includes the value as given, which also satisfies the 'names the value' part.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks how bulk reading reports values it could not read. Its pick returns the raw stored strings, deduplicated by exact string and sorted, which matches 'each distinct original value once, sorted, exactly as it was stored'. Item 8, keeping rows with a null status, also fits the scenario.",
+      "failing": true
+    }
+  ]
+}

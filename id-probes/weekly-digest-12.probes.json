@@ -1,0 +1,97 @@
+{
+  "run": "weekly-digest-12",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.05963160000000001,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-31T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[{at:new Date(\"2026-01-25T00:00:00Z\"),gate:1}]}]}).tasks[0].stalled"
+    },
+    {
+      "item": 2,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-15T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[]}]}).tasks[0].stalled"
+    },
+    {
+      "item": 3,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-15T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"closed\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[]},{id:\"b\",title:\"B\",status:\"merged\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[]}]})"
+    },
+    {
+      "item": 4,
+      "probe": "[buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-15T00:00:00Z\"),tasks:[]}),buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-15T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"merged\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[]}]})]"
+    },
+    {
+      "item": 5,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-03-01T00:00:00Z\"),tasks:[{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2026-02-25T00:00:00Z\"),submissions:[]},{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-02-25T00:00:00Z\"),submissions:[]},{id:\"c\",title:\"C\",status:\"open\",postedAt:new Date(\"2026-02-20T00:00:00Z\"),submissions:[]},{id:\"d\",title:\"D\",status:\"open\",postedAt:new Date(\"2026-01-10T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>t.id)"
+    },
+    {
+      "item": 6,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-03-01T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-02-25T00:00:00Z\"),submissions:[]}]}).subject"
+    },
+    {
+      "item": 7,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-04T23:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[]}]}).tasks[0].ageDays"
+    },
+    {
+      "item": 8,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-15T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[{at:new Date(\"2026-01-10T00:00:00Z\"),gate:3},{at:new Date(\"2026-01-12T00:00:00Z\"),gate:1}]},{id:\"b\",title:\"B\",status:\"open\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[]}]}).tasks.map(t=>[t.id,t.furthestGate])"
+    },
+    {
+      "item": 9,
+      "probe": "[isDigestDue(\"Asia/Singapore\",new Date(\"2026-01-04T17:00:00Z\")),isDigestDue(\"UTC\",new Date(\"2026-01-04T17:00:00Z\")),isDigestDue(\"America/New_York\",new Date(\"2026-01-06T04:00:00Z\")),isDigestDue(\"UTC\",new Date(\"2026-01-05T23:59:59Z\"))]"
+    },
+    {
+      "item": 10,
+      "probe": "buildDigest({timeZone:\"Mars/Olympus\",now:new Date(\"2026-01-15T00:00:00Z\"),tasks:[]})"
+    },
+    {
+      "item": 11,
+      "probe": "buildDigest({timeZone:\"UTC\",now:new Date(\"2026-01-31T00:00:00Z\"),tasks:[{id:\"a\",title:\"A\",status:\"open\",postedAt:new Date(\"2026-01-01T00:00:00Z\"),submissions:[{at:new Date(\"2026-02-10T00:00:00Z\"),gate:1}]}]}).tasks[0].stalled"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "false"
+    },
+    {
+      "item": 2,
+      "actual": "true"
+    },
+    {
+      "item": 3,
+      "actual": "null"
+    },
+    {
+      "item": 4,
+      "actual": "[ null, null ]"
+    },
+    {
+      "item": 5,
+      "actual": "[ 'd', 'c', 'a', 'b' ]"
+    },
+    {
+      "item": 6,
+      "actual": "'Weekly digest: 1 open tasks, 0 stalled'"
+    },
+    {
+      "item": 7,
+      "actual": "3"
+    },
+    {
+      "item": 8,
+      "actual": "[ [ 'b', 0 ], [ 'a', 3 ] ]"
+    },
+    {
+      "item": 9,
+      "actual": "[ true, false, true, true ]"
+    },
+    {
+      "item": 10,
+      "actual": "throws Error: Unknown time zone: Mars/Olympus"
+    },
+    {
+      "item": 11,
+      "actual": "false"
+    }
+  ]
+}

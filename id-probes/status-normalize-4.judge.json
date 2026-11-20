@@ -1,0 +1,49 @@
+{
+  "run": "status-normalize-4",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1034949,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks how loosely stored values are matched on read (case, whitespace). It trims and lowercases, and the run shows '  PUBLISHED ' → 'published'. So 'Draft', ' PUBLISHED ', 'Merged' and 'claimed' read as draft, published, merged and claimed.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 3,
+      "agrees": false,
+      "why": "Item 3 asks which old spellings map to a status. It maps only 'in review'. The run shows 'under review' → null, so 'under_review' reads as null, not 'review'. 'LIVE' is also not mapped to 'published'.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks what an unmatched value reads as. It returns null and never maps to the nearest status ('ghost' → null). Item 5 also confirms empty and whitespace-only values give null. 'closed', 'archived', 'drafts' and 'revew' match no status or alias, so they read as null.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what is stored when a valid canonical status is written. Item 6 is about whether non-canonical input gets normalised on write. Its run happens to show writeStatus('draft') → 'draft', but that is not the question it asks.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether writing accepts non-canonical input or old spellings. It accepts only exact enum strings. The run shows 'Draft' and 'in-review' rejected, with an error naming the value as given. Item 8 shows ' draft' is rejected too, so 'Review', 'in-review', ' draft' and 'closed' are all refused.",
+      "failing": false
+    },
+    {
+      "key": "happy-4",
+      "item": 10,
+      "agrees": true,
+      "why": "Item 10 asks how unreadable values are reported when reading many rows. It lists distinct raw values as stored (e.g. 'Ghost ' with its trailing space), sorted, each once. Item 9 confirms rows are kept with status null.",
+      "failing": true
+    }
+  ]
+}

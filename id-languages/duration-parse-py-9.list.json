@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/9",
+  "model": "claude-sonnet-5-5",
+  "seconds": 15,
+  "costUsd": 0.051778599999999994,
+  "items": [
+    {
+      "question": "Are bare numbers with no unit (e.g. the old raw-millisecond form like \"172800\") accepted as durations?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects a unitless digit string with a ValueError.",
+      "where": "src/solution.py:19",
+      "instead": "Accept a bare number as milliseconds for backward compatibility with existing configs."
+    },
+    {
+      "question": "Can units be written in any order, repeated, or with only some present?",
+      "ticket": "accept human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Requires components in h, m, s, ms order, each at most once. Any subset is allowed, and \"30m1h\" and \"1m1m\" are rejected.",
+      "where": "src/solution.py:18",
+      "instead": "Accept any order, or sum repeated units."
+    },
+    {
+      "question": "Is unit case significant (e.g. \"1H\", \"90S\")?",
+      "ticket": "silent",
+      "chose": "Only lowercase units match, so \"1H\" is rejected.",
+      "where": "src/solution.py:18",
+      "instead": "Match case-insensitively."
+    },
+    {
+      "question": "Are whitespace, signs, decimals and non-ASCII digits allowed in a duration string?",
+      "ticket": "silent",
+      "chose": "Rejects them all: no spaces, no \"-\", no \"1.5h\", and ASCII digits only.",
+      "where": "src/solution.py:18",
+      "instead": "Strip surrounding whitespace, allow spaces between components, or allow fractional values like 1.5h."
+    },
+    {
+      "question": "Are larger units such as days (\"d\") or weeks supported?",
+      "ticket": "a two-day timeout as 172800",
+      "chose": "Supports only h, m, s and ms, so \"1d\" is rejected and two days must be written \"48h\".",
+      "where": "src/solution.py:14",
+      "instead": "Add a \"d\" unit (and perhaps \"w\")."
+    },
+    {
+      "question": "Is there an upper limit on a parsed duration, and what happens above it?",
+      "ticket": "silent",
+      "chose": "Caps the total at 9007199254740991 ms (2^53-1) and raises ValueError above that.",
+      "where": "src/solution.py:42",
+      "instead": "Apply no cap (Python ints are unbounded) or use a smaller, domain-specific maximum."
+    },
+    {
+      "question": "How are the empty string and a non-string input handled by the parser?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for \"\" and for any non-str input.",
+      "where": "src/solution.py:30",
+      "instead": "Treat empty or None as 0 or as \"no timeout\", or raise TypeError for non-strings."
+    },
+    {
+      "question": "Is a zero duration valid, and are zero components such as \"0s\" or \"0ms\" accepted?",
+      "ticket": "silent",
+      "chose": "Accepts them and returns 0.",
+      "where": "src/solution.py:36",
+      "instead": "Reject a zero timeout as invalid."
+    },
+    {
+      "question": "Do non-normalised components such as \"90s\" or \"100m\" parse as written, or are they rejected for exceeding the next unit?",
+      "ticket": "`90s`",
+      "chose": "Accepts any digit count in any component and sums them with no per-unit limit.",
+      "where": "src/solution.py:39",
+      "instead": "Require components to be normalised (for example seconds below 60 when minutes are present)."
+    },
+    {
+      "question": "What style does the formatter print: the greedy decomposition or the shortest string?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Searches for the shortest string, so 5,400,000 ms prints \"90m\" rather than \"1h30m\" and 119 minutes prints \"119m\".",
+      "where": "src/solution.py:47",
+      "instead": "Use a greedy largest-unit-first decomposition, e.g. \"1h30m\"."
+    },
+    {
+      "question": "What does the formatter return for 0 ms?",
+      "ticket": "silent",
+      "chose": "Returns \"0s\".",
+      "where": "src/solution.py:88",
+      "instead": "Return \"0ms\" or an empty string."
+    },
+    {
+      "question": "What does the formatter do with negative, bool, float, non-int or above-maximum input?",
+      "ticket": "silent",
+      "chose": "Raises ValueError for negatives, bools, floats, non-ints and values above 2^53-1.",
+      "where": "src/solution.py:84",
+      "instead": "Accept integral floats or bools, or let negatives format with a sign."
+    }
+  ]
+}

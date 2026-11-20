@@ -1,0 +1,75 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "1ff8de7f-ad2b-403d-b845-8a94e83c8c4d",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.2470123,
+        "turns": 7,
+        "durationMs": 39523,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.2470123,
+    "finalText": "I created `packages/core/src/analysis.ts` with every export the spec lists. Both function bodies are just `throw new Error(\"not implemented\");`. `npx tsc -p tsconfig.test.json` reports no errors, and the existing suite still passes (105 of 105).\n\n- **Constants and types:** the three status, error-code and artifact-kind arrays are plain `as const` arrays, not frozen, matching the style in `bounty.ts`. Each one has a type derived from it, and `GRAPHIFY_TOOL_VERSION` is exported with the value the spec gives.\n- **Throws:** the doc comment on `canonicalJson` says what it throws: an `Error` with the message `Cache parameters must be JSON values.` for undefined, functions and symbols, a `TypeError` for bigints, and a `RangeError` for cycles. I didn't add any error classes.\n- **Parameter names:** the package's tsconfig rejects unused parameters, so stub bodies with the plain names don't compile. I prefixed the names with an underscore (`_attempt`, `_maxAttempts`, `_value`). Parameter names aren't part of a function's type, so callers aren't affected, and the implementer can drop the prefix.\n- **Index re-export still missing:** I was told to write only the seam file, so I didn't change `packages/core/src/index.ts`. The spec requires it to gain `export * from \"./analysis.js\";`. Until the implementation adds that line, the scenario that imports from `../src/index.js` will fail.\n\nAdded: ANALYSIS_STATUSES, AnalysisStatus, ANALYSIS_ERROR_CODES, AnalysisErrorCode, ARTIFACT_KINDS, ArtifactKind, GRAPHIFY_TOOL_VERSION, AnalysisParams, expiredAnalysis, canonicalJson",
+    "problem": null,
+    "sha256": "8f2c0d394ef56bcde3eb40fc0603f160bf1282d35eedb2add434768f55005871"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "36670f83-0a31-4e91-934a-8b23f62bd948",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.7290158999999998,
+        "turns": 9,
+        "durationMs": 161923,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.7290158999999998,
+    "finalText": "I wrote the test suite in `packages/core/test/analysis-params-check.test.ts`.\n\n**Checks:**\n- `npx tsc -p tsconfig.test.json` reports no errors.\n- Running the given command, the 10 constants tests pass and the rest fail. That's expected: those tests call the two functions, which still throw `not implemented`, or check the `index.ts` re-export, which isn't there yet.\n- I also ran a compiled copy of the suite in the scratchpad against a quick reference implementation I wrote from the spec, with the re-export added. All 66 tests passed, so they agree with the spec as I read it. That copy is outside the repository, which is unchanged apart from the new test file.\n\n**Layout:**\n- There are 33 scenarios: 16 `@happy`, 11 `@boundary` and 6 `@unhappy`. Each has two tests: one for its happy path, and one for a boundary case named `[key] boundary: …`.\n- The tests use the same style as `bounty.test.ts`: `node:test` `test` with `node:assert/strict`, all flat at the top level.\n- For Scenario Outlines, the happy-path test runs every row of the Examples table. The boundary test picks an edge the spec's rules force, such as `new Array(1)` giving `[]`, `expiredAnalysis(-Infinity, 3)`, or a lone surrogate matching `JSON.stringify`.\n\n**Index re-export:** `src/index.ts` doesn't re-export `analysis.js` yet, so importing those names from it directly wouldn't compile. The `[happy-5]` tests instead import `../src/index.js` as a namespace and check each export against the one from `../src/analysis.js`. They compile now and will pass once the developer adds the re-export.\n\n66 tests, in 1 file.",
+    "problem": null,
+    "files": [
+      "packages/core/test/analysis-params-check.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "81ada8e2-35a8-4719-ab7f-6c5d524eac8f",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.6112681,
+        "turns": 25,
+        "durationMs": 382056,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.6112681,
+    "finalText": "The hidden suite is written: four files in `packages/core/test/hidden-analysis-params-check/`. `npx tsc -p tsconfig.test.json` reports no errors.\n\n**Results:**\n- **Against the current seam:** all 61 tests fail, as required.\n- **Against a reference implementation I wrote in the scratchpad:** all 61 pass, and so does the public suite. That copy also added the `export * from \"./analysis.js\"` line to `index.ts`. Nothing outside the hidden test folder was changed in the repo itself.\n- **Against shortcut implementations:** five shortcuts pass the whole public suite but fail these tests:\n  - a cycle check that throws its own `RangeError`;\n  - a custom `TypeError` for bigints;\n  - throwing whenever an object has its own `toJSON`;\n  - unwrapping `new String(...)` and the other boxed primitives;\n  - turning a failed `-0` attempt into `0`.\n\n**Files:**\n- **`vocabulary.test.ts`:** the constants and the index re-export. They are read through `index.js` because the constants already exist in the seam, so those tests can only fail until `index.ts` re-exports them. It also checks that `analysis.ts` has exactly six runtime exports.\n- **`expired-analysis.test.ts`:** limits other than the public ones, a full count from 0 to 19 below a limit of 20, longer step-by-step sequences, more equal and over-limit pairs, and `-0` and floating-point edge cases.\n- **`canonical-json.test.ts`:**\n  - every character up to U+00FF compared with `JSON.stringify`, and all 120 insertion orders of five keys;\n  - key sorting by UTF-16 code unit: astral characters against U+E000–U+FFFF, and integer-like keys;\n  - keys sorted before escaping, and frozen inputs;\n  - holes at the start, middle and end of arrays, array-likes, boxed primitives and getters;\n  - non-enumerable `toJSON`, and an own `toJSON` that isn't a function.\n- **`canonical-json-errors.test.ts`:**\n  - bigint errors must carry `JSON.stringify`'s own message;\n  - other kinds of function (classes, async, generator, bound) and symbols must throw the fixed error;\n  - an own `toJSON` function is never called;\n  - cycles must throw the engine's own stack-overflow message;\n  - an object shared by two branches without a cycle must still be written out in both places.\n\nEvery scenario key from `[happy-1]`–`[happy-16]`, `[boundary-1]`–`[boundary-11]` and `[unhappy-1]`–`[unhappy-6]` has at least one test, and each test names the public test it extends in a comment.\n\n61 tests, in 4 files.\n\nOpen in the spec:\n- `[boundary-4] boundary: failed results are new objects too, so changing one leaves the next untouched`: the test writes `a.attempt = 99` on a returned object. The spec says each call returns a new object, but not whether that object can be changed. A correct implementation that returns frozen objects would throw there. I don't test this either way, and I removed the same assumption from my own `[boundary-4]` test.",
+    "problem": null,
+    "files": [
+      "packages/core/test/hidden-analysis-params-check/canonical-json-errors.test.ts",
+      "packages/core/test/hidden-analysis-params-check/canonical-json.test.ts",
+      "packages/core/test/hidden-analysis-params-check/expired-analysis.test.ts",
+      "packages/core/test/hidden-analysis-params-check/vocabulary.test.ts"
+    ],
+    "open": [
+      "`[boundary-4] boundary: failed results are new objects too, so changing one leaves the next untouched`: the test writes `a.attempt = 99` on a returned object. The spec says each call returns a new object, but not whether that object can be changed. A correct implementation that returns frozen objects would throw there. I don't test this either way, and I removed the same assumption from my own `[boundary-4]` test."
+    ]
+  }
+}

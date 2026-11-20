@@ -1,0 +1,74 @@
+{
+  "skeleton": {
+    "sessions": [
+      {
+        "sessionId": "d2533a0a-1aa6-45b7-acfb-2f45ba9f15c9",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 0.5131857000000001,
+        "turns": 8,
+        "durationMs": 79097,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 0.5131857000000001,
+    "finalText": "I've written the five seam files in `packages/core/src/selection/`. `npx tsc -p tsconfig.test.json` reports no errors, the existing suite still passes (24/24), and every export below loads from `selection/index.js`. No other files were changed.\n\nChoices worth knowing about:\n\n- **Unused-parameter prefixes:** the repo's base tsconfig turns on `noUnusedParameters`, and its own comment says to prefix such parameters with `_`. So the stubs use names like `_issue` and `_now`. Callers see the same signatures the spec gives.\n- **Constants loaded without calling stubs:** the signal constants (`unassigned`, `neverInSprint`, `notInSprint`, `bug`) and the six `CATEGORIES` entries are written as plain objects. Building them with `signal(...)` would call a stub that throws, so every test file importing them would fail to load. The ids, labels, `why` texts and defaults carry the spec's exact values; only their `test` / `describe` / `rule` functions throw \"not implemented\".\n- **`priorityAtMost` argument type:** the spec gives no TypeScript signatures for the signal factories, so I wrote them from the table. `priorityAtMost` takes `\"low\" | \"medium\"`, the only two ids the spec names; the other factories take a `number`.\n- **Style:** the spec's code blocks use 4-space indent; I used the repo's 2-space style and added the doc comments. Names and types are otherwise exactly as the spec gives them.\n\nAdded: `SelectionLink`, `SelectionClosedSprint`, `SelectionRelease`, `SelectionIssue`, `PriorityRank`, `IssueFacts`, `PRIORITY_RANKS`, `BUG_ISSUE_TYPES`, `factsFor`, `Signal`, `Rule`, `all`, `any`, `silent`, `signal`, `Evaluation`, `evaluate`, `unassigned`, `neverInSprint`, `notInSprint`, `bug`, `openAtLeast`, `quietAtLeast`, `carriedAtLeast`, `votesAtLeast`, `watchersAtLeast`, `duplicatesAtLeast`, `commentsAtLeast`, `blocksAtLeast`, `priorityAtMost`, `deadlineWithin`, `Thresholds`, `Category`, `CATEGORIES`, `UNCATEGORIZED`, `CategorySettings`, `CategoryConfig`, `ResolvedCategory`, `CategoryMatch`, `resolveCategories`, `createClassifier`, `classify`",
+    "problem": null,
+    "sha256": "6d139e3bb26937ae7a835381b3ad20a811c9c9a81d3a4db0799215f5b71cd2ec"
+  },
+  "public": {
+    "sessions": [
+      {
+        "sessionId": "8ea831d3-0508-40d0-878e-1807d39bc12e",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 1.261501,
+        "turns": 17,
+        "durationMs": 268151,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 1.261501,
+    "finalText": "I wrote the test suite in three files under `packages/core/test/`. `npx tsc -p tsconfig.test.json` reports no errors. Running the files gives 84 tests: 82 fail with `not implemented`, as expected. The other 2 pass already: they are the `[happy-11]` registry tests, and the registry data in `categories.ts` is already filled in.\n\n- **`categories-check.facts.test.ts`** tests `factsFor`: day counts, assignee, sprint state, `carriedSince`, missing counts, links, priority, bug type, due date and release choice.\n- **`categories-check.rules.test.ts`** tests `signal`, `silent`, `evaluate` with `all`/`any`, and every signal's id, threshold edges and wording.\n- **`categories-check.categories.test.ts`** tests the registry, `resolveCategories`, `classify` and `createClassifier`.\n\n**Coverage:** the spec has 42 scenarios (18 happy, 6 unhappy, 18 boundary), and each gets exactly two tests. The first runs the scenario as written, using every row of the examples table where it has one. The second checks one edge case. Most of these are exact thresholds, the singular \"1 day\"/\"1 vote\" wording, ties, and UTC handling of dates written with a time-zone offset. The rest check that inputs are not changed, that `all` still checks every child after its first child fails, and that changing the config after building a classifier has no effect.\n\n**How they're built:**\n- Test names start with keys like `[unhappy-4]`; each name appears once and there are no `describe` blocks.\n- They use `node:test` and `node:assert/strict`, like `bounty.test.ts` and `handle.test.ts`.\n- `factsFor` always gets the fixed date `2026-11-20T12:00:00.000Z`, so nothing reads the real clock.\n- Spy signals and spy categories count calls by hand, so no mocking library is needed.\n- Nothing outside these three files was changed.\n\n84 tests, in 3 files.",
+    "problem": null,
+    "files": [
+      "packages/core/test/categories-check.categories.test.ts",
+      "packages/core/test/categories-check.facts.test.ts",
+      "packages/core/test/categories-check.rules.test.ts"
+    ]
+  },
+  "private": {
+    "sessions": [
+      {
+        "sessionId": "ddf77050-8448-488b-95ae-5e988585f015",
+        "model": "claude-opus-5-5",
+        "ok": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "costUsd": 2.7170696000000003,
+        "turns": 24,
+        "durationMs": 588044,
+        "subtype": "success",
+        "apiError": null,
+        "sandboxed": true
+      }
+    ],
+    "costUsd": 2.7170696000000003,
+    "finalText": "I wrote the hidden suite in `packages/core/test/hidden-categories-check/`, in three files: `facts.test.ts`, `rules.test.ts` and `categories.test.ts`. `npx tsc -p tsconfig.test.json` reports no errors. Against the current stubs all 102 tests fail with `not implemented`. While checking that, one test (`PRIORITY_RANKS` has the six keys) passed against the stub, so I changed it to also go through `factsFor`.\n\n**Checked against a correct implementation:** to make sure the tests aren't wrong, I wrote a throwaway JavaScript implementation of the spec in the scratchpad, outside the repo. The public and hidden suites together pass in full against it. That run caught one arithmetic mistake in my own test (a date that was 999 days from now, not 1000), which I fixed.\n\n**Checked against shortcuts:** I then made small broken versions of that implementation, each a shortcut that passes the public suite. The hidden suite fails every one that actually changes behaviour:\n- looking up priority names without guarding against built-in object names, so `\"constructor\"` doesn't rank `\"high\"`;\n- `votes || 0`, which turns `NaN` into 0;\n- comparisons where a `NaN` threshold passes;\n- treating a missing comment count as 0;\n- accepting `true` or arrays as thresholds;\n- treating `enabled: 0` as disabled;\n- falling back to the label when the only clause is `\"\"`;\n- taking a sprint's earliest date from its start and end together, instead of start first;\n- not merging thresholds for a disabled category;\n- lower-casing the rest of the reason;\n- listing Quietly wanted's demand signals in the order of its defaults rather than its rule;\n- caching classifier results per facts object;\n- adding the year only before a hard-coded 2026;\n- sorting the issue's releases in place;\n- measuring against a hard-coded `now`.\n\nThings I deliberately left untested because the spec doesn't decide them:\n- what `factsFor` returns for dates when `now` is invalid;\n- whether `describe` is called on a signal that didn't match;\n- the first-letter rule when a reason starts with a space or a non-ASCII letter;\n- what a current sprint whose state is `\"closed\"` adds to `closedSprintCount`.\n\n102 tests, in 3 files.\n\nOpen in the spec: none",
+    "problem": null,
+    "files": [
+      "packages/core/test/hidden-categories-check/categories.test.ts",
+      "packages/core/test/hidden-categories-check/facts.test.ts",
+      "packages/core/test/hidden-categories-check/rules.test.ts"
+    ],
+    "open": []
+  }
+}

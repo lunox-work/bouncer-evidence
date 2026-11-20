@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-13",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.062465,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"\")"
+    },
+    {
+      "item": 2,
+      "probe": "parseFeature(\"Feature: f\\nScenario Outline: o\\nGiven x\\nExamples:\\n| a |\")"
+    },
+    {
+      "item": 3,
+      "probe": "parseFeature(\"Feature: f\\n@a\\n@b\\n\\nGiven x\")"
+    },
+    {
+      "item": 4,
+      "probe": "parseFeature(\"Feature: f\\nBackground:\\nGiven b\\nScenario: s\\nWhen w\\nBackground:\\nGiven c\")"
+    },
+    {
+      "item": 5,
+      "probe": "parseFeature(\"Feature: f\\nsome description\\nScenario: s\\nmore text\\nGiven x\\nfree text after step\")"
+    },
+    {
+      "item": 6,
+      "probe": "parseFeature(\"Feature: f\\nScenario: s\\nGiven x\\n    \\\"\\\"\\\"\\n      indented\\n  less\\n    \\\"\\\"\\\"\\nWhen y\\n| a | b |\\n| 1 | 2 |\")"
+    },
+    {
+      "item": 7,
+      "probe": "parseFeature(\"Feature: f\\nScenario: s\\nGiven x\\n|  a\\\\|b  | c\\\\\\\\d | e\\\\nf |\\n| g | h\")"
+    },
+    {
+      "item": 8,
+      "probe": "parseFeature(\"@early\\nFeature: f\\n@a @b\\n@c\\nScenario: s\\nGiven x\\n@bad tag\\nScenario: t\")"
+    },
+    {
+      "item": 9,
+      "probe": "parseFeature(\"Feature: f\\nGiven x\\nScenario: s\\nFeature: g\")"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"# c\\r\\nFeature: f\\r\\n\\r\\n# x\\r\\nScenario: s\\r\\nGiven x\\r\\nbad line\\r\\n\")"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"Feature:\\nScenario:  s  \\nGiven\\nGiven   spaced text  \")"
+    },
+    {
+      "item": 12,
+      "probe": "[parseFeature(\"Feature: f\"), parseFeature(\"Feature: f\\nScenario: s\")]"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "throws ParseError: line 1: expected a Feature: line"
+    },
+    {
+      "item": 2,
+      "actual": "throws ParseError: line 2: Scenario Outline is not supported"
+    },
+    {
+      "item": 3,
+      "actual": "throws ParseError: line 2: tags must be followed by a Scenario:"
+    },
+    {
+      "item": 4,
+      "actual": "throws ParseError: line 6: Background: must come once, before any Scenario:"
+    },
+    {
+      "item": 5,
+      "actual": "throws ParseError: line 6: unrecognised line: free text after step"
+    },
+    {
+      "item": 6,
+      "actual": "{\n  name: 'f',\n  background: null,\n  scenarios: [\n    { name: 's', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'x', line: 3, docString: [Array], table: null }, { keyword: 'When', text: 'y', line: 8, docString: null, table: [Array] } ] }\n  ]\n}"
+    },
+    {
+      "item": 7,
+      "actual": "throws ParseError: line 5: a table row must end with |"
+    },
+    {
+      "item": 8,
+      "actual": "throws ParseError: line 7: not a tag line: @bad tag"
+    },
+    {
+      "item": 9,
+      "actual": "throws ParseError: line 2: a step must come after Background: or Scenario:"
+    },
+    {
+      "item": 10,
+      "actual": "throws ParseError: line 7: unrecognised line: bad line"
+    },
+    {
+      "item": 11,
+      "actual": "{\n  name: '',\n  background: null,\n  scenarios: [\n    { name: 's', line: 2, tags: [], steps: [ { keyword: 'Given', text: 'spaced text', line: 4, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 12,
+      "actual": "[\n  { name: 'f', background: null, scenarios: [] },\n  { name: 'f', background: null, scenarios: [ { name: 's', line: 2, tags: [], steps: [] } ] }\n]"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "sha256": "6baf611832a97cdf9e3957caa1fd0f20fb767f8e1d9b1b013475f56fa26b4be4",
+  "by": "in-repo evidence arm: bouncer check, the commit's developer simulated",
+  "at": "2026-11-20T00:01:44.155Z",
+  "startedAt": null,
+  "minutes": null,
+  "decided": [
+    "Length is counted in UTF-16 code units on the trimmed, lowercased string, with an inclusive range of 3 to 30.",
+    "Only lowercase a-z, digits, hyphen and underscore are allowed, tested after lowercasing.",
+    "A handle may start or end with a hyphen or underscore and may repeat them, so `---` and `-abc-` are valid. checkHandle tests only length and character class.",
+    "Length is checked before the charset, so a short or long handle with bad characters reports `length`, and only one problem is ever reported.",
+    "checkHandle does not normalize. Uppercase input fails with `charset`, and whitespace-padded input fails `charset`, or `length` when out of range, with the whitespace counted.",
+    "normalizeHandle trims the input. `handle` is the lowercased form, and `display` is the trimmed text with its original casing.",
+    "toHandleCase only trims the ends and calls `toLowerCase()`. Inner characters are left alone, and lowercasing is locale-independent Unicode lowercasing.",
+    "Rejection reasons are fixed English sentences: `Must be between 3 and 30 characters.` and `Can use letters, numbers, hyphens and underscores only.`",
+    "toHandleStem lowercases, replaces each run of disallowed characters with a single hyphen, trims edge hyphens and keeps hyphens in the middle.",
+    "A stem shorter than the minimum, including empty text, gets the literal `-user` appended, so empty text gives `-user` and `jo` gives `jo-user`.",
+    "A stem longer than the maximum is truncated to 30 characters after the hyphen trim, which can leave a trailing hyphen at the cut.",
+    "handleStemFromEmail uses the text before the first `@`. Without an `@` it uses the whole string, an empty local part becomes `-user`, and plus-tags are kept and turned into hyphens.",
+    "isValidHandle normalizes first and is true exactly when normalizeHandle returns `ok`, so `\"FeverSoul\"` and `\"  abc  \"` are valid.",
+    "\"Trim\" means `String.prototype.trim`, which also removes tabs, newlines, NBSP and other Unicode whitespace.",
+    "No handle is reserved. `admin`, `api`, `settings` and `new` are valid.",
+    "A rejection is exactly `{ status, problem, reason }`, a success from checkHandle is exactly `{ status: \"ok\" }`, and normalizeHandle's rejection equals `checkHandle(toHandleCase(raw))`.",
+    "toHandleStem trims only hyphens from the ends. Edge underscores are kept, so `__` gives `__-user`.",
+    "No export throws for any string input. Bad input is reported through the `invalid` result or repaired into a stem.",
+    "`packages/core/src/index.ts` re-exports everything in `handle.ts`, so the package entry exposes the handle rules.",
+    "Seam (the files the stub writes): packages/core/src/handle.ts",
+    "Allowed paths (what the implementer may change): packages/core/src/"
+  ],
+  "seam": [
+    "packages/core/src/handle.ts"
+  ],
+  "allowedPaths": [
+    "packages/core/src/"
+  ]
+}

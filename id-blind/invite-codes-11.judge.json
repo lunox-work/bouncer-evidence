@@ -1,0 +1,70 @@
+{
+  "run": "invite-codes/11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0961029,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 8,
+      "agrees": true,
+      "why": "The 14-day expiry and the unused starting state are fixed requirements. The only open question here is what happens when a new code collides with an existing one, and that is item 8. Its pick redraws the code, which matches the scenario.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks this. Item 12 is about the order of a contributor's task list and duplicates in it, not whether redeeming grants access to just that task and records who used the code and when.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 4,
+      "agrees": true,
+      "why": "Item 4 asks whether codes are matched exactly or leniently. Its pick uppercases the code and strips whitespace and dashes, so lowercase, spaced or dashed input is read as the same code.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks about the exact 14-day boundary. Its pick treats now >= createdAt + 14 days as expired, so a redeem at 08:59:59.999 works and one at exactly 09:00:00 fails with \"expired\".",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks what happens when the same contributor redeems their own used code again. Item 1 covers redeeming a different code for a task the contributor already has, which is S7. Item 5 is about which reason wins between used, revoked and expired, which this scenario doesn't involve.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 6,
+      "agrees": true,
+      "why": "Item 6 asks whether codes can be revoked and what revoking a used or unknown code does. Its pick adds revoke and throws on used codes, which matches \"a used code cannot be revoked\". A revoked code being refused follows from having revoke at all. Item 11 covers only the \"unknown\" reason, so item 6 is closer.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 1,
+      "agrees": true,
+      "why": "Item 1 asks exactly this. Its pick returns \"already has access\" and leaves the code unused.",
+      "failing": false
+    },
+    {
+      "key": "concurrency-1",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks how simultaneous redemptions are handled. Its pick runs registry operations one at a time through a shared queue, so only one redeem wins even when the store resolves late. The other fails with \"used\".",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": null,
+      "why": "Item 9 asks what list returns. Its pick gives each code's state at the current time but doesn't say which fields are shown, such as who used a code and when. It also doesn't say whether a used code stays \"used\" after its expiry time, so there's no way to tell if it matches.",
+      "failing": false
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-go/12",
+  "model": "claude-sonnet-5-5",
+  "seconds": 16,
+  "costUsd": 0.057364200000000004,
+  "items": [
+    {
+      "question": "Is surrounding whitespace in the input accepted?",
+      "ticket": "silent",
+      "chose": "Trims leading and trailing whitespace before parsing, so \"  5s\\t\\n\" parses as 5000.",
+      "where": "src/task.go:50",
+      "instead": "Reject any input with surrounding whitespace as invalid."
+    },
+    {
+      "question": "Is whitespace between components or between a count and its unit accepted (\"1h 30m\", \"1 h\")?",
+      "ticket": "silent",
+      "chose": "Rejects it. A count must be followed directly by a unit, and a component must follow directly after the previous one.",
+      "where": "src/task.go:69",
+      "instead": "Skip whitespace between components and accept \"1h 30m\"."
+    },
+    {
+      "question": "What does an empty or whitespace-only string return?",
+      "ticket": "silent",
+      "chose": "Returns 0 and an error containing \"duration\".",
+      "where": "src/task.go:51",
+      "instead": "Treat it as 0 or \"unset\" with no error."
+    },
+    {
+      "question": "Is a bare number with no unit, such as the old raw milliseconds \"172800\", accepted?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects it with a \"missing or unknown unit\" error.",
+      "where": "src/task.go:75",
+      "instead": "Treat a bare number as raw milliseconds for backward compatibility."
+    },
+    {
+      "question": "Are unit letters case-sensitive?",
+      "ticket": "silent",
+      "chose": "Accepts only lowercase units, so \"1H\" is an error.",
+      "where": "src/task.go:101",
+      "instead": "Match units case-insensitively."
+    },
+    {
+      "question": "Are units beyond the three examples supported (d for days), and are other units such as weeks or microseconds supported?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Supports d, h, m, s and ms only. It adds days, which the ticket's examples don't include, and no weeks, microseconds, or other units.",
+      "where": "src/task.go:33",
+      "instead": "Support only h, m, s and ms, or add w, us and similar units."
+    },
+    {
+      "question": "Can units appear out of order or repeat (\"30m1h\", \"1h1h\")?",
+      "ticket": "silent",
+      "chose": "Rejects both. Units must run from largest to smallest and each can appear at most once.",
+      "where": "src/task.go:79",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Are fractional, signed, or negative counts accepted (\"1.5h\", \"-1h\", \"+1h\")?",
+      "ticket": "silent",
+      "chose": "Accepts only unsigned ASCII digit counts, so all of these are errors.",
+      "where": "src/task.go:62",
+      "instead": "Accept decimal counts like \"1.5h\", or accept a leading \"+\"."
+    },
+    {
+      "question": "Is there a maximum duration, and what happens when it is exceeded or overflows?",
+      "ticket": "silent",
+      "chose": "Caps the total at 2^53-1 ms (the JavaScript safe integer) and returns 0 with an error when a count, a product, or the sum goes over it.",
+      "where": "src/task.go:64",
+      "instead": "Allow up to the int64 maximum, or silently clamp or wrap on overflow."
+    },
+    {
+      "question": "Is zero an allowed duration, and are leading zeros allowed?",
+      "ticket": "silent",
+      "chose": "Accepts \"0ms\", \"0h\" and \"007s\" as valid, giving 0 for the zero forms and 7000 for \"007s\".",
+      "where": "src/task.go:55",
+      "instead": "Reject zero as an invalid timeout, or reject leading zeros."
+    },
+    {
+      "question": "How does the formatter print zero milliseconds?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Returns \"0ms\".",
+      "where": "src/task.go:117",
+      "instead": "Return \"0s\" or an empty string."
+    },
+    {
+      "question": "How does the formatter handle negative or oversized values, and does it break the value into several units?",
+      "ticket": "print them back in the same style in the admin UI",
+      "chose": "Returns \"\" and an error for values below 0 or above 2^53-1. Otherwise it prints a greedy decomposition into d/h/m/s/ms, with days as the largest unit and zero parts left out (for example 172800000 gives \"2d\").",
+      "where": "src/task.go:114",
+      "instead": "Format negative values with a minus sign, or print only the largest exact unit, or use hours as the top unit (\"48h\")."
+    }
+  ]
+}

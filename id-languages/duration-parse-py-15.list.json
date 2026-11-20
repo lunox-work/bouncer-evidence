@@ -1,0 +1,92 @@
+{
+  "run": "duration-parse-py/15",
+  "model": "claude-sonnet-5-5",
+  "seconds": 13,
+  "costUsd": 0.0543636,
+  "items": [
+    {
+      "question": "Which units does a duration string accept?",
+      "ticket": "human-readable durations like `1h30m`, `90s` or `250ms`",
+      "chose": "Accepts d, h, m, s and ms, so it adds days, which the ticket never lists.",
+      "where": "src/solution.py:14",
+      "instead": "Accept only h, m, s and ms, the units the ticket's examples show, or add weeks as well."
+    },
+    {
+      "question": "Are unit letters case-sensitive?",
+      "ticket": "silent",
+      "chose": "Rejects uppercase units such as `1H` and `1S`.",
+      "where": "src/solution.py:19",
+      "instead": "Accept units in any case."
+    },
+    {
+      "question": "Must terms run from largest unit to smallest, and may a unit repeat?",
+      "ticket": "silent",
+      "chose": "Rejects out-of-order or repeated units such as `30m1h` and `1h1h`.",
+      "where": "src/solution.py:52",
+      "instead": "Accept any order and sum repeated units."
+    },
+    {
+      "question": "Is whitespace allowed in a duration string?",
+      "ticket": "silent",
+      "chose": "Strips leading and trailing whitespace but rejects spaces inside, so `1h 30m` fails.",
+      "where": "src/solution.py:39",
+      "instead": "Reject any whitespace, or allow spaces between terms."
+    },
+    {
+      "question": "Is a bare number with no unit accepted, such as the legacy raw millisecond value?",
+      "ticket": "Job timeouts are raw millisecond numbers in the config",
+      "chose": "Rejects `90` because it has no unit, and rejects non-string input such as the int 90.",
+      "where": "src/solution.py:37",
+      "instead": "Treat a bare number or int as raw milliseconds, for backward compatibility with existing configs."
+    },
+    {
+      "question": "Are fractional, signed or non-ASCII digit values accepted, such as `1.5h`, `-1s` or `+1s`?",
+      "ticket": "silent",
+      "chose": "Accepts only ASCII digit runs and rejects decimals, signs and other digits.",
+      "where": "src/solution.py:19",
+      "instead": "Allow decimals like `1.5h`, or allow a leading plus sign."
+    },
+    {
+      "question": "What happens with empty or whitespace-only input?",
+      "ticket": "silent",
+      "chose": "Raises ValueError with the message 'empty duration'.",
+      "where": "src/solution.py:40",
+      "instead": "Return 0, or treat it as unset or None."
+    },
+    {
+      "question": "Is there an upper limit on a parsed duration?",
+      "ticket": "silent",
+      "chose": "Rejects totals above 9007199254740991 ms, and rejects very long digit strings early.",
+      "where": "src/solution.py:63",
+      "instead": "Impose no limit, or use a smaller limit such as a sensible maximum timeout."
+    },
+    {
+      "question": "Is a zero duration valid, and how is it written?",
+      "ticket": "silent",
+      "chose": "Parses `0s` and `0ms` as 0, and formats 0 as `0s`.",
+      "where": "src/solution.py:101",
+      "instead": "Reject zero as an invalid timeout, or format it as `0ms`."
+    },
+    {
+      "question": "Are leading zeros in a number accepted, such as `01h`?",
+      "ticket": "silent",
+      "chose": "Accepts them and parses `01h` as one hour.",
+      "where": "src/solution.py:19",
+      "instead": "Reject numbers with leading zeros."
+    },
+    {
+      "question": "How is a millisecond value formatted for display in the admin UI?",
+      "ticket": "print them back in the same style in the admin UI instead of the raw number",
+      "chose": "Picks the shortest string over all decompositions, so 90000 prints as `90s`, 5400000 as `90m` and 25 hours as `25h`. Ties go to fewer terms, then larger units.",
+      "where": "src/solution.py:110",
+      "instead": "Greedy decomposition from the largest unit, such as `1h30m`, or only use the largest unit that divides the value exactly."
+    },
+    {
+      "question": "What does format_duration do with invalid input such as negative numbers, floats or bools?",
+      "ticket": "silent",
+      "chose": "Raises ValueError mentioning 'milliseconds' for negatives, values above the maximum, floats and bools.",
+      "where": "src/solution.py:98",
+      "instead": "Clamp negatives to 0, round floats, or accept bools as ints."
+    }
+  ]
+}

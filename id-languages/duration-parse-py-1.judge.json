@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-py/1",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.1036368,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": true,
+      "why": "The row that needs a decision is `2d`, which only works if days are a supported unit. Item 4 asks which units are supported, and its pick includes d. The `0s` row also touches item 8, which agrees too, but the units question is the closer fit.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks whether whitespace is accepted. Its pick rejects surrounding whitespace, but the scenario expects `  45m\\n` to be trimmed and parsed as 2700000.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Most rows are decimals, signs, underscores, inner whitespace or non-ASCII digits (`1.5h`, `-3s`, `+3s`, `1_0s`, `1h 30m`, `3 s`, `３s`). That is exactly item 5's question, and its pick rejects all of them. Other rows fall under other items: empty is item 2, `90` is item 1, `3w` is item 4, `3S` is item 6. Item 8 accepts leading zeros, which conflicts with the `05s` row, but that is a different question.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a parsed count may go above the next unit's size, such as 90 minutes. Item 3 only covers unit order and repeats, and item 11's 'no per-unit cap' is about formatting, not parsing.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks about unit order and repeated units. Its pick requires d, h, m, s, ms order with each unit used at most once, so all four examples are rejected.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7 asks about the maximum total. Its pick only rejects totals above 9007199254740991 ms, so the maximum itself parses.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 7,
+      "agrees": true,
+      "why": "Item 7's pick raises ValueError when the total exceeds 9007199254740991 ms, which covers both examples.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 11,
+      "agrees": false,
+      "why": "Item 11 asks which output formatting picks. Its pick is the shortest string, which would give `90s` for 90000 and `90m` for 5400000, but the scenario expects the normalised `1m30s` and `1h30m`. Item 10's `0s` for zero also conflicts with the expected `0ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 11,
+      "agrees": false,
+      "why": "The scenario expects the normalised form `104249991d8h59m991ms` (20 characters). Item 11's shortest-string rule would pick a shorter form, such as `9007199254740991ms` (18 characters), instead.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing must give the original number back. Any output that parses would pass, so none of the formatting choices decides this scenario.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-4",
+      "item": 12,
+      "agrees": true,
+      "why": "Item 12 asks how invalid format inputs are handled. Its pick raises ValueError for negative values, values above the maximum, bool and float, which covers every example. The pick doesn't say what the error message contains.",
+      "failing": false
+    }
+  ]
+}

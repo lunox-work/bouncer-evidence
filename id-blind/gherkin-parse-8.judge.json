@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse/8",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.10243649999999999,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 9,
+      "agrees": true,
+      "why": "S1 says which step keywords are allowed (Given, When, Then, And, But, *), that each keeps its spelling as written, and that the text starts after the keyword and one space. Item 9 asks exactly this, and its pick takes those keywords, case-sensitive, followed by one space and the text.",
+      "failing": false
+    },
+    {
+      "key": "happy-2",
+      "item": 8,
+      "agrees": true,
+      "why": "S2 says that text between Feature: and the first Background, Scenario or tag line is the feature's description and is skipped. Item 8 asks what happens to that free text, and its pick ignores it. Item 5 also touches tags going to the next scenario, but it mostly covers doc strings and tables, so item 8 is the closer fit.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 4,
+      "agrees": true,
+      "why": "S3 says Background steps come back as their own background and are not copied into scenarios. Item 4's pick puts them in a separate background array and does not copy them.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "S4 says the opening quotes' indentation is removed from each doc string line and that lines inside are never read as keywords, comments or tags. Item 11 asks how doc strings are delimited and indented, and its pick strips the opening indentation and keeps comments and blank lines inside. It also accepts ``` as a delimiter, which S4 neither requires nor forbids.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 2,
+      "agrees": true,
+      "why": "S5 starts with the missing-Feature case: the error is at the first line of other content. Item 2's pick throws at line 1 for a file with no Feature: line, or at the first content line if something comes before it. Items 3, 8 and 11 each match one of S5's other clauses (Scenario Outline, a step before any block or an unrecognised line, an unclosed doc string), and their picks agree too.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 1,
+      "agrees": true,
+      "why": "S6 says a Feature with no scenarios is valid. Item 1's pick accepts it and returns an empty scenarios array. Item 4 sets background to null when there is none, which matches 'no background'.",
+      "failing": false
+    }
+  ]
+}

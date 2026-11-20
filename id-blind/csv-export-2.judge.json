@@ -1,0 +1,49 @@
+{
+  "run": "csv-export/2",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.0826672,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 1,
+      "agrees": true,
+      "why": "S1 checks several things that each have their own item: BOM (4), row order (2), CRLF on every line (3) and the header (1). The header is the scenario's main subject, so item 1 is the closest. Its pick writes exactly \"Requisition ID,Title,Status,Openings,Filled,Created\". The other three picks agree with S1 too.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 9,
+      "agrees": false,
+      "why": "Item 9 asks how status values are written. S2 expects labels people can read: \"Open\", \"On hold\", \"Filled\", \"Cancelled\". The pick writes the raw status string, such as on_hold. Item 8, the date format, also fits S2 and also disagrees: it writes a full ISO timestamp with milliseconds, not YYYY-MM-DD. Item 7, the empty title, agrees.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 5,
+      "agrees": true,
+      "why": "Item 5 asks what an empty list produces. The pick returns the BOM and the header row ending in CRLF, with no data rows. That is S3's \"byte order mark and the header row alone\", using S1's rule that every row ends in CRLF.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks how fields are quoted and escaped. The pick quotes on a comma, quote, CR or LF and doubles inner quotes. S4 also requires quotes when a title starts or ends with a space, and the pick does not do that.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item covers defusing formulas: adding a single quote before a leading =, +, -, @, tab or CR. Item 6 is only about quoting separators, which is a different behaviour.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 12,
+      "agrees": true,
+      "why": "Items 9, 10 and 11 each cover one way a row can be invalid, and each throws an error naming the id. Item 12 asks what a bad row does to the whole export, which is S6's overall rule, and it also covers the invalid creation time. Its pick validates every row first and throws, so building fails with no partial output, as S6 expects. Its wording does not mention the id, but the sibling picks do.",
+      "failing": true
+    }
+  ]
+}

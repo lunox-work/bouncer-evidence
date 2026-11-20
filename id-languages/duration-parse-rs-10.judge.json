@@ -1,0 +1,84 @@
+{
+  "run": "duration-parse-rs/10",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.100104,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": 4,
+      "agrees": false,
+      "why": "The scenario needs the day unit to work: `2d` should give 172800000 and `1d0h0m0s0ms` should give 86400000. Item 4 asks which units are supported, and its pick rejects `d`. Item 7, on zero values, covers only the `0s` row.",
+      "failing": true
+    },
+    {
+      "key": "boundary-1",
+      "item": 6,
+      "agrees": false,
+      "why": "Item 6 asks whether whitespace is allowed, including leading whitespace like ` 1h`. Its pick rejects all whitespace, but the scenario expects whitespace around the value to be ignored.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-1",
+      "item": 6,
+      "agrees": true,
+      "why": "Most rejected inputs here are what item 6 asks about: empty input, decimals (`1.5h`), signs (`-3s`, `+3s`) and inner whitespace (`1h 30m`, `3 s`). Its pick rejects all of them. Some other rows belong to other items: `90` to item 1, `05s` to item 7, `3S` to item 5 and `3w` to item 4.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether a parsed count may be larger than the next unit up, such as `90m` instead of `1h30m`. Item 10 mentions `90m`, but only as formatting output. Item 3 is about unit order and repeats, not count size.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-2",
+      "item": 3,
+      "agrees": true,
+      "why": "Item 3 asks whether units can repeat or appear out of order. Its pick rejects both, and the scenario expects both to be errors.",
+      "failing": false
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks for the largest duration that parses. Its pick caps at 2^53-1 = 9007199254740991 ms, which is exactly what the scenario expects to parse. The input also uses `d`, which item 4 rejects, but that is a separate question.",
+      "failing": true
+    },
+    {
+      "key": "unhappy-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 sets the maximum, and its pick rejects any total above 2^53-1, so both inputs fail as expected. Item 8 only covers which error an overflow maps to.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 10,
+      "agrees": false,
+      "why": "Item 10 asks how formatting picks among equivalent strings. Its pick uses the shortest string, so 90000 would print as `90s` instead of the expected `1m30s`. The scenario wants the largest units first. Separately, item 9's pick prints 0 as `0s`, not `0ms`.",
+      "failing": true
+    },
+    {
+      "key": "boundary-3",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks for the largest value that can be formatted. Its pick allows 2^53-1 and rejects only larger values, so this value formats. The exact output text also depends on items 10 and 4.",
+      "failing": true
+    },
+    {
+      "key": "boundary-4",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks whether formatting and then parsing gives back the original number.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-4",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks what happens when formatting a value above the maximum. Its pick returns a MillisecondsOutOfRange error, which fits an error message that mentions milliseconds.",
+      "failing": false
+    }
+  ]
+}

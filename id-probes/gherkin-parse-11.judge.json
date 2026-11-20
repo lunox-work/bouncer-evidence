@@ -1,0 +1,49 @@
+{
+  "run": "gherkin-parse-11",
+  "model": "claude-opus-5-5",
+  "costUsd": 0.11593200000000001,
+  "rows": [
+    {
+      "key": "happy-1",
+      "item": null,
+      "agrees": null,
+      "why": "No item asks about the basic shape of the result: the feature name, scenarios in file order, each scenario's name and line, and each step's keyword, text and line. Item 12 mentions '*' as a step keyword, but it is about which input formats are accepted, not about what a parsed step contains.",
+      "failing": true
+    },
+    {
+      "key": "happy-2",
+      "item": 5,
+      "agrees": false,
+      "why": "Item 5 asks how description text between Feature: and the first Background or Scenario is treated. The scenario says every such line is description and is skipped. The run shows an indented 'Given indented text' line inside the description throwing 'step before any Background: or Scenario:' instead of being skipped.",
+      "failing": false
+    },
+    {
+      "key": "happy-3",
+      "item": 9,
+      "agrees": true,
+      "why": "Item 9 asks whether Background steps are returned and where they go. The pick puts them in a separate feature.background and does not merge them into each scenario's steps, which is what the scenario expects.",
+      "failing": false
+    },
+    {
+      "key": "boundary-1",
+      "item": 11,
+      "agrees": true,
+      "why": "Item 11 asks how table cells and doc string lines are processed. The pick trims table cells, removes the opening delimiter's indentation from each doc string line and returns the doc string as an array of lines, which matches the scenario.",
+      "failing": false
+    },
+    {
+      "key": "unhappy-1",
+      "item": 3,
+      "agrees": false,
+      "why": "Several items touch on errors (1, 3, 4, 6, 7, 10). Item 3 asks the scenario's lead question: what happens when there is no Feature: line. The scenario puts that error at the first line of other content. The pick always reports line 1, which is wrong when comments or blank lines come first.",
+      "failing": true
+    },
+    {
+      "key": "boundary-2",
+      "item": 2,
+      "agrees": true,
+      "why": "Item 2 asks whether a feature with no scenarios is valid. The run returns { name: 'F', background: null, scenarios: [] }, so it parses with no scenarios and no background.",
+      "failing": false
+    }
+  ]
+}

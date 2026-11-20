@@ -1,0 +1,92 @@
+{
+  "run": "csv-export/7",
+  "model": "claude-sonnet-5-5",
+  "seconds": 19,
+  "costUsd": 0.052281400000000006,
+  "items": [
+    {
+      "question": "Does the CSV start with a UTF-8 byte order mark?",
+      "ticket": "silent",
+      "chose": "Prefixes the output with a BOM character (U+FEFF).",
+      "where": "src/index.ts:32",
+      "instead": "Emit plain UTF-8 with no BOM."
+    },
+    {
+      "question": "Which line terminator ends each row, and is there a trailing one after the last row?",
+      "ticket": "silent",
+      "chose": "Ends every line, including the last, with CRLF.",
+      "where": "src/index.ts:32",
+      "instead": "Use LF, and either no trailing newline or a single LF."
+    },
+    {
+      "question": "What columns does the CSV have, what are their header names, and in what order?",
+      "ticket": "(with status and fill counts)",
+      "chose": "Writes the header 'Requisition ID,Title,Status,Openings,Filled,Created', with id, title, status, openings, filled and created date as the columns.",
+      "where": "src/index.ts:36",
+      "instead": "Use other header labels, such as snake_case field names, or a different column set or order."
+    },
+    {
+      "question": "What does an empty requisition list produce?",
+      "ticket": "silent",
+      "chose": "Returns the BOM and header line only, with no data rows.",
+      "where": "src/index.ts:19",
+      "instead": "Return an empty string, or throw."
+    },
+    {
+      "question": "In what order are the rows written?",
+      "ticket": "silent",
+      "chose": "Sorts by creation time ascending, then by id using a UTF-16 code-unit comparison, on a copy of the input.",
+      "where": "src/index.ts:15",
+      "instead": "Keep the input order, or sort newest first."
+    },
+    {
+      "question": "How is the creation time formatted in the CSV?",
+      "ticket": "silent",
+      "chose": "Writes a full ISO 8601 UTC timestamp with milliseconds from toISOString().",
+      "where": "src/index.ts:28",
+      "instead": "Write a date-only value (YYYY-MM-DD) or a locale-formatted date."
+    },
+    {
+      "question": "How are fields containing commas, quotes or line breaks written?",
+      "ticket": "silent",
+      "chose": "Wraps the field in double quotes and doubles any embedded quotes (RFC 4180), only when it contains a comma, quote, CR or LF.",
+      "where": "src/index.ts:65-67",
+      "instead": "Quote every field always, or also guard against spreadsheet formula injection by prefixing values that start with =, +, - or @."
+    },
+    {
+      "question": "What is written when a requisition has no title (missing or null)?",
+      "ticket": "silent",
+      "chose": "Writes an empty field.",
+      "where": "src/index.ts:24",
+      "instead": "Write a placeholder such as 'Untitled', or throw."
+    },
+    {
+      "question": "What happens when a requisition has an unknown status?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id, and only the four statuses open, on_hold, filled and cancelled are allowed.",
+      "where": "src/index.ts:43-45",
+      "instead": "Write the status string through unchanged, or skip the row."
+    },
+    {
+      "question": "What happens when openings or filled is negative, fractional or non-finite?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id for any value that is not a whole number of at least 0.",
+      "where": "src/index.ts:46-51",
+      "instead": "Write the number as is, clamp it, or skip the row."
+    },
+    {
+      "question": "What happens when filled is greater than openings?",
+      "ticket": "silent",
+      "chose": "Throws an Error naming the requisition id.",
+      "where": "src/index.ts:52-54",
+      "instead": "Export the row as is, since the data is what it is, or clamp filled to openings."
+    },
+    {
+      "question": "What happens when one requisition in the list is invalid? Does the export fail, or does it skip that row?",
+      "ticket": "silent",
+      "chose": "Validates every requisition before writing any output, so one bad row makes the whole build throw.",
+      "where": "src/index.ts:11-13",
+      "instead": "Skip or flag the bad rows and export the rest."
+    }
+  ]
+}

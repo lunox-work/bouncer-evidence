@@ -1,0 +1,105 @@
+{
+  "run": "gherkin-parse-10",
+  "model": "claude-sonnet-5-5",
+  "costUsd": 0.0581075,
+  "probes": [
+    {
+      "item": 1,
+      "probe": "parseFeature(\"\")"
+    },
+    {
+      "item": 2,
+      "probe": "parseFeature(\"Feature: F\\n\")"
+    },
+    {
+      "item": 3,
+      "probe": "parseFeature(\"Feature: F\\n\\nRule: R\\n\")"
+    },
+    {
+      "item": 4,
+      "probe": "parseFeature(\"Feature: F\\n  Given a step\\n\")"
+    },
+    {
+      "item": 5,
+      "probe": "parseFeature(\"Feature: F\\n  some description\\n  Scenario: S\\n    Given x\\n    random text\\n\")"
+    },
+    {
+      "item": 6,
+      "probe": "parseFeature(\"Feature: F\\n  @a\\n\\n  Given x\\n  Scenario: S\\n\")"
+    },
+    {
+      "item": 7,
+      "probe": "parseFeature(\"@top\\nFeature: F\\n  @a @b\\n  @c\\n  Scenario: S\\n    Given x\\n\")"
+    },
+    {
+      "item": 8,
+      "probe": "parseFeature(\"Feature: F\\n  Background:\\n    Given b\\n  Scenario: S\\n    When w\\n\")"
+    },
+    {
+      "item": 9,
+      "probe": "parseFeature(\"Feature: F\\n  Scenario: S\\n    Given a\\n      \\\"\\\"\\\"\\n      line1\\n        line2\\n      \\\"\\\"\\\"\\n    And b\\n      | a | b |\\n      | 1 | 2 |\\n    And c\\n      | x |\\n      \\\"\\\"\\\"\\n      d\\n      \\\"\\\"\\\"\\n\")"
+    },
+    {
+      "item": 10,
+      "probe": "parseFeature(\"Feature: F\\n  Scenario: S\\n    Given\\n    Givenx\\n\")"
+    },
+    {
+      "item": 11,
+      "probe": "parseFeature(\"\\uFEFFFeature: F\\r\\n# c\\r\\n\\r\\n  Scenario: S\\r\\n    Given a\\r\\n      \\\"\\\"\\\"\\r\\n      # not comment\\r\\n      \\\"\\\"\\\"\\r\\n\")"
+    },
+    {
+      "item": 12,
+      "probe": "parseFeature(\"Feature: F\\n\\n# c\\nExample: E\\n  Given a\\nScenario: S\\n  Given b\\n\")"
+    }
+  ],
+  "ran": [
+    {
+      "item": 1,
+      "actual": "throws ParseError: line 1: missing \"Feature:\" line"
+    },
+    {
+      "item": 2,
+      "actual": "{ name: 'F', background: null, scenarios: [] }"
+    },
+    {
+      "item": 3,
+      "actual": "throws ParseError: line 3: \"Rule:\" is not supported"
+    },
+    {
+      "item": 4,
+      "actual": "throws ParseError: line 2: a step must come after \"Background:\" or \"Scenario:\""
+    },
+    {
+      "item": 5,
+      "actual": "throws ParseError: line 5: unrecognised line: \"random text\""
+    },
+    {
+      "item": 6,
+      "actual": "throws ParseError: line 2: tags must be followed by a Scenario or Feature"
+    },
+    {
+      "item": 7,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'S', line: 5, tags: [ '@a', '@b', '@c' ], steps: [ { keyword: 'Given', text: 'x', line: 6, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 8,
+      "actual": "{\n  name: 'F',\n  background: [ { keyword: 'Given', text: 'b', line: 3, docString: null, table: null } ],\n  scenarios: [\n    { name: 'S', line: 4, tags: [], steps: [ { keyword: 'When', text: 'w', line: 5, docString: null, table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 9,
+      "actual": "throws ParseError: line 13: a doc string must follow a step"
+    },
+    {
+      "item": 10,
+      "actual": "throws ParseError: line 4: unrecognised line: \"Givenx\""
+    },
+    {
+      "item": 11,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'S', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 5, docString: [Array], table: null } ] }\n  ]\n}"
+    },
+    {
+      "item": 12,
+      "actual": "{\n  name: 'F',\n  background: null,\n  scenarios: [\n    { name: 'E', line: 4, tags: [], steps: [ { keyword: 'Given', text: 'a', line: 5, docString: null, table: null } ] },\n    { name: 'S', line: 6, tags: [], steps: [ { keyword: 'Given', text: 'b', line: 7, docString: null, table: null } ] }\n  ]\n}"
+    }
+  ]
+}
