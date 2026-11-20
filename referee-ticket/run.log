@@ -1,6 +1,6 @@
 [05:47:51] 75 rejected runs, 117 distinct failing tests
 [05:47:51] spec round 1: 75 runs unresolved, 8 case(s)
-[05:47:51] 8 case(s), 8 to referee on claude-cli (claude-fable-5-1); out /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/referee-ticket/spec.jsonl
+[05:47:51] 8 case(s), 8 to referee on claude-cli (claude-fable-5-1); out ~/Repositories/lunox-work/public/bouncer/evidence/referee-ticket/spec.jsonl
 [05:48:30] suite csv-export yes typical BOM, header, then one row per requisition in creation-time order, each
 [05:49:04] suite escrow-split yes edge passing hidden tests on a bounty of 0 records nothing and the task is 
 [05:49:40] suite gherkin-parse open edge a step's text is what follows the keyword and exactly one space
@@ -20,7 +20,7 @@ runs rejected: 75; failing a test the spec requires: 73
 
 own-green runs rejected: 75; failing a test the spec requires: 73
 [05:52:27] spec round 2: 2 runs unresolved, 1 case(s)
-[05:52:27] 1 case(s), 1 to referee on claude-cli (claude-fable-5-1); out /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/referee-ticket/spec.jsonl
+[05:52:27] 1 case(s), 1 to referee on claude-cli (claude-fable-5-1); out ~/Repositories/lunox-work/public/bouncer/evidence/referee-ticket/spec.jsonl
 [05:53:07] suite gherkin-parse yes edge only one space after each keyword is dropped from the step's text
 | cases | n | spec requires the test | open | test wrong | typical / edge / adversarial |
 | --- | ---: | ---: | ---: | ---: | --- |

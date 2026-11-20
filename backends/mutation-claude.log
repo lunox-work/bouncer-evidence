@@ -1,4 +1,4 @@
-[07:51:12] 75 spec(s) in /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/claude/specs for the claude arm
+[07:51:12] 75 spec(s) in ~/Repositories/lunox-work/public/independent-tests/evidence/backends/claude/specs for the claude arm
 [07:51:13] access-rules mutating
 [07:51:13] coalescing-cache mutating
 [07:51:13] csv-export mutating

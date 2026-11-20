@@ -1,4 +1,4 @@
-context-sources: incomplete. Public 25/71, hidden 32/92, existing 228/228; /private/tmp/claude-501/-Users-charlieangriawan-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory at d3016bce6cd4eea76e653c6df162053285dbbb92.
+context-sources: incomplete. Public 25/71, hidden 32/92, existing 228/228; /private/tmp/claude-501/-Users-me-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory at d3016bce6cd4eea76e653c6df162053285dbbb92.
 Hidden suite sha256 c36efdd98825d037274e35a7d62a0b32ce099d4d5b9876db570e4fed2ddc7a8a, sealed 2026-10-26T04:36:00.389Z.
 Failing scenarios: boundary-1, boundary-10, boundary-11, boundary-12, boundary-13, boundary-14, boundary-15, boundary-16, boundary-17, boundary-18, boundary-2, boundary-3, boundary-4, boundary-5, boundary-6, boundary-7, boundary-9, happy-1, happy-10, happy-2, happy-3, happy-4, happy-5, happy-6, happy-7, happy-8, happy-9, unhappy-1, unhappy-3
 public: test/context-sources.test.ts :: [happy-1] the sources and caps have their declared values
@@ -47,4 +47,4 @@ public: test/context-sources.test.ts :: [boundary-18] a truncated document whose
 public: test/context-sources.test.ts :: [boundary-18] an untruncated blank document renders only its heading
 public: test/context-sources.test.ts :: [boundary-19] a step against NO_CONTEXT is never behind
 public: test/context-sources.test.ts :: [boundary-20] a step that used no context is behind every source the overview holds
-Check "independent-tests (drafted)": failure, incomplete: public 25/71, hidden 32/92, existing 228/228 (payload in /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/ci/checks/context-sources.json); not posted (no token).
+Check "independent-tests (drafted)": failure, incomplete: public 25/71, hidden 32/92, existing 228/228 (payload in ~/Repositories/lunox-work/public/independent-tests/evidence/ci/checks/context-sources.json); not posted (no token).

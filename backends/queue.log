@@ -70,12 +70,12 @@
 [05:23:28] ladder-kestrel-l2: imported (396 hidden tests kept, 23 public; not held out)
 [05:23:28] ladder-kestrel-l3: imported (396 hidden tests kept, 14 public; not held out)
 [05:23:28] ladder-kestrel-l4: imported (396 hidden tests kept, 1 public; not held out)
-71 spec(s) imported into /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs.
+71 spec(s) imported into ~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs.
 Imported specs are not held out: use them to check the pipeline, never to grade a party that could have seen the archive.
-[05:23:29] 71 spec(s) in /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs for the codex-cli arm
+[05:23:29] 71 spec(s) in ~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs for the codex-cli arm
 [2026-10-26T05:23:29Z] exit 0
 [2026-10-26T05:23:29Z] node bin/referee.mjs --cases ../double-blind-experiment/referee.jsonl --kinds suite --backend codex-cli --out evidence/backends/referee-codex-cli.jsonl --concurrency 3
-[05:23:29] 57 case(s), 57 to referee on codex-cli; out /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/referee-codex-cli.jsonl
+[05:23:29] 57 case(s), 57 to referee on codex-cli; out ~/Repositories/lunox-work/public/independent-tests/evidence/backends/referee-codex-cli.jsonl
 [05:23:34] waiting for a session slot (3 max, 25% memory free)
 [05:23:41] suite csv-export yes adversarial a whole number of 10^21 is written as plain digits, not in exponent fo
 [05:23:50] suite money-format yes adversarial currency named after an object property constructor is refused
@@ -303,10 +303,10 @@ generated access-rules, coalescing-cache, csv-export, env-names, escrow-ledger, 
 [07:05:11] invite-codes mutating
 [2026-10-26T07:06:10Z] mutation (split from queue.sh)
 [2026-10-27T02:00:28Z] node evidence/backends.mjs import codex-cli
-[02:00:28] 71 spec(s) in /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs for the codex-cli arm
+[02:00:28] 71 spec(s) in ~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs for the codex-cli arm
 [2026-10-27T02:00:28Z] exit 0
 [2026-10-27T02:00:28Z] node bin/referee.mjs --cases ../double-blind-experiment/referee.jsonl --kinds suite --backend codex-cli --out evidence/backends/referee-codex-cli.jsonl --concurrency 2
-[02:00:28] 57 case(s), 0 to referee on codex-cli; out /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/referee-codex-cli.jsonl
+[02:00:28] 57 case(s), 0 to referee on codex-cli; out ~/Repositories/lunox-work/public/independent-tests/evidence/backends/referee-codex-cli.jsonl
 | cases | n | spec requires the test | open | test wrong | typical / edge / adversarial |
 | --- | ---: | ---: | ---: | ---: | --- |
 | suite test fails a run, any arm | 57 | 45 | 12 | 0 | 15 / 34 / 8 |

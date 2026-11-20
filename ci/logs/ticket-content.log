@@ -1,4 +1,4 @@
-ticket-content: incomplete. Public 0/52, hidden 0/47, existing 0/139; /private/tmp/claude-501/-Users-charlieangriawan-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory at ee0bef013a078340116991400e3bfb1a730560be.
+ticket-content: incomplete. Public 0/52, hidden 0/47, existing 0/139; /private/tmp/claude-501/-Users-me-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory at ee0bef013a078340116991400e3bfb1a730560be.
 Hidden suite sha256 b5b1572e12366c7c1208a0daa90d4e25b2d126eabc453d71409093517953b56d, sealed 2026-10-26T04:35:59.630Z.
 Did not compile with the public suite:
 test/ticket-content.test.ts(100,30): error TS2339: Property 'titleMaxChars' does not exist on type '{ readonly title: 255; readonly description: 20000; readonly issueType: 64; readonly priority: 64; readonly labels: 20; readonly label: 64; }'.
@@ -146,4 +146,4 @@ Regressions (passed on base plus stub, fail now):
 - test/tree.test.ts :: dominantExtensions: most files first, ties by name
 - test/tree.test.ts :: modulesFor assigns a file to its most specific module
 Failing scenarios: boundary-1, boundary-10, boundary-11, boundary-12, boundary-2, boundary-5, boundary-6, boundary-7, boundary-8, boundary-9, concurrency-1, happy-10, happy-4, happy-5, happy-6, happy-7, happy-8, happy-9, unhappy-1, unhappy-2, unhappy-3
-Check "independent-tests (drafted)": failure, incomplete: public 0/52, hidden 0/47, existing 0/139 (payload in /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/ci/checks/ticket-content.json); not posted (no token).
+Check "independent-tests (drafted)": failure, incomplete: public 0/52, hidden 0/47, existing 0/139 (payload in ~/Repositories/lunox-work/public/independent-tests/evidence/ci/checks/ticket-content.json); not posted (no token).

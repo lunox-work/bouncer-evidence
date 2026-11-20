@@ -55,28 +55,28 @@
       "expected": "denied",
       "got": "denied",
       "ok": true,
-      "detail": "cat: /private/tmp/claude-501/-Users-charlieangriawan-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p5/home/specs/_sandbox-probe/tests/"
+      "detail": "cat: /private/tmp/claude-501/-Users-me-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p5/home/specs/_sandbox-probe/tests/"
     },
     {
       "probe": "list the home",
       "expected": "denied",
       "got": "denied",
       "ok": true,
-      "detail": "ls: /Users/charlieangriawan: Operation not permitted"
+      "detail": "ls: ~: Operation not permitted"
     },
     {
       "probe": "read ~/.codex/auth.json",
       "expected": "denied",
       "got": "denied",
       "ok": true,
-      "detail": "cat: /Users/charlieangriawan/.codex/auth.json: Operation not permitted"
+      "detail": "cat: ~/.codex/auth.json: Operation not permitted"
     },
     {
       "probe": "read the package",
       "expected": "denied",
       "got": "denied",
       "ok": true,
-      "detail": "cat: /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/package.json: Operation not permitted"
+      "detail": "cat: ~/Repositories/lunox-work/public/independent-tests/package.json: Operation not permitted"
     },
     {
       "probe": "write outside the workdir",

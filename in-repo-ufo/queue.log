@@ -217,7 +217,7 @@
 [15:01:18] 25 codex-cli run(s) staged
 [15:01:18] ufo-base-prefix-confirmed codex-cli 1 agent started
 [15:01:18] ufo-base-prefix-confirmed codex-cli 2 agent started
-[15:01:18] installing @openai/codex@0.164.0 into /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/backends/codex-0.164.0 (npm@10.9.2, once)
+[15:01:18] installing @openai/codex@0.164.0 into ~/Repositories/lunox-work/public/independent-tests/backends/codex-0.164.0 (npm@10.9.2, once)
 [15:01:27] waiting for a session slot (2 max, 40% memory free)
 [15:02:52] ufo-base-prefix-confirmed codex-cli 1 agent done $0.00, 2 path(s) changed, 1 PEEK ATTEMPT(S)
 [15:02:52] ufo-base-prefix-confirmed codex-cli 3 agent started

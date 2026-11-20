@@ -1,5 +1,5 @@
 {
-  "from": "/Users/charlieangriawan/Repositories/lunox-work/public/double-blind-experiment/specs/ladder-kestrel-l4",
+  "from": "~/Repositories/lunox-work/public/double-blind-experiment/specs/ladder-kestrel-l4",
   "at": "2026-10-26T05:23:28.100Z",
   "heldOut": false,
   "why": "Its suites were in the archive's working folder and its published write-ups before this import; anyone who worked there may have read them.",

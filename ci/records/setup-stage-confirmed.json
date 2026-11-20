@@ -2,7 +2,7 @@
   "at": "2026-10-26T04:39:12.283Z",
   "slug": "setup-stage-confirmed",
   "verdict": "passed",
-  "checkout": "/private/tmp/claude-501/-Users-charlieangriawan-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory",
+  "checkout": "/private/tmp/claude-501/-Users-me-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory",
   "ref": "ddaf803050e52faf61ac348dc0d927a804201848",
   "public": {
     "passed": 52,

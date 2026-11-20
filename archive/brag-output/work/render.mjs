@@ -4,7 +4,7 @@ import { mkdirSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 const here = path.dirname(fileURLToPath(import.meta.url));
-const require = createRequire('/Users/charlieangriawan/Repositories/lunox-work/public/sandbox-factory/package.json');
+const require = createRequire(process.env.HOME + '/Repositories/lunox-work/public/sandbox-factory/package.json');
 const { chromium } = require('playwright');
 const [mode, a, b] = process.argv.slice(2);
 const browser = await chromium.launch();

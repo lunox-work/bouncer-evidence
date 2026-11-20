@@ -5,21 +5,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-11/tests/private'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-11/tests/private'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1055:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1117:20)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1055:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1117:20)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-11/tests/private'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-11/tests/private'
 }
 
 Node.js v24.21.0
@@ -29,21 +29,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-118/tests/private'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-118/tests/private'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1055:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1117:20)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1055:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1117:20)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-118/tests/private'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-118/tests/private'
 }
 
 Node.js v24.21.0
@@ -55,21 +55,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-128/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-128/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-128/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-128/tests/public'
 }
 
 Node.js v24.21.0
@@ -79,21 +79,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-13/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-13/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-13/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-13/tests/public'
 }
 
 Node.js v24.21.0
@@ -103,21 +103,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-144/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-144/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-144/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-144/tests/public'
 }
 
 Node.js v24.21.0
@@ -127,21 +127,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-151/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-151/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-151/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-151/tests/public'
 }
 
 Node.js v24.21.0
@@ -151,21 +151,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-154/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-154/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-154/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-154/tests/public'
 }
 
 Node.js v24.21.0
@@ -175,21 +175,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-159/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-159/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-159/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-159/tests/public'
 }
 
 Node.js v24.21.0
@@ -199,21 +199,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-17/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-17/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-17/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-17/tests/public'
 }
 
 Node.js v24.21.0
@@ -223,21 +223,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-19/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-19/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-19/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-19/tests/public'
 }
 
 Node.js v24.21.0
@@ -247,21 +247,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-22/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-22/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-22/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-22/tests/public'
 }
 
 Node.js v24.21.0
@@ -271,21 +271,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-24/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-24/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-24/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-24/tests/public'
 }
 
 Node.js v24.21.0
@@ -295,21 +295,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-25/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-25/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-25/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-25/tests/public'
 }
 
 Node.js v24.21.0
@@ -319,21 +319,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-31/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-31/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-31/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-31/tests/public'
 }
 
 Node.js v24.21.0
@@ -343,21 +343,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-32/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-32/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-32/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-32/tests/public'
 }
 
 Node.js v24.21.0
@@ -367,21 +367,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-34/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-34/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-34/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-34/tests/public'
 }
 
 Node.js v24.21.0
@@ -391,21 +391,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-39/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-39/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-39/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-39/tests/public'
 }
 
 Node.js v24.21.0
@@ -415,21 +415,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-4/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-4/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-4/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-4/tests/public'
 }
 
 Node.js v24.21.0
@@ -439,21 +439,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-43/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-43/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-43/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-43/tests/public'
 }
 
 Node.js v24.21.0
@@ -463,21 +463,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-44/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-44/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-44/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-44/tests/public'
 }
 
 Node.js v24.21.0
@@ -487,21 +487,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-46/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-46/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-46/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-46/tests/public'
 }
 
 Node.js v24.21.0
@@ -511,21 +511,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-48/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-48/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-48/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-48/tests/public'
 }
 
 Node.js v24.21.0
@@ -535,21 +535,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-49/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-49/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-49/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-49/tests/public'
 }
 
 Node.js v24.21.0
@@ -559,21 +559,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-53/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-53/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-53/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-53/tests/public'
 }
 
 Node.js v24.21.0
@@ -583,21 +583,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-55/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-55/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-55/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-55/tests/public'
 }
 
 Node.js v24.21.0
@@ -607,21 +607,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-57/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-57/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-57/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-57/tests/public'
 }
 
 Node.js v24.21.0
@@ -631,21 +631,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-58/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-58/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-58/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-58/tests/public'
 }
 
 Node.js v24.21.0
@@ -655,21 +655,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-60/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-60/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-60/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-60/tests/public'
 }
 
 Node.js v24.21.0
@@ -679,21 +679,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-63/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-63/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-63/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-63/tests/public'
 }
 
 Node.js v24.21.0
@@ -703,21 +703,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-74/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-74/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-74/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-74/tests/public'
 }
 
 Node.js v24.21.0
@@ -727,21 +727,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-76/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-76/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-76/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-76/tests/public'
 }
 
 Node.js v24.21.0
@@ -751,21 +751,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-77/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-77/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-77/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-77/tests/public'
 }
 
 Node.js v24.21.0
@@ -775,21 +775,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-83/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-83/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-83/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-83/tests/public'
 }
 
 Node.js v24.21.0
@@ -799,21 +799,21 @@ node:internal/fs/cp/cp-sync:56
   fsBinding.cpSyncCheckPaths(src, dest, opts.dereference, opts.recursive);
             ^
 
-Error: ENOENT: no such file or directory, lstat '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-97/tests/public'
+Error: ENOENT: no such file or directory, lstat '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-97/tests/public'
     at cpSyncFn (node:internal/fs/cp/cp-sync:56:13)
     at cpSync (node:fs:3242:3)
-    at copy (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
-    at stage (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
-    at run (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
-    at judge (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
-    at judgeText (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
-    at scoreSpec (file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
-    at file:///Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
+    at copy (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:842:3)
+    at stage (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1054:26)
+    at run (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1101:17)
+    at judge (file://~/Repositories/lunox-work/public/independent-tests/bin/lib.mjs:1114:42)
+    at judgeText (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:61:12)
+    at scoreSpec (file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:70:21)
+    at file://~/Repositories/lunox-work/public/independent-tests/evidence/evalplus.mjs:108:40
     at ModuleJob.run (node:internal/modules/esm/module_job:561:25) {
   errno: -2,
   code: 'ENOENT',
   syscall: 'lstat',
-  path: '/Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-97/tests/public'
+  path: '~/Repositories/lunox-work/public/independent-tests/evidence/backends/specs/he-97/tests/public'
 }
 
 Node.js v24.21.0

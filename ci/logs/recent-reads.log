@@ -1,4 +1,4 @@
-recent-reads: incomplete. Public 0/58, hidden 0/52, existing 0/885; /private/tmp/claude-501/-Users-charlieangriawan-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory at d937dcdba623213dcdef87939ce4195edff52144.
+recent-reads: incomplete. Public 0/58, hidden 0/52, existing 0/885; /private/tmp/claude-501/-Users-me-Repositories-lunox-work/612c9fc5-052a-49b0-b7c1-81bdaee20a80/scratchpad/p3/sandbox-factory at d937dcdba623213dcdef87939ce4195edff52144.
 Hidden suite sha256 ddc25f9852e5db4565e2c72f728b6d72b511a52200d2982a35f2841a4566bf86, sealed 2026-10-26T04:35:59.327Z.
 Did not compile with the public suite:
 test/recent-reads.test.ts(5,3): error TS2724: '"../src/jira/recent.js"' has no exported member named 'RECENT_JIRA_READS_MAX'. Did you mean 'RECENT_JIRA_READ_MS'?

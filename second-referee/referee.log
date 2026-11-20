@@ -1,5 +1,5 @@
 round 1: 14 solutions unresolved, 8 case(s)
-[09:46:47] 8 case(s), 8 to referee on claude-cli (claude-fable-5-1); out /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/second-referee/spec.jsonl
+[09:46:47] 8 case(s), 8 to referee on claude-cli (claude-fable-5-1); out ~/Repositories/lunox-work/public/bouncer/evidence/second-referee/spec.jsonl
 [09:47:25] suite he-11 yes typical TestStringXor.test_identical_mixed_strings
 [09:47:54] suite he-124 yes edge TestValidDatePrivate.test_five_digit_year
 [09:48:24] suite he-124 yes edge TestValidDatePrivate.test_trailing_newline
@@ -19,7 +19,7 @@ runs rejected: 14; failing a test the spec requires: 11
 
 own-green runs rejected: 0; failing a test the spec requires: 0
 round 2: 3 solutions unresolved, 2 case(s)
-[09:51:20] 2 case(s), 2 to referee on claude-cli (claude-fable-5-1); out /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/second-referee/spec.jsonl
+[09:51:20] 2 case(s), 2 to referee on claude-cli (claude-fable-5-1); out ~/Repositories/lunox-work/public/bouncer/evidence/second-referee/spec.jsonl
 [09:51:58] suite he-43 yes edge TestPairsSumToZeroHidden.test_separated_zero_occurrences
 [09:52:34] suite he-57 yes edge TestMonotonicHidden.test_strings_increasing
 | cases | n | spec requires the test | open | test wrong | typical / edge / adversarial |

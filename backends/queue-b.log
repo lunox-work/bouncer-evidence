@@ -18,7 +18,7 @@ ladder-kestrel-l2: the oracle passes 25/27 public tests
 ladder-kestrel-l3: the oracle passes 16/16 public tests
 ladder-kestrel-l4: the oracle passes 2/2 public tests
 exit 0
-[07:12:34] installing the python toolchain into /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/toolchains/python-d285f5cb9782 (once)
+[07:12:34] installing the python toolchain into ~/Repositories/lunox-work/public/independent-tests/evidence/backends/toolchains/python-d285f5cb9782 (once)
 [07:12:38] he-0 public started
 [07:12:38] he-10 public started
 [07:12:38] he-106 public started

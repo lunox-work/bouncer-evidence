@@ -1,4 +1,4 @@
-[21:37:30] installing the go toolchain into /Users/charlieangriawan/Repositories/lunox-work/public/bouncer/evidence/languages-ticket/toolchains/go-e23858180de9 (once)
+[21:37:30] installing the go toolchain into ~/Repositories/lunox-work/public/bouncer/evidence/languages-ticket/toolchains/go-e23858180de9 (once)
 [21:37:31] 15 ticket-haiku run(s) staged
 [21:37:31] duration-parse-go ticket-haiku 1 agent started
 [21:38:24] duration-parse-go ticket-haiku 1 agent done $0.01, 2 path(s) changed

@@ -357,7 +357,7 @@
       "package": ".",
       "commit": "62b8f507b56fad4ea3af5a5238c911e7d2641fd1",
       "supported": false,
-      "reason": "the dependencies do not install on a clean copy (uv-dated): error: Command '['clang', '-fno-strict-overflow', '-Wsign-compare', '-Wunreachable-code', '-fno-common', '-dynamic', '-DNDEBUG', '-g', '-O3', '-Wall', '-I/Users/charlieangriawan/.cache/uv/builds-v0/.tmp5CUA0B/include', '-I/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/includ",
+      "reason": "the dependencies do not install on a clean copy (uv-dated): error: Command '['clang', '-fno-strict-overflow', '-Wsign-compare', '-Wunreachable-code', '-fno-common', '-dynamic', '-DNDEBUG', '-g', '-O3', '-Wall', '-I~/.cache/uv/builds-v0/.tmp5CUA0B/include', '-I/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/includ",
       "stage": "run",
       "seconds": 1
     },

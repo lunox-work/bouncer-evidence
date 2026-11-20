@@ -1,5 +1,5 @@
 [05:19:44] duration-parse skeleton started
-[05:19:44] installing @openai/codex@0.164.0 into /Users/charlieangriawan/Repositories/lunox-work/public/independent-tests/evidence/backends/backends/codex-0.164.0 (npm@10.9.2, once)
+[05:19:44] installing @openai/codex@0.164.0 into ~/Repositories/lunox-work/public/independent-tests/evidence/backends/backends/codex-0.164.0 (npm@10.9.2, once)
 [05:20:19] duration-parse skeleton done $0.00
 [05:20:19] duration-parse public started
 [05:21:50] duration-parse public done $0.00
