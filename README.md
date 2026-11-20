@@ -5,7 +5,8 @@ numbers. [docs/RESULTS.md](https://github.com/lunox-work/bouncer/blob/main/docs/
 in the Bouncer repository is the summary; every figure there cites a file
 here. Nothing here is needed to run Bouncer. Kept out of the Bouncer
 repository since 2026-11-20 so that installing it does not clone thousands of
-files; the history up to then is in Bouncer's git log.
+files; on 2026-11-21 these folders were also removed from Bouncer's git
+history, so each file's state here is as of the move, not its edits before.
 
 ## Layout
 
