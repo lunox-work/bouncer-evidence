@@ -1,6 +1,12 @@
 {
-  "at": "2026-11-20T06:58:06.415Z",
+  "at": "2026-11-23T12:10:38.561Z",
   "byVariant": {
+    "ticket-fable": {
+      "runs": 35,
+      "ownGreen": 35,
+      "ownGreenRejected": 15,
+      "noOwnTests": 0
+    },
     "ticket-haiku": {
       "runs": 35,
       "ownGreen": 35,
@@ -21,6 +27,56 @@
     }
   },
   "rows": [
+    {
+      "spec": "csv-export",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 23,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 18,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 9,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "csv-export",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 12,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
     {
       "spec": "csv-export",
       "variant": "ticket-haiku",
@@ -167,6 +223,56 @@
       "run": 5,
       "verdict": "incomplete",
       "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 29,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 27,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 28,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 28,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "escrow-split",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 26,
       "ownGreen": true,
       "applied": true,
       "hasOwn": true
@@ -323,6 +429,56 @@
     },
     {
       "spec": "gherkin-parse",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 35,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 24,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 47,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 22,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 23,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "gherkin-parse",
       "variant": "ticket-haiku",
       "run": 1,
       "verdict": "incomplete",
@@ -467,6 +623,56 @@
       "run": 5,
       "verdict": "passed",
       "ownTests": 2,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 26,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 27,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 25,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 27,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "invite-codes",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 19,
       "ownGreen": true,
       "applied": true,
       "hasOwn": true
@@ -623,6 +829,56 @@
     },
     {
       "spec": "status-normalize",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "incomplete",
+      "ownTests": 13,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "incomplete",
+      "ownTests": 11,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "incomplete",
+      "ownTests": 11,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "incomplete",
+      "ownTests": 11,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "incomplete",
+      "ownTests": 10,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "status-normalize",
       "variant": "ticket-haiku",
       "run": 1,
       "verdict": "incomplete",
@@ -773,6 +1029,56 @@
     },
     {
       "spec": "usage-counter",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 19,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 18,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 21,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 17,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "usage-counter",
       "variant": "ticket-haiku",
       "run": 1,
       "verdict": "passed",
@@ -917,6 +1223,56 @@
       "run": 5,
       "verdict": "passed",
       "ownTests": 3,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-fable",
+      "run": 1,
+      "verdict": "passed",
+      "ownTests": 22,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-fable",
+      "run": 2,
+      "verdict": "passed",
+      "ownTests": 22,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-fable",
+      "run": 3,
+      "verdict": "passed",
+      "ownTests": 16,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-fable",
+      "run": 4,
+      "verdict": "passed",
+      "ownTests": 20,
+      "ownGreen": true,
+      "applied": true,
+      "hasOwn": true
+    },
+    {
+      "spec": "weekly-digest",
+      "variant": "ticket-fable",
+      "run": 5,
+      "verdict": "passed",
+      "ownTests": 27,
       "ownGreen": true,
       "applied": true,
       "hasOwn": true

@@ -213,3 +213,75 @@
 [07:45:55] weekly-digest/ticket-public-opus/4 passed public 28/28, hidden 83/83 
 [07:45:57] weekly-digest/ticket-public-opus/5 passed public 28/28, hidden 83/83 
 210 result(s) in results.jsonl
+[11:35:17] csv-export/ticket-fable/1 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[11:35:19] csv-export/ticket-fable/2 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[11:35:20] csv-export/ticket-fable/3 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[11:35:21] csv-export/ticket-fable/4 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[11:35:22] csv-export/ticket-fable/5 incomplete public 3/12, hidden 17/47 scenarios boundary-2, happy-1, happy-2, unhappy-1, unhappy-2
+[11:35:24] escrow-split/ticket-fable/1 passed public 22/22, hidden 46/46 
+[11:35:25] escrow-split/ticket-fable/2 passed public 22/22, hidden 46/46 
+[11:35:27] escrow-split/ticket-fable/3 passed public 22/22, hidden 46/46 
+[11:35:28] escrow-split/ticket-fable/4 passed public 22/22, hidden 46/46 
+[11:35:30] escrow-split/ticket-fable/5 passed public 22/22, hidden 46/46 
+[11:35:31] gherkin-parse/ticket-fable/1 passed public 18/18, hidden 47/47 
+[11:35:33] gherkin-parse/ticket-fable/2 passed public 18/18, hidden 47/47 
+[11:35:35] gherkin-parse/ticket-fable/3 passed public 18/18, hidden 47/47 
+[11:35:36] gherkin-parse/ticket-fable/4 passed public 18/18, hidden 47/47 
+[11:35:38] gherkin-parse/ticket-fable/5 passed public 18/18, hidden 47/47 
+[11:35:39] invite-codes/ticket-fable/1 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[11:35:41] invite-codes/ticket-fable/2 incomplete public 22/26, hidden 39/47 scenarios happy-1, unhappy-1, unhappy-2
+[11:35:43] invite-codes/ticket-fable/3 incomplete public 25/26, hidden 44/47 scenarios happy-1, unhappy-1, unhappy-2
+[11:35:45] invite-codes/ticket-fable/4 incomplete public 25/26, hidden 44/47 scenarios happy-1, unhappy-1, unhappy-2
+[11:35:46] invite-codes/ticket-fable/5 incomplete public 23/26, hidden 40/47 scenarios happy-1, happy-2, happy-3, unhappy-1, unhappy-2
+[11:35:48] status-normalize/ticket-fable/1 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[11:35:49] status-normalize/ticket-fable/2 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[11:35:50] status-normalize/ticket-fable/3 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[11:35:52] status-normalize/ticket-fable/4 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[11:35:53] status-normalize/ticket-fable/5 incomplete public 11/15, hidden 19/25 scenarios happy-2, happy-4
+[11:35:55] usage-counter/ticket-fable/1 passed public 27/27, hidden 50/50 
+[11:35:57] usage-counter/ticket-fable/2 passed public 27/27, hidden 50/50 
+[11:35:59] usage-counter/ticket-fable/3 passed public 27/27, hidden 50/50 
+[11:36:01] usage-counter/ticket-fable/4 passed public 27/27, hidden 50/50 
+[11:36:02] usage-counter/ticket-fable/5 passed public 27/27, hidden 50/50 
+[11:36:05] weekly-digest/ticket-fable/1 passed public 28/28, hidden 83/83 
+[11:36:06] weekly-digest/ticket-fable/2 passed public 28/28, hidden 83/83 
+[11:36:08] weekly-digest/ticket-fable/3 passed public 28/28, hidden 83/83 
+[11:36:10] weekly-digest/ticket-fable/4 passed public 28/28, hidden 83/83 
+[11:36:12] weekly-digest/ticket-fable/5 passed public 28/28, hidden 83/83 
+245 result(s) in results.jsonl
+[12:07:53] csv-export/ticket-public-fable/1 passed public 12/12, hidden 47/47 
+[12:07:55] csv-export/ticket-public-fable/2 passed public 12/12, hidden 47/47 
+[12:07:56] csv-export/ticket-public-fable/3 passed public 12/12, hidden 47/47 
+[12:07:57] csv-export/ticket-public-fable/4 passed public 12/12, hidden 47/47 
+[12:07:58] csv-export/ticket-public-fable/5 passed public 12/12, hidden 47/47 
+[12:08:00] escrow-split/ticket-public-fable/1 passed public 22/22, hidden 46/46 
+[12:08:01] escrow-split/ticket-public-fable/2 passed public 22/22, hidden 46/46 
+[12:08:03] escrow-split/ticket-public-fable/3 passed public 22/22, hidden 46/46 
+[12:08:04] escrow-split/ticket-public-fable/4 passed public 22/22, hidden 46/46 
+[12:08:06] escrow-split/ticket-public-fable/5 passed public 22/22, hidden 46/46 
+[12:08:08] gherkin-parse/ticket-public-fable/1 passed public 18/18, hidden 47/47 
+[12:08:09] gherkin-parse/ticket-public-fable/2 passed public 18/18, hidden 47/47 
+[12:08:11] gherkin-parse/ticket-public-fable/3 passed public 18/18, hidden 47/47 
+[12:08:13] gherkin-parse/ticket-public-fable/4 passed public 18/18, hidden 47/47 
+[12:08:14] gherkin-parse/ticket-public-fable/5 passed public 18/18, hidden 47/47 
+[12:08:16] invite-codes/ticket-public-fable/1 passed public 26/26, hidden 47/47 
+[12:08:18] invite-codes/ticket-public-fable/2 passed public 26/26, hidden 47/47 
+[12:08:19] invite-codes/ticket-public-fable/3 passed public 26/26, hidden 47/47 
+[12:08:21] invite-codes/ticket-public-fable/4 passed public 26/26, hidden 47/47 
+[12:08:23] invite-codes/ticket-public-fable/5 passed public 26/26, hidden 47/47 
+[12:08:24] status-normalize/ticket-public-fable/1 passed public 15/15, hidden 25/25 
+[12:08:25] status-normalize/ticket-public-fable/2 passed public 15/15, hidden 25/25 
+[12:08:27] status-normalize/ticket-public-fable/3 passed public 15/15, hidden 25/25 
+[12:08:28] status-normalize/ticket-public-fable/4 passed public 15/15, hidden 25/25 
+[12:08:29] status-normalize/ticket-public-fable/5 passed public 15/15, hidden 25/25 
+[12:08:31] usage-counter/ticket-public-fable/1 passed public 27/27, hidden 50/50 
+[12:08:33] usage-counter/ticket-public-fable/2 passed public 27/27, hidden 50/50 
+[12:08:35] usage-counter/ticket-public-fable/3 passed public 27/27, hidden 50/50 
+[12:08:37] usage-counter/ticket-public-fable/4 passed public 27/27, hidden 50/50 
+[12:08:39] usage-counter/ticket-public-fable/5 passed public 27/27, hidden 50/50 
+[12:08:41] weekly-digest/ticket-public-fable/1 passed public 28/28, hidden 83/83 
+[12:08:43] weekly-digest/ticket-public-fable/2 passed public 28/28, hidden 83/83 
+[12:08:45] weekly-digest/ticket-public-fable/3 passed public 28/28, hidden 83/83 
+[12:08:47] weekly-digest/ticket-public-fable/4 passed public 28/28, hidden 83/83 
+[12:08:49] weekly-digest/ticket-public-fable/5 passed public 28/28, hidden 83/83 
+280 result(s) in results.jsonl
